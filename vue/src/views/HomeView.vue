@@ -6,6 +6,7 @@
     <div class="company-description">
       <p>Welcome to Jolt, your ultimate coffee locator hub! With us, you can easily locate and explore the best coffee shops near you, read reviews from fellow coffee enthusiasts, organize meet-ups with friends over a cup of your favorite brew, and embark on exciting adventures to discover new coffee destinations. Join our vibrant coffee-loving community and let Jolt guide you to your next perfect coffee spot. Start your coffee journey with us today!</p>
     </div>
+    <router-link class="link" v-bind:to="{ name: 'development' }" v-if="$store.state.token != ''">DEVELOPMENT</router-link>
   </div>
 </template>
 
