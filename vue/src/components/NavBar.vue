@@ -36,15 +36,13 @@
 export default {
     data() {
         return {
-            isNavOpen: false, // Tracks if the navbar is open
+            isNavOpen: false // Tracks if the navbar is open
         };
     },
 };
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Lobster+Two&family=Nunito+Sans:opsz,wght@6..12,200&family=Raleway:wght@800&family=Ubuntu:wght@300&display=swap');
-
 /* General Styling */
 nav {
     position: fixed;
@@ -101,6 +99,10 @@ nav {
     font-size: 1rem;
     color: rgb(245, 242, 242);
     text-decoration: none;
+}
+
+.separator {
+    color: #333437;
 }
 
 /* Profile Image */

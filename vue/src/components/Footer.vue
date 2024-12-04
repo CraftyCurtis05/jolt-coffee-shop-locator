@@ -30,8 +30,10 @@
   <style scoped>
   .footer {
     background-color: transparent;
-    padding: 20px 0;
     text-align: center;
+    border-top: .1rem #333437 solid;
+    padding-top: 1rem;
+    margin-top: 1rem;
   }
   .container {
     max-width: 1200px;
