@@ -58,10 +58,6 @@ html, body {
   z-index: 100;
 }
 
-/* #footer {
-
-} */
-
 body::-webkit-scrollbar {
   width: 20px;
 }
