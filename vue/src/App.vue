@@ -58,28 +58,25 @@ html, body {
   z-index: 100;
 }
 
-#footer {
+/* #footer {
 
-}
+} */
 
-html::-webkit-scrollbar {
+body::-webkit-scrollbar {
   width: 20px;
 }
         
-html::-webkit-scrollbar-track {
-  border-radius: 8px;
-  background-color: red;
-  /* background-image: url("https://i.ibb.co/5150925/tracks.png"); */
+body::-webkit-scrollbar-track {
+  background: url("@/assets/scrollbar/scrollbar_track.png");
   background-position: -5px;
   background-repeat: repeat-y;
   background-size: 50px;
 }
         
-html::-webkit-scrollbar-thumb {
-  border-radius: 8px;
-  /* background-image: url("https://i.ibb.co/q95CBdZ/train.png"); */
+body::-webkit-scrollbar-thumb {
+  background-image: url("@/assets/scrollbar/scrollbar_thumb.png");
   background-position:center center;
   background-repeat: no-repeat;
-  background-size: 35px;
+  background-size: 20px;
 }
 </style>

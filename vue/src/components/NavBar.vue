@@ -16,7 +16,7 @@
                     <div class="separator">|</div>
                 <li><router-link class="link" v-bind:to="{ name: 'locator' }" v-if="$store.state.token != ''">LOCATOR</router-link></li>
                     <div class="separator">|</div>
-                <li><router-link class="link" v-bind:to="{ name: 'links' }" v-if="$store.state.token != ''">SHOP</router-link></li>
+                <li><router-link class="link" v-bind:to="{ name: 'shop' }" v-if="$store.state.token != ''">SHOP</router-link></li>
                     <div class="separator">|</div>
                 <li><router-link class="link" v-bind:to="{ name: 'articles' }" v-if="$store.state.token != ''">ARTICLES</router-link></li>
                     <div class="separator">|</div>

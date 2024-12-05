@@ -1,10 +1,11 @@
 <template>
+  <body>
     <div class="about-us">
       <h1>Who We Are</h1>
       <p>Meet Our Software Engineers</p>
       <div class="team-members">
         <div class="team-member">
-            <a href="https://www.linkedin.com/in/jcurtisdeveloper/" target="_blank"><img src="src\assets\Jennifer.jpg" alt="Jennifer" class="team-member-image"></a>
+            <a href="https://www.linkedin.com/in/jcurtisdeveloper/" target="_blank"><img src="@/assets/about/jennifer.jpg" alt="Jennifer" class="team-member-image"></a>
           <div class="bio-tooltip"  :style="{border: '2px solid rgb(223,204,145)'}">
             <p class="name">Jennifer</p>
             <span class="tooltip-text">
@@ -17,7 +18,7 @@
           </div>
         </div>
         <div class="team-member">
-            <a href="https://www.linkedin.com/in/steven-riggle/" target="_blank"><img src="src\assets\Steven.jpg" alt="Steven" class="team-member-image"></a>
+            <a href="https://www.linkedin.com/in/steven-riggle/" target="_blank"><img src="@/assets/about/steven.jpg" alt="Steven" class="team-member-image"></a>
 
           <div class="bio-tooltip" :style="{border: '2px solid rgb(223,204,145)'}">
             <p>Steven</p>
@@ -27,7 +28,7 @@
           </div>
         </div>
         <div class="team-member">
-          <a href="https://www.linkedin.com/in/naomi-adams-0804a4106/" target="_blank"><img src="src\assets\Naomi.jpg" alt="Naomi" class="team-member-image"></a>
+          <a href="https://www.linkedin.com/in/naomi-adams-0804a4106/" target="_blank"><img src="@/assets/about/naomi.jpg" alt="Naomi" class="team-member-image"></a>
           <div class="bio-tooltip" :style="{border: '2px solid rgb(223,204,145)'}">
             <p>Naomi</p>
             <span class="tooltip-text">
@@ -42,7 +43,7 @@
           </div>
         </div>
         <div class="team-member">
-            <a href="https://www.linkedin.com/in/daviddefoshajr/" target="_blank"><img src="src\assets\David.jpg" alt="David" class="team-member-image"></a>
+            <a href="https://www.linkedin.com/in/daviddefoshajr/" target="_blank"><img src="@/assets/about/david.jpg" alt="David" class="team-member-image"></a>
           <div class="bio-tooltip" :style="{border: '2px solid rgb(223,204,145)'}">
             <p>David</p>
             <span class="tooltip-text">
@@ -54,32 +55,32 @@
         </div>
       </div>
     </div>
-  </template>
+  </body>  
+</template>
   
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Lobster+Two&family=Ubuntu&display=swap');
 body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-}
-.about-us {
-  text-align: center;
-  padding: 20px;
-}
-h1 {
-    text-align: center;
-  font-family: 'Lobster Two', sans-serif;
   font-family: 'Ubuntu', sans-serif;
+  color: #333437;
+  padding-top: 5rem;
+}
+
+h1 {
   font-weight: bolder;
-  font-size: 35px; /* Adjust the font size as needed */
+  font-size: 1.8rem;
+  text-align: center;
   margin: 0;
 }
+
 p {
-  text-align: center;
-  font-family: 'Lobster Two', sans-serif;
-  font-family: 'Nunito Sans', sans-serif;
-  font-family: 'Ubuntu', sans-serif;
-  margin-top: 10px;
+  margin-top: .5vw;
 }
+
 .team-members {
   display: flex;
   justify-content: center;

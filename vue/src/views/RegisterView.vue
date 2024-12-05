@@ -7,17 +7,17 @@
       <form v-on:submit.prevent="register">
         <h1>Create Account</h1>
         <div class="form-input-container">
-          <div class="form-input">
+          <div class="form-input username">
             <label for="username">Username</label>
-            <input id="username" type="text" v-model="user.username" required autofocus/>
+            <input type="text" v-model="user.username" required autofocus/>
           </div>
-          <div class="form-input">
+          <div class="form-input password">
             <label for="password">Password</label>
-            <input id="password" type="password" v-model="user.password" required/>
+            <input type="password" v-model="user.password" required/>
           </div>
-          <div class="form-input">
+          <div class="form-input confirm">
             <label for="confirmPassword">Confirm Password</label>
-            <input id="confirm" type="password" v-model="user.confirmPassword" required/>
+            <input type="password" v-model="user.confirmPassword" required/>
           </div>
         </div>
         <div class="alert-container">
@@ -97,7 +97,9 @@ body {
 
 img {
   display: flex;
-  width: 23vw;
+  flex-direction: column;
+  align-items: center;
+  width: 20rem;
   height: auto;
   padding-top: 15vh;
   z-index: 10;
@@ -105,12 +107,12 @@ img {
 
 .form-container-opacity {
   position: absolute;
-  width: 18vw;
-  height: 55vh;
+  width: 18rem;
+  height: 25rem;
   background-color: rgb(160, 153, 145);
-  border: .3vw #3a2f2e solid;
-  border-radius: .2vw;
-  margin-top: 35vh;
+  border: .2rem rgb(53, 37, 19) solid;
+  border-radius: .2rem;
+  margin-top: 14rem;
   opacity: .7;
   z-index: 1;
 }
@@ -118,38 +120,44 @@ img {
 .register-form {
   display: flex;
   flex-direction: column;
-  align-content: start;
-  justify-content: start ;
-  padding-top: 1vw;
+  align-content: center;
+  justify-content: center;
+  padding-top: .2rem;
   z-index: 10;
 }
 
 h1 {
   text-align: center;
-  font-size: 1.6vw;
+  font-size: 1.4rem;
+  padding-bottom: .8rem;
 }
 
 .form-input {
   display: flex;
   flex-direction: column;
-  font-size: 1.2vw;
-  width: 15.5vw;
-  height: 8vh;
-  padding: .3vw;
+  align-items: center;
+  font-size: 1.1rem;
+  width: 18rem;
+  height: 3.5rem;
 }
 
 .form-input input {
-  height: 4vh;
-  width: 15vw;
-  font-size: 1.2vw;
-  border: .1vw #3a2f2e solid;;
+  height: 4rem;
+  width: 13.5rem;
+  font-size: 1.1rem;
+  border: .1rem rgb(53, 37, 19) solid;
+}
+
+.password,
+.confirm {
+  padding-top: .5rem;
 }
 
 .alert-container {
-  text-align: center;
-  font-size: 1.1vw;
+  font-size: .9rem;
   font-weight: bold;
-  padding-top: 2vh;
+  color: #681c29;
+  padding-top: .5rem;
 }
 
 .button-container {
@@ -157,7 +165,7 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  padding-top: 1rem;
 }
 
 button {
@@ -166,14 +174,13 @@ button {
   justify-content: center;
   align-items: center;
   object-fit: contain;
-  background-color: #3a2f2e;
-  width: 8vw;
-  height: 4vh;
-  font-size: 1vw;
+  background-color: rgb(53, 37, 19);
+  width: 8rem;
+  height: 1.8rem;
+  font-size: .9rem;
   color: #ffffff;
-  border: .1vw solid #e8bb64;
-  border-radius: .2vw;
-  margin-top: 1vh;
+  border: .1rem solid #e8bb64;
+  border-radius: .1rem;
   transition: all 0.5s; /* add this line */
   -webkit-transition: all 0.5s; /* add this line, chrome, safari, etc */
   -moz-transition: all 0.5s; /* add this line, firefox */
@@ -182,7 +189,7 @@ button {
 
 button:hover {
   background-color: #e8bb64;
-  color: #3a2f2e;
+  color: rgb(53, 37, 19);
   text-decoration: underline;
   border: .1vw solid #ffffff;
 }
@@ -190,8 +197,8 @@ button:hover {
 #account {
   text-align: center;
   color: #333437;
-  font-size: 1.1vw;
-  padding-top: 2.5vh;
+  font-size: 1rem;
+  padding-top: 1rem;
 }
 
 #account:hover {

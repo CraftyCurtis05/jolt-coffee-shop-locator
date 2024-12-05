@@ -6,13 +6,12 @@ import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
-import LinksView from '../views/LinksView.vue';
+import ShopView from '../views/ShopView.vue';
 import ArticlesView from '../views/ArticlesView.vue';
 import LocatorView from '../views/LocatorView.vue';
 import ProfileView from '../views/ProfileView.vue';
 import FavoritesView from '../views/FavoritesView.vue';
 import AboutUsView from '../views/AboutUsView.vue';
-import DevelopmentView from '../views/DevelopmentView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -58,9 +57,9 @@ const routes = [
     }
   },
   {
-    path: "/links",
-    name: "links",
-    component: LinksView,
+    path: "/shop",
+    name: "shop",
+    component: ShopView,
     meta: {
       requiresAuth: true
     }
@@ -101,14 +100,6 @@ const routes = [
     path: "/aboutUs",
     name: "aboutUs",
     component: AboutUsView,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: "/development",
-    name: "development",
-    component: DevelopmentView,
     meta: {
       requiresAuth: true
     }

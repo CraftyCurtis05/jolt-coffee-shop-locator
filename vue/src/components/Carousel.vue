@@ -8,12 +8,12 @@
       </transition>
     </div>
     <button @click="prevSlide" class="prev-btn">
-      <img src="@/assets/prev_icon_wht.png" class="default">
-      <img src="@/assets/prev_icon_bwn.png" class="hover">
+      <img src="@/assets/carousel/prev_icon_wht.png" class="default">
+      <img src="@/assets/carousel/prev_icon_bwn.png" class="hover">
     </button>
     <button @click="nextSlide" class="next-btn">
-      <img src="@/assets/next_icon_wht.png" class="default">
-      <img src="@/assets/next_icon_bwn.png" class="hover">
+      <img src="@/assets/carousel/next_icon_wht.png" class="default">
+      <img src="@/assets/carousel/next_icon_bwn.png" class="hover">
     </button>
   </div>
 </template>
@@ -23,10 +23,10 @@ export default {
   data() {
     return {
       images: [
-        'src/assets/carousel_01.png',
-        'src/assets/carousel_02.png',
-        'src/assets/carousel_03.png',
-        'src/assets/carousel_04.png'
+        'src/assets/carousel/carousel_01.png',
+        'src/assets/carousel/carousel_02.png',
+        'src/assets/carousel/carousel_03.png',
+        'src/assets/carousel/carousel_04.png'
         // Add more image URLs as needed
       ],
       currentIndex: 0,
@@ -49,7 +49,7 @@ export default {
   width: 70%; /* Make the container width flexible */
   padding: 2rem; /* Add some padding for smaller screens */
   box-sizing: border-box;
-  background-color: #3c2d30;
+  background-color: rgb(53, 37, 19);
 }
 
 .carousel {
