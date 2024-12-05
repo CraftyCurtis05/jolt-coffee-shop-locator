@@ -1,37 +1,35 @@
 <template>
-  <div id="register-container">
-    <div class="logo-company-container">
-      <div class="logo-container">
-        <img src="src\assets\Jolt Logo.png" alt="Logo"/>
-      </div>
+  <body>
+    <img src="@/assets/jolt_logo.png" alt="logo"/>
+    <div class="form-container-opacity">
     </div>
-    <div class="form-container">
-      <div class="register-form">
-        <form v-on:submit.prevent="register">
-          <h1 class="create-account-text">Create Account</h1>
-          <div role="alert" v-if="registrationErrors">
-            {{ registrationErrorMsg }}
-          </div>
-          <div class="username-form-input">
+    <div class="register-form">
+      <form v-on:submit.prevent="register">
+        <h1>Create Account</h1>
+        <div class="form-input-container">
+          <div class="form-input">
             <label for="username">Username</label>
-            <input type="text" id="username" v-model="user.username" required autofocus />
+            <input id="username" type="text" v-model="user.username" required autofocus/>
           </div>
-          <div class="password-form-input">
+          <div class="form-input">
             <label for="password">Password</label>
-            <input type="password" id="password" v-model="user.password" required />
+            <input id="password" type="password" v-model="user.password" required/>
           </div>
-          <div class="confirm-form-input">
-            <label class="confirm-password-text" for="confirmPassword">Confirm Password</label>
-            <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
+          <div class="form-input">
+            <label for="confirmPassword">Confirm Password</label>
+            <input id="confirm" type="password" v-model="user.confirmPassword" required/>
           </div>
-          <div class="submit-button" >
-            <button type="submit">Create Account</button>
-            <p class="have-account-text"><router-link v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="alert-container">
+          <div role="alert" v-if="registrationErrors">{{ registrationErrorMsg }}</div>
+        </div>
+        <div class="button-container">
+          <button id="create" type="submit">Create Account</button>
+          <router-link id="account" v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link>
+        </div>
+      </form>
     </div>
-  </div>  
+  </body>
 </template>
 
 <script>
@@ -84,96 +82,120 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Lobster+Two&family=Ubuntu&display=swap');
-
 body {
-  text-align: center;
-  align-items: center;
-}
-h1 {
-  text-align: center;
-  font-family: 'Lobster Two', sans-serif;
-  font-family: 'Ubuntu', sans-serif;
-  font-weight: bolder;
-  font-size: 28px; /* Adjust the font size as needed */
-  margin: 0;
-}
-#register-container{
-  background: url('src\\assets\\beans-coffee.gif') no-repeat center center fixed;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  width: 100%;
-}
-.logo-container{
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  position: relative;
-  top: -200px;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: url('@/assets/beans-coffee.gif');
+  background-size: cover;
+  font-family: 'Ubuntu', sans-serif;
+  color: #333437;
+  z-index: 0;
 }
+
+img {
+  display: flex;
+  width: 23vw;
+  height: auto;
+  padding-top: 15vh;
+  z-index: 10;
+}
+
+.form-container-opacity {
+  position: absolute;
+  width: 18vw;
+  height: 55vh;
+  background-color: rgb(160, 153, 145);
+  border: .3vw #3a2f2e solid;
+  border-radius: .2vw;
+  margin-top: 35vh;
+  opacity: .7;
+  z-index: 1;
+}
+
 .register-form {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-content: start;
+  justify-content: start ;
+  padding-top: 1vw;
+  z-index: 10;
+}
+
+h1 {
+  text-align: center;
+  font-size: 1.6vw;
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.2vw;
+  width: 15.5vw;
+  height: 8vh;
+  padding: .3vw;
+}
+
+.form-input input {
+  height: 4vh;
+  width: 15vw;
+  font-size: 1.2vw;
+  border: .1vw #3a2f2e solid;;
+}
+
+.alert-container {
+  text-align: center;
+  font-size: 1.1vw;
+  font-weight: bold;
+  padding-top: 2vh;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  position: relative;
-  top: -475px;
-  color: white;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 14px;
+  align-items: center;
+
 }
-.create-account-text {
-  color: white;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  font-size: 24px;
-}
-#username {
-  display: flex;
-}
-#password {
-  display: flex;
-}
-#confirm-password {
-  display: flex;
-}
-.confirm-password-text {
-  display: flex;
-}
+
 button {
   display: flex;
+  flex-wrap: nowrap;
   justify-content: center;
-  position: relative;
+  align-items: center;
+  object-fit: contain;
   background-color: #3a2f2e;
-  width: 125px;
+  width: 8vw;
+  height: 4vh;
+  font-size: 1vw;
   color: #ffffff;
-  text-align: center;
-  border: 1.5px solid #cccccc;
-  border-radius: 5px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 14px;
-  margin:0px;
+  border: .1vw solid #e8bb64;
+  border-radius: .2vw;
+  margin-top: 1vh;
+  transition: all 0.5s; /* add this line */
   -webkit-transition: all 0.5s; /* add this line, chrome, safari, etc */
   -moz-transition: all 0.5s; /* add this line, firefox */
   -o-transition: all 0.5s; /* add this line, opera */
-  transition: all 0.5s; /* add this line */
 }
+
 button:hover {
   background-color: #e8bb64;
+  color: #3a2f2e;
+  text-decoration: underline;
+  border: .1vw solid #ffffff;
 }
-a:link, a:visited {
-  color: white;
-  text-decoration: none;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-weight: 700;
-  font-size: 12px; 
+
+#account {
+  text-align: center;
+  color: #333437;
+  font-size: 1.1vw;
+  padding-top: 2.5vh;
 }
-a:hover{
-  color:#e8bb64;
-  text-decoration: none;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-weight: 790;
-  font-size: 12px; 
+
+#account:hover {
+  color: #e8bb64;
+  font-weight: bold;
 }
 </style>

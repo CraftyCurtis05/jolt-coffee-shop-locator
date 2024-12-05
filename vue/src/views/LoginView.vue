@@ -1,38 +1,36 @@
 <template>
-  <div id="login-container">
-    <div class="logo-company-container">
-      <div class="logo-container">
-        <img src="src\assets\Jolt Logo.png" alt="Logo"/>
-      </div>
+  <body>
+    <img src="@/assets/jolt_logo.png" alt="logo"/>
+    <div class="form-container-opacity">
     </div>
-    <div class="form-container">
-      <div class="login-form">
-        <form v-on:submit.prevent="login">
-          <h1 class="sign-in-text">Please Sign In</h1>
+    <div class="login-form">
+      <form v-on:submit.prevent="login">
+        <h1>Please Sign In</h1>
+        <div class="form-input-container">
+          <div class="form-input">
+            <label for="username">Username</label>
+            <input id="username"  type="text" v-model="user.username" required autofocus/>
+          </div>
+          <div class="form-input">
+            <label for="password">Password </label>
+            <input id="password" type="password" v-model="user.password" required/>
+          </div>
+        </div>
+        <div class="alert-container">
+          <div role="alert" v-if="this.$route.query.registration">
+            Thank you for registering!<br>Please sign in.
+          </div>
           <div role="alert" v-if="invalidCredentials">
             Invalid username and password!
           </div>
-          <div role="alert" v-if="this.$route.query.registration">
-            Thank you for registering, please sign in.
-          </div>
-          <div class="form-input-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" v-model="user.username" required autofocus />
-          </div>
-          <div class="form-input-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" v-model="user.password" required />
-          </div>
-          <button class="sign-in-button" type="submit">Sign in</button>
-          <div class="button-container">
-            <router-link v-bind:to="{ name: 'register' }">
-              <button class="register-button">Register</button>
-            </router-link>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="button-container">
+          <button id="sign-in" type="submit">Sign in</button>
+          <router-link v-bind:to="{ name: 'register' }"><button id="register">Register</button></router-link>
+        </div>
+      </form>
     </div>
-  </div>
+  </body>
 </template>
 
 <script>
@@ -71,83 +69,111 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Lobster+Two&family=Ubuntu&display=swap');
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: url('@/assets/beans-coffee.gif');
+  background-size: cover;
+  font-family: 'Ubuntu', sans-serif;
+  color: #333437;
+  z-index: 0;
+}
+
+img {
+  display: flex;
+  width: 23vw;
+  height: auto;
+  padding-top: 15vh;
+  z-index: 10;
+}
+
+.form-container-opacity {
+  position: absolute;
+  width: 18vw;
+  height: 55vh;
+  background-color: rgb(160, 153, 145);
+  border: .3vw #3a2f2e solid;
+  border-radius: .2vw;
+  margin-top: 35vh;
+  opacity: .7;
+  z-index: 1;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-content: start;
+  justify-content: start ;
+  padding-top: 1vw;
+  z-index: 10;
+}
 
 h1 {
   text-align: center;
-  font-family: 'Lobster Two', sans-serif;
-  font-family: 'Ubuntu', sans-serif;
-  font-weight: bolder;
-  font-size: 28px; /* Adjust the font size as needed */
-  margin: 0;
+  font-size: 1.6vw;
+  padding-bottom: 1vh;
 }
-#login-container{
-  background: url('src\\assets\\beans-coffee.gif') no-repeat center center fixed;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  width: 100%;
-}
-.logo-container{
+
+.form-input {
   display: flex;
-  flex-direction:row;
-  justify-content: center;
-  position: relative;
-  top: -200px;
+  flex-direction: column;
+  font-size: 1.2vw;
+  width: 15.5vw;
+  height: 8vh;
+  padding: .5vw;
 }
-.login-form {
+
+.form-input input {
+  height: 4vh;
+  width: 15vw;
+  font-size: 1.2vw;
+  border: .1vw #3a2f2e solid;;
+}
+
+.alert-container {
+  text-align: center;
+  font-size: 1.1vw;
+  font-weight: bold;
+  padding-top: 2vh;
+}
+
+.button-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  position: relative;
-  top: -475px;
+  padding-top: 2vw;
 }
-.sign-in-text {
-  color: white;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  font-size: 24px;
-}
-.form-input-group {
-  color: white;
-  text-align: start;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 14px;
-}
-#username {
-  display: flex;
-}
-#password {
-  display: flex;
-}
-.register-button {
-  position: relative;
-  right: -80px;
-  top: -28.5px;
-}
-.sign-in-button {
-  position: relative;
-}
+
 button {
   display: flex;
+  flex-wrap: nowrap;
   justify-content: center;
-  position: relative;
+  align-items: center;
+  object-fit: contain;
   background-color: #3a2f2e;
-  width: 80px;
+  width: 5vw;
+  height: 4vh;
+  font-size: 1vw;
   color: #ffffff;
-  text-align: center;
-  border: 1.5px solid #cccccc;
-  border-radius: 5px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 14px;
-  margin: 5px;
+  border: .1vw solid #e8bb64;
+  border-radius: .2vw;
+  transition: all 0.5s; /* add this line */
   -webkit-transition: all 0.5s; /* add this line, chrome, safari, etc */
   -moz-transition: all 0.5s; /* add this line, firefox */
   -o-transition: all 0.5s; /* add this line, opera */
-  transition: all 0.5s; /* add this line */
 }
+
 button:hover {
   background-color: #e8bb64;
+  color: #3a2f2e;
+  text-decoration: underline;
+  border: .1vw solid #ffffff;
+}
+
+#sign-in {
+  margin-right: 2vw;
 }
 </style>

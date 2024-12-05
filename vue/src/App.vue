@@ -1,9 +1,15 @@
 <template>
-  <div id="app">
-    <NavBar/>
-    <router-view />
-    <Footer />
-  </div>
+  <body id="app">
+    <div id="header">
+      <NavBar/>
+    </div>
+    <main>
+      <router-view />
+    </main>  
+    <div id="footer">
+      <Footer />
+    </div>
+  </body>
 </template>
 
 <script>
@@ -39,9 +45,41 @@ export default {
 <style>
 html, body {
   width: 100vw;
+  height: 100%;
   padding: 0;
   margin: 0;
   font-size: 18px;
   overflow-x: hidden;
+}
+
+#header {
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+}
+
+#footer {
+
+}
+
+html::-webkit-scrollbar {
+  width: 20px;
+}
+        
+html::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background-color: red;
+  /* background-image: url("https://i.ibb.co/5150925/tracks.png"); */
+  background-position: -5px;
+  background-repeat: repeat-y;
+  background-size: 50px;
+}
+        
+html::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  /* background-image: url("https://i.ibb.co/q95CBdZ/train.png"); */
+  background-position:center center;
+  background-repeat: no-repeat;
+  background-size: 35px;
 }
 </style>

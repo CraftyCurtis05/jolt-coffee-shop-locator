@@ -45,12 +45,10 @@ export default {
 <style scoped>
 /* General Styling */
 nav {
-    position: fixed;
     width: 100%;
     background-color: rgb(160, 153, 145);
     margin: 0;
     padding: 0;
-    z-index: 100;
 }
 
 /* Nav Header */

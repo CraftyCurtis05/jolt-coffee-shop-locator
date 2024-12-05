@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import GlobalCss from '../assets/global.css';
 import Carousel from '../components/Carousel.vue';
 
 export default {
@@ -31,14 +32,13 @@ body {
 
 h1 {
   font-weight: bolder;
-  font-size: 1.8rem; /* Adjust the font size as needed */
+  font-size: 1.8rem;
   text-align: center;
   margin: 0;
 }
 
 p {
-  font-family: 'Ubuntu', sans-serif;
-  margin-top: .5vw; /* Add some spacing */
+  margin-top: .5vw;
 }
 
 /* Add styles for the company description */

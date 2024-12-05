@@ -1,7 +1,6 @@
 <template>
-  <footer class="footer">
+  <footer v-if="!$route.meta.hideNavBar">
     <div class="container">
-      <span>&copy; {{ year }} {{ companyName }}</span>
       <p class="slogan">Be Brew-tiful. Sip, Savor, Repeat.</p>
       <div class="social-links">
         <a href="https://www.facebook.com/profile.php?id=100094171302714" target="_blank" class="social-link">
@@ -11,6 +10,7 @@
           <img src="src\assets\instagram.jpg" alt="Instagram">
         </a>
       </div>
+      <span>&copy; {{ year }} {{ companyName }}</span>
     </div>
   </footer>
 </template>
@@ -31,8 +31,9 @@
   .footer {
     background-color: transparent;
     text-align: center;
+    background-color: rgb(160, 153, 145);
     border-top: .1rem #333437 solid;
-    padding-top: 1rem;
+    padding: 1rem 0;
     margin-top: 1rem;
   }
   .container {
@@ -40,12 +41,12 @@
     margin: 0 auto;
   }
   .footer span {
-    color: grey;
+    color: #333437;
     font-size: 14px;
     line-height: 1.5;
   }
   .slogan {
-    font-size: 15px; 
+    font-size: 1rem; 
     margin-top: 10px; 
     font-weight: bold; 
     color: rgb(234,189,99);
