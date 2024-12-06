@@ -48,6 +48,7 @@ html, body {
   height: 100%;
   padding: 0;
   margin: 0;
+  font-family: 'Ubuntu', sans-serif;
   font-size: 18px;
   overflow-x: hidden;
 }

@@ -6,24 +6,43 @@ public class Favorites {
     private User user;               // The User object that owns this favorite (reference to User)
     private String businessId;       // ID of the business that is favorited
     private String businessName;     // Name of the business
-    private String businessAddress;  // Address of the business
-    private String businessWebsite;  // Website URL of the business
+    private String businessAddress1; // Address1 of the business
+    private String businessAddress2; // Address2 of the business
+    private String businessCity;     // City of the business
+    private String businessState;    // State of the business
+    private String businessZipcode;  // Zipcode of the business
+    private String businessImage;    // Image URL of the business
+    private String businessUrl;      // Website URL of the business
 
     // Constructor to create a Favorites object with all necessary fields.
-    public Favorites(int favoriteId, User user, String businessId, String businessName, String businessAddress, String businessWebsite) {
+    public Favorites(int favoriteId,
+                     User user,
+                     String businessId,
+                     String businessName,
+                     String businessAddress1,
+                     String businessAddress2,
+                     String businessCity,
+                     String businessState,
+                     String businessZipcode,
+                     String businessImage,
+                     String businessUrl) {
         this.favoriteId = favoriteId;
         this.user = user;  // Set the User object directly
         this.businessId = businessId;
         this.businessName = businessName;
-        this.businessAddress = businessAddress;
-        this.businessWebsite = businessWebsite;
+        this.businessAddress1 = businessAddress1;
+        this.businessAddress2 = businessAddress2;
+        this.businessCity = businessCity;
+        this.businessState = businessState;
+        this.businessZipcode = businessZipcode;
+        this.businessImage = businessImage;
+        this.businessUrl = businessUrl;
     }
 
     // Default constructor for creating an empty Favorites object.
-    public Favorites() {
-    }
+    public Favorites() {}
 
-    // Getter and Setter methods for the favoriteId field.
+    // Getters and Setters
     public int getFavoriteId() {
         return favoriteId;
     }
@@ -31,7 +50,6 @@ public class Favorites {
         this.favoriteId = favoriteId;
     }
 
-    // Getter and Setter methods for the user field (User object).
     public User getUser() {
         return user;
     }
@@ -39,7 +57,6 @@ public class Favorites {
         this.user = user;
     }
 
-    // Getter and Setter methods for the businessId field.
     public String getBusinessId() {
         return businessId;
     }
@@ -47,7 +64,6 @@ public class Favorites {
         this.businessId = businessId;
     }
 
-    // Getter and Setter methods for the businessName field.
     public String getBusinessName() {
         return businessName;
     }
@@ -55,19 +71,48 @@ public class Favorites {
         this.businessName = businessName;
     }
 
-    // Getter and Setter methods for the businessAddress field.
-    public String getBusinessAddress() {
-        return businessAddress;
+    public String getBusinessAddress1() {
+        return businessAddress1;
     }
-    public void setBusinessAddress(String businessAddress) {
-        this.businessAddress = businessAddress;
+    public void setBusinessAddress1(String businessAddress1) {
+        this.businessAddress1 = businessAddress1;
     }
 
-    // Getter and Setter methods for the businessWebsite field.
-    public String getBusinessWebsite() {
-        return businessWebsite;
+    public String getBusinessAddress2() {
+        return businessAddress2;
     }
-    public void setBusinessWebsite(String businessWebsite) {
-        this.businessWebsite = businessWebsite;
+    public void setBusinessAddress2(String businessAddress2) {
+        this.businessAddress2 = businessAddress2;
+    }
+
+    public String getBusinessCity() {
+        return businessCity;
+    }
+    public void setBusinessCity(String businessCity) {
+        this.businessCity = businessCity;
+    }
+
+    public String getBusinessState() {
+        return businessState;
+    }
+    public void setBusinessState(String businessState) {
+        this.businessState = businessState;
+    }
+
+    public String getBusinessZipcode() { return businessZipcode; }
+    public void setBusinessZipcode(String businessZipcode) {
+        this.businessZipcode = businessZipcode;
+    }
+
+    public String getBusinessImage() { return businessImage; }
+    public void setBusinessImage(String businessImage) {
+        this.businessImage = businessImage;
+    }
+
+    public String getBusinessUrl() {
+        return businessUrl;
+    }
+    public void setBusinessUrl(String businessUrl) {
+        this.businessUrl = businessUrl;
     }
 }

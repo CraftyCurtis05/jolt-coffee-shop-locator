@@ -78,8 +78,13 @@ export default {
       FavoriteService.createFavorite({
         businessId: result.id,
         businessName: result.name,
-        businessAddress: result.location.address1,
-        businessWebsite: result.url
+        businessAddress1: result.location.address1,
+        businessAddress2: result.location.address2,
+        businessCity: result.location.city,
+        businessState: result.location.state,
+        businessZipcode: result.location.zip_code,
+        businessImage: result.image_url,
+        businessUrl: result.url
       }).then(() => {
           console.log('Favorite added successfully');
       }).catch(error => {

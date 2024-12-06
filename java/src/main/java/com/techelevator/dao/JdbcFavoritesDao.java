@@ -2,7 +2,6 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Favorites;
 import com.techelevator.model.User;
-import com.techelevator.dao.UserDao;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -10,7 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 import com.techelevator.exception.DaoException;
-
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -38,7 +36,7 @@ public class JdbcFavoritesDao implements FavoritesDao {
     public Favorites getFavoriteById(int userId, int favoriteId) {
         Favorites favorite = null;
         // SQL query to fetch a favorite by its favorites_id and user_id
-        String sql = "SELECT favorite_id, user_id, business_id, business_name, business_address, business_website " +
+        String sql = "SELECT favorite_id, user_id, business_id, business_name, business_address1, business_address2, business_city, business_state, business_zipcode, business_image, business_url " +
                 "FROM favorites " +
                 "WHERE favorite_id = ? AND user_id = ?";  // Ensure the user only sees their own favorites
 
@@ -65,7 +63,7 @@ public class JdbcFavoritesDao implements FavoritesDao {
     @Override
     public List<Favorites> getFavorites(int userId) {
         List<Favorites> favorites = new ArrayList<>();
-        String sql = "SELECT favorite_id, user_id, business_id, business_name, business_address, business_website " +
+        String sql = "SELECT favorite_id, user_id, business_id, business_name, business_address1, business_address2, business_city, business_state, business_zipcode, business_image, business_url " +
                 "FROM favorites WHERE user_id = ? ORDER BY favorite_id ASC;";
 
         try {
@@ -90,14 +88,17 @@ public class JdbcFavoritesDao implements FavoritesDao {
     public Favorites createFavorite(Favorites favorite, int userId) {
         Favorites newFavorite = null;
         // SQL query to insert a new favorite for a user, returning the generated favorites_id
-        String sql = "INSERT INTO favorites (user_id, business_id, business_name, business_address, business_website) " +
-                "VALUES (?, ?, ?, ?, ?) RETURNING favorite_id;";
+        String sql = "INSERT INTO favorites (user_id, business_id, business_name, business_address1, business_address2, business_city, business_state, business_zipcode, business_image, business_url) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING favorite_id;";
 
         try {
             // Insert the favorite into the database and get the generated favorites_id
             int newFavoritesId = jdbcTemplate.queryForObject(sql, int.class, userId,
                     favorite.getBusinessId(), favorite.getBusinessName(),
-                    favorite.getBusinessAddress(), favorite.getBusinessWebsite());
+                    favorite.getBusinessAddress1(), favorite.getBusinessAddress2(),
+                    favorite.getBusinessCity(), favorite.getBusinessState(),
+                    favorite.getBusinessZipcode(), favorite.getBusinessImage(),
+                    favorite.getBusinessUrl());
 
             // Fetch the newly created favorite using its ID and the userId
             newFavorite = getFavoriteById(userId, newFavoritesId);
@@ -136,6 +137,13 @@ public class JdbcFavoritesDao implements FavoritesDao {
         }
     }
 
+    // Check if favorite already exists for userID
+    public boolean isFavoriteExists(int userId, String businessId) {
+        String sql = "SELECT COUNT(*) FROM favorites WHERE user_id = ? AND business_id = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, userId, businessId);
+        return count != null && count > 0; // Return true if count > 0
+    }
+
     /**
      * Maps a row from the result set to a Favorites object.
      *
@@ -147,8 +155,13 @@ public class JdbcFavoritesDao implements FavoritesDao {
         favorites.setFavoriteId(rs.getInt("favorite_id"));
         favorites.setBusinessId(rs.getString("business_id"));
         favorites.setBusinessName(rs.getString("business_name"));
-        favorites.setBusinessAddress(rs.getString("business_address"));
-        favorites.setBusinessWebsite(rs.getString("business_website"));
+        favorites.setBusinessAddress1(rs.getString("business_address1"));
+        favorites.setBusinessAddress2(rs.getString("business_address2"));
+        favorites.setBusinessCity(rs.getString("business_city"));
+        favorites.setBusinessState(rs.getString("business_state"));
+        favorites.setBusinessZipcode(rs.getString("business_zipcode"));
+        favorites.setBusinessImage(rs.getString("business_image"));
+        favorites.setBusinessUrl(rs.getString("business_url"));
 
         // Fetch the user object associated with the favorite (from UserDao)
         User user = userDao.getUserById(rs.getInt("user_id"));

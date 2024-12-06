@@ -4,8 +4,10 @@
     <p>Jolt Up Your Profile</p>
     <main>
       <div class="profile-pic">
-        <h2>Change Profile Picture</h2>
-        <ProfilePicture/>
+        <ProfilePic/>
+      </div>
+      <div class="profile">
+        <Profile/>
       </div>
       <div class="favorites">
         <Favorites/>
@@ -15,12 +17,14 @@
 </template>
 
 <script>
-import ProfilePicture from '../components/ProfilePicture.vue';
+import ProfilePic from '../components/ProfilePic.vue';
+import Profile from '../components/Profile.vue';
 import Favorites from '../components/Favorites.vue';
 
 export default {
   components: {
-    ProfilePicture,
+    ProfilePic,
+    Profile,
     Favorites
   }
 };

@@ -7,8 +7,8 @@ import com.techelevator.dao.FavoritesDao;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:5173")  // Allow this controller to accept requests from the frontend
 public class FavoritesController {
 
-    private final FavoritesDao favoritesDao;
+    private FavoritesDao favoritesDao;
     private UserDao userDao;
 
     public FavoritesController(FavoritesDao favoritesDao, UserDao userDao) {
@@ -55,15 +55,21 @@ public class FavoritesController {
     /**
      * Create a new favorite for a given user
      *
-     * @param favorite
+     * @param favorite body
      **/
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(path = "/favorites", method = RequestMethod.POST)
+    @PostMapping(path = "/favorites")
     public Favorites createFavorite(@RequestBody Favorites favorite, Principal principal) {
 
         String username = principal.getName();  // Get the username from the authenticated user
         User user = userDao.getUserByUsername(username); // Get User object from username
         int userId = user.getId(); // Get userId from User object
+
+        // Check if the favorite already exists
+        boolean exists = favoritesDao.isFavoriteExists(userId, favorite.getBusinessId());
+        if (exists) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "This favorite already exists for this user!");
+        }
 
         // Save the new favorite to the database
         return favoritesDao.createFavorite(favorite, userId);  // Passing the userId
@@ -72,10 +78,10 @@ public class FavoritesController {
     /**
      * Delete a favorite for a given user
      *
-     * @param favoriteId
+     * @param favoriteId from favorite body
      **/
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(path = "/favorites/{favoriteId}", method = RequestMethod.DELETE)
+    @DeleteMapping(path = "/favorites/{favoriteId}")
     public void deleteFavorite(@PathVariable int favoriteId, Principal principal) {
         
         String username = principal.getName();  // Get the username from the authenticated user

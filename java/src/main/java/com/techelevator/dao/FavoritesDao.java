@@ -17,4 +17,7 @@ public interface FavoritesDao {
 
     // Delete a favorite by its ID and user ID
     void deleteFavorite(int favoriteId, int userId);
+
+    // Check is favorite already exists for userId
+    boolean isFavoriteExists(int userId, String businessId);
 }

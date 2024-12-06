@@ -1,3 +1,4 @@
+// FavoriteService.js
 import axios from 'axios';
 
 export default {
@@ -23,8 +24,8 @@ export default {
     },
 
     // Method to delete a favorite from user profile
-    deleteFavorite(favorite) {
-        return axios.delete('/favorites', favorite)
+    deleteFavorite(favoriteId) {
+        return axios.delete(`/favorites/${favoriteId}`)
         .then(response => response.data)
         .catch(error => {
             console.error("There was an error deleting this favorite!", error);

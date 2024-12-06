@@ -2,16 +2,23 @@
     <main class="favorites-container">
         <h1>Favorites</h1> 
         <p>Coffee Shop Delights: My Personal Selection</p> 
-        <div class="results-container"> 
-            <div class="result" v-for="result in results" :key="result.favoriteId">
+        <div class="results-container" v-for="result in results" :key="result.favoriteId"> 
+            <div class="result">
                 <div class="name">
-                    <a v-bind:href="result.businessWebsite" target="_blank">{{ result.businessName }}</a>
+                    <a v-bind:href="result.businessUrl" target="_blank">{{ result.businessName }}</a>
                 </div>
                 <div class="address">
-                    <a id="address1" :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(result.businessAddress)" target="_blank">{{ result.businessAddress }}</a>
+                    <a id="address1" :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(result.businessAddress1)" target="_blank">{{ result.businessAddress1 }}</a>
+                    <a id="address2" :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(result.businessAddress1)" target="_blank">{{ result.businessAddress2 }}</a>
+                    <a id="city" :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(result.businessAddress1)" target="_blank">{{ result.businessCity }}</a>
+                    <a id="state" :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(result.businessAddress1)" target="_blank">{{ result.businessState }}</a>
+                    <a id="zipcode" :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(result.businessAddress1)" target="_blank">{{ result.businessZipcode }}</a>
+                </div>
+                <div class="image">
+                    <a v-bind:href="result.businessUrl" target="_blank"><img :src="result.businessImage"></a>
                 </div>
                 <div>
-                    <button id="delete" v-on:click="deleteFavorite()">delete</button>
+                    <button id="delete" @click="deleteFavorite(result.favoriteId)">Delete</button>
                 </div>
             </div>
         </div>
@@ -44,10 +51,12 @@ export default {
             });
         },
 
-        deleteFavorite(favorite) {
-        FavoriteService.deleteFavorite(favorite)
+        deleteFavorite(favoriteId) {
+        FavoriteService.deleteFavorite(favoriteId)
             .then(() => {
                 console.log('Favorite deleted successfully');
+                // Update the UI by removing the favorite
+                this.results = this.results.filter(result => result.favoriteId !== favoriteId);
             })
             .catch(error => {
                 console.error('Error deleting favorite:', error);
@@ -99,5 +108,9 @@ h1 {
     margin: 1vw;
     border: .1vw black solid;
     background-color: rgb(160, 153, 145);
+}
+
+.image img {
+    width: 5vw;
 }
 </style>
