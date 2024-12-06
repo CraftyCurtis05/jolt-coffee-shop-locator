@@ -1,89 +1,58 @@
 <template>
-  <div>
+  <body>
     <h1>Profile</h1>
     <p>Jolt Up Your Profile</p>
-    <div class="favorites-list">
-      <h3>Your Favorite Coffee Shops</h3>
-      <ul>
-        <li v-for="favorite in favorites" :key="favorite.id">
-          <a :href="favorite.url" target="_blank">{{ favorite.name }}</a> - {{ favorite.address }}
-        </li>
-      </ul>
-    </div>
-    <div class="favorites-link"><a href="/favorites">Go to Favorites</a></div>
-    <div id="change-profile-pic">
-        <h3>Change Profile Picture</h3>
-        <ProfilePictureUpload />
-    </div>
-  </div>
+    <main>
+      <div class="profile-pic">
+        <h2>Change Profile Picture</h2>
+        <ProfilePicture/>
+      </div>
+      <div class="favorites">
+        <Favorites/>
+      </div>
+    </main>
+  </body>
 </template>
 
 <script>
-import ProfilePictureUpload from '../components/ProfilePictureUpload.vue';
-import JavaService from '../services/FavoriteService';
+import ProfilePicture from '../components/ProfilePicture.vue';
+import Favorites from '../components/Favorites.vue';
 
 export default {
   components: {
-    ProfilePictureUpload
-  },
-  data() {
-    return {
-      favorites: []  // To store the user's favorites
-    };
-  },
-  methods: {
-    getUserFavorites() {
-      JavaService.getFavorites()  // Assuming you have this service method
-        .then(response => {
-          this.favorites = response.data;  // Store the favorites in the data
-        })
-        .catch(error => {
-          console.log('Error fetching favorites:', error);
-        });
-    }
-  },
-  mounted() {
-    this.getUserFavorites();  // Fetch favorites when the component is mounted
+    ProfilePicture,
+    Favorites
   }
 };
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Lobster+Two&family=Ubuntu&display=swap');
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Ubuntu', sans-serif;
+  color: #333437;
+  padding-top: 5rem;
+}
 
 h1{
-  text-align: center;
-  font-family: 'Lobster Two', sans-serif;
-  font-family: 'Ubuntu', sans-serif;
   font-weight: bolder;
-  font-size: 35px; /* Adjust the font size as needed */
+  font-size: 1.8rem;
+  text-align: center;
   margin: 0;
 }
+
 p {
-  text-align: center;
-  font-family: 'Lobster Two', sans-serif;
-  font-family: 'Nunito Sans', sans-serif;
-  font-family: 'Ubuntu', sans-serif;
-  margin-top: 10px; /* Add some spacing */
+  font-size: 1rem;
+  margin-top: .5vw;
 }
-#change-profile-pic {
+
+main {
   display: flex;
-  position: relative;
-  left: 100px;
-}
-h3 {
-  display: flex;
-  position: relative;
-  left: 425px;
-  bottom: -30px;
-  font-family: 'Lobster Two', sans-serif;
-  font-family: 'Ubuntu', sans-serif;
-}
-a {
-  text-decoration: none;
-  font-size: 20px;
-  display: flex;
-  position: relative;
-  left: 500px;
+  flex-wrap: nowrap;
+  justify-content: center;
+  padding: 0vw 3vw;
 }
 </style>

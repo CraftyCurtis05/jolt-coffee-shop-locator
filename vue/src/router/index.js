@@ -10,7 +10,6 @@ import ShopView from '../views/ShopView.vue';
 import ArticlesView from '../views/ArticlesView.vue';
 import LocatorView from '../views/LocatorView.vue';
 import ProfileView from '../views/ProfileView.vue';
-import FavoritesView from '../views/FavoritesView.vue';
 import AboutUsView from '../views/AboutUsView.vue';
 
 /**
@@ -84,14 +83,6 @@ const routes = [
     path: "/profile",
     name: "profile",
     component: ProfileView,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: "/favorites",
-    name: "favorites",
-    component: FavoritesView,
     meta: {
       requiresAuth: true
     }
