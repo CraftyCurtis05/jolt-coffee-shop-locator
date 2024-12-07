@@ -9,11 +9,11 @@ public class Profile {
     private String birthMonth;
     private int birthDay;
     private int birthYear;
-    private String profileAddress1;
-    private String profileAddress2;
-    private String profileCity;
-    private String profileState;
-    private String profileZipcode;
+    private String address1;
+    private String address2;
+    private String city;
+    private String state;
+    private String zipcode;
 
     // Constructor to create a Profile object with all necessary fields.
     public Profile(int profileId,
@@ -23,11 +23,11 @@ public class Profile {
                    String birthMonth,
                    int birthDay,
                    int birthYear,
-                   String profileAddress1,
-                   String profileAddress2,
-                   String profileCity,
-                   String profileState,
-                   String profileZipcode) {
+                   String address1,
+                   String address2,
+                   String city,
+                   String state,
+                   String zipcode) {
         this.profileId = profileId;
         this.user = user;
         this.firstName = firstName;
@@ -35,11 +35,11 @@ public class Profile {
         this.birthMonth = birthMonth;
         this.birthDay = birthDay;
         this.birthYear = birthYear;
-        this.profileAddress1 = profileAddress1;
-        this.profileAddress2 = profileAddress2;
-        this.profileCity = profileCity;
-        this.profileState = profileState;
-        this.profileZipcode = profileZipcode;
+        this.address1 = address1;
+        this.address2 = address2;
+        this.city = city;
+        this.state = state;
+        this.zipcode = zipcode;
     }
 
     // Default constructor for creating an empty Profile object.
@@ -67,18 +67,18 @@ public class Profile {
     public int getBirthYear() { return birthYear; }
     public void setBirthYear(int birthYear) { this.birthYear = birthYear; }
 
-    public String getProfileAddress1() { return profileAddress1; }
-    public void setProfileAddress1(String profileAddress1) { this.profileAddress1 = profileAddress1; }
+    public String getAddress1() { return address1; }
+    public void setAddress1(String address1) { this.address1 = address1; }
 
-    public String getProfileAddress2() { return profileAddress2; }
-    public void setProfileAddress2(String profileAddress2) { this.profileAddress2 = profileAddress2; }
+    public String getAddress2() { return address2; }
+    public void setAddress2(String address2) { this.address2 = address2; }
 
-    public String getProfileCity() { return profileCity; }
-    public void setProfileCity(String profileCity) { this.profileCity = profileCity; }
+    public String getCity() { return city; }
+    public void setCity(String city) { this.city = city; }
 
-    public String getProfileState() { return profileState; }
-    public void setProfileState(String profileState) { this.profileState = profileState; }
+    public String getState() { return state; }
+    public void setState(String state) { this.state = state; }
 
-    public String getProfileZipcode() { return profileZipcode; }
-    public void setProfileZipcode(String profileZipcode) { this.profileZipcode = profileZipcode; }
+    public String getZipcode() { return zipcode; }
+    public void setZipcode(String zipcode) { this.zipcode = zipcode; }
 }

@@ -6,6 +6,9 @@
       <div class="profile-pic">
         <ProfilePic/>
       </div>
+      <div class="profile-details">
+        <ProfileDetails/>
+      </div>
       <div class="profile">
         <Profile/>
       </div>
@@ -18,12 +21,14 @@
 
 <script>
 import ProfilePic from '../components/ProfilePic.vue';
-import Profile from '../components/Profile.vue';
+import ProfileDetails from '../components/ProfileDetails.vue';
+import Profile from '../components/ProfileForm.vue';
 import Favorites from '../components/Favorites.vue';
 
 export default {
   components: {
     ProfilePic,
+    ProfileDetails,
     Profile,
     Favorites
   }

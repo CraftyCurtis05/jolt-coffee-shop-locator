@@ -5,6 +5,7 @@ import com.techelevator.dao.UserDao;
 import com.techelevator.model.Profile;
 
 import com.techelevator.model.User;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.security.Principal;
 
 @RestController
 @PreAuthorize("isAuthenticated()")
+@RequestMapping("/profile")
 @CrossOrigin(origins = "http://localhost:5173")  // Allow this controller to accept requests from the frontend
 public class ProfileContoller {
 
@@ -30,7 +32,7 @@ public class ProfileContoller {
      * @param principal The authenticated user's principal object
      * @return Profile details of the authenticated user
      */
-    @GetMapping("/profile")
+    @GetMapping()
     public Profile getProfile(Principal principal) {
 
         String username = principal.getName();  // Get the username from the authenticated user
@@ -48,7 +50,7 @@ public class ProfileContoller {
      * @return The updated or created profile
      */
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/profile")
+    @PutMapping()
     public Profile saveProfile(@RequestBody Profile profile, Principal principal) {
 
         String username = principal.getName();  // Get the username from the authenticated user
@@ -64,7 +66,7 @@ public class ProfileContoller {
      * @param principal The authenticated user's principal object
      */
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/profile")
+    @DeleteMapping()
     public void deleteProfile(Principal principal) {
 
         String username = principal.getName();  // Get the username from the authenticated user

@@ -36,11 +36,11 @@ CREATE TABLE profile (
     birth_month varchar(9) NOT NULL,
     birth_day int NOT NULL,
     birth_year int NOT NULL,
-    profile_address1 varchar(100) NOT NULL,
-    profile_address2 varchar(50),
-    profile_city varchar(100),
-    profile_state varchar(50),
-    profile_zipcode varchar(15),
+    address1 varchar(150) NOT NULL,
+    address2 varchar(50),
+    city varchar(100) NOT NULL,
+    state_abbr varchar(2) NOT NULL,
+    zipcode varchar(5) NOT NULL,
     CONSTRAINT fk_profile_users FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
 );
 
@@ -48,7 +48,7 @@ CREATE TABLE profile (
 CREATE TABLE image (
     image_id SERIAL PRIMARY KEY,
     user_id int NOT NULL,
-    profile_image BYTEA,  -- Store the binary data of the profile image here
+    image BYTEA,  -- Store the binary data of the profile image here
     CONSTRAINT fk_image_users FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
 );
 

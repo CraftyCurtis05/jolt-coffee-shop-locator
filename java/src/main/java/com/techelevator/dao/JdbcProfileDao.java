@@ -32,7 +32,8 @@ public class JdbcProfileDao implements ProfileDao {
     public Profile getProfileByUserId(int userId) {
         Profile profile = null;
 
-        String sql = "SELECT profile_id, user_id, first_name, last_name, birth_month, birth_day, birth_year, profile_address1, profile_address2, profile_city, profile_state, profile_zipcode " +
+        String sql = "SELECT profile_id, user_id, first_name, last_name, birth_month, birth_day, birth_year, " +
+                "address1, address2, city, state_abbr, zipcode " +
                 "FROM profile " +
                 "WHERE user_id = ?";
 
@@ -70,26 +71,26 @@ public class JdbcProfileDao implements ProfileDao {
                 // Profile exists, perform an UPDATE
 
                 String updateSql = "UPDATE profile SET first_name = ?, last_name = ?, birth_month = ?, birth_day = ?, birth_year = ?, " +
-                        "profile_address1 = ?, profile_address2 = ?, profile_city = ?, profile_state = ?, profile_zipcode = ? " +
-                        "WHERE user_id = ?";
+                                    "address1 = ?, address2 = ?, city = ?, state_abbr = ?, zipcode = ? " +
+                                    "WHERE user_id = ?";
 
                 jdbcTemplate.update(updateSql, profile.getFirstName(), profile.getLastName(),
                         profile.getBirthMonth(), profile.getBirthDay(), profile.getBirthYear(),
-                        profile.getProfileAddress1(), profile.getProfileAddress2(), profile.getProfileCity(),
-                        profile.getProfileState(), profile.getProfileZipcode(), userId);
+                        profile.getAddress1(), profile.getAddress2(), profile.getCity(),
+                        profile.getState(), profile.getZipcode(), userId);
 
                 // Retrieve the updated profile
                 savedProfile = getProfileByUserId(userId);
             } else {
                 // Profile does not exist, perform an INSERT
 
-                String insertSql = "INSERT INTO profile (user_id, first_name, last_name, birth_month, birth_day, birth_year, profile_address1, profile_address2, profile_city, profile_state, profile_zipcode) " +
+                String insertSql = "INSERT INTO profile (user_id, first_name, last_name, birth_month, birth_day, birth_year, address1, address2, city, state_abbr, zipcode) " +
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
                 jdbcTemplate.update(insertSql, userId, profile.getFirstName(), profile.getLastName(),
                         profile.getBirthMonth(), profile.getBirthDay(), profile.getBirthYear(),
-                        profile.getProfileAddress1(), profile.getProfileAddress2(), profile.getProfileCity(),
-                        profile.getProfileState(), profile.getProfileZipcode());
+                        profile.getAddress1(), profile.getAddress2(), profile.getCity(),
+                        profile.getState(), profile.getZipcode());
 
                 // Retrieve the newly created profile
                 savedProfile = getProfileByUserId(userId);
@@ -135,11 +136,11 @@ public class JdbcProfileDao implements ProfileDao {
         profile.setBirthMonth(rs.getString("birth_month"));
         profile.setBirthDay(rs.getInt("birth_day"));
         profile.setBirthYear(rs.getInt("birth_year"));
-        profile.setProfileAddress1(rs.getString("profile_address1"));
-        profile.setProfileAddress2(rs.getString("profile_address2"));
-        profile.setProfileCity(rs.getString("profile_city"));
-        profile.setProfileState(rs.getString("profile_state"));
-        profile.setProfileZipcode(rs.getString("profile_zipcode"));
+        profile.setAddress1(rs.getString("address1"));
+        profile.setAddress2(rs.getString("address2"));
+        profile.setCity(rs.getString("city"));
+        profile.setState(rs.getString("state_abbr"));
+        profile.setZipcode(rs.getString("zipcode"));
 
         // Fetch the user object associated with the favorite (from UserDao)
         User user = userDao.getUserById(rs.getInt("user_id"));

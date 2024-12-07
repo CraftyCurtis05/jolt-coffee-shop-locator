@@ -1,3 +1,4 @@
+<!-- ProfileForm component -->
 <template>
   <main>
     <div class="profile-container">
@@ -70,6 +71,8 @@
 </template>
   
 <script>
+import ProfileService from '../services/ProfileService';
+
 export default {
   data() {
     return {
@@ -92,14 +95,22 @@ export default {
     };
   },
   methods: {
-    submitForm() {
-      // Here, you would typically send the form data to the server using an API.
-      console.log("Form Submitted:", this.user);
-      alert("Profile saved successfully!");
-      
-      // Reset the form after submission
-      this.resetForm();
-    },
+    async submitForm() {
+      try {
+        // Save the profile using the ProfileService
+        const savedProfile = await ProfileService.saveProfile(this.user);
+        console.log("Profile saved:", savedProfile);
+
+        // Show success message
+        alert("Profile saved successfully!");
+        
+        // Reset the form after successful submission
+        this.resetForm();
+      } catch (error) {
+        // Handle error and show a message to the user
+        alert("There was an error saving your profile. Please try again.");
+      }
+    },  
     resetForm() {
       this.user = {
         firstName: '',
@@ -119,12 +130,35 @@ export default {
 </script>
 
 <style scoped>
-main {
-  display: flex;
-  flex-direction: column;
+.profile-form {
+  max-width: 500px;
+  margin: 0 auto;
 }
 
-img {
-  width: 5vw;
+.profile-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.profile-form input,
+.profile-form select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.profile-form button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.profile-form button:hover {
+  background-color: #45a049;
 }
 </style>

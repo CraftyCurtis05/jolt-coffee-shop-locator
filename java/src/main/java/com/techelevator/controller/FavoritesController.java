@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @PreAuthorize("isAuthenticated()")
+@RequestMapping("/favorites")
 @CrossOrigin(origins = "http://localhost:5173")  // Allow this controller to accept requests from the frontend
 public class FavoritesController {
 
@@ -29,7 +30,7 @@ public class FavoritesController {
     /**
      * Retrieves the favorites for the authenticated user.
      */
-    @GetMapping("/favorites")
+    @GetMapping()
     public List<Favorites> getFavorites(Principal principal) {
 
         String username = principal.getName();  // Get the username from the authenticated user
@@ -42,7 +43,7 @@ public class FavoritesController {
     /**
      * Retrieves a specific favorite for the authenticated user by favoriteId.
      */
-    @GetMapping("/favorites/{favoriteId}")
+    @GetMapping("/{favoriteId}")
     public Favorites getFavoriteById(@PathVariable int favoriteId, Principal principal) {
 
         String username = principal.getName();  // Get the username from the authenticated user
@@ -58,7 +59,7 @@ public class FavoritesController {
      * @param favorite body
      **/
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(path = "/favorites")
+    @PostMapping()
     public Favorites createFavorite(@RequestBody Favorites favorite, Principal principal) {
 
         String username = principal.getName();  // Get the username from the authenticated user
@@ -81,7 +82,7 @@ public class FavoritesController {
      * @param favoriteId from favorite body
      **/
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping(path = "/favorites/{favoriteId}")
+    @DeleteMapping(path = "/{favoriteId}")
     public void deleteFavorite(@PathVariable int favoriteId, Principal principal) {
         
         String username = principal.getName();  // Get the username from the authenticated user
