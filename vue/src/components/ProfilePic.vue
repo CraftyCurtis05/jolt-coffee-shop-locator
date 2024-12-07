@@ -10,6 +10,7 @@
 
 <script>
 import axios from 'axios';
+import ProfileService from '../services/ProfileService';
 
 export default {
   data() {
@@ -22,7 +23,9 @@ export default {
     handleFileUpload(event) {
       this.selectedFile = event.target.files[0];
     },
-    async uploadImage() {
+
+  // Upload the selected image
+  async uploadImage() {
       if (!this.selectedFile) {
         alert("Please select an image to upload.");
         return;

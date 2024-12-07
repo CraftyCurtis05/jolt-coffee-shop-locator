@@ -25,17 +25,11 @@ export default {
 
     // Method to save profile image
     saveImage(image) {
-        const formData = new FormData();
-        formData.append("image", image); // Append the file with the key "image" (which matches @RequestParam("image") in the backend)
-
-        return axios.put('http://localhost:9000/image', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data', // Axios should handle this automatically, but it's good to confirm
-                // You can also add the Authorization header if needed:
-                // 'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
+        return axios.put('/image', image)
+        .then(response => {
+            console.log(response.data); // Make sure the response contains the imageUrl
+            return response.data; // Return the entire response object so we can access imageUrl in the component
         })
-        .then(response => response.data)
         .catch(error => {
             console.error("There was an error saving profile image!", error);
             throw error;
@@ -44,11 +38,14 @@ export default {
 
     // Method to get the current profile image
     getImage() {
-        return axios.get('http://localhost:9000/image')
-        .then(response => response.data)
-        .catch(error => {
-            console.error("There was an error fetching profile image!", error);
+        try {
+            const response = axios.get("/image");
+            this.imageUrl = response.data.imageUrl;
+            return this.imageUrl;
+            
+          } catch (error) {
+            console.error("Error fetching image:", error);
             throw error;
-        });
+          }
     }
 };
