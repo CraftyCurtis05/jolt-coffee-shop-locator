@@ -8,7 +8,7 @@ export default {
         return axios.put('/profile', profile)
         .then(response => response.data)
         .catch(error => {
-            console.error("There was an error saving profile!");
+            console.error("Error saving profile:", error);
             throw error;
         })
     },
@@ -18,22 +18,24 @@ export default {
         return axios.get('/profile')
         .then(response => response.data)
         .catch(error => {
-            console.error("There was an error fetching profile!", error);
+            console.error("Error fetching profile:", error);
             throw error;
         })
     },
 
     // Method to save profile image
-    saveImage(image) {
-        return axios.put('/image', image)
-        .then(response => {
-            console.log(response.data); // Make sure the response contains the imageUrl
-            return response.data; // Return the entire response object so we can access imageUrl in the component
-        })
-        .catch(error => {
-            console.error("There was an error saving profile image!", error);
-            throw error;
+    async saveImage(image) {
+      try {
+        const response = axios.post("/image", image, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
         });
+        return (await response).data;
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        throw error;
+      }
     },
 
     // Method to get the current profile image
@@ -42,7 +44,7 @@ export default {
             const response = axios.get("/image");
             this.imageUrl = response.data.imageUrl;
             return this.imageUrl;
-            
+
           } catch (error) {
             console.error("Error fetching image:", error);
             throw error;
