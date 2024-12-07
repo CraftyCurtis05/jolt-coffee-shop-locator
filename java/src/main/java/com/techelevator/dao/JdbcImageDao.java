@@ -1,21 +1,20 @@
 package com.techelevator.dao;
 
+import com.techelevator.exception.DaoException;
 import com.techelevator.model.Image;
-
+import com.techelevator.model.User;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.security.Principal;
+import java.sql.PreparedStatement;
 
 @Component
 public class JdbcImageDao implements ImageDao {
 
-    private JdbcTemplate jdbcTemplate;
-    private UserDao userDao;
+    private final JdbcTemplate jdbcTemplate;
+    private final UserDao userDao;
 
     public JdbcImageDao(JdbcTemplate jdbcTemplate, UserDao userDao) {
         this.jdbcTemplate = jdbcTemplate;
@@ -23,48 +22,90 @@ public class JdbcImageDao implements ImageDao {
     }
 
     @Override
-    public Image getImageByUserId(int userId) {
-        String sql = "SELECT profile_image FROM image WHERE user_id = ?";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+    public Image saveImage(Image image, int userId) {
+        Image savedImage = null;
 
-        if (results.next()) {
-            try {
-                // Get binary stream from the database (PostgreSQL BYTEA type)
-                byte[] imageBytes = results.getBytes("profile_image"); // This can be used as is
+        try {
+            // First, check if the user already has an image
+            String sql = "SELECT COUNT(*) FROM image WHERE user_id = ?";
+            Integer count = jdbcTemplate.queryForObject(sql, Integer.class, userId);
 
-                // If you wanted to read from an InputStream (alternative), use:
-                // InputStream inputStream = results.getBinaryStream("profile_image");
-                // byte[] imageBytes = IOUtils.toByteArray(inputStream); // You'd need Apache Commons IOUtils to convert stream to byte array.
-
-                // Create and return the Image object
-                Image image = new Image();
-                image.setImage(imageBytes); // Set the image bytes to the Image object
-                return image;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null; // Handle exception accordingly, might want to return a specific error or message
+            if (count > 0) {
+                // User already has an image, update it
+                String updateSql = "UPDATE image SET image = ?, image_name = ? WHERE user_id = ?";
+                jdbcTemplate.update(connection -> {
+                    PreparedStatement ps = connection.prepareStatement(updateSql);
+                    ps.setBytes(1, image.getImage());  // Use setBytes to store image data
+                    ps.setString(2, image.getImageName());
+                    ps.setInt(3, userId);
+                    return ps;
+                });
+                savedImage = getImageByUserId(userId);
+            } else {
+                // No image exists for the user, insert a new one
+                String insertSql = "INSERT INTO image (user_id, image_name, image) VALUES (?, ?, ?)";
+                jdbcTemplate.update(connection -> {
+                    PreparedStatement ps = connection.prepareStatement(insertSql);
+                    ps.setInt(1, userId);
+                    ps.setString(2, image.getImageName());
+                    ps.setBytes(3, image.getImage());  // Use setBytes to store image data
+                    return ps;
+                });
+                savedImage = getImageByUserId(userId);
             }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Database error occurred while saving the image", e);
         }
-        return null; // Return null if no image is found
+        return savedImage;
     }
 
     @Override
-    public Image saveImage(Image image, int userId) {
-        String sql = "INSERT INTO image (user_id, profile_image) VALUES (?, ?)";
-        jdbcTemplate.update(sql, userId, image.getImage()); // Save the image bytes to the database
+    public Image getImageByUserId(int userId) {
+        Image image = null;
+
+        String sql = "SELECT * FROM image WHERE user_id = ?";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+            if (results.next()) {
+                image = mapRowToImage(results);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
         return image;
     }
 
     @Override
     public void deleteImage(int userId) {
         String sql = "DELETE FROM image WHERE user_id = ?";
-        jdbcTemplate.update(sql, userId); // Delete image by user ID
+
+        try {
+            int rowsAffected = jdbcTemplate.update(sql, userId);
+            if (rowsAffected == 0) {
+                throw new DaoException("Image not found or not authorized to delete");
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
     }
 
-    private RowMapper<Image> imageMapper = (rs, rowNum) -> {
-        int imageId = rs.getInt("image_id");
-        int userId = rs.getInt("user_id");
-        byte[] profileImage = rs.getBytes("image");
-        return new Image(imageId, userDao.getUserById(userId), profileImage);
-    };
+    public Image mapRowToImage(SqlRowSet rs) {
+        Image image = new Image();
+        image.setImageId(rs.getInt("image_id"));
+        image.setImageName(rs.getString("image_name"));
+
+        // Retrieve the image data as an Object (byte[]).
+        Object imageObject = rs.getObject("image");
+
+        if (imageObject instanceof byte[]) {
+            byte[] imageBytes = (byte[]) imageObject;
+            image.setImage(imageBytes);
+        }
+
+        // Retrieve the associated user
+        User user = userDao.getUserById(rs.getInt("user_id"));
+        image.setUser(user);  // Set the User object for this image
+
+        return image;
+    }
 }

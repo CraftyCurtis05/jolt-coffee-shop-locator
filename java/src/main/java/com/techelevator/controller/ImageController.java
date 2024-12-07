@@ -3,8 +3,9 @@ package com.techelevator.controller;
 import com.techelevator.dao.ImageDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Image;
-import com.techelevator.model.User;
 
+import com.techelevator.model.User;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,33 +27,45 @@ public class ImageController {
         this.userDao = userDao;
     }
 
-    // Get image
-    @GetMapping
-    public Image getImage(Principal principal) {
+    // Endpoint to retrieve the current user's image
+    @GetMapping()
+    public Image getUserImage(Principal principal) {
 
         String username = principal.getName();  // Get the username from the authenticated user
         User user = userDao.getUserByUsername(username); // Get User object from username
         int userId = user.getId(); // Get userId from User object
 
-        return imageDao.getImageByUserId(userId);
+        Image image = imageDao.getImageByUserId(userId);
+
+        return image;
     }
 
-    // Save image
-    @PutMapping
-    public Image saveImage(@RequestParam("image") MultipartFile file, Principal principal) throws IOException {
-        String username = principal.getName();
-        User user = userDao.getUserByUsername(username);
-        int userId = user.getId();
+    // Endpoint to upload/update image for the authenticated user
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping()
+    public Image saveImage(@RequestParam("image") MultipartFile file, Principal principal) {
+        try {
+            String username = principal.getName();  // Get the username from the authenticated user
+            User user = userDao.getUserByUsername(username); // Get User object from username
+            int userId = user.getId(); // Get userId from User object
 
-        byte[] imageBytes = file.getBytes(); // Convert file to byte array
-        Image image = new Image();
-        image.setImage(imageBytes); // Set image bytes in the Image object
+            // Prepare the image data
+            Image image = new Image();
+            image.setImageName(file.getOriginalFilename());
+            image.setImage(file.getBytes());  // This might throw an IOException
 
-        return imageDao.saveImage(image, userId); // Save image to database and return the saved image
+            // Save or update the image in the database
+            Image newImage = imageDao.saveImage(image, userId);
+
+            return newImage;
+        } catch (IOException e) {
+            // Handle the exception (log it or return a custom error response)
+            throw new RuntimeException("Failed to read image file", e);
+        }
     }
 
-    // Delete image
-    @DeleteMapping
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping()
     public void deleteImage(Principal principal) {
 
         String username = principal.getName();  // Get the username from the authenticated user

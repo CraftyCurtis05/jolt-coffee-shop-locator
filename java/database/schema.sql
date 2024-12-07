@@ -48,6 +48,7 @@ CREATE TABLE profile (
 CREATE TABLE image (
     image_id SERIAL PRIMARY KEY,
     user_id int NOT NULL,
+	image_name varchar (100),
     image BYTEA,  -- Store the binary data of the profile image here
     CONSTRAINT fk_image_users FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
 );

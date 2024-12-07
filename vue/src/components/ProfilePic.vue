@@ -1,62 +1,61 @@
 <template>
   <div>
-    <h1>Profile Pic</h1>
-    <div class="image-container">
-      <!-- Display the profile picture if available -->
-      <div v-if="image">
-        <img :src="image" alt="Profile Picture" class="profile-picture"/>
-      </div>
-      <!-- File input for selecting an image -->
-      <input type="file" @change="handleFileChange" accept="image/*" />
-      <!-- Button to upload the selected image -->
-      <button @click="uploadProfilePicture" :disabled="!selectedFile">Upload Profile Picture</button>
+    <input type="file" @change="handleFileUpload" accept="image/*" />
+    <button @click="uploadImage">Upload/Update Image</button>
+    <div v-if="imageUrl">
+      <img :src="imageUrl" alt="Uploaded Image" />
     </div>
   </div>
 </template>
 
 <script>
-import ProfileService from '../services/ProfileService';
+import axios from 'axios';
 
 export default {
   data() {
     return {
-      selectedFile: null, // To hold the selected file
-      image: '' // To hold the image URL after upload
+      selectedFile: null,
+      imageUrl: null
     };
   },
-
   methods: {
-    // Handle file selection
-    handleFileChange(event) {
-      this.selectedFile = event.target.files[0]; // Store the selected file
+    handleFileUpload(event) {
+      this.selectedFile = event.target.files[0];
     },
-    
-    // Upload the selected image
-    async uploadProfilePicture() {
+    async uploadImage() {
+      if (!this.selectedFile) {
+        alert("Please select an image to upload.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("image", this.selectedFile);
+
       try {
-        if (this.selectedFile) {
-          const response = await ProfileService.saveImage(this.selectedFile);
-          this.image = response.profilePictureUrl; // Assuming the response contains the URL or image data
-        }
+        const response = await axios.post("/image", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        });
+
+        // On success, show the uploaded image
+        this.imageUrl = response.data.imageUrl;
       } catch (error) {
-        console.error("Error saving image:", error);
-        alert("There was an error uploading your profile picture.");
+        console.error("Error uploading image:", error);
       }
     },
-    
-    // Fetch the current profile picture (if any) when the component is created
-    async loadProfilePicture() {
+
+    async fetchUserImage() {
       try {
-        const response = await ProfileService.getImage();
-        this.image = response.profilePictureUrl; // Assuming response contains the profile picture URL
+        const response = await axios.get("/image");
+        this.imageUrl = response.data.imageUrl;
       } catch (error) {
-        console.error("Error fetching profile picture:", error);
+        console.error("Error fetching image:", error);
       }
     }
   },
-
-  mounted() {
-    this.loadProfilePicture(); // Fetch the profile picture when the component is mounted
+  created() {
+    this.fetchUserImage();
   }
 };
 </script>
