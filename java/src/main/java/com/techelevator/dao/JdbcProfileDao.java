@@ -10,6 +10,9 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 import com.techelevator.exception.DaoException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class JdbcProfileDao implements ProfileDao {
 
@@ -20,6 +23,139 @@ public class JdbcProfileDao implements ProfileDao {
     public JdbcProfileDao(JdbcTemplate jdbcTemplate, UserDao userDao) {
         this.jdbcTemplate = jdbcTemplate;
         this.userDao = userDao; // Initialize UserDao
+    }
+
+    /**
+     * Get isFormSubmitted for a user profile
+     *
+     * @param userId The ID of the user of the profile.
+     * @return The boolean isFormSubmitted of the profile by user ID.
+     */
+    @Override
+    public boolean isFormSubmittedByUserId(int userId) {
+        try {
+            // First, check if the user exists in the database
+            String userCheckSql = "SELECT COUNT(*) FROM users WHERE user_id = ?";
+            int userCount = jdbcTemplate.queryForObject(userCheckSql, Integer.class, userId);
+
+            // If the user doesn't exist, return false immediately
+            if (userCount == 0) {
+                return false;  // User does not exist, so the form cannot be submitted
+            }
+
+            // SQL query to fetch the value of is_form_submitted from profile for the given userId
+            String sql = "SELECT is_form_submitted FROM profile WHERE user_id = ?";
+
+            // Query the database and retrieve the boolean value of is_form_submitted
+            Boolean isFormSubmitted = jdbcTemplate.queryForObject(sql, Boolean.class, userId);
+
+            // Return the result, handling the case where the value is null (if the profile doesn't exist)
+            return isFormSubmitted != null && isFormSubmitted; // Returns true if the value is true, false if null or false
+
+        } catch (CannotGetJdbcConnectionException e) {
+            // Handle database connection issues
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            // Handle any data integrity issues (e.g., foreign key violations)
+            throw new DaoException("Data integrity violation", e);
+        }
+    }
+
+    /**
+     * Creates/Saves a profile for a user.
+     *
+     * @param profile The Profile object containing details about the user.
+     * @param userId The ID of the user saving the profile.
+     * @return The newly created profile object, including the generated profile_id.
+     */
+    @Override
+    public Profile saveProfile(Profile profile, int userId) {
+        Profile savedProfile = null;
+
+        try {
+            // Step 1: Check if the profile exists for the given userId
+            String checkSql = "SELECT COUNT(*) FROM profile WHERE user_id = ?";
+            int count = jdbcTemplate.queryForObject(checkSql, Integer.class, userId);
+
+            // Prepare SQL for update
+            StringBuilder updateSql = new StringBuilder("UPDATE profile SET ");
+            List<Object> parameters = new ArrayList<>();
+
+            // Dynamically append fields that have been changed
+            if (profile.getFirstName() != null) {
+                updateSql.append("first_name = ?, ");
+                parameters.add(profile.getFirstName());
+            }
+            if (profile.getLastName() != null) {
+                updateSql.append("last_name = ?, ");
+                parameters.add(profile.getLastName());
+            }
+            if (profile.getBirthMonth() != null) {
+                updateSql.append("birth_month = ?, ");
+                parameters.add(profile.getBirthMonth());
+            }
+            if (profile.getBirthDay() > 0) {  // Check if birthDay is provided
+                updateSql.append("birth_day = ?, ");
+                parameters.add(profile.getBirthDay());
+            }
+            if (profile.getBirthYear() > 0) {  // Check if birthYear is provided
+                updateSql.append("birth_year = ?, ");
+                parameters.add(profile.getBirthYear());
+            }
+            if (profile.getAddress1() != null) {
+                updateSql.append("address1 = ?, ");
+                parameters.add(profile.getAddress1());
+            }
+            if (profile.getAddress2() != null) {
+                updateSql.append("address2 = ?, ");
+                parameters.add(profile.getAddress2());
+            }
+            if (profile.getCity() != null) {
+                updateSql.append("city = ?, ");
+                parameters.add(profile.getCity());
+            }
+            if (profile.getState() != null) {
+                updateSql.append("state_abbr = ?, ");
+                parameters.add(profile.getState());
+            }
+            if (profile.getZipcode() != null) {
+                updateSql.append("zipcode = ?, ");
+                parameters.add(profile.getZipcode());
+            }
+
+            // Remove the last comma and space
+            updateSql.setLength(updateSql.length() - 2);
+
+            // Add the userId condition at the end of the query
+            updateSql.append(" WHERE user_id = ?");
+            parameters.add(userId);
+
+            if (count > 0) {
+                // Profile exists, perform an UPDATE
+                jdbcTemplate.update(updateSql.toString(), parameters.toArray());
+
+                // Retrieve the updated profile
+                savedProfile = getProfileByUserId(userId);
+            } else {
+                // Profile does not exist, perform an INSERT for a new profile
+                String insertSql = "INSERT INTO profile (user_id, first_name, last_name, birth_month, birth_day, birth_year, " +
+                        "address1, address2, city, state_abbr, zipcode, is_form_submitted) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                jdbcTemplate.update(insertSql, userId, profile.getFirstName(), profile.getLastName(),
+                        profile.getBirthMonth(), profile.getBirthDay(), profile.getBirthYear(),
+                        profile.getAddress1(), profile.getAddress2(), profile.getCity(),
+                        profile.getState(), profile.getZipcode(), true);
+
+                // Retrieve the newly created profile
+                savedProfile = getProfileByUserId(userId);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+
+        return savedProfile;
     }
 
     /**
@@ -49,61 +185,6 @@ public class JdbcProfileDao implements ProfileDao {
             throw new DaoException("Unable to connect to server or database", e);
         }
         return profile;
-    }
-
-    /**
-     * Creates/Saves a profile for a user.
-     *
-     * @param profile The Profile object containing details about the user.
-     * @param userId The ID of the user saving the profile.
-     * @return The newly created profile object, including the generated profile_id.
-     */
-    @Override
-    public Profile saveProfile(Profile profile, int userId) {
-        Profile savedProfile = null;
-
-        try {
-            // Step 1: Check if a profile already exists for the user
-            String checkSql = "SELECT COUNT(*) FROM profile WHERE user_id = ?";
-            int count = jdbcTemplate.queryForObject(checkSql, Integer.class, userId);
-
-            if (count > 0) {
-                // Profile exists, perform an UPDATE
-
-                String updateSql = "UPDATE profile SET first_name = ?, last_name = ?, birth_month = ?, birth_day = ?, birth_year = ?, " +
-                                    "address1 = ?, address2 = ?, city = ?, state_abbr = ?, zipcode = ? " +
-                                    "WHERE user_id = ?";
-
-                jdbcTemplate.update(updateSql, profile.getFirstName(), profile.getLastName(),
-                        profile.getBirthMonth(), profile.getBirthDay(), profile.getBirthYear(),
-                        profile.getAddress1(), profile.getAddress2(), profile.getCity(),
-                        profile.getState(), profile.getZipcode(), userId);
-
-                // Retrieve the updated profile
-                savedProfile = getProfileByUserId(userId);
-            } else {
-                // Profile does not exist, perform an INSERT
-
-                String insertSql = "INSERT INTO profile (user_id, first_name, last_name, birth_month, birth_day, birth_year, address1, address2, city, state_abbr, zipcode) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-                jdbcTemplate.update(insertSql, userId, profile.getFirstName(), profile.getLastName(),
-                        profile.getBirthMonth(), profile.getBirthDay(), profile.getBirthYear(),
-                        profile.getAddress1(), profile.getAddress2(), profile.getCity(),
-                        profile.getState(), profile.getZipcode());
-
-                // Retrieve the newly created profile
-                savedProfile = getProfileByUserId(userId);
-            }
-        } catch (CannotGetJdbcConnectionException e) {
-            // Handle database connection issues
-            throw new DaoException("Unable to connect to server or database", e);
-        } catch (DataIntegrityViolationException e) {
-            // Handle any data integrity issues (e.g., foreign key violations)
-            throw new DaoException("Data integrity violation", e);
-        }
-
-        return savedProfile;
     }
 
     /**

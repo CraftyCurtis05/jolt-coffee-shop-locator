@@ -1,14 +1,14 @@
-<!-- ProfilePic.vue -->
+<!-- ProfilePic.vue Component -->
 <template>
-  <!-- Main wrapper for the profile picture component -->
-  <article>
+  <!-- Profile Pic Container Section -->
+  <article class="profile-pic-container">
     <!-- Header section containing the title of the component -->
     <header>
       <h1>Profile Picture</h1>
     </header>
 
     <!-- Section containing the image and the file upload form -->
-    <section>
+    <section class="profile-pic">
       <!-- Conditionally render the image if a URL is provided -->
       <div v-if="imageUrl">
         <img :src="imageUrl" alt="Uploaded Profile Picture" />
@@ -117,6 +117,11 @@ export default {
 </script>
 
 <style scoped>
+.profile-pic form {
+  display: flex;
+  flex-direction: column;
+}
+
 img {
     width: 10vw;
 }

@@ -14,6 +14,7 @@ public class Profile {
     private String city;
     private String state;
     private String zipcode;
+    private boolean isFormSubmitted;
 
     // Constructor to create a Profile object with all necessary fields.
     public Profile(int profileId,
@@ -27,7 +28,8 @@ public class Profile {
                    String address2,
                    String city,
                    String state,
-                   String zipcode) {
+                   String zipcode,
+                   boolean isFormSubmitted) {
         this.profileId = profileId;
         this.user = user;
         this.firstName = firstName;
@@ -40,6 +42,7 @@ public class Profile {
         this.city = city;
         this.state = state;
         this.zipcode = zipcode;
+        this.isFormSubmitted = isFormSubmitted;
     }
 
     // Default constructor for creating an empty Profile object.
@@ -81,4 +84,7 @@ public class Profile {
 
     public String getZipcode() { return zipcode; }
     public void setZipcode(String zipcode) { this.zipcode = zipcode; }
+
+    public boolean isFormSubmitted() { return isFormSubmitted; }
+    public void setIsFormSubmitted(boolean isFormSubmitted) { isFormSubmitted = isFormSubmitted; }
 }

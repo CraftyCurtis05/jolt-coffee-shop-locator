@@ -22,8 +22,8 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:5173", maxAge = 3600, allowCredentials = "true")  // Allow this controller to accept requests from the frontend
 public class ImageController {
 
-    private ImageDao imageDao;
-    private UserDao userDao;
+    private final ImageDao imageDao;
+    private final UserDao userDao;
 
     public ImageController(ImageDao imageDao, UserDao userDao) {
         this.imageDao = imageDao;
@@ -38,19 +38,22 @@ public class ImageController {
         User user = userDao.getUserByUsername(username); // Get User object from username
         int userId = user.getId(); // Get userId from User object
 
+        // Attempt to fetch the user's image from the database
         Image image = imageDao.getImageByUserId(userId);
-        String base64Image = null;
+        Map<String, Object> response = new HashMap<>();
 
         if (image != null) {
-            // Convert byte[] to base64
-            base64Image = Base64.getEncoder().encodeToString(image.getImage());
+            // Image found, convert byte[] to base64
+            String base64Image = Base64.getEncoder().encodeToString(image.getImage());
+            response.put("imageId", image.getImageId());
+            response.put("imageName", image.getImageName());
+            response.put("imageUrl", "data:image/jpeg;base64," + base64Image);
+        } else {
+            // No image found, return a default response or handle the case as needed
+            response.put("imageId", null);  // Or provide a default ID if you prefer
+            response.put("imageName", "No image uploaded");
+            response.put("imageUrl", "");  // You can provide a placeholder or default image URL
         }
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("imageId", image.getImageId());
-        response.put("imageName", image.getImageName());
-        response.put("imageUrl", "data:image/jpeg;base64," + base64Image);
-
         return response;
     }
 

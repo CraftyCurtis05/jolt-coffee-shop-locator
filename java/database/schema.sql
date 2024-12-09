@@ -41,6 +41,7 @@ CREATE TABLE profile (
     city varchar(100) NOT NULL,
     state_abbr varchar(2) NOT NULL,
     zipcode varchar(5) NOT NULL,
+	is_form_submitted BOOLEAN DEFAULT FALSE, -- Default value is false (form not submitted)
     CONSTRAINT fk_profile_users FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
 );
 

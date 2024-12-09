@@ -27,10 +27,26 @@ public class ProfileContoller {
     }
 
     /**
+     * GET boolean isFormSubmitted from profile
+     *
+     * @param principal The authenticated user's principal object.
+     * @return boolean isFormSubmitted from profile of authenticated user.
+     */
+    @GetMapping("/submit")
+    public boolean getIsFormSubmittedByUserId(Principal principal) {
+
+        String username = principal.getName();  // Get the username from the authenticated user
+        User user = userDao.getUserByUsername(username); // Get User object from username
+        int userId = user.getId(); // Get userId from User object
+
+        return profileDao.isFormSubmittedByUserId(userId);
+    }
+
+    /**
      * GET Profile Details
      *
-     * @param principal The authenticated user's principal object
-     * @return Profile details of the authenticated user
+     * @param principal The authenticated user's principal object.
+     * @return Profile details of the authenticated user.
      */
     @GetMapping()
     public Profile getProfile(Principal principal) {
