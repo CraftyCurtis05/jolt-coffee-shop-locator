@@ -1,8 +1,13 @@
-<!-- ProfileDetails.vue -->
+<!-- ProfileDetails.vue Component -->
+ 
 <template>
-  <div>
-    <h1>User Info</h1>
-    <div v-if="user">
+  <section class="profile-details-container">
+    <header>
+      <h1>User Info</h1>
+    </header>
+   
+    <article class="profile-details" v-if="user">
+      <!-- Display user details only when 'user' prop is available -->
       <p><strong>First Name:</strong> {{ user.firstName }}</p>
       <p><strong>Last Name:</strong> {{ user.lastName }}</p>
       <p><strong>Birth Month:</strong> {{ user.birthMonth }}</p>
@@ -13,20 +18,23 @@
       <p><strong>City:</strong> {{ user.city }}</p>
       <p><strong>State:</strong> {{ user.state }}</p>
       <p><strong>Zipcode:</strong> {{ user.zipcode }}</p>
-    </div>
-    <div v-else>
+    </article>
+
+    <article v-else>
+      <!-- Show loading message if 'user' prop is not yet available -->
       <p>Loading user profile...</p>
-    </div>
-  </div>
+    </article>
+  </section>
 </template>
-  
+
 <script>
 export default {
   props: {
     user: {
-      type: Object,
-      required: true, // Make sure it's required if you always want it to be passed
-      default: () => ({}) // Provide an empty object as the default
+      // Expecting a 'user' object as a prop that will be passed to the component
+      type: Object, // Specifies the expected data type of the prop (Object)
+      required: true, // Ensures that the 'user' prop is always provided when the component is used
+      default: () => ({}) // Provides a default empty object in case no value is passed (optional fallback)
     }
   }
 };

@@ -1,140 +1,145 @@
 <!-- ProfileForm.vue Component -->
+
 <template>
-  <article class="profile-form-modal" v-if="isVisible">
+  <section v-if="isVisible" class="profile-form-container">
     <header>
       <h1>Profile Form</h1>
     </header>
-    <section class="profile-form">
-      <form @submit.prevent="submitForm">
+    
+    <article class="profile-form">
+      <form @submit.prevent="submitForm" ref="profileForm">
+
         <!-- Personal Information Section -->
-        <fieldset>
+        <fieldset class="name">
           <legend>Personal Information</legend>
-          <!-- First Name Input -->
           <div>
             <label for="firstName">First Name:</label>
             <input
               type="text"
               id="firstName"
               v-model="user.firstName"
-              :required="!isFormSubmitted"
+              :required="!status"
               @input="trackChanges"
             />
           </div>
-          <!-- Last Name Input -->
           <div>
             <label for="lastName">Last Name:</label>
-            <input 
-              type="text" 
-              id="lastName" 
+            <input
+              type="text"
+              id="lastName"
               v-model="user.lastName"
-              :required="!isFormSubmitted"
+              :required="!status"
               @input="trackChanges"
             />
           </div>
         </fieldset>
 
-        <!-- Birthday Section -->
-        <fieldset class="birthday" v-if="isFormSubmitted === false">
+        <!-- Birthday Section (only visible if the status is false) -->
+        <fieldset class="birthday" v-if="!status">
           <legend>Birthday</legend>
           <div>
             <label for="birthMonth">Birth Month:</label>
-            <select 
-              id="birthMonth" 
-              v-model="user.birthMonth" 
-              :disabled="isFormSubmitted" 
-              :required="!isFormSubmitted"
+            <select
+              id="birthMonth"
+              v-model="user.birthMonth"
+              :disabled="status"
+              :required="!status"
             >
               <option value="" disabled>Select Month</option>
               <option v-for="month in months" :key="month" :value="month">{{ month }}</option>
             </select>
-          </div>
+          </div> 
+
           <div>
             <label for="birthDay">Birth Day:</label>
-            <input 
-              type="number" 
-              id="birthDay" 
-              v-model="user.birthDay" 
-              :disabled="isFormSubmitted" 
-              :required="!isFormSubmitted"
-              min="1" 
-              max="31" 
+            <input
+              type="number"
+              id="birthDay"
+              v-model="user.birthDay"
+              :disabled="status"
+              :required="!status"
+              min="1"
+              max="31"
             />
           </div>
+  
           <div>
             <label for="birthYear">Birth Year:</label>
-            <input 
-              type="number" 
-              id="birthYear" 
-              v-model="user.birthYear" 
-              :disabled="isFormSubmitted" 
-              :required="!isFormSubmitted"
-              min="1900" 
-              max="2024" 
+            <input
+              type="number"
+              id="birthYear"
+              v-model="user.birthYear"
+              :disabled="status"
+              :required="!status"
+              min="1900"
+              max="2024"
             />
           </div>
         </fieldset>
 
-        <!-- Address Section -->
-        <fieldset>
+        <!-- Location Section -->
+        <fieldset class="location">
           <legend>Location Details</legend>
           <div>
             <label for="address1">Address 1:</label>
-            <input 
-              type="text" 
-              id="address1" 
+            <input
+              type="text"
+              id="address1"
               v-model="user.address1"
-              :required="!isFormSubmitted"
+              :required="!status"
               @input="trackChanges"
             />
           </div>
           <div>
             <label for="address2">Address 2:</label>
-            <input 
-              type="text" 
-              id="address2" 
+            <input
+              type="text"
+              id="address2"
               v-model="user.address2"
               @input="trackChanges"
             />
           </div>
           <div>
             <label for="city">City:</label>
-            <input 
-              type="text" 
-              id="city" 
+            <input
+              type="text"
+              id="city"
               v-model="user.city"
-              :required="!isFormSubmitted"
+              :required="!status"
               @input="trackChanges"
             />
           </div>
           <div>
             <label for="state">State:</label>
-            <input 
-              type="text" 
-              id="state" 
+            <input
+              type="text"
+              id="state"
               v-model="user.state"
-              :required="!isFormSubmitted"
+              :required="!status"
               @input="trackChanges"
             />
           </div>
           <div>
             <label for="zipcode">Zipcode:</label>
-            <input 
-              type="text" 
-              id="zipcode" 
+            <input
+              type="text"
+              id="zipcode"
               v-model="user.zipcode"
-              :required="!isFormSubmitted"
+              :required="!status"
               @input="trackChanges"
             />
           </div>
         </fieldset>
 
+        <!-- Save and cancel form buttons -->
         <div>
-          <button type="submit">Save Profile</button>
+          <button type="submit" @click="saveProfile">Save Profile</button>
           <button type="button" @click="closeForm">Cancel</button>
         </div>
+
       </form>
-    </section>
-  </article>
+    </article>
+  </section>
 </template>
 
 <script>
@@ -143,7 +148,19 @@ import ProfileService from '../services/ProfileService';
 export default {
   data() {
     return {
+      // Array of months used for the birth month dropdown
+      months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+
+      // Indicates if the form is in 'update' mode (true = updating, false = creating)
+      status: false,
+
+      // Toggles the visibility of the profile form
       isVisible: false,
+
+      // Tracks the fields that have been modified
+      changedFields: {},
+
+      // User's profile data
       user: {
         firstName: '',
         lastName: '',
@@ -155,43 +172,84 @@ export default {
         city: '',
         state: '',
         zipcode: ''
-      },
-      months: [
-        'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 
-        'September', 'October', 'November', 'December'
-      ],
-      isFormSubmitted: false,  // Flag for form submission state
-      changedFields: {}  // Object to track changed fields
+      }
     };
   },
   methods: {
 
+    /**
+     * Opens the profile form and emits visibility change event.
+     */
     openForm() {
-      this.isVisible = true;  // Show modal
+      this.isVisible = true;
+      this.$emit('form-visible', true);
     },
 
+    /**
+     * Closes the profile form and emits visibility change event.
+     */
     closeForm() {
-      this.isVisible = false;  // Hide modal
+      this.isVisible = false;
+      this.$emit('form-visible', false);
     },
 
-    async fetchFormSubmittedState() {
+    /**
+     * Fetches the profile creation/update status from the backend.
+     * Sets `status` to determine if the form is for creating or updating a profile.
+     */
+    async fetchStatus() {
       try {
-        const response = await ProfileService.getFormSubmitted();
-        this.isFormSubmitted = response;  // Get the submission state from the server
+        const response = await ProfileService.getStatus();
+        this.status = response;   // Set form status (true = updating, false = creating)
       } catch (error) {
-        console.error("Error fetching form submission state:", error);
+        console.error('Error fetching status:', error);
       }
     },
 
+    /**
+     * Saves the profile data by either creating a new profile or updating an existing one.
+     * Depending on the status, it calls the appropriate service method.
+     */
+    async saveProfile() {
+      try {
+        if (!this.status) {
+          // Create new profile if status is false
+          await ProfileService.createProfile(this.user);
+          console.log('Profile created successfully!');
+          alert('Profile created successfully!');
+        } else {
+          // Update existing profile with changed fields
+          const updatedProfile = { ...this.changedFields };
+          await ProfileService.updateProfile(updatedProfile);
+
+          // Emit updated profile and close form
+          this.$emit('profile-updated', this.user);
+          console.log('Profile updated successfully!');
+          alert('Profile updated successfully!');
+          this.closeForm();
+        }
+      } catch (error) {
+        console.error('Error saving profile:', error);
+        alert("Error saving your profile!")
+      }
+    },
+
+    /**
+     * Fetches the existing profile data from the backend to populate the form.
+     */
     async fetchProfile() {
       try {
         const response = await ProfileService.getProfile();
-        this.user = { ...response };  // Populate form with existing profile data
+        this.user = { ...response };  // Populate form with existing data
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
     },
-    // Track changes to the form fields
+
+    /**
+     * Tracks changes to form fields and updates the `changedFields` object 
+     * to store modified values.
+     */
     trackChanges() {
       // Only track fields that have been modified from the original state
       this.changedFields = {
@@ -206,79 +264,20 @@ export default {
         state: this.user.state,
         zipcode: this.user.zipcode
       };
-    },
-
-    async submitForm() {
-      try {
-        const updatedProfile = { ...this.changedFields }; // Only the changed fields
-        await ProfileService.saveProfile(updatedProfile);
-
-        this.isFormSubmitted = true;
-        this.$emit('profile-updated', this.user); // Emit updated profile to parent
-
-        console.log('Form submitted successfully');
-        this.closeForm();
-      } catch (error) {
-        alert("Error saving your profile. Please try again.");
-      }
-    },
-
-    resetForm() {
-      this.user = {
-        firstName: '',
-        lastName: '',
-        birthMonth: '',
-        birthDay: '',
-        birthYear: '',
-        address1: '',
-        address2: '',
-        city: '',
-        state: '',
-        zipcode: ''
-      };
-    }
+    }  
   },
+
   mounted() {
-    this.fetchFormSubmittedState();  // Fetch initial form submission state
-    this.fetchProfile();  // Fetch the user's profile
+    // Fetch the initial status of the profile (new or updating)
+    this.fetchStatus();
+    // Load the user's profile data if available
+    this.fetchProfile();
   }
 };
 </script>
 
 <style scoped>
-.profile-form {
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.profile-form label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.profile-form input,
-.profile-form select {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.profile-form button {
-  padding: 10px 20px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.profile-form button:hover {
-  background-color: #45a049;
-}
-
-.profile-form-modal {
+.profile-form-container {
   width: 20vw;
   padding: 0 3vw;
 }

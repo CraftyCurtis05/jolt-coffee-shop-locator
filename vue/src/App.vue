@@ -59,6 +59,10 @@ html, body {
   z-index: 100;
 }
 
+header {
+  text-align: center;
+}
+
 body::-webkit-scrollbar {
   width: 20px;
 }

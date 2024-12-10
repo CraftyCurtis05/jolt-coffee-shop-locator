@@ -38,39 +38,81 @@ public class JdbcProfileDao implements ProfileDao {
             String userCheckSql = "SELECT COUNT(*) FROM users WHERE user_id = ?";
             int userCount = jdbcTemplate.queryForObject(userCheckSql, Integer.class, userId);
 
+            // Check if the profile exists for the user
+            String profileCheckSql = "SELECT COUNT(*) FROM profile WHERE user_id = ?";
+            int profileCount = jdbcTemplate.queryForObject(profileCheckSql, Integer.class, userId);
+
             // If the user doesn't exist, return false immediately
-            if (userCount == 0) {
+            // If no profile is found, return false (profile does not exist)
+            if (userCount == 0 || profileCount == 0) {
                 return false;  // User does not exist, so the form cannot be submitted
             }
 
-            // SQL query to fetch the value of is_form_submitted from profile for the given userId
+            // If the profile exists, fetch the value of is_form_submitted
             String sql = "SELECT is_form_submitted FROM profile WHERE user_id = ?";
-
-            // Query the database and retrieve the boolean value of is_form_submitted
             Boolean isFormSubmitted = jdbcTemplate.queryForObject(sql, Boolean.class, userId);
 
-            // Return the result, handling the case where the value is null (if the profile doesn't exist)
-            return isFormSubmitted != null && isFormSubmitted; // Returns true if the value is true, false if null or false
+            return isFormSubmitted != null && isFormSubmitted;
 
         } catch (CannotGetJdbcConnectionException e) {
             // Handle database connection issues
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
-            // Handle any data integrity issues (e.g., foreign key violations)
+            // Handle data integrity issues (e.g., foreign key violations)
             throw new DaoException("Data integrity violation", e);
         }
     }
 
     /**
-     * Creates/Saves a profile for a user.
+     * Creates a profile for a user.
      *
      * @param profile The Profile object containing details about the user.
      * @param userId The ID of the user saving the profile.
      * @return The newly created profile object, including the generated profile_id.
      */
     @Override
-    public Profile saveProfile(Profile profile, int userId) {
-        Profile savedProfile = null;
+    public Profile createProfile(Profile profile, int userId) {
+
+        Profile newProfile = null;
+
+        try {
+            // Step 1: Check if the profile exists for the given userId
+            String checkSql = "SELECT COUNT(*) FROM profile WHERE user_id = ?";
+            int count = jdbcTemplate.queryForObject(checkSql, Integer.class, userId);
+
+            if (count == 0) {
+                // Profile does not exist, perform an INSERT for a new profile
+                String insertSql = "INSERT INTO profile (user_id, first_name, last_name, birth_month, birth_day, birth_year, " +
+                        "address1, address2, city, state_abbr, zipcode, is_form_submitted) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+                jdbcTemplate.update(insertSql, userId, profile.getFirstName(), profile.getLastName(),
+                profile.getBirthMonth(), profile.getBirthDay(), profile.getBirthYear(),
+                profile.getAddress1(), profile.getAddress2(), profile.getCity(),
+                profile.getState(), profile.getZipcode(), true);
+
+                // Retrieve the newly created profile
+                newProfile = getProfileByUserId(userId);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+
+        return newProfile;
+    }
+
+    /**
+     * Updates a profile for a user.
+     *
+     * @param profile The Profile object containing details about the user.
+     * @param userId The ID of the user saving the profile.
+     * @return The newly created profile object, including the generated profile_id.
+     */
+    @Override
+    public Profile updateProfile(Profile profile, int userId) {
+        Profile updatedProfile = null;
 
         try {
             // Step 1: Check if the profile exists for the given userId
@@ -135,27 +177,15 @@ public class JdbcProfileDao implements ProfileDao {
                 jdbcTemplate.update(updateSql.toString(), parameters.toArray());
 
                 // Retrieve the updated profile
-                savedProfile = getProfileByUserId(userId);
-            } else {
-                // Profile does not exist, perform an INSERT for a new profile
-                String insertSql = "INSERT INTO profile (user_id, first_name, last_name, birth_month, birth_day, birth_year, " +
-                        "address1, address2, city, state_abbr, zipcode, is_form_submitted) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                jdbcTemplate.update(insertSql, userId, profile.getFirstName(), profile.getLastName(),
-                        profile.getBirthMonth(), profile.getBirthDay(), profile.getBirthYear(),
-                        profile.getAddress1(), profile.getAddress2(), profile.getCity(),
-                        profile.getState(), profile.getZipcode(), true);
-
-                // Retrieve the newly created profile
-                savedProfile = getProfileByUserId(userId);
+                updatedProfile = getProfileByUserId(userId);
             }
+
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
-
-        return savedProfile;
+        return updatedProfile;
     }
 
     /**

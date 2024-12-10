@@ -1,32 +1,27 @@
 <!-- ProfilePic.vue Component -->
+
 <template>
-  <!-- Profile Pic Container Section -->
-  <article class="profile-pic-container">
-    <!-- Header section containing the title of the component -->
+  <section class="profile-pic-container">
     <header>
       <h1>Profile Picture</h1>
     </header>
 
-    <!-- Section containing the image and the file upload form -->
-    <section class="profile-pic">
-      <!-- Conditionally render the image if a URL is provided -->
+    <article class="profile-pic">
+      <!-- Display the profile image if available -->
       <div v-if="imageUrl">
         <img :src="imageUrl" alt="Uploaded Profile Picture" />
       </div>
 
-      <!-- Form for uploading a new image -->
+      <!-- Form to upload a new profile picture -->
       <form @submit.prevent="uploadImage">
-        <!-- Visually hidden label for the file input, improving accessibility -->
+        <!-- Label hidden for accessibility purposes -->
         <label for="file-upload" class="visually-hidden">Choose an image</label>
-
-        <!-- File input to select an image file, triggering the handleFileUpload method on change -->
+        <!-- Input for selecting a file, restricted to image types -->
         <input type="file" id="file-upload" @change="handleFileUpload" accept="image/*" aria-labelledby="file-upload"/>
-
-        <!-- Submit button to trigger the image upload or update -->
         <button type="submit">Upload/Update Image</button>
       </form>
-    </section>
-  </article>
+    </article>
+  </section>
 </template>
 
 <script>
@@ -35,81 +30,88 @@ import ProfileService from '../services/ProfileService';
 export default {
   data() {
     return {
-      selectedFile: null,  // Holds the file selected by the user for upload
-      imageUrl: null       // Holds the URL of the uploaded or fetched image
+      // File selected by the user for uploading
+      selectedFile: null,
+      // URL of the uploaded profile image
+      imageUrl: null
     };
   },
 
   methods: {
-    // Handles the file selection when the user chooses an image
+    /**
+     * Handles file selection, validates file type, and sets the selected file.
+     * @param {Event} event - The input change event triggered by file selection.
+     */
     handleFileUpload(event) {
       const file = event.target.files[0];
       
-      // Check if the file is an image with a valid extension
       if (file) {
-        const validImageTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];  // Valid image MIME types
+        // Valid image types for profile picture upload
+        const validImageTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
 
-        // Check if the selected file's type is valid
+        // Ensure the selected file is of a valid type
         if (!validImageTypes.includes(file.type)) {
           alert("Unsupported file type. Please upload a .jpg, .jpeg, .png or .webp image.");
-          this.selectedFile = null; // Reset selected file if invalid
+          this.selectedFile = null;
           return;
         }
-
-        // If the file type is valid, set the selectedFile
+        // Store the selected file
         this.selectedFile = file;
       }
     },
 
-    // Uploads the selected image to the server
+    /**
+     * Uploads the selected image to the server.
+     * Sends the image as FormData to be processed by the backend service.
+     */
     async uploadImage() {
-      // Ensure a file is selected before attempting upload
       if (!this.selectedFile) {
+        // Alert user to select a file before uploading
         alert("Please select an image to upload.");
         return;
       }
-
-      // Prepare the file for submission
       const formData = new FormData();
-      formData.append("image", this.selectedFile);  // Append the selected file to the form data
+      formData.append("image", this.selectedFile);
 
       try {
-        // Attempt to upload the image using ProfileService's saveImage method
+        // Attempt to upload the image through the ProfileService
         const response = await ProfileService.saveImage(formData);
-        
-        // On success, update the imageUrl with the URL returned from the server
+        // Set the URL of the uploaded image after a successful upload
         this.imageUrl = response.imageUrl;
       } catch (error) {
-        // Handle errors during the upload process
         console.error("Error uploading image:", error);
+        alert("Error uploading profile picture!")
       }
     },
 
-    // Fetches the user's profile image from the server
+    /**
+     * Fetches the current user's profile image URL from the backend.
+     * This is typically called on component creation to load the user's image.
+     */
     async fetchUserImage() {
       try {
-        // Attempt to fetch the image URL using ProfileService's getImage method
         const imageUrl = await ProfileService.getImage();
-        this.imageUrl = imageUrl;  // Set the fetched image URL to imageUrl
+        // Set the fetched image URL to be displayed in the component
+        this.imageUrl = imageUrl;
       } catch (error) {
-        // Handle errors during the image fetch process
         console.error("Error fetching image:", error);
       }
     }
   },
 
-  // Lifecycle hook that runs when the component is created
   created() {
-    // Fetch the user's image when the component is created
+    // Fetch the user's profile image when the component is created
     this.fetchUserImage();
   },
 
-  // Watcher that triggers when imageUrl is updated
   watch: {
+    /**
+     * Watches for changes to the image URL and refetches the image when it changes.
+     * This ensures the image is updated correctly when the URL changes.
+     */
     imageUrl(newImageUrl, oldImageUrl) {
-      // Only re-fetch the image if the imageUrl has changed
       if (newImageUrl !== oldImageUrl) {
-        this.fetchUserImage();  // Re-fetch the user image whenever the imageUrl changes
+        this.fetchUserImage();
       }
     }
   }

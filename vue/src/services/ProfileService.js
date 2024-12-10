@@ -3,17 +3,45 @@ import axios from 'axios';
 
 export default {
 
-   // This will hold the original profile data
-   originalProfile: null,
+  // This will hold the original profile data
+  originalProfile: null,
 
   /**
-   * Save or update the user's profile.
+   * Get the form submitted status.
    * 
-   * @param {Object} profile - The profile object containing the updated user data.
-   * @returns {Promise<Object>} - A promise that resolves with the response data of the updated profile.
-   * @throws {Error} - Throws an error if the request fails.
+   * @returns {Promise<boolean>} - A promise that resolves with the form submission status.
    */
-  saveProfile(profile) {
+  getStatus() {
+    return axios.get('/profile/status')
+    .then(response => response.data)
+    .catch(error => {
+      console.error("Error fetching form submitted status:", error);
+      throw error;
+    });
+  },
+
+  /**
+   * Create a new profile.
+   * 
+   * @param {Object} user - The user data to be sent.
+   * @returns {Promise<Object>} - A promise that resolves with the response data.
+   */
+  createProfile(user) {
+    return axios.post('/profile', user)
+    .then(response => response.data)
+    .catch(error => {
+      console.error("Error creating profile:", error);
+      throw error;
+    });
+  },
+
+  /**
+   * Update an existing profile.
+   * 
+   * @param {Object} user - The user data to be updated.
+   * @returns {Promise<Object>} - A promise that resolves with the response data.
+   */
+  updateProfile(profile) {
     if (!this.originalProfile) {
       throw new Error("Original profile data is not set. Cannot perform save operation.");
     }
@@ -33,16 +61,16 @@ export default {
     }
   
     return axios.put('/profile', updatedProfile)
-      .then(response => {
-        this.originalProfile = response.data;  // Update the original profile data
-        return response.data;
-      })
-      .catch(error => {
-        console.error("Error saving profile:", error);
-        throw error;
-      });
+    .then(response => {
+      this.originalProfile = response.data;  // Update the original profile data
+      return response.data;
+    })
+    .catch(error => {
+      console.error("Error saving profile:", error);
+      throw error;
+    });
   },
-  
+
   /**
    * Retrieve the user's profile.
    * 
@@ -62,15 +90,6 @@ export default {
       });
   },
 
-  getFormSubmitted() {
-    return axios.get('/profile/submit')
-    .then(response => response.data)
-    .catch(error => {
-      console.error("Error fetching form submitted status:", error);
-      throw error;
-    })
-  },
-
   /**
    * Upload a new profile image.
    * 
@@ -84,11 +103,11 @@ export default {
         "Content-Type": "multipart/form-data"
       }
     })
-      .then(response => response.data)
-      .catch(error => {
-        console.error("Error uploading image:", error);
-        throw error;
-      });
+    .then(response => response.data)
+    .catch(error => {
+      console.error("Error uploading image:", error);
+      throw error;
+    });
   },
 
   /**
@@ -99,10 +118,10 @@ export default {
    */
   getImage() {
     return axios.get("/image")
-      .then(response => response.data.imageUrl) // Extract and return the image URL from the response data.
-      .catch(error => {
-        console.error("Error fetching image:", error);
-        throw error;
-      });
+    .then(response => response.data.imageUrl) // Extract and return the image URL from the response data.
+    .catch(error => {
+      console.error("Error fetching image:", error);
+      throw error;
+    });
   }
 };
