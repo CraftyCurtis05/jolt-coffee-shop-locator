@@ -9,7 +9,7 @@
     <article class="profile-pic">
       <!-- Display the profile image if available -->
       <div v-if="imageUrl">
-        <img :src="imageUrl" alt="Uploaded Profile Picture" />
+        <img :src="imageUrl" alt="Profile Picture" />
       </div>
 
       <!-- Form to upload a new profile picture -->
@@ -17,7 +17,7 @@
         <!-- Label hidden for accessibility purposes -->
         <label for="file-upload" class="visually-hidden">Choose an image</label>
         <!-- Input for selecting a file, restricted to image types -->
-        <input type="file" id="file-upload" @change="handleFileUpload" accept="image/*" aria-labelledby="file-upload"/>
+        <input type="file" @change="handleFileUpload" accept="image/*"/>
         <button type="submit">Upload/Update Image</button>
       </form>
     </article>
@@ -75,9 +75,11 @@ export default {
 
       try {
         // Attempt to upload the image through the ProfileService
-        const response = await ProfileService.saveImage(formData);
+        const profileImage = await ProfileService.saveImage(formData);
         // Set the URL of the uploaded image after a successful upload
-        this.imageUrl = response.imageUrl;
+        this.imageUrl = profileImage.imageUrl;
+        // Emit the updated image URL to the parent
+        this.$emit('update-image', this.imageUrl);
       } catch (error) {
         console.error("Error uploading image:", error);
         alert("Error uploading profile picture!")
@@ -88,20 +90,22 @@ export default {
      * Fetches the current user's profile image URL from the backend.
      * This is typically called on component creation to load the user's image.
      */
-    async fetchUserImage() {
+    async fetchImage() {
       try {
         const imageUrl = await ProfileService.getImage();
         // Set the fetched image URL to be displayed in the component
         this.imageUrl = imageUrl;
+        // Emit the fetched image URL to the parent
+        this.$emit('update-image', this.imageUrl);
       } catch (error) {
         console.error("Error fetching image:", error);
       }
     }
   },
 
-  created() {
+  async created() {
     // Fetch the user's profile image when the component is created
-    this.fetchUserImage();
+    this.fetchImage();
   },
 
   watch: {
@@ -111,7 +115,7 @@ export default {
      */
     imageUrl(newImageUrl, oldImageUrl) {
       if (newImageUrl !== oldImageUrl) {
-        this.fetchUserImage();
+        this.fetchImage();
       }
     }
   }

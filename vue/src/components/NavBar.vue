@@ -1,5 +1,6 @@
+<!-- NavBar.vue Component -->
+
 <template>
-    <!-- NavBar Component -->
     <nav v-if="!$route.meta.hideNavBar">
         <div class="nav-header">
 
@@ -26,19 +27,46 @@
             <!-- Profile -->
             <div class="profile-container">
                 <router-link class="link" v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">LOGOUT</router-link>
-                <router-link id="profile-pic" v-bind:to="{ name: 'profile' }" v-if="$store.state.token != ''"><img src="@/assets/profile_pic.png"></router-link>
+
+                <!-- Profile Picture with dynamic src -->
+                <router-link id="profile-pic" v-bind:to="{ name: 'profile' }" v-if="$store.state.token != ''">
+                    <!-- Fallback image used if no profile image is fetched -->
+                    <img :src="imageUrl || 'src/assets/profile_pic.png'" alt="Profile Picture" />
+                </router-link>
             </div>
         </div>
     </nav>
 </template>
 
 <script>
+// Importing the ProfileService to fetch the profile image
+import ProfileService from '../services/ProfileService';
+
 export default {
-    data() {
-        return {
-            isNavOpen: false // Tracks if the navbar is open
-        };
-    },
+  data() {
+    return {
+        // Tracks if the navbar is open
+        isNavOpen: false,
+        // URL of the uploaded profile image
+        imageUrl: null
+    };
+  },
+
+  methods: {
+
+    async fetchImage() {
+      try {
+        const imageUrl = await ProfileService.getImage();
+        this.imageUrl = imageUrl;
+      } catch (error) {
+        console.error("Error fetching image:", error);
+      }
+    }
+  },
+
+  mounted() {
+    this.fetchImage();
+  }
 };
 </script>
 

@@ -215,8 +215,8 @@ export default {
         if (!this.status) {
           // Create new profile if status is false
           await ProfileService.createProfile(this.user);
-          console.log('Profile created successfully!');
           alert('Profile created successfully!');
+          this.closeForm();
         } else {
           // Update existing profile with changed fields
           const updatedProfile = { ...this.changedFields };
@@ -224,13 +224,12 @@ export default {
 
           // Emit updated profile and close form
           this.$emit('profile-updated', this.user);
-          console.log('Profile updated successfully!');
           alert('Profile updated successfully!');
           this.closeForm();
         }
       } catch (error) {
         console.error('Error saving profile:', error);
-        alert("Error saving your profile!")
+        alert("Make sure to fill out all required profile fields!")
       }
     },
 
