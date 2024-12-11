@@ -155,9 +155,24 @@ a:hover {
     }
 
     .nav-container {
+        align-items: flex-start;
         flex-direction: column; /* Stack items */
         max-height: 0; /* Initially collapsed */
-        gap: 1rem;
+        padding-top: 4rem;
+        gap: .1rem;
+    }
+
+    a:hover {
+        font-weight: bold;
+        font-size: 1rem;
+    }
+
+    .link {
+        color: #333437;
+    }
+
+    .separator {
+        visibility: hidden;
     }
 
     .nav-container.nav-open {

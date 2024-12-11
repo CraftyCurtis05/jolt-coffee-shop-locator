@@ -4,8 +4,13 @@
     <!-- Search Bar -->
     <div class="search-bar">
       <input type="text" v-model="locationID" name="user-location" placeholder="Enter Your Location"/>
-      <button v-on:click="search()">Search</button>
+      <button @click="search()">Search</button>
     </div>
+
+    <!-- Near Home Search -->
+     <div class="search-home">
+        <button @click="searchHome()">Search Near Home</button>
+     </div>
 
     <h1>List of local coffee shops near you:</h1>
 
@@ -37,8 +42,9 @@
 </template>
   
 <script>
-import YelpService from '../services/YelpService';
-import FavoriteService from '../services/FavoriteService';
+import YelpService from '../services/YelpService.js';
+import FavoriteService from '../services/FavoriteService.js';
+import ProfileService from '../services/ProfileService.js';
 
 export default {
   name: "SearchBar",
@@ -48,6 +54,7 @@ export default {
       results: [] // Add the results array to hold the Yelp search results
     };
   },
+  
   methods: {
     // Update search method to fetch data and populate results
     search() {
@@ -86,8 +93,9 @@ export default {
         businessImage: result.image_url,
         businessUrl: result.url
       }).then(() => {
-          console.log('Favorite added successfully');
+          alert('Favorite added successfully!');
       }).catch(error => {
+          alert("You've already favorited this shop. Try again!")
           console.error('Error adding favorite:', error);
       });
     }
