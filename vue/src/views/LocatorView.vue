@@ -4,47 +4,37 @@
   <body>
     <header>
       <h1>Locator</h1>
-      <p>Uncover your next coffee adventure. Locate the perfect brew near you</p>
+      <h2>Uncover your next coffee adventure. Locate the perfect brew near you</h2>
     </header>
 
-    <section class="search-bar">
-      <SearchBar/>
-    </section>
+    <main>
+      <section class="locator-container">
+        <Locator />
+      </section>
+    </main>
     
   </body>
 </template>
   
 <script>
-import SearchBar from '../components/locator_view/SearchBar.vue';
+import Locator from '../components/locator_view/Locator.vue';
 
 export default {
   name: 'LocatorView',
   components: {
-    SearchBar
+    Locator
   }
 };
 </script>
 
 <style scoped>
-body {
+main {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  font-family: 'Ubuntu', sans-serif;
-  color: #333437;
-  padding-top: 5rem;
 }
 
-h1{
-  font-weight: bolder;
-  font-size: 1.8rem;
-  text-align: center;
-  margin: 0;
-}
-
-p {
-  font-size: 1rem;
-  margin-top: .5vw;
+.locator-container {
+  margin: 0 auto;
 }
 </style>

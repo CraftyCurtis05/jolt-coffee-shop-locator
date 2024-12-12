@@ -1,7 +1,6 @@
 <!-- Shop.vue Component -->
 
 <template>
-
     <article class="shop-container">
 
         <section class="shop">
@@ -50,7 +49,7 @@
 <script>
 export default {
     name: 'Shop'
-}
+};
 </script>
 
 <style scoped>

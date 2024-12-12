@@ -34,13 +34,7 @@ main {
   align-items: center;
 }
 
-.carousel-container {
+.shop-container {
   margin: 0 auto;
-}
-
-.description-container {
-  font-size: 1rem;
-  max-width: 70%;
-  line-height: 1.5;
 }
 </style>
