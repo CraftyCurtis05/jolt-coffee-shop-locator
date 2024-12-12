@@ -1,4 +1,4 @@
-"Jolt" - Coffee Shop Locator
+"Jolt" - Coffee Shop Locator <br>
 (Currently under development)
 
 This is a Coffee Shop Locator web application that allows users to find and explore coffee shops using the Yelp Fusion API. It offers an intuitive and dynamic user interface built with Vue.js, and provides seamless communication with the backend through Axios. The application is powered by a robust backend developed in Spring with JDBC for database interaction and PostgreSQL as the data store. The app includes user authentication, enabling users to create profiles, manage favorite coffee shops, and upload profile pictures.
