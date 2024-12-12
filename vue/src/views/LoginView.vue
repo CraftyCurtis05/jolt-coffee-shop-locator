@@ -1,6 +1,8 @@
+<!-- LoginView.vue -->
+
 <template>
   <body>
-    <img src="@/assets/jolt_logo.png" alt="logo"/>
+    <img src="@/assets/app/logo/jolt_logo.png" alt="logo"/>
     <div class="form-container-opacity">
     </div>
     <div class="login-form">
@@ -17,10 +19,10 @@
           </div>
         </div>
         <div class="alert-container">
-          <div role="alert" v-if="this.$route.query.registration">
+          <div role="alert" v-if="this.$route.query.registration" id="alert1">
             Thank you for registering!<br>Please sign in.
           </div>
-          <div role="alert" v-if="invalidCredentials">
+          <div role="alert invalid" v-if="invalidCredentials" id="alert2">
             Invalid username and password!
           </div>
         </div>
@@ -35,7 +37,9 @@
 
 <script>
 import authService from "../services/AuthService";
+
 export default {
+  name: 'LoginView',
   components: {},
   data() {
     return {
@@ -75,7 +79,7 @@ body {
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background: url('@/assets/beans-coffee.gif');
+  background: url('@/assets/log_view/beans-coffee.gif');
   background-size: cover;
   font-family: 'Ubuntu', sans-serif;
   color: #333437;
@@ -145,6 +149,11 @@ h1 {
   font-weight: bold;
   color: #681c29;
   padding-top: .5rem;
+}
+
+#alert1 {
+  font-weight: 500;
+  color: rgb(234,189,99);
 }
 
 .button-container {

@@ -8,7 +8,7 @@
 
     <article class="profile-pic">
       <!-- Display the profile image if available -->
-      <div v-if="imageUrl">
+      <div v-if="imageUrl" class="image-container">
         <img :src="imageUrl" alt="Profile Picture" />
       </div>
 
@@ -25,9 +25,10 @@
 </template>
 
 <script>
-import ProfileService from '../services/ProfileService';
+import ProfileService from '../../services/ProfileService';
 
 export default {
+
   data() {
     return {
       // File selected by the user for uploading
@@ -123,12 +124,28 @@ export default {
 </script>
 
 <style scoped>
+.profile-pic-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-container {
+  position: relative; 
+  width: 200px; 
+  height: 200px; 
+  overflow: hidden; 
+  border-radius: 50%;
+  border: 10px #e8bb64 solid;
+}
+
+img { 
+  width: 100%; 
+  height: auto;
+}
+
 .profile-pic form {
   display: flex;
   flex-direction: column;
-}
-
-img {
-    width: 10vw;
 }
 </style>

@@ -1,3 +1,5 @@
+// index.js Router
+
 import { createRouter as createRouter, createWebHistory } from 'vue-router'
 import { useStore } from 'vuex'
 

@@ -4,7 +4,7 @@
   <body>
     <header>
       <h1>Who We Are</h1>
-      <p>Meet Our Software Engineers</p>
+      <h2>Meet Our Developers</h2>
     </header>
     
     <main>
@@ -24,16 +24,18 @@
         <David/>
       </section>
     </main>
+
   </body>  
 </template>
 
 <script>
-import Jennifer from '../components/about/Jennifer.vue';
-import Steven from '../components/about/Steven.vue';
-import Naomi from '../components/about/Naomi.vue';
-import David from '../components/about/David.vue';
+import Jennifer from '../components/about_view/Jennifer.vue';
+import Steven from '../components/about_view/Steven.vue';
+import Naomi from '../components/about_view/Naomi.vue';
+import David from '../components/about_view/David.vue';
 
 export default {
+  name: 'AboutUsView',
   components: {
     Jennifer,
     Steven,
@@ -49,26 +51,11 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  font-family: 'Ubuntu', sans-serif;
-  color: #333437;
-  padding-top: 5rem;
 }
 
 main {
   display: flex;
   flex-direction: row;
-}
-
-h1 {
-  font-weight: bolder;
-  font-size: 1.8rem;
-  text-align: center;
-  margin: 0;
-}
-
-p {
-  margin-top: .5vw;
 }
 </style>
 

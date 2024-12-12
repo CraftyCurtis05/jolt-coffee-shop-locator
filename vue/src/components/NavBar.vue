@@ -5,7 +5,7 @@
         <div class="nav-header">
 
             <!-- Logo -->
-            <router-link id="logo" v-bind:to="{ name: 'home' }" v-if="$store.state.token != ''"><img src="@/assets/jolt_logo.png"></router-link>
+            <router-link id="logo" v-bind:to="{ name: 'home' }" v-if="$store.state.token != ''"><img src="@/assets/app/logo/jolt_logo.png"></router-link>
 
             <!-- Toggle Button -->
             <button class="toggle-btn" @click="isNavOpen = !isNavOpen">☰</button>
@@ -29,10 +29,12 @@
                 <router-link class="link" v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">LOGOUT</router-link>
 
                 <!-- Profile Picture with dynamic src -->
-                <router-link id="profile-pic" v-bind:to="{ name: 'profile' }" v-if="$store.state.token != ''">
-                    <!-- Fallback image used if no profile image is fetched -->
-                    <img :src="imageUrl || 'src/assets/profile_pic.png'" alt="Profile Picture" />
-                </router-link>
+                 <div class="image-container">
+                    <router-link v-bind:to="{ name: 'profile' }" v-if="$store.state.token != ''">
+                        <!-- Fallback image used if no profile image is fetched -->
+                        <img :src="imageUrl || 'src/assets/app/profile_pic.png'" alt="Profile Picture" />
+                    </router-link>
+                </div>
             </div>
         </div>
     </nav>
@@ -40,9 +42,10 @@
 
 <script>
 // Importing the ProfileService to fetch the profile image
-import ProfileService from '../services/ProfileService';
+import ProfileService from '../services/ProfileService.js';
 
 export default {
+    name: 'NavBar',
   data() {
     return {
         // Tracks if the navbar is open
@@ -105,8 +108,7 @@ nav {
 }
 
 /* Nav Container */
-.nav-container,
-.profile-container {
+.nav-container {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -131,11 +133,28 @@ nav {
     color: #333437;
 }
 
+.profile-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    margin-right: 1.6rem;
+}
+
 /* Profile Image */
-.profile-container img {
-    width: 3rem;
-    height: auto;
-    padding-right: 2rem;
+.image-container {
+  position: relative; 
+  width: 3.3rem; 
+  height: 3.3rem; 
+  overflow: hidden; 
+  border-radius: 50%;
+  border: .2rem #e8bb64 solid;
+}
+
+img { 
+  width: 100%; 
+  height: auto;
 }
 
 a:hover {

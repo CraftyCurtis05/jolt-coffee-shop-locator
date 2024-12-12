@@ -29,6 +29,7 @@
 
 <script>
 export default {
+  name: 'ProfileDetails',
   props: {
     user: {
       // Expecting a 'user' object as a prop that will be passed to the component

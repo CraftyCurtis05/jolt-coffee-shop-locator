@@ -1,14 +1,28 @@
+<!-- Footer.vue Component -->
+
 <template>
   <footer v-if="!$route.meta.hideNavBar">
+
     <div class="footer-container">
       <p class="slogan">Be Brew-tiful. Sip, Savor, Repeat.</p>
+
       <div class="social-links">
-        <a href="https://www.facebook.com/profile.php?id=100094171302714" target="_blank" class="social-link">
-          <img src="src\assets\facebook.jpg" alt="Facebook">
+        <a href="https://www.facebook.com/" target="_blank" class="social-link">
+          <img src="@/assets/app/social_media/facebook_logo.png" alt="Facebook">
         </a>
-        <a href="https://www.instagram.com/joltcoffeeshoplocator/" target="_blank" class="social-link">
-          <img src="src\assets\instagram.jpg" alt="Instagram">
+
+        <a href="https://www.instagram.com/" target="_blank" class="social-link">
+          <img src="@/assets/app/social_media/instagram_logo.png" alt="Instagram">
         </a>
+
+        <a href="https://www.linkedin.com/" target="_blank" class="social-link">
+          <img src="@/assets/app\social_media/linkedIn_logo.png" alt="LinkedIn">
+        </a>
+
+        <a href="https://www.twitter.com/" target="_blank" class="social-link">
+          <img src="@/assets/app/social_media/twitter_logo.png" alt="Twitter">
+        </a>
+        
       </div>
       <span>&copy; {{ year }} {{ companyName }}</span>
     </div>
@@ -18,6 +32,7 @@
   
 <script>
 export default {
+  name: 'Footer',
   data() {
     return {
       year: new Date().getFullYear(),

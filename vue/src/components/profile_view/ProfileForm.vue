@@ -143,9 +143,10 @@
 </template>
 
 <script>
-import ProfileService from '../services/ProfileService';
+import ProfileService from '../../services/ProfileService.js';
 
 export default {
+  name: 'ProfileForm',
   data() {
     return {
       // Array of months used for the birth month dropdown

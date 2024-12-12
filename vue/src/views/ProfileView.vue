@@ -35,18 +35,20 @@
       <section class="favorites">
         <Favorites />
       </section>
+
     </main>
   </body>
 </template>
 
 <script>
 import ProfileService from '../services/ProfileService'; // Service for fetching profile data from API
-import ProfilePic from '../components/ProfilePic.vue'; // ProfilePic component to display user's profile picture
-import ProfileForm from '../components/ProfileForm.vue'; // ProfileForm component for editing user profile
-import ProfileDetails from '../components/ProfileDetails.vue'; // ProfileDetails component to display user info
-import Favorites from '../components/Favorites.vue'; // Favorites component to show user’s favorite items
+import ProfilePic from '../components/profile_view/ProfilePic.vue'; // ProfilePic component to display user's profile picture
+import ProfileForm from '../components/profile_view/ProfileForm.vue'; // ProfileForm component for editing user profile
+import ProfileDetails from '../components/profile_view/ProfileDetails.vue'; // ProfileDetails component to display user info
+import Favorites from '../components/profile_view/Favorites.vue'; // Favorites component to show user’s favorite items
 
 export default {
+  name: 'ProfileView',
   components: {
     ProfilePic,
     ProfileForm,

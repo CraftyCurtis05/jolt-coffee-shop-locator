@@ -1,3 +1,5 @@
+// AuthService.js
+
 import axios from 'axios';
 
 export default {
@@ -9,4 +11,4 @@ export default {
   register(user) {
     return axios.post('/register', user)
   },
-}
+};

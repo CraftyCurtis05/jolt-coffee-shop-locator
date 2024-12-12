@@ -1,15 +1,24 @@
+<!-- LocatorView.vue -->
+
 <template>
   <body>
-    <h1>Locator</h1>
-    <p>Uncover your next coffee adventure. Locate the perfect brew near you</p>  
-    <SearchBar/>
+    <header>
+      <h1>Locator</h1>
+      <p>Uncover your next coffee adventure. Locate the perfect brew near you</p>
+    </header>
+
+    <section class="search-bar">
+      <SearchBar/>
+    </section>
+    
   </body>
 </template>
   
 <script>
-import SearchBar from '../components/SearchBar.vue';
+import SearchBar from '../components/locator_view/SearchBar.vue';
 
 export default {
+  name: 'LocatorView',
   components: {
     SearchBar
   }

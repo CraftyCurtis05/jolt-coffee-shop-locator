@@ -1,21 +1,23 @@
+<!-- SearchBar.vue Components -->
+
 <template>
-  <div class="locator-container">
+  <section class="locator-container">
 
     <!-- Search Bar -->
-    <div class="search-bar">
+    <article class="search-bar">
       <input type="text" v-model="locationID" name="user-location" placeholder="Enter Your Location"/>
       <button @click="search()">Search</button>
-    </div>
+    </article>
 
     <!-- Near Home Search -->
-     <div class="search-home">
+     <article class="search-home">
         <button @click="searchHome()">Search Near Home</button>
-     </div>
+     </article>
 
     <h1>List of local coffee shops near you:</h1>
 
     <!-- Search Results -->
-    <div class="results-container">
+    <article class="results-container">
       <div class="results" v-for="result in results" v-bind:key="result.id">
         <a class="name" v-bind:href="result.url" target="_blank">{{ result.name }}</a>
         <div class="address">
@@ -30,21 +32,21 @@
         <div class="result-image">  
           <a v-bind:href="result.url" target="_blank"><img v-bind:src="result.image_url"/></a>
         </div>
-        <button id="favorite" v-on:click="setFavorite(result)"><img src="@/assets/favorite_btn.png"></button>  
+        <button id="favorite" v-on:click="setFavorite(result)"><img src="@/assets/locator_view/favorites/favorite_btn.png"></button>  
       </div>  
-    </div>
+    </article>
 
     <!-- No Search Results -->
     <div classv-if="results.length === 0">
       <p>No results found. Please try a different location.</p>
     </div>
-  </div>
+
+  </section>
 </template>
   
 <script>
-import YelpService from '../services/YelpService.js';
-import FavoriteService from '../services/FavoriteService.js';
-import ProfileService from '../services/ProfileService.js';
+import YelpService from '../../services/YelpService.js';
+import FavoriteService from '../../services/FavoriteService.js';
 
 export default {
   name: "SearchBar",

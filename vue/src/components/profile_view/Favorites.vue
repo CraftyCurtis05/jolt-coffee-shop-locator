@@ -1,5 +1,7 @@
+<!-- Favorites.vue -->
+
 <template>
-    <main class="favorites-container">
+    <section class="favorites-container">
         <h1>Favorites</h1> 
         <p>Coffee Shop Delights: My Personal Selection</p> 
         <div class="results-container" v-for="result in results" :key="result.favoriteId"> 
@@ -26,13 +28,14 @@
         <div v-if="results.length === 0">
             <p>You have no favorites coffee shops saved yet!</p>
         </div>
-    </main>
+    </section>
   </template>
   
 <script>
-import FavoriteService from '../services/FavoriteService.js';
+import FavoriteService from '../../services/FavoriteService.js';
 
 export default {
+    name: 'Favorites',
     data() {
         return {
             results: []  // To store the user's favorites
@@ -70,7 +73,7 @@ export default {
 </script>
   
 <style scoped>
-main {
+section {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;

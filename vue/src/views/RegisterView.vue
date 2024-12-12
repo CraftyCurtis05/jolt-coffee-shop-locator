@@ -1,6 +1,8 @@
+<!-- RegisterView.vue -->
+
 <template>
   <body>
-    <img src="@/assets/jolt_logo.png" alt="logo"/>
+    <img src="@/assets/app/logo/jolt_logo.png" alt="logo"/>
     <div class="form-container-opacity">
     </div>
     <div class="register-form">
@@ -33,9 +35,10 @@
 </template>
 
 <script>
-import authService from '../services/AuthService';
+import authService from '../services/AuthService.js';
 
 export default {
+  name: 'RegisterView',
   data() {
     return {
       user: {
@@ -88,7 +91,7 @@ body {
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background: url('@/assets/beans-coffee.gif');
+  background: url('@/assets/log_view/beans-coffee.gif');
   background-size: cover;
   font-family: 'Ubuntu', sans-serif;
   color: #333437;

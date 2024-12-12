@@ -1,32 +1,39 @@
+<!-- Carousel.vue Component -->
+
 <template>
-  <div class="carousel-container">
-    <div class="carousel">
+  <article class="carousel-container">
+
+    <section class="carousel">
       <transition name="slide" mode="out-in">
         <div :key="currentIndex" class="carousel-item">
           <img :src="images[currentIndex]" alt="Slide" class="carousel-image" />
         </div>
       </transition>
-    </div>
+    </section>
+
     <button @click="prevSlide" class="prev-btn">
-      <img src="@/assets/carousel/prev_icon_wht.png" class="default">
-      <img src="@/assets/carousel/prev_icon_bwn.png" class="hover">
+      <img src="@/assets/home_view/carousel/prev_icon_wht.png" class="default">
+      <img src="@/assets/home_view/carousel/prev_icon_bwn.png" class="hover">
     </button>
+
     <button @click="nextSlide" class="next-btn">
-      <img src="@/assets/carousel/next_icon_wht.png" class="default">
-      <img src="@/assets/carousel/next_icon_bwn.png" class="hover">
+      <img src="@/assets/home_view/carousel/next_icon_wht.png" class="default">
+      <img src="@/assets/home_view/carousel/next_icon_bwn.png" class="hover">
     </button>
-  </div>
+    
+  </article>
 </template>
 
 <script>
 export default {
+  name: 'Carousel',
   data() {
     return {
       images: [
-        'src/assets/carousel/carousel_01.png',
-        'src/assets/carousel/carousel_02.png',
-        'src/assets/carousel/carousel_03.png',
-        'src/assets/carousel/carousel_04.png'
+        'src/assets/home_view/carousel/carousel_01.png',
+        'src/assets/home_view/carousel/carousel_02.png',
+        'src/assets/home_view/carousel/carousel_03.png',
+        'src/assets/home_view/carousel/carousel_04.png'
         // Add more image URLs as needed
       ],
       currentIndex: 0,
@@ -52,19 +59,12 @@ export default {
   background-color: rgb(53, 37, 19);
 }
 
-.carousel {
-  overflow: hidden;
-  position: relative;
-}
-
 .carousel-item {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: auto;
-
-  
 }
 
 .carousel-image {
