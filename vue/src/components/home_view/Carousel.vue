@@ -73,6 +73,11 @@ export default {
   border: .4vw #e8bb64 solid;
 }
 
+button:hover {
+  background-color: #e8bb64;
+  color: #525459;
+}
+
 .prev-btn,
 .next-btn {
   display: flex;
@@ -101,11 +106,6 @@ export default {
   right: 1%;
 }
 
-button:hover {
-  background-color: #e8bb64;
-  color: #525459;
-}
-
 button img {
   display: block;
   position: absolute;
@@ -119,39 +119,18 @@ button img {
 
 .hover {
   opacity: 0; /* Initially hidden */
-  position: absolute; /* Overlay */
-}
-
-.default:hover {
-  opacity: 0; /* Hide default on hover */
 }
 
 .hover:hover {
   opacity: 1; /* Show hover image */
 }
 
-
-/* !!!!!! REDO RESPONSIVE STYLING !!!!!! */
-
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
-  .carousel-image {
-    height: auto; /* Allow the height to adjust for smaller screens */
-  }
 
-  .prev-btn,
-  .next-btn {
-    width: 30px;
-    height: 30px;
-    font-size: 12px; /* Adjust button size */
-  }
 }
 
-@media (max-width: 480px) {
-  .prev-btn,
-  .next-btn {
-    width: 25px;
-    height: 25px;
-  }
+@media (max-width: 425px) {
+
 }
 </style>

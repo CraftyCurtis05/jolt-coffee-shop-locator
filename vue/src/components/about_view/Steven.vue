@@ -11,7 +11,7 @@
 
         <section class="about-container">
             <header>
-                <h2>Steven Riggle</h2>
+                <h3>Steven Riggle</h3>
             </header>
 
             <details>
@@ -73,7 +73,7 @@ img:hover {
     border: .2vw #e8bb64 solid;
 }
 
-h2 {
+h3 {
     font-size: 1.3rem;
 }
 
