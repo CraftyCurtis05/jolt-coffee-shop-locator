@@ -41,11 +41,13 @@ main {
   align-items: center;
 }
 
-/* Add styles for the company description */
+.carousel-container {
+  margin: 0 auto;
+}
+
 .description-container {
-  text-align: center;
-  font-size: .9rem; /* Adjust the font size as needed */
-  max-width: 70%; /* Adjust the max width as needed */
-  line-height: 1.5; /* Adjust the line height as needed */
+  font-size: 1rem;
+  max-width: 70%;
+  line-height: 1.5;
 }
 </style>

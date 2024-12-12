@@ -6,19 +6,19 @@
     <section class="carousel">
       <transition name="slide" mode="out-in">
         <div :key="currentIndex" class="carousel-item">
-          <img :src="images[currentIndex]" alt="Slide" class="carousel-image" />
+          <img :src="images[currentIndex]" alt="Slide" title="Carousel Image"/>
         </div>
       </transition>
     </section>
 
     <button @click="prevSlide" class="prev-btn">
       <img src="@/assets/home_view/carousel/prev_icon_wht.png" class="default">
-      <img src="@/assets/home_view/carousel/prev_icon_bwn.png" class="hover">
+      <img src="@/assets/home_view/carousel/prev_icon_bwn.png" class="hover" title="Previous Image">
     </button>
 
     <button @click="nextSlide" class="next-btn">
       <img src="@/assets/home_view/carousel/next_icon_wht.png" class="default">
-      <img src="@/assets/home_view/carousel/next_icon_bwn.png" class="hover">
+      <img src="@/assets/home_view/carousel/next_icon_bwn.png" class="hover" title="Next Image">
     </button>
     
   </article>
@@ -53,10 +53,10 @@ export default {
 <style scoped>
 .carousel-container {
   position: relative;
-  width: 70%; /* Make the container width flexible */
-  padding: 2rem; /* Add some padding for smaller screens */
-  box-sizing: border-box;
+  width: 50%;
   background-color: rgb(53, 37, 19);
+  box-sizing: border-box;
+  padding: 2%;
 }
 
 .carousel-item {
@@ -67,10 +67,9 @@ export default {
   height: auto;
 }
 
-.carousel-image {
-  width: 85%; /* Set the image width to adapt to container */
-  height: auto; /* Maintain the aspect ratio */
-  object-fit: cover;
+.carousel img {
+  width: 85%;
+  height: auto;
   border: .4vw #e8bb64 solid;
 }
 
@@ -95,11 +94,11 @@ export default {
 }
 
 .prev-btn {
-  left: 10px;
+  left: 1%;
 }
 
 .next-btn {
-  right: 10px;
+  right: 1%;
 }
 
 button:hover {

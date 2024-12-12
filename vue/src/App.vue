@@ -1,4 +1,5 @@
 <!-- App.vue -->
+ <!-- npm run dev -->
 
 <template>
   <body id="app">
