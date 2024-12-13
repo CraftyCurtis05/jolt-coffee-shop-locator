@@ -56,7 +56,7 @@
 
         <div class="favorite">
           <button @click="setFavorite(result)">
-            <img src="@/assets/locator_view/favorites/favorite_btn.png" alt="Favorite Button" title="Click to Add to Favorites">
+            <img src="@/assets/locator_view/favorite_btn.png" alt="Favorite Button" title="Click to Add to Favorites">
             <h4>Add to Favorites</h4>
           </button>  
         </div>

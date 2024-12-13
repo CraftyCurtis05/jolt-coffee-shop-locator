@@ -383,7 +383,8 @@ legend {
   width: 30%;
 }
 
-.col-70 {
+.col-70,
+option {
   width: 70%;
   margin-top: 6px;
 }

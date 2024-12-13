@@ -2,10 +2,6 @@
 
 <template>
   <body>
-    <header>
-      <h1>Profile</h1>
-      <h2>Jolt Up Your Profile</h2>
-    </header>
 
     <main>
       <section class="profile-container">
@@ -114,7 +110,6 @@ export default {
 main {
   display: flex;
   flex-direction: row;
-  height: 130vh;
 }
 
 .profile-container {
@@ -124,7 +119,6 @@ main {
   background-color: rgb(53, 37, 19);
   box-sizing: border-box;
   padding: 4% 5%;
-  margin: -5rem auto;
 }
 
 .profile-form button {
@@ -144,6 +138,6 @@ main {
 }
 
 .favorites-container {
-  width: 65%;
+  width: 100%;
 }
 </style>

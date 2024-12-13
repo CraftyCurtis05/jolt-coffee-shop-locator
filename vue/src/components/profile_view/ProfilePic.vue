@@ -6,14 +6,14 @@
     <section class="profile-pic">
       <!-- Display the profile image if available -->
       <div v-if="imageUrl" class="image-container">
-        <img :src="imageUrl" alt="Profile Picture" title="Profile Picture"/>
+        <img :src="imageUrl || defaultImage" alt="Profile Picture" title="Profile Picture"/>
       </div>
 
       <!-- Form to upload a new profile picture -->
       <form @submit.prevent="uploadImage">
         <!-- Input for selecting a file, restricted to image types -->
         <input type="file" @change="handleFileUpload" accept="image/*"/>
-        <button type="submit" title="Click to Change Profile Picture">Change Picture</button>
+        <button type="submit" title="Click to Save Profile Picture">Change Picture</button>
       </form>
     </section>
 
@@ -30,7 +30,8 @@ export default {
       // File selected by the user for uploading
       selectedFile: null,
       // URL of the uploaded profile image
-      imageUrl: null
+      imageUrl: null,
+      defaultImage: 'src/assets/app/profile_pic.png'
     };
   },
 
