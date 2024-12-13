@@ -66,7 +66,7 @@ export default {
     display: flex;
     flex-direction: column;
     max-width: 39vw;
-    background-color: rgb(160, 153, 145);
+    background-color: #e8bb64;
     border-radius: .1rem;
     padding-bottom: .5rem;
     margin: 1rem 1rem;
@@ -74,7 +74,12 @@ export default {
 }
 
 .shop:hover {
-    transform: scale(1.1); 
+    transform: scale(1.1);
+    filter: grayscale(80%);
+}
+
+.shop:hover h3 {
+    font-weight: bold;
 }
 
 .shop img {
@@ -82,9 +87,6 @@ export default {
     border: .5rem #e8bb64 solid;
 }
 
-.shop img:hover {
-    filter: grayscale(80%);
-}
 
 a {
     color: #333437;
@@ -94,11 +96,8 @@ a {
 h3 {
     font-size: 1.2rem;
     font-weight: lighter;
+    color: rgb(53, 37, 19);
     margin: .5rem auto;
     transition: all 0.5s;
-}
-
-h3:hover {
-    font-weight: bold;
 }
 </style>
