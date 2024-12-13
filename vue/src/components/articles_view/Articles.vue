@@ -58,47 +58,47 @@ export default {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+    width: 100%;
+    padding: 1vw 0;
 }
 
 .articles {
     display: flex;
     flex-direction: column;
-    font-size: 1rem;
-    max-width: 70%;
-    line-height: 1.2;
-    padding-bottom: 1.5vw;
+    max-width: 39vw;
+    background-color: rgb(160, 153, 145);
+    border-radius: .1rem;
+    padding-bottom: .5rem;
+    margin: 1rem 1rem;
+    transition: all 0.5s;
+}
+
+.articles:hover {
+    transform: scale(1.1);
 }
 
 .articles img {
-    width: 85%;
-    height: auto;
+    width: 35vw;
+    border: .5rem #e8bb64 solid;
 }
 
 .articles img:hover {
-    border: .3rem #e8bb64 solid;
+    filter: grayscale(80%);
 }
 
 a {
+    color: #333437;
     text-decoration: none;
 }
 
 h3 {
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: lighter;
-    color: #333437;
-    margin: 0;
+    margin: .5rem auto;
+    transition: all 0.5s;
 }
 
 h3:hover {
-    font-weight: bolder;
-}
-
-/* Media Queries for Responsiveness */
-@media (max-width: 768px) {
-
-}
-
-@media (max-width: 425px) {
-
+    font-weight: bold;
 }
 </style>

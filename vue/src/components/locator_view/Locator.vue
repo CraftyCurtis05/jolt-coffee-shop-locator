@@ -197,7 +197,7 @@ h3 {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 1rem 0;
+  padding: 1rem 0;
 }
 
 .result {
