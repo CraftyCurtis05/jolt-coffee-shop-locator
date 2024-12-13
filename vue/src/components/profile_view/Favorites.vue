@@ -112,20 +112,21 @@ header {
     width: 100%;
     color: rgb(245, 242, 242);
     background-color: rgb(53, 37, 19);
-    border-bottom: .4vw  #e8bb64 solid;
+    border-bottom: .4rem  #e8bb64 solid;
+    padding: .5rem 0;
 }
 
 h3 {
-  font-weight: bolder;
-  font-size: 1.3rem;
-  margin: 0;
-  margin-top: 1vw;
+    font-weight: bolder;
+    font-size: 1.3rem;
+    margin: 0;
+    margin-top: 1rem;
 }
 
 h4 {
     font-size: 1rem;
-    font-weight: 200;
-    margin: .5vw;
+    font-weight: lighter;
+    margin: .5rem;
 }
 
 .results-container {
@@ -133,47 +134,55 @@ h4 {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 1vw;
+    margin: 1rem 0;
 }
 
 .result {
     display: flex;
     flex-direction: column;
-    flex-wrap: nowrap;
     justify-content: center;
-    align-items: center;
-    width: 20vw;
-    height: 20vw;
+    width: 15rem;
+    height: 15rem;
+    border: .1rem rgb(53, 37, 19) solid;
+    border-radius: .1rem;
     padding: .8rem;
 }
 
 .result:hover {
-  font-size: 1.1rem;
-  background-color: #e8bb64;
-  border-radius: .2vw;
-  transition: all 0.5s;
+    background-color: #e8bb64;
 }
 
 .result a {
-  color: #525459;
-  text-decoration: none;
+    color: #525459;
+    text-decoration: none;
 }
 
 .result .name {
-  font-size: .9rem;
-  font-weight: bold;
+    font-weight: bold;
+}
+
+.result .name:hover {
+    font-size: 1.04rem;
 }
 
 .result .location-container {
-    font-size: .8rem;
+    font-size: .9rem;
+}
+
+.result .location-container:hover {
+    font-size: .94rem;
 }
 
 .result img {
-    width: 15vw;
-    height: 15vw;
-    margin-top: .5vw;
-    border: .2vw rgb(53, 37, 19) solid;
-    border-radius: .2vw;
+    width: 10rem;
+    height: 10rem;
+    margin-top: .5rem;
+    border: .1rem rgb(53, 37, 19) solid;
+    border-radius: .1rem;
+}
+
+.result img:hover {
+    border: .12rem rgb(53, 37, 19) solid;
 }
 
 button {
@@ -182,8 +191,7 @@ button {
     font-size: .7rem;
     color: rgb(53, 37, 19);
     background-color: #e8bb64;
-    border-radius: 4px;
-    margin-inline: .3vw;
+    border-radius: .1rem;
 }
 
 button:hover {

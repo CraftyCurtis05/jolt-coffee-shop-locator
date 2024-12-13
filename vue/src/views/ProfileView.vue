@@ -127,8 +127,8 @@ main {
   font-size: .7rem;
   color: rgb(53, 37, 19);
   background-color: #e8bb64;
-  border-radius: 4px;
-  margin-top: 1vw;
+  border-radius: .1rem;
+  margin-top: 1rem;
 }
 
 .profile-form button:hover {

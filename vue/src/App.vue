@@ -65,6 +65,7 @@ html, body {
 
 main {
   width: 100vw;
+  overflow-y: hidden;
 }
 
 h1 {

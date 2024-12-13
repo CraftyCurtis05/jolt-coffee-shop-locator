@@ -4,16 +4,26 @@
   <article class="profile-pic-container">
 
     <section class="profile-pic">
-      <!-- Display the profile image if available -->
+
+      <!-- Display the profile image if available, use the defaultImage if not -->
       <div v-if="imageUrl" class="image-container">
         <img :src="imageUrl || defaultImage" alt="Profile Picture" title="Profile Picture"/>
       </div>
 
       <!-- Form to upload a new profile picture -->
       <form @submit.prevent="uploadImage">
-        <!-- Input for selecting a file, restricted to image types -->
-        <input type="file" @change="handleFileUpload" accept="image/*"/>
-        <button type="submit" title="Click to Save Profile Picture">Change Picture</button>
+
+         <!-- Hidden input for selecting a file -->
+        <input type="file" id="fileInput" @change="handleFileUpload" accept="image/*"/>
+        
+        <!-- Button to either trigger file selection or submit the form -->
+        <button 
+          type="button" 
+          @click="handleButtonClick" 
+          :title="selectedFile ? 'Click to Save Profile Picture' : 'Click to Change Profile Picture'">
+          {{ selectedFile ? 'Save Picture' : 'Change Picture' }}
+        </button>
+
       </form>
     </section>
 
@@ -31,11 +41,30 @@ export default {
       selectedFile: null,
       // URL of the uploaded profile image
       imageUrl: null,
+      // Used as default profile image
       defaultImage: 'src/assets/app/profile_pic.png'
     };
   },
 
   methods: {
+      /**
+     * Handles button click, either triggers file input or uploads the image.
+     */
+     handleButtonClick() {
+      if (this.selectedFile) {
+        this.uploadImage();  // If a file is selected, trigger the upload
+      } else {
+        this.triggerFileInput();  // Otherwise, open the file input dialog
+      }
+    },
+
+    /**
+     * Opens the file input dialog when the button is clicked.
+     */
+     triggerFileInput() {
+      document.getElementById('fileInput').click();  // Triggers the file input click event
+    },
+
     /**
      * Handles file selection, validates file type, and sets the selected file.
      * @param {Event} event - The input change event triggered by file selection.
@@ -63,11 +92,7 @@ export default {
      * Sends the image as FormData to be processed by the backend service.
      */
     async uploadImage() {
-      if (!this.selectedFile) {
-        // Alert user to select a file before uploading
-        alert("Please select an image to upload.");
-        return;
-      }
+ 
       const formData = new FormData();
       formData.append("image", this.selectedFile);
 
@@ -78,6 +103,8 @@ export default {
         this.imageUrl = profileImage.imageUrl;
         // Emit the updated image URL to the parent
         this.$emit('update-image', this.imageUrl);
+        // Reset the selected file and button text
+        this.selectedFile = null;  // Reset selected file so the button switches back
       } catch (error) {
         console.error("Error uploading image:", error);
         alert("Error uploading profile picture!")
@@ -126,17 +153,17 @@ export default {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin: 0 auto;
   color: rgb(245, 242, 242); 
 }
 
 .image-container {
   position: relative; 
-  width: 18vw; 
-  height: 18vw; 
+  width: 16vw; 
+  height: 16vw; 
   overflow: hidden; 
   border-radius: 50%;
   border: .7vw #e8bb64 solid;
+  margin: 0 auto;
 }
 
 img,
@@ -145,13 +172,21 @@ form {
   height: auto;
 }
 
+form input {
+  display: none;
+}
+
 form button {
-  width: 18vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 6rem;
   height: 1.5rem;
   font-size: .7rem;
   color: rgb(53, 37, 19);
   background-color: #e8bb64;
-  border-radius: 4px;
+  border-radius:.1rem;
+  margin: .5rem auto;
 }
 
 form button:hover {

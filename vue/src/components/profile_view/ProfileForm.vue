@@ -180,8 +180,8 @@
 
         <!-- Save and cancel form buttons -->
         <div class="button-container">
-          <button type="submit" @click="saveProfile" title="Click to Save">Save Profile</button>
-          <button type="button" @click="closeForm" title="Click to Close">Cancel</button>
+          <button type="submit" @click="saveProfile" title="Click to Save Updated Profile">Save Profile</button>
+          <button type="button" @click="closeForm" title="Click to Close Update Profile">Cancel</button>
         </div>
 
       </form>
@@ -326,13 +326,13 @@ export default {
 
 <style scoped>
 .profile-form-container {
-  margin-top: 1.5vw;
+  margin: 1rem auto;
 }
 
 .profile-form {
   width: 25vw;
   background-color: rgb(160, 153, 145);
-  border: 2vw rgb(160, 153, 145) solid;
+  border: 1vw rgb(160, 153, 145) solid;
 }
 
 .name,
@@ -359,24 +359,22 @@ legend {
 
 .form {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  font-size: .7rem;
-  width: 100%;
 }
 
 .form label {
-  display: inline-block;
-  font-size: .8rem;
-  padding: 17px 12px 12px 0;
+  display: flex;
+  justify-content: center;
+  font-size: .9rem;
+  margin-top: .8rem;
 }
 
 .form input {
   width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  font-size: .8rem;
+  border: .1rem solid #ccc;
+  border-radius: .1rem;
   box-sizing: border-box;
-  padding: 12px;
+  padding: .6rem;
 }
 
 .col-30 {
@@ -386,24 +384,27 @@ legend {
 .col-70,
 option {
   width: 70%;
-  margin-top: 6px;
+  margin-top: .3rem;
 }
 
 form .button-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: .5vw;
+  margin-top: .9rem;
 }
 
 form button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 6rem;
   height: 1.5rem;
   font-size: .7rem;
   color: rgb(53, 37, 19);
   background-color: #e8bb64;
-  border-radius: 4px;
-  margin-inline: .3vw;
+  border-radius:.1rem;
+  margin-inline: .5rem;
 }
 
 form button:hover {
