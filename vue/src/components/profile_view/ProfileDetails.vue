@@ -1,30 +1,22 @@
 <!-- ProfileDetails.vue Component -->
  
 <template>
-  <section class="profile-details-container">
-    <header>
-      <h1>User Info</h1>
-    </header>
+  <article class="profile-details-container">
    
-    <article class="profile-details" v-if="user">
-      <!-- Display user details only when 'user' prop is available -->
-      <p><strong>First Name:</strong> {{ user.firstName }}</p>
-      <p><strong>Last Name:</strong> {{ user.lastName }}</p>
-      <p><strong>Birth Month:</strong> {{ user.birthMonth }}</p>
-      <p><strong>Birth Day:</strong> {{ user.birthDay }}</p>
-      <p><strong>Birth Year:</strong> {{ user.birthYear }}</p>
-      <p><strong>Address 1:</strong> {{ user.address1 }}</p>
-      <p><strong>Address 2:</strong> {{ user.address2 }}</p>
-      <p><strong>City:</strong> {{ user.city }}</p>
-      <p><strong>State:</strong> {{ user.state }}</p>
-      <p><strong>Zipcode:</strong> {{ user.zipcode }}</p>
-    </article>
+    <!-- Display user details only when 'user' prop is available -->
+    <section class="profile-details" v-if="user">
+      <p class="name">{{ user.firstName }} {{ user.lastName }}</p>
+      <p class="birthday">{{ user.birthMonth }} {{ user.birthDay }}, {{ user.birthYear }}</p>
+      <p class="address1">{{ user.address1 }} {{ user.address2 }}</p>
+      <p class="address2">{{ user.city }}, {{ user.state }} {{ user.zipcode }}</p>
+    </section>
 
-    <article v-else>
+    <section v-else>
       <!-- Show loading message if 'user' prop is not yet available -->
       <p>Loading user profile...</p>
-    </article>
-  </section>
+    </section>
+
+  </article>
 </template>
 
 <script>
@@ -42,5 +34,28 @@ export default {
 </script>
 
 <style scoped>
+.profile-details-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  color: rgb(245, 242, 242);
+}
 
+.name {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.birthday {
+  font-size: .8rem;
+  font-style: italic;
+}
+
+.address1,
+.address2 {
+  font-size: .9rem;
+  margin: 0;
+}
 </style>

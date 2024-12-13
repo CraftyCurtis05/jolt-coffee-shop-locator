@@ -64,7 +64,7 @@ html, body {
 }
 
 main {
-  padding-top: 1rem;
+  width: 100vw;
 }
 
 h1 {

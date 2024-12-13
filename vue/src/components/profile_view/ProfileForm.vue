@@ -1,145 +1,193 @@
 <!-- ProfileForm.vue Component -->
 
 <template>
-  <section v-if="isVisible" class="profile-form-container">
-    <header>
-      <h1>Profile Form</h1>
-    </header>
+  <article v-if="isVisible" class="profile-form-container">
     
-    <article class="profile-form">
-      <form @submit.prevent="submitForm" ref="profileForm">
+    <section class="profile-form">
+      <form @submit.prevent="submitForm">
 
         <!-- Personal Information Section -->
         <fieldset class="name">
           <legend>Personal Information</legend>
-          <div>
-            <label for="firstName">First Name:</label>
-            <input
-              type="text"
-              id="firstName"
-              v-model="user.firstName"
-              :required="!status"
-              @input="trackChanges"
-            />
+          <div class="form">
+            <div class="col-30">
+              <label for="firstName">First Name:</label>
+            </div>
+            <div class="col-70">  
+              <input
+                type="text"
+                id="firstName"
+                v-model="user.firstName"
+                :required="!status"
+                @input="trackChanges"
+                title="Enter First Name"
+              />
+            </div>
           </div>
-          <div>
-            <label for="lastName">Last Name:</label>
-            <input
-              type="text"
-              id="lastName"
-              v-model="user.lastName"
-              :required="!status"
-              @input="trackChanges"
-            />
+          <div class="form">
+            <div class="col-30">
+              <label for="lastName">Last Name:</label>
+            </div>
+            <div class="col-70">
+              <input
+                type="text"
+                id="lastName"
+                v-model="user.lastName"
+                :required="!status"
+                @input="trackChanges"
+                title="Enter Last Name"
+              />
+            </div>
           </div>
         </fieldset>
 
         <!-- Birthday Section (only visible if the status is false) -->
         <fieldset class="birthday" v-if="!status">
           <legend>Birthday</legend>
-          <div>
-            <label for="birthMonth">Birth Month:</label>
-            <select
-              id="birthMonth"
-              v-model="user.birthMonth"
-              :disabled="status"
-              :required="!status"
-            >
-              <option value="" disabled>Select Month</option>
-              <option v-for="month in months" :key="month" :value="month">{{ month }}</option>
-            </select>
+          <div class="form">
+            <div class="col-30">
+              <label for="birthMonth">Birth Month:</label>
+            </div>
+            <div class="col-70">
+              <select
+                id="birthMonth"
+                v-model="user.birthMonth"
+                :disabled="status"
+                :required="!status"
+                title="Enter Birth Month"
+              >
+                <option value="" disabled>Select Month</option>
+                <option v-for="month in months" :key="month" :value="month">{{ month }}</option>
+              </select>
+            </div>  
           </div> 
 
-          <div>
-            <label for="birthDay">Birth Day:</label>
-            <input
-              type="number"
-              id="birthDay"
-              v-model="user.birthDay"
-              :disabled="status"
-              :required="!status"
-              min="1"
-              max="31"
-            />
+          <div class="form">
+            <div class="col-30">
+              <label for="birthDay">Birth Day:</label>
+            </div>
+            <div class="col-70">
+              <input
+                type="number"
+                id="birthDay"
+                v-model="user.birthDay"
+                :disabled="status"
+                :required="!status"
+                min="1"
+                max="31"
+                title="Enter Birth Day"
+              />
+            </div>  
           </div>
   
-          <div>
-            <label for="birthYear">Birth Year:</label>
-            <input
-              type="number"
-              id="birthYear"
-              v-model="user.birthYear"
-              :disabled="status"
-              :required="!status"
-              min="1900"
-              max="2024"
-            />
+          <div class="form">
+            <div class="col-30">
+              <label for="birthYear">Birth Year:</label>
+            </div>
+            <div class="col-70">  
+              <input
+                type="number"
+                id="birthYear"
+                v-model="user.birthYear"
+                :disabled="status"
+                :required="!status"
+                min="1900"
+                max="2024"
+                title="Enter Birth Year"
+              />
+            </div>  
           </div>
         </fieldset>
 
         <!-- Location Section -->
         <fieldset class="location">
           <legend>Location Details</legend>
-          <div>
-            <label for="address1">Address 1:</label>
-            <input
-              type="text"
-              id="address1"
-              v-model="user.address1"
-              :required="!status"
-              @input="trackChanges"
-            />
+          <div class="form">
+            <div class="col-30">
+              <label for="address1">Address 1:</label>
+            </div>
+            <div class="col-70">
+              <input
+                type="text"
+                id="address1"
+                v-model="user.address1"
+                :required="!status"
+                @input="trackChanges"
+                title="Enter Address"
+              />
+            </div>
           </div>
-          <div>
-            <label for="address2">Address 2:</label>
-            <input
-              type="text"
-              id="address2"
-              v-model="user.address2"
-              @input="trackChanges"
-            />
+          <div class="form">
+            <div class="col-30">
+              <label for="address2">Address 2:</label>
+            </div>
+            <div class="col-70">  
+              <input
+                type="text"
+                id="address2"
+                v-model="user.address2"
+                @input="trackChanges"
+                title="Enter Address 2"
+              />
+            </div>  
           </div>
-          <div>
-            <label for="city">City:</label>
-            <input
-              type="text"
-              id="city"
-              v-model="user.city"
-              :required="!status"
-              @input="trackChanges"
-            />
+          <div class="form">
+            <div class="col-30">
+              <label for="city">City:</label>
+            </div>
+            <div class="col-70">
+              <input
+                type="text"
+                id="city"
+                v-model="user.city"
+                :required="!status"
+                @input="trackChanges"
+                title="Enter City"
+              />
+            </div>  
           </div>
-          <div>
-            <label for="state">State:</label>
-            <input
-              type="text"
-              id="state"
-              v-model="user.state"
-              :required="!status"
-              @input="trackChanges"
-            />
+          <div class="form">
+            <div class="col-30">
+              <label for="state">State:</label>
+            </div>
+            <div class="col-70"> 
+              <input
+                type="text"
+                id="state"
+                v-model="user.state"
+                :required="!status"
+                @input="trackChanges"
+                title="Enter State"
+              />
+            </div>  
           </div>
-          <div>
-            <label for="zipcode">Zipcode:</label>
-            <input
-              type="text"
-              id="zipcode"
-              v-model="user.zipcode"
-              :required="!status"
-              @input="trackChanges"
-            />
+          <div class="form">
+            <div class="col-30">
+              <label for="zipcode">Zip Code:</label>
+            </div>
+            <div class="col-70">  
+              <input
+                type="text"
+                id="zipcode"
+                v-model="user.zipcode"
+                :required="!status"
+                @input="trackChanges"
+                title="Enter Zip Code"
+              />
+            </div>  
           </div>
         </fieldset>
 
         <!-- Save and cancel form buttons -->
-        <div>
-          <button type="submit" @click="saveProfile">Save Profile</button>
-          <button type="button" @click="closeForm">Cancel</button>
+        <div class="button-container">
+          <button type="submit" @click="saveProfile" title="Click to Save">Save Profile</button>
+          <button type="button" @click="closeForm" title="Click to Close">Cancel</button>
         </div>
 
       </form>
-    </article>
-  </section>
+    </section>
+
+  </article>
 </template>
 
 <script>
@@ -278,7 +326,88 @@ export default {
 
 <style scoped>
 .profile-form-container {
+  margin-top: 1.5vw;
+}
+
+.profile-form {
+  width: 25vw;
+  background-color: rgb(160, 153, 145);
+  border: 2vw rgb(160, 153, 145) solid;
+}
+
+.name,
+.birthday,
+.location {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;  
+}
+
+fieldset {
   width: 20vw;
-  padding: 0 3vw;
+}
+
+fieldset:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+legend {
+  font-size: .9rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  font-size: .7rem;
+  width: 100%;
+}
+
+.form label {
+  display: inline-block;
+  font-size: .8rem;
+  padding: 17px 12px 12px 0;
+}
+
+.form input {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  padding: 12px;
+}
+
+.col-30 {
+  width: 30%;
+}
+
+.col-70 {
+  width: 70%;
+  margin-top: 6px;
+}
+
+form .button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: .5vw;
+}
+
+form button {
+  width: 6rem;
+  height: 1.5rem;
+  font-size: .7rem;
+  color: rgb(53, 37, 19);
+  background-color: #e8bb64;
+  border-radius: 4px;
+  margin-inline: .3vw;
+}
+
+form button:hover {
+  color: #e8bb64;
+  background-color: rgb(53, 37, 19);
+  cursor: pointer;
 }
 </style>

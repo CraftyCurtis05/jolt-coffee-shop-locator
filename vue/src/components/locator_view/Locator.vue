@@ -18,9 +18,9 @@
 
     <!-- Search Results -->
     <section class="results-container">
-      <div class="result" v-for="result in results" v-bind:key="result.id">
+      <div class="result" v-for="result in results" :key="result.id">
 
-        <a class="name" v-bind:href="result.url" target="_blank" title="Click for Yelp Page">{{ result.name }}</a>
+        <a class="name" :href="result.url" target="_blank" title="Click for Yelp Page">{{ result.name }}</a>
 
         <div class="address" title="Click for Directions">
           <div class="top">
@@ -49,13 +49,13 @@
         </div>
 
         <div class="image">  
-          <a v-bind:href="result.url" target="_blank">
-            <img v-bind:src="result.image_url" alt="Yelp Coffee Shop Image" title="Click for Yelp Page"/>
+          <a :href="result.url" target="_blank">
+            <img :src="result.image_url || defaultImage" alt="Yelp Coffee Shop Image" title="Click for Yelp Page"/>
           </a>
         </div>
 
         <div class="favorite">
-          <button v-on:click="setFavorite(result)">
+          <button @click="setFavorite(result)">
             <img src="@/assets/locator_view/favorites/favorite_btn.png" alt="Favorite Button" title="Click to Add to Favorites">
             <h4>Add to Favorites</h4>
           </button>  
@@ -80,9 +80,10 @@ export default {
   name: "Locator",
   data() {
     return {
-      locationId: '',
-      results: [] // Add the results array to hold the locator search results
-    };
+      locationId: '', // LocationId variable to hold and pass location
+      results: [], // Results array to hold the locator search results
+      defaultImage: 'src/assets/locator_view/default_image.png'
+    }
   },
   
   methods: {
@@ -107,6 +108,7 @@ export default {
           console.log(this.results);
         })
         .catch(error => {
+          alert('There was a problem fetching coffee shops! Please try again.');
           console.error('Error fetching Yelp results:', error);
         });
     },

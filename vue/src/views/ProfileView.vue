@@ -4,11 +4,11 @@
   <body>
     <header>
       <h1>Profile</h1>
-      <p>Jolt Up Your Profile</p>
+      <h2>Jolt Up Your Profile</h2>
     </header>
 
     <main>
-      <section class="user-details">
+      <section class="profile-container">
 
         <!-- User Profile Picture Section -->
         <article class="profile-pic">
@@ -26,13 +26,13 @@
           <ProfileForm @profile-updated="updateProfile" @form-visible="toggleUpdateButton" ref="profileForm" />
 
           <!-- Button to Trigger Profile Form (Visible When Form is Hidden) -->
-          <button v-if="showUpdateButton" @click="showForm">Update Profile</button>
+          <button v-if="showUpdateButton" @click="showForm" title="Click to Create or Update Profile">Update Profile</button>
         </article>
 
       </section>
 
       <!-- User Favorites Section -->
-      <section class="favorites">
+      <section class="favorites-container">
         <Favorites />
       </section>
 
@@ -41,18 +41,18 @@
 </template>
 
 <script>
-import ProfileService from '../services/ProfileService'; // Service for fetching profile data from API
-import ProfilePic from '../components/profile_view/ProfilePic.vue'; // ProfilePic component to display user's profile picture
-import ProfileForm from '../components/profile_view/ProfileForm.vue'; // ProfileForm component for editing user profile
-import ProfileDetails from '../components/profile_view/ProfileDetails.vue'; // ProfileDetails component to display user info
-import Favorites from '../components/profile_view/Favorites.vue'; // Favorites component to show user’s favorite items
+import ProfileService from '../services/ProfileService';
+import ProfilePic from '../components/profile_view/ProfilePic.vue';
+import ProfileDetails from '../components/profile_view/ProfileDetails.vue';
+import ProfileForm from '../components/profile_view/ProfileForm.vue';
+import Favorites from '../components/profile_view/Favorites.vue';
 
 export default {
   name: 'ProfileView',
   components: {
     ProfilePic,
-    ProfileForm,
     ProfileDetails,
+    ProfileForm,
     Favorites
   },
 
@@ -104,7 +104,6 @@ export default {
   },
 
   mounted() {
- 
     // Fetches the user's profile data when the component is mounted
     this.fetchProfile();
   }
@@ -112,37 +111,39 @@ export default {
 </script>
 
 <style scoped>
-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Ubuntu', sans-serif;
-  color: #333437;
-  padding-top: 5rem;
-}
-
-h1{
-  font-weight: bolder;
-  font-size: 1.8rem;
-  text-align: center;
-  margin: 0;
-}
-
-p {
-  font-size: 1rem;
-  margin-top: .5vw;
-}
-
 main {
   display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-  padding: 0vw 3vw;
+  flex-direction: row;
+  height: 130vh;
 }
 
-.user-details {
+.profile-container {
   display: flex;
   flex-direction: column;
+  width: 40%;
+  background-color: rgb(53, 37, 19);
+  box-sizing: border-box;
+  padding: 4% 5%;
+  margin: -5rem auto;
+}
+
+.profile-form button {
+  width: 6rem;
+  height: 1.5rem;
+  font-size: .7rem;
+  color: rgb(53, 37, 19);
+  background-color: #e8bb64;
+  border-radius: 4px;
+  margin-top: 1vw;
+}
+
+.profile-form button:hover {
+  color: #e8bb64;
+  background-color: rgb(53, 37, 19);
+  cursor: pointer;
+}
+
+.favorites-container {
+  width: 65%;
 }
 </style>

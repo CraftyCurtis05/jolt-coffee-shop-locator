@@ -1,34 +1,41 @@
 <!-- Favorites.vue -->
 
 <template>
-    <section class="favorites-container">
-        <h1>Favorites</h1> 
-        <p>Coffee Shop Delights: My Personal Selection</p> 
-        <div class="results-container" v-for="result in results" :key="result.favoriteId"> 
+    <article class="favorites-container">
+        <header>
+            <h3>Favorites</h3> 
+            <h4>Coffee Shop Delights: My Personal Selection</h4>
+        </header>
+
+        <section class="results-container" v-for="result in results" :key="result.favoriteId"> 
             <div class="result">
                 <div class="name">
                     <a v-bind:href="result.businessUrl" target="_blank">{{ result.businessName }}</a>
                 </div>
-                <div class="address">
+                <div class="location-container">
                     <a id="address1" :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(result.businessAddress1)" target="_blank">{{ result.businessAddress1 }}</a>
                     <a id="address2" :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(result.businessAddress1)" target="_blank">{{ result.businessAddress2 }}</a>
                     <a id="city" :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(result.businessAddress1)" target="_blank">{{ result.businessCity }}</a>
                     <a id="state" :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(result.businessAddress1)" target="_blank">{{ result.businessState }}</a>
                     <a id="zipcode" :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(result.businessAddress1)" target="_blank">{{ result.businessZipcode }}</a>
                 </div>
-                <div class="image">
-                    <a v-bind:href="result.businessUrl" target="_blank"><img :src="result.businessImage"></a>
+                <div class="image-container">
+                    <a v-bind:href="result.businessUrl" target="_blank">
+                        <img :src="result.businessImage">
+                    </a>
                 </div>
-                <div>
+                <div class="button-container">
                     <button id="delete" @click="deleteFavorite(result.favoriteId)">Delete</button>
                 </div>
             </div>
-        </div>
-            <!-- No Search Results -->
-        <div v-if="results.length === 0">
+        </section>
+
+        <!-- No Search Results -->
+        <section v-if="results.length === 0">
             <p>You have no favorites coffee shops saved yet!</p>
-        </div>
-    </section>
+        </section>
+
+    </article>
   </template>
   
 <script>
@@ -73,47 +80,5 @@ export default {
 </script>
   
 <style scoped>
-section {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: center;
-    text-align: center;
-    font-family: 'Ubuntu', sans-serif;
-    width: 40vw;
-}
 
-h1 {
-    font-size: 1.7vw;
-    padding: 0;
-    margin: 0;
-}
-
-.results-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 40vw;
-    border: .1vw black solid;
-}
-
-.result {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 1vw;
-    width: 10vw;
-    height: 10vw;
-    margin: 1vw;
-    border: .1vw black solid;
-    background-color: rgb(160, 153, 145);
-}
-
-.image img {
-    width: 5vw;
-}
 </style>

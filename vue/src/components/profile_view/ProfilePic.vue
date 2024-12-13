@@ -1,31 +1,27 @@
 <!-- ProfilePic.vue Component -->
 
 <template>
-  <section class="profile-pic-container">
-    <header>
-      <h1>Profile Picture</h1>
-    </header>
+  <article class="profile-pic-container">
 
-    <article class="profile-pic">
+    <section class="profile-pic">
       <!-- Display the profile image if available -->
       <div v-if="imageUrl" class="image-container">
-        <img :src="imageUrl" alt="Profile Picture" />
+        <img :src="imageUrl" alt="Profile Picture" title="Profile Picture"/>
       </div>
 
       <!-- Form to upload a new profile picture -->
       <form @submit.prevent="uploadImage">
-        <!-- Label hidden for accessibility purposes -->
-        <label for="file-upload" class="visually-hidden">Choose an image</label>
         <!-- Input for selecting a file, restricted to image types -->
         <input type="file" @change="handleFileUpload" accept="image/*"/>
-        <button type="submit">Upload/Update Image</button>
+        <button type="submit" title="Click to Change Profile Picture">Change Picture</button>
       </form>
-    </article>
-  </section>
+    </section>
+
+  </article>
 </template>
 
 <script>
-import ProfileService from '../../services/ProfileService';
+import ProfileService from '../../services/ProfileService.js';
 
 export default {
 
@@ -128,24 +124,38 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  margin: 0 auto;
+  color: rgb(245, 242, 242); 
 }
 
 .image-container {
   position: relative; 
-  width: 200px; 
-  height: 200px; 
+  width: 18vw; 
+  height: 18vw; 
   overflow: hidden; 
   border-radius: 50%;
-  border: 10px #e8bb64 solid;
+  border: .7vw #e8bb64 solid;
 }
 
-img { 
-  width: 100%; 
+img,
+form { 
+  width: 18vw; 
   height: auto;
 }
 
-.profile-pic form {
-  display: flex;
-  flex-direction: column;
+form button {
+  width: 18vw;
+  height: 1.5rem;
+  font-size: .7rem;
+  color: rgb(53, 37, 19);
+  background-color: #e8bb64;
+  border-radius: 4px;
+}
+
+form button:hover {
+  color: #e8bb64;
+  background-color: rgb(53, 37, 19);
+  cursor: pointer;
 }
 </style>

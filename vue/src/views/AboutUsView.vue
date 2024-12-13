@@ -46,16 +46,10 @@ export default {
 </script>
   
 <style scoped>
-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 main {
   display: flex;
   flex-direction: row;
+  justify-content: center; 
 }
 </style>
 
