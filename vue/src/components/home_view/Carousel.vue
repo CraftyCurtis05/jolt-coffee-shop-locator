@@ -96,6 +96,7 @@ button:hover {
   cursor: pointer;
   padding: 10px;
   z-index: 10;
+  transition: all 0.5s;
 }
 
 .prev-btn {

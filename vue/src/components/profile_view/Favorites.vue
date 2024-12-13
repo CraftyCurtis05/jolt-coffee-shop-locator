@@ -2,10 +2,10 @@
 
 <template>
     <article class="favorites-container">
-        <header>
+        <div class="header-container">
             <h3>Favorites</h3> 
             <h4>Coffee Shop Delights: My Personal Selection</h4>
-        </header>
+        </div>    
 
         <section class="results-container"> 
             <div class="result" v-for="result in results" :key="result.favoriteId">
@@ -108,7 +108,7 @@ export default {
     width: 100%;
 }
 
-header {
+.header-container {
     width: 100%;
     color: rgb(245, 242, 242);
     background-color: rgb(53, 37, 19);
@@ -146,6 +146,7 @@ h4 {
     border: .1rem rgb(53, 37, 19) solid;
     border-radius: .1rem;
     padding: .8rem;
+    transition: all 0.5s;
 }
 
 .result:hover {
@@ -159,6 +160,7 @@ h4 {
 
 .result .name {
     font-weight: bold;
+    transition: all 0.5s;
 }
 
 .result .name:hover {
@@ -167,6 +169,7 @@ h4 {
 
 .result .location-container {
     font-size: .9rem;
+    transition: all 0.5s;
 }
 
 .result .location-container:hover {
@@ -179,6 +182,7 @@ h4 {
     margin-top: .5rem;
     border: .1rem rgb(53, 37, 19) solid;
     border-radius: .1rem;
+    transition: all 0.1s;
 }
 
 .result img:hover {
@@ -192,6 +196,7 @@ button {
     color: rgb(53, 37, 19);
     background-color: #e8bb64;
     border-radius: .1rem;
+    transition: all 0.5s;
 }
 
 button:hover {

@@ -68,14 +68,18 @@ main {
   overflow-y: hidden;
 }
 
+header {
+  margin-top: 1rem;
+}
+
 h1 {
   font-size: 1.8rem;
-  margin: 0;
+  margin: 0 auto;
 }
 
 h2 {
   font-size: 1rem;
-  margin-top: .5vw;
+  margin-top: .4rem;
 }
 
 /* Scrollbar */

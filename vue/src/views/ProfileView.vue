@@ -129,6 +129,7 @@ main {
   background-color: #e8bb64;
   border-radius: .1rem;
   margin-top: 1rem;
+  transition: all 0.5s;
 }
 
 .profile-form button:hover {

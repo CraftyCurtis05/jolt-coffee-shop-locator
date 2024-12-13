@@ -405,6 +405,7 @@ form button {
   background-color: #e8bb64;
   border-radius:.1rem;
   margin-inline: .5rem;
+  transition: all 0.5s;
 }
 
 form button:hover {

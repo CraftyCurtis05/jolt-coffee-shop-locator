@@ -11,10 +11,10 @@
 
     <!-- Near Home Search -->
      <section class="search-home">
-        <button @click="searchHome()" alt="Search Near Home Button" title="Click to Get Coffee Shops Near Saved Address">Search Near Home</button>
+        <button @click="searchHome()" alt="Search Near Home Button" title="Click to Get Coffee Shops Near Home">Search Near Home</button>
      </section>
 
-    <h3 v-if="results.length > 0">List of local coffee shops near you:</h3>
+    <h3 v-if="results.length > 0">List of Coffee Shops Near You:</h3>
 
     <!-- Search Results -->
     <section class="results-container">
@@ -22,7 +22,7 @@
 
         <a class="name" :href="result.url" target="_blank" title="Click for Yelp Page">{{ result.name }}</a>
 
-        <div class="address" title="Click for Directions">
+        <div class="location-container" title="Click for Directions">
           <div class="top">
             <a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(result.location.address1)" target="_blank">
               {{ result.location.address1 }},&nbsp;
@@ -126,6 +126,7 @@ export default {
         businessUrl: result.url
       }).then(() => {
           alert('Favorite added successfully!');
+          console.log('Favorite added successfully!');
       }).catch(error => {
           alert("You've already favorited this shop. Try again!")
           console.error('Error adding favorite:', error);
@@ -140,21 +141,18 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100vw;
+  width: 100%;
 }
 
 .search-bar {
   display: flex;
   flex-direction: row;
-  width: 40%;
-  height: 100%;
-  font-size: 1.1rem;
-  margin-bottom: 1vw;
+  width: 40vw;
+  margin-bottom: 1rem;
 }
 
 .search-bar input {
   width: 100%;
-  height: auto;
   font-size: 1.1rem;
 }
 
@@ -163,12 +161,11 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(53, 37, 19);
   width: 5rem;
   height: 1.7rem;
   font-size: .9rem;
   color: rgb(245, 242, 242);
-  border: .1rem solid #e8bb64;
+  background-color: rgb(53, 37, 19);
   border-radius: .1rem;
   transition: all 0.5s;
 }
@@ -185,30 +182,39 @@ export default {
 .search-home button:hover {
   background-color: #e8bb64;
   color: rgb(53, 37, 19);
+  cursor: pointer;
 }
 
 h3 {
   font-weight: bolder;
   font-size: 1.3rem;
   margin: 0;
-  margin-top: 1vw;
+  margin-top: 1.5rem;
 }
 
 .results-container {
   display: flex;
-  flex-wrap: wrap;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
-  width: 90%;
-  margin-top: .5vw;
+  margin: 1rem 0;
 }
 
 .result {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 2vw;
+  justify-content: center;
+  width: 18rem;
+  height: 20rem;
+  border: .1rem rgb(53, 37, 19) solid;
+  border-radius: .1rem;
+  padding: .8rem;
+  margin: .5rem;
+  transition: all 0.5s;
+}
+
+.result:hover {
+  background-color: #e8bb64;
 }
 
 .result a {
@@ -221,35 +227,48 @@ h3 {
   font-weight: bold;
 }
 
-.result:hover {
-  font-size: 1.1rem;
-  background-color: #e8bb64;
-  border-radius: .2vw;
+.result .name:hover {
+  font-size: 1.15rem;
+}
+
+.result .location-container {
+  font-size: 1rem;
   transition: all 0.5s;
 }
 
+.result .location-container:hover {
+  font-size: 1.05rem;
+}
+
 .result img {
-  width: 20vw;
-  height: 20vw;
-  margin-top: .5vw;
-  border: .2vw rgb(53, 37, 19) solid;
-  border-radius: .2vw;
+  width: 12rem;
+  height: 12rem;
+  margin-top: .5rem;
+  border: .1rem rgb(53, 37, 19) solid;
+  border-radius: .1rem;
+  transition: all 0.1s;
+}
+
+.result img:hover {
+  border: .12rem rgb(53, 37, 19) solid;
 }
 
 .favorite button {
   background-color: transparent;
   border: none;
+  transition: all 0.5s;
 }
 
 .favorite img {
-  width: 2.9vw;
-  height: 2.5vw;
+  width: 2rem;
+  height: 1.8rem;
   border: none;
 }
 
 .favorite img:hover {
-  width: 3.2vw;
-  height: 2.8vw;
+  width: 2.2rem;
+  height: 1.9rem;
+  border: none;
   cursor: pointer;
 }
 
