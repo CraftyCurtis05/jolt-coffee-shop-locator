@@ -49,7 +49,8 @@ export default {
 main {
   display: flex;
   flex-direction: row;
-  justify-content: center; 
+  justify-content: center;
+  margin: 1.2rem auto;
 }
 </style>
 

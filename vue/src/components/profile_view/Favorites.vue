@@ -146,11 +146,26 @@ h4 {
     border: .1rem rgb(53, 37, 19) solid;
     border-radius: .1rem;
     padding: .8rem;
-    transition: all 0.5s;
+    margin: 1rem;
+    transition: all 0.6s;
 }
 
 .result:hover {
     background-color: #e8bb64;
+    transform: scale(1.1);
+}
+
+.result:hover .name {
+    font-size: 1.04rem;
+}
+
+.result:hover .location-container {
+    font-size: .94rem;
+}
+
+.result:hover img {
+    border: .12rem rgb(53, 37, 19) solid;
+    filter: grayscale(70%);
 }
 
 .result a {
@@ -163,17 +178,14 @@ h4 {
     transition: all 0.5s;
 }
 
-.result .name:hover {
-    font-size: 1.04rem;
-}
-
 .result .location-container {
     font-size: .9rem;
     transition: all 0.5s;
 }
 
+.result .name:hover,
 .result .location-container:hover {
-    font-size: .94rem;
+    text-decoration: underline;
 }
 
 .result img {
@@ -182,11 +194,11 @@ h4 {
     margin-top: .5rem;
     border: .1rem rgb(53, 37, 19) solid;
     border-radius: .1rem;
-    transition: all 0.1s;
 }
 
 .result img:hover {
-    border: .12rem rgb(53, 37, 19) solid;
+    transition: all 0.5s;
+    transform: scale(1.05);
 }
 
 button {

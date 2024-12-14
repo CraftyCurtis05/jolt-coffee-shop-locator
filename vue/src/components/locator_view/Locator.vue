@@ -56,8 +56,9 @@
 
         <div class="favorite">
           <button @click="setFavorite(result)">
-            <img src="@/assets/locator_view/favorite_btn.png" alt="Favorite Button" title="Click to Add to Favorites">
-            <h4>Add to Favorites</h4>
+            <!-- Conditionally set the favorite button image -->
+            <img :src="userFavorites.includes(result.id) ? 'src/assets/locator_view/favorite_added_btn.png' : 'src/assets/locator_view/favorite_btn.png'" alt="Favorite Button" title="Click to Add to Favorites">
+            <h4>{{ userFavorites.includes(result.id) ? 'Added to Favorites' : 'Add to Favorites' }}</h4>
           </button>  
         </div>
 
@@ -82,7 +83,8 @@ export default {
     return {
       locationId: '', // LocationId variable to hold and pass location
       results: [], // Results array to hold the locator search results
-      defaultImage: 'src/assets/locator_view/default_image.png'
+      defaultImage: 'src/assets/locator_view/default_image.png',
+      userFavorites: [] // Array to hold the list of favorited shops IDs for the user
     }
   },
   
@@ -114,6 +116,11 @@ export default {
     },
     // Sending the favorite shop details to the backend
     setFavorite(result) {
+       // Check if the shop is already favorited by the user
+      if (this.userFavorites.includes(result.id)) {
+        alert("You've already favorited this shop.");
+        return;
+      }
       FavoriteService.createFavorite({
         businessId: result.id,
         businessName: result.name,
@@ -124,14 +131,31 @@ export default {
         businessZipcode: result.location.zip_code,
         businessImage: result.image_url,
         businessUrl: result.url
-      }).then(() => {
-          alert('Favorite added successfully!');
-          console.log('Favorite added successfully!');
+      })
+      .then(() => {
+        // Add the business ID to the userFavorites array after a successful favorite action
+        this.userFavorites.push(result.id);
       }).catch(error => {
-          alert("You've already favorited this shop. Try again!")
-          console.error('Error adding favorite:', error);
+        console.error('Error adding favorite:', error);
       });
-    }
+    },
+
+    // Fetch the user's favorites from the database
+    getUserFavorites() {
+      FavoriteService.getFavorites()
+      .then(response => {
+        // Populate userFavorites with the list of favorited shop IDs
+        this.userFavorites = response.map(favorite => favorite.businessId); // Assuming each favorite has a `businessId`
+      })
+      .catch(error => {
+        console.error('Error fetching favorites:', error);
+      });
+  },
+  },
+
+  mounted() {
+    // Fetch the user's favorite shops when the component is mounted
+    this.getUserFavorites();
   }
 };
 </script>
@@ -215,6 +239,20 @@ h3 {
 
 .result:hover {
   background-color: #e8bb64;
+  transform: scale(1.1);
+}
+
+.result:hover .name {
+    font-size: 1.15rem;
+}
+
+.result:hover .location-container {
+    font-size: 1.05rem;
+}
+
+.result:hover .image img {
+    border: .15rem rgb(53, 37, 19) solid;
+    filter: grayscale(70%);
 }
 
 .result a {
@@ -225,10 +263,7 @@ h3 {
 .result .name {
   font-size: 1.1rem;
   font-weight: bold;
-}
-
-.result .name:hover {
-  font-size: 1.15rem;
+  transition: all 0.5s;
 }
 
 .result .location-container {
@@ -236,8 +271,9 @@ h3 {
   transition: all 0.5s;
 }
 
+.result .name:hover,
 .result .location-container:hover {
-  font-size: 1.05rem;
+  text-decoration: underline;
 }
 
 .result img {
@@ -246,28 +282,29 @@ h3 {
   margin-top: .5rem;
   border: .1rem rgb(53, 37, 19) solid;
   border-radius: .1rem;
-  transition: all 0.1s;
 }
 
 .result img:hover {
-  border: .12rem rgb(53, 37, 19) solid;
+  transition: all 0.5s;
+  transform: scale(1.05);
 }
 
 .favorite button {
   background-color: transparent;
   border: none;
-  transition: all 0.5s;
+  transition: all 0.3s;
 }
 
 .favorite img {
-  width: 2rem;
-  height: 1.8rem;
+  width: 2.6rem;
+  height: 2rem;
   border: none;
+  padding: 0;
+  margin: 0;
 }
 
 .favorite img:hover {
-  width: 2.2rem;
-  height: 1.9rem;
+  transform: scale(1.2);
   border: none;
   cursor: pointer;
 }

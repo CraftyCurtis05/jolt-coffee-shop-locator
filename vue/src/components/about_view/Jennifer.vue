@@ -68,6 +68,12 @@ img:hover {
 .about-container {
     color: rgb(245, 242, 242);
     border: .2vw #e8bb64 solid;
+    transition: all 0.5s;
+}
+
+.about-container:hover {
+    background-color: #e8bb64;
+    color: rgb(53, 37, 19);
 }
 
 h3 {
@@ -77,11 +83,6 @@ h3 {
 summary {
     cursor: pointer;
     padding-bottom: 1.5rem;
-}
-
-.about-container:hover {
-    background-color: #e8bb64;
-    color: rgb(53, 37, 19);
 }
 
 p {

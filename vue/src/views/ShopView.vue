@@ -4,7 +4,7 @@
   <body>
     <header>
       <h1>Shop</h1>
-      <h2>Shop for More Than Just Coffee: Discover Equipment, Snacks, and Unique Merchandise</h2>
+      <h2>Shop for More Than Just Coffee: Discover Equipment, Unique Merchandise and Snacks</h2>
     </header>
 
     <main>

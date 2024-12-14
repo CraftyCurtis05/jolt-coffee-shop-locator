@@ -75,7 +75,7 @@ export default {
 
 .shop:hover {
     transform: scale(1.1);
-    filter: grayscale(80%);
+    filter: grayscale(70%);
 }
 
 .shop:hover h3 {
@@ -98,6 +98,5 @@ h3 {
     font-weight: lighter;
     color: rgb(53, 37, 19);
     margin: .5rem auto;
-    transition: all 0.5s;
 }
 </style>
