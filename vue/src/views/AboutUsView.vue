@@ -50,7 +50,7 @@ main {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin: 1.2rem auto;
+  margin: 1.1rem auto;
 }
 </style>
 

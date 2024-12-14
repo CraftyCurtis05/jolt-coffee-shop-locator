@@ -234,7 +234,7 @@ h3 {
   border-radius: .1rem;
   padding: .8rem;
   margin: .5rem;
-  transition: all 0.5s;
+  transition: all 0.5s ease-in-out;
 }
 
 .result:hover {
@@ -263,12 +263,12 @@ h3 {
 .result .name {
   font-size: 1.1rem;
   font-weight: bold;
-  transition: all 0.5s;
+  transition: all 0.5s ease-in-out;
 }
 
 .result .location-container {
   font-size: 1rem;
-  transition: all 0.5s;
+  transition: all 0.5s ease-in-out;
 }
 
 .result .name:hover,
@@ -282,17 +282,17 @@ h3 {
   margin-top: .5rem;
   border: .1rem rgb(53, 37, 19) solid;
   border-radius: .1rem;
+  transition: all 0.5s ease-in-out;
 }
 
 .result img:hover {
-  transition: all 0.5s;
   transform: scale(1.05);
 }
 
 .favorite button {
   background-color: transparent;
   border: none;
-  transition: all 0.3s;
+  transition: all 0.3s ease-in-out;
 }
 
 .favorite img {

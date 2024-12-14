@@ -42,7 +42,7 @@ export default {
       // URL of the uploaded profile image
       imageUrl: null,
       // Used as default profile image
-      defaultImage: 'src/assets/app/profile_pic.png'
+      defaultImage: 'src/assets/profile_view/profile_pic.png'
     };
   },
 
@@ -187,7 +187,7 @@ form button {
   background-color: #e8bb64;
   border-radius:.1rem;
   margin: .5rem auto;
-  transition: all 0.5s;
+  transition: all 0.5s ease-in-out;
 }
 
 form button:hover {

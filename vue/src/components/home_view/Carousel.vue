@@ -5,8 +5,8 @@
 
     <section class="carousel">
       <transition name="slide" mode="out-in">
-        <div :key="currentIndex" class="carousel-item">
-          <img :src="images[currentIndex]" alt="Slide" title="Carousel Image"/>
+        <div class="carousel-item">
+          <img :src="images[currentIndex]" alt="Image Slide" title="Carousel Image Slide" />
         </div>
       </transition>
     </section>
@@ -53,7 +53,7 @@ export default {
 <style scoped>
 .carousel-container {
   position: relative;
-  width: 50%;
+  width: 80%;
   background-color: rgb(53, 37, 19);
   box-sizing: border-box;
   padding: 2%;
@@ -96,7 +96,7 @@ button:hover {
   cursor: pointer;
   padding: 10px;
   z-index: 10;
-  transition: all 0.5s;
+  transition: all 0.5s ease-in-out;
 }
 
 .prev-btn {
@@ -124,14 +124,5 @@ button img {
 
 .hover:hover {
   opacity: 1; /* Show hover image */
-}
-
-/* Media Queries for Responsiveness */
-@media (max-width: 768px) {
-
-}
-
-@media (max-width: 425px) {
-
 }
 </style>

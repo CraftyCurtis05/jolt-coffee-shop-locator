@@ -59,7 +59,6 @@ export default {
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
-    padding: 1vw 0;
 }
 
 .articles {
@@ -70,7 +69,7 @@ export default {
     border-radius: .1rem;
     padding-bottom: .5rem;
     margin: 1rem 1rem;
-    transition: all 0.5s;
+    transition: all 0.5s ease-in-out;
 }
 
 .articles:hover {

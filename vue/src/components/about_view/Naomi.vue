@@ -68,7 +68,7 @@ img:hover {
 .about-container {
     color: rgb(245, 242, 242);
     border: .2vw #e8bb64 solid;
-    transition: all 0.5s;
+    transition: all 0.5s ease-in-out;
 }
 
 .about-container:hover {

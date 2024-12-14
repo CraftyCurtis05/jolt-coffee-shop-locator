@@ -3,16 +3,11 @@
 <template>
   <body>
     <header>
-      <h1>Home</h1>
-      <h2>Discover the best coffee shops with friends and savor your favorite brews together</h2>
+      <h1>Welcome to <img src="@/assets/app/logo/jolt_logo.png"></h1>
+      <h2>Discover the best coffee shops with friends and savor your favorite brews together!</h2>
     </header>
 
-    <main>
-      <section class="carousel-container">
-        <Carousel />
-      </section>
-
-      <section class="description-container">
+    <section class="description-container">
         <p>
           Welcome to Jolt, your ultimate coffee locator hub! With us, you can easily locate and explore the best coffee shops near you, 
           read reviews from fellow coffee enthusiasts, organize meet-ups with friends over a cup of your favorite brew, and embark on 
@@ -20,6 +15,12 @@
           your next perfect coffee spot. Start your coffee journey with us today!
         </p>
       </section>
+
+    <main>
+      <section class="carousel-container">
+        <Carousel />
+      </section>
+
     </main>
 
   </body>
@@ -39,6 +40,11 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 1rem;
+}
+
+header img {
+  width: 5.5rem;
 }
 
 .carousel-container {
@@ -47,7 +53,8 @@ main {
 
 .description-container {
   font-size: 1rem;
-  max-width: 70%;
+  max-width: 75%;
   line-height: 1.5;
+  margin: 0 auto;
 }
 </style>

@@ -2,41 +2,65 @@
 
 <template>
     <nav v-if="!$route.meta.hideNavBar">
-        <div class="nav-header">
+        <article class="nav-container">
 
-            <!-- Logo -->
-            <router-link id="logo" v-bind:to="{ name: 'home' }" v-if="$store.state.token != ''"><img src="@/assets/app/logo/jolt_logo.png"></router-link>
+            <section class="logo-container">
+                <router-link v-bind:to="{ name: 'home' }" v-if="$store.state.token != ''">
+                    <img src="@/assets/app/logo/jolt_logo.png" alt="Jolt Logo" title="Click to Go to Home">
+                </router-link>
+            </section>    
 
-            <!-- Toggle Button -->
-            <button class="toggle-btn" @click="isNavOpen = !isNavOpen">☰</button>
+            <section class="toggle-container">
+                <button @click="isNavOpen = !isNavOpen">☰</button>
+            </section>    
        
 
-            <!-- Links -->
-            <ul class="nav-container" :class="{ 'nav-open': isNavOpen }">
-                <li><router-link class="link" v-bind:to="{ name: 'home' }" v-if="$store.state.token != ''">HOME</router-link></li>
-                    <div class="separator">|</div>
-                <li><router-link class="link" v-bind:to="{ name: 'locator' }" v-if="$store.state.token != ''">LOCATOR</router-link></li>
-                    <div class="separator">|</div>
-                <li><router-link class="link" v-bind:to="{ name: 'shop' }" v-if="$store.state.token != ''">SHOP</router-link></li>
-                    <div class="separator">|</div>
-                <li><router-link class="link" v-bind:to="{ name: 'articles' }" v-if="$store.state.token != ''">ARTICLES</router-link></li>
-                    <div class="separator">|</div>
-                <li><router-link class="link" v-bind:to="{ name: 'aboutUs' }" v-if="$store.state.token != ''">ABOUT US</router-link></li>
-            </ul>
+            <section class="link-container" :class="{ 'nav-open': isNavOpen }">
+                <router-link class="link" v-bind:to="{ name: 'home' }" v-if="$store.state.token != ''" title="Click to Go to Home">
+                    <h3>HOME</h3>
+                </router-link>
+
+                <div class="separator">|</div>
+
+                <router-link class="link" v-bind:to="{ name: 'locator' }" v-if="$store.state.token != ''" title="Click to Go to Locator">
+                    <h3>LOCATOR</h3>
+                </router-link>
+
+                <div class="separator">|</div>
+            
+                <router-link class="link" v-bind:to="{ name: 'shop' }" v-if="$store.state.token != ''" title="Click to Go to Shop">
+                    <h3>SHOP</h3>
+                </router-link>
+
+                <div class="separator">|</div>
+
+                <router-link class="link" v-bind:to="{ name: 'articles' }" v-if="$store.state.token != ''" title="Click to Go to Articles">
+                    <h3>ARTICLES</h3>
+                </router-link>
+
+                <div class="separator">|</div>
+        
+                <router-link class="link" v-bind:to="{ name: 'aboutUs' }" v-if="$store.state.token != ''" title="Click to Go to About Us">
+                    <h3>ABOUT US</h3>
+                </router-link>
+            </section>
 
             <!-- Profile -->
-            <div class="profile-container">
-                <router-link class="link" v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">LOGOUT</router-link>
+            <section class="profile-container">
+                <router-link class="link" v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" title="Click to Logout">
+                    <h3>LOGOUT</h3>
+                </router-link>
 
                 <!-- Profile Picture with dynamic src -->
                  <div class="image-container">
-                    <router-link v-bind:to="{ name: 'profile' }" v-if="$store.state.token != ''">
+                    <router-link v-bind:to="{ name: 'profile' }" v-if="$store.state.token != ''" title="Click to Go to Profile">
                         <!-- Fallback image used if no profile image is fetched -->
                         <img :src="imageUrl || 'src/assets/app/profile_pic.png'" alt="Profile Picture" />
                     </router-link>
                 </div>
-            </div>
-        </div>
+            </section>
+
+        </article>
     </nav>
 </template>
 
@@ -74,59 +98,59 @@ export default {
 </script>
 
 <style scoped>
-/* General Styling */
 nav {
     width: 100%;
     background-color: rgb(160, 153, 145);
-    margin: 0;
     padding: 0;
+    margin: 0;
 }
 
-/* Nav Header */
-.nav-header {
+.nav-container {
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: nowrap;
     align-items: center;
     height: 4rem;
 }
 
-/* Logo Image */
-#logo img {
+.logo-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 1.6rem;
+}
+
+.logo-container img {
     width: 8rem;
     height: auto;
-    padding-left: 1rem;
 }
 
-/* Toggle Button */
-.toggle-btn {
+.toggle-container button {
     display: none;
-    font-size: 1.5rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: white;
 }
 
-/* Nav Container */
-.nav-container {
+.link-container {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    list-style: none;
-    gap: 2rem;
-    transition: max-height 0.3s ease-in-out;
-    max-height: none; /* For larger screens */
-    overflow: hidden; /* Hide content when collapsed */
+    gap: 1.25rem;
+    margin: 0 auto;
 }
 
 /* Nav Links */
+h3,
 .link {
-    font-family: 'Ubuntu', sans-serif;
     font-weight: bold;
     font-size: 1rem;
     color: rgb(245, 242, 242);
     text-decoration: none;
+    transition: all 0.3s ease-in-out;
+}
+
+h3:hover,
+.link:hover {
+    color: #525459;
+    transform: scale(1.05);
 }
 
 .separator {
@@ -136,7 +160,7 @@ nav {
 .profile-container {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     gap: .5rem;
     margin-right: 1.6rem;
@@ -144,36 +168,55 @@ nav {
 
 /* Profile Image */
 .image-container {
-  position: relative; 
-  width: 3.3rem; 
-  height: 3.3rem; 
-  overflow: hidden; 
-  border-radius: 50%;
-  border: .2rem #e8bb64 solid;
+    display: flex;
+    justify-content: flex-end;
+    width: 3.1rem; 
+    height: 3.1rem; 
+    overflow: hidden; 
+    border-radius: 50%;
+    border: .25rem #e8bb64 solid;
+    transition: all 0.3s ease-in-out;
 }
 
-img { 
-  width: 100%; 
-  height: auto;
+.image-container img { 
+    width: 100%; 
+    height: auto;
 }
 
-a:hover {
-    font-size: 1.1rem;
-    font-weight: 800;
-    color: #525459;
+.image-container:hover {
+    border: .25rem rgb(53, 37, 19) solid;
+    transform: scale(1.05);
 }
 
 /* !!!!!!! REDO BELOW !!!!!!! */
 
 /* Responsive Styles */
 @media screen and (max-width: 1107px) {
-    .toggle-btn {
+
+    /* General Styling */
+    nav {
+
+    }
+
+    /* Nav Header */
+    .nav-container {
+
+    }
+
+    /* Logo Image */
+    .logo-container img {
+        width: 8rem;
+        height: auto;
+        padding-left: 1rem;
+    }
+
+    .toggle-container button {
         display: flex; /* Show toggle button */
-        justify-content: center;
+        justify-content: flex-start;
         text-align: center;
     }
 
-    .nav-container {
+    ul {
         align-items: flex-start;
         flex-direction: column; /* Stack items */
         max-height: 0; /* Initially collapsed */
@@ -181,29 +224,8 @@ a:hover {
         gap: .1rem;
     }
 
-    a:hover {
-        font-weight: bold;
-        font-size: 1rem;
-    }
+    .link:hover {
 
-    .link {
-        color: #333437;
-    }
-
-    .separator {
-        visibility: hidden;
-    }
-
-    .nav-container.nav-open {
-        max-height: 500px; /* Arbitrary large height to show all items */
-    }
-
-    #logo img {
-        width: 6rem; /* Scale down logo */
-    }
-
-    #profile img {
-        width: 2rem;
     }
 }
 </style>
