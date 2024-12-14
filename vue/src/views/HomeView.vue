@@ -57,4 +57,26 @@ header img {
   line-height: 1.5;
   margin: 0 auto;
 }
+
+@media screen and (max-width: 768px) {
+
+  header img {
+    width: 4.5rem;
+  }
+
+  .description-container {
+    font-size: .9rem;
+    max-width: 90%;
+  }
+
+}
+
+@media screen and (max-width: 425px) {
+
+  .description-container {
+    font-size: .78rem;
+    margin-left: .8rem;
+  }
+
+}
 </style>

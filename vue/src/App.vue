@@ -100,4 +100,50 @@ body::-webkit-scrollbar-thumb {
   background-repeat: no-repeat;
   background-size: 20px;
 }
+
+@media screen and (max-width: 768px) {
+
+  header {
+    margin-top: .7rem;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  h2 {
+    font-size: .9rem;
+  }
+
+}
+
+@media screen and (max-width: 425px) {
+
+  header {
+    width: 90%;
+    margin-top: .4rem;
+    margin-left: .8rem;
+  }
+
+  h1 {
+    font-size: 1.2rem;
+  }
+
+  h2 {
+    font-size: .81rem;
+  }
+
+  body::-webkit-scrollbar {
+    width: 12px;
+  }
+          
+  body::-webkit-scrollbar-track {
+    background-size: 18px;
+  }
+          
+  body::-webkit-scrollbar-thumb {
+    background-size: 12px;
+  }
+
+}
 </style>
