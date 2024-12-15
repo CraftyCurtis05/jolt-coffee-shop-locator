@@ -314,6 +314,14 @@ h4 {
   margin: 0;
 }
 
+/* Laptop L - 1440px */
+
+/* 4K - 2560px */
+@media screen and (min-width: 2560px) {
+
+}
+
+/* Laptop - 1024px */
 @media screen and (max-width: 1024px) {
 
   .search-bar {
@@ -323,17 +331,17 @@ h4 {
   p {
     font-size: .9rem;
   }
-
 }
 
+/* Tablet - 768px */
 @media screen and (max-width: 768px) {
 
   .search-bar {
     width: 65vw;
   }
-
 }
 
+/* Mobile L - 425px */
 @media screen and (max-width: 425px) {
 
   .search-bar {
@@ -343,18 +351,15 @@ h4 {
   p {
     font-size: .8rem;
   }
-
 }
 
+/* Mobile M - 375px */
 @media screen and (max-width: 375px) {
 
-
-
 }
 
+/* Mobile S - 320px */
 @media screen and (max-width: 320px) {
-
-
 
 }
 </style>

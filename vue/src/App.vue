@@ -51,6 +51,7 @@ export default {
 </script>
 
 <style>
+/* Laptop L - 1440px */
 html, body {
   width: 100vw;
   height: 100%;
@@ -75,7 +76,7 @@ main {
 }
 
 header {
-  margin-top: 1rem;
+  margin-top: .5rem;
 }
 
 h1 {
@@ -94,33 +95,79 @@ footer {
 
 /* Scrollbar */
 body::-webkit-scrollbar {
-  width: 20px;
+  width: 15px;
 }
         
 body::-webkit-scrollbar-track {
   background: url("@/assets/app/scrollbar/scrollbar_track.png");
-  background-size: 20px;
+  background-size: 15px;
 }
         
 body::-webkit-scrollbar-thumb {
   background-image: url("@/assets/app/scrollbar/scrollbar_thumb.png");
   background-position:center center;
   background-repeat: no-repeat;
-  background-size: 20px;
+  background-size: 15px;
 }
 
-@media screen and (max-width: 768px) {
+/* 4K - 2560px */
+@media screen and (min-width: 2560px) {
 
+  
   header {
-    margin-top: .7rem;
+    margin-top: .9rem;
   }
 
   h1 {
-    font-size: 1.4rem;
+    font-size: 3rem;
+  }
+
+  h2 {
+    font-size: 1.7rem;
+  }
+
+  body::-webkit-scrollbar {
+    width: 23px;
+  }
+          
+  body::-webkit-scrollbar-track {
+    background-size: 20px;
+  }
+          
+  body::-webkit-scrollbar-thumb {
+    background-size: 23px;
+  }
+}
+
+/* Laptop - 1024px */
+@media screen and (max-width: 1024px) {
+
+  header {
+    margin-top: .5rem;
+  }
+
+  h1 {
+    font-size: 1.6rem;
   }
 
   h2 {
     font-size: .9rem;
+  }
+}
+
+/* Tablet - 768px */
+@media screen and (max-width: 768px) {
+
+  header {
+    margin-top: .4rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: .85rem;
   }
 
   body::-webkit-scrollbar {
@@ -136,20 +183,19 @@ body::-webkit-scrollbar-thumb {
   }
 }
 
+/* Mobile L - 425px */
 @media screen and (max-width: 425px) {
 
   header {
-    width: 90%;
-    margin-top: .4rem;
-    margin-left: .8rem;
+    margin-top: .35rem;
   }
 
   h1 {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
   }
 
   h2 {
-    font-size: .81rem;
+    font-size: .80rem;
   }
 
   body::-webkit-scrollbar {
@@ -162,6 +208,35 @@ body::-webkit-scrollbar-thumb {
           
   body::-webkit-scrollbar-thumb {
     background-size: 7px;
+  }
+}
+
+/* Mobile M - 375px */
+@media screen and (max-width: 375px) {
+
+  header {
+    margin-top: .30rem;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  h2 {
+    font-size: .75rem;
+    max-width: 98%;
+  }
+}
+
+/* Mobile S - 320px */
+@media screen and (max-width: 320px) {
+
+  h1 {
+    font-size: 1.25rem;
+  }
+
+  h2 {
+    font-size: .72rem;
   }
 }
 </style>

@@ -51,9 +51,10 @@ export default {
 </script>
 
 <style scoped>
+/* Laptop L - 1440px */
 .carousel-container {
   position: relative;
-  width: 80%;
+  width: 60rem;
   background-color: rgb(53, 37, 19);
   box-sizing: border-box;
   padding: 2%;
@@ -126,11 +127,50 @@ button img {
   opacity: 1; /* Show hover image */
 }
 
+/* 4K - 2560px */
+@media screen and (min-width: 2560px) {
+  .carousel-container {
+    width: 95rem;
+  }
+}
+
+/* Laptop - 1024px */
+@media screen and (max-width: 1024px) {
+
+  .carousel-container {
+    width: 45rem;
+  }
+}
+
+/* Tablet - 768px */
 @media screen and (max-width: 768px) {
 
   .carousel-container {
-    width: 90%;
+    width: 36rem;
   }
+}
 
+/* Mobile L - 425px */
+@media screen and (max-width: 425px) {
+
+  .carousel-container {
+    width: 21rem;
+  }
+}
+
+/* Mobile M - 375px */
+@media screen and (max-width: 375px) {
+
+  .carousel-container {
+    width: 19rem;
+  }
+}
+
+/* Mobile S - 320px */
+@media screen and (max-width: 320px) {
+
+  .carousel-container {
+    width: 16rem;
+  }
 }
 </style>

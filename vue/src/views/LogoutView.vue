@@ -15,5 +15,6 @@ export default {
 </script>
 
 <style scoped>
+/* Laptop L - 1440px */
 
 </style>

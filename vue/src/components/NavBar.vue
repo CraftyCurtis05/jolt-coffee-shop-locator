@@ -101,7 +101,8 @@ export default {
 </script>
 
 <style scoped>
-nav {
+/*** Laptop L - 1440px ***/
+nav {  /*  */
     width: 100%;
     background-color: rgb(160, 153, 145);
     padding: 0;
@@ -119,7 +120,7 @@ nav {
 .logo-container {
     display: flex;
     justify-content: flex-start;
-    margin-left: 1.6rem;
+    margin-left: 1rem;
 }
 
 .logo {
@@ -172,7 +173,7 @@ h3:hover,
     justify-content: flex-end;
     align-items: center;
     gap: .5rem;
-    margin-right: 1.6rem;
+    margin-right: 1.3rem;
 }
 
 .image-container {
@@ -197,7 +198,39 @@ h3:hover,
     filter: grayscale(70%);
 }
 
-/* Responsive Styles */
+/*** 4K - 2560px ***/
+@media screen and (min-width: 2560px) {
+
+    .nav-container {
+        height: 6rem;
+    }
+
+    .logo-container img {
+        width: 12rem;
+    }
+
+    .link-container {
+        gap: 1.9rem;
+    }
+
+    h3,
+    .separator {
+        font-size: 1.7rem;    
+    }
+
+    .profile-container {
+        gap: 1rem;
+        margin-right: 1.5rem;
+    }
+
+    .image-container {
+        width: 5rem;
+        height: 5rem;
+        border: .35rem #e8bb64 solid;
+    }
+}
+
+/*** Laptop - 1024px ***/
 @media screen and (max-width: 1024px) {
 
     .logo-container {
@@ -211,24 +244,21 @@ h3:hover,
     h3 {
         font-size: .9rem;
     }
-
-    .profile-container {
-        margin-right: .5rem;
-    }
 }
 
+/*** Tablet - 768px ***/
 @media screen and (max-width: 768px) {
 
     .toggle-container button {
         display: block; /* Show toggle button on smaller screens */
         position: relative;
-        right: 80%;
+        right: 17rem;
         background-color: transparent;
         font-size: 2rem;
         color: rgb(245, 242, 242);
         border: none;
         margin: 0 10rem;
-        z-index: 10; /* Ensure the button stays on top of other elements */
+        z-index: 2;
     }
 
     .link-container {
@@ -238,7 +268,7 @@ h3:hover,
         background-color: rgb(160, 153, 145);
         opacity: .9;
         transition: max-height 0.3s ease-in-out, visibility 0.3s ease-in-out;
-        z-index: 100;
+        z-index: 1;
     }
 
     .link-container.nav-open {
@@ -246,7 +276,7 @@ h3:hover,
         display: flex;
         flex-direction: column;
         position: relative;
-        right: 75.5%;
+        right: 31rem;
         max-height: 15rem;
         font-size: .7rem;
         padding: 1rem 2rem;
@@ -269,38 +299,44 @@ h3:hover,
 
     .logo-container {
         position: relative;
-        left: 39%;
+        left: 16.5rem;
     }
 
     .profile-container {
         position: relative;
-        left: 8%;
+        left: 3.1rem;
+    }
+
+    .profile-container.nav-open h3,
+    .image-container.nav-open {
+        position: relative;
+        right: 10.35rem;
     }
 }
 
+/*** Mobile L - 425px ***/
 @media screen and (max-width: 425px) {
 
     .toggle-container button {
-        right: 16%;
-        z-index: 5000;
+        right: 3.2rem;
     }
 
     .logo-container {
-        left: 0%;
+        left: 0rem;
     }
 
     .logo {
-        display: none;
+        display: none; /* Hide Original Logo */
     }
 
     .logo-responsive {
-        display: block;
+        display: block; /* Show Responsive Logo */
     }
 
     .link-container.nav-open {
         height: 15rem;
         top: 7.5rem;
-        right: 80%;
+        right: 18.4rem;
         padding: 0;
     }
 
@@ -315,7 +351,7 @@ h3:hover,
         position: relative;
         width: 6rem;
         top: 13.5rem;
-        right: 450%;
+        right: 29.2rem;
         font-size: .9rem;
         font-weight: bolder;
         color: rgb(53, 37, 19);
@@ -323,96 +359,68 @@ h3:hover,
         padding: 0;
         margin: 0;
         opacity: .9;
-        z-index: 1000;
+        z-index: 3;
     }
 
     .image-container {
         position: relative;
-        width: 2.7rem;
-        height: 2.7rem;
-        right: 155%;
+        width: 2.9rem;
+        height: 2.9rem;
+        right: 15.7rem;
         contain: content;
-        border: .25rem rgb(53, 37, 19) solid;
+        border: .3rem rgb(53, 37, 19) solid;
     }
 
     .image-container.nav-open {
-        right: 211%;
+        right: 25.9rem;
     }
 }
 
+/*** Mobile M - 375px ***/
 @media screen and (max-width: 375px) {
 
     .toggle-container button {
-        right: 21%;
+        right: 4.6rem;
     }
 
     .link-container.nav-open {
-        right: 95%;
+        right: 19.6rem;
     }
 
     .profile-container.nav-open h3 {
-        right: 461%;
+        right: 30.4rem;
     }
 
     .image-container {
-        right: 186%
+        right: 18.6rem;
     }
 
     .image-container.nav-open {
-        right: 235%;
+        right: 28.8rem;
     }
 }
 
+/*** Mobile S - 320px ***/
 @media screen and (max-width: 320px) {
 
     .toggle-container button {
-        right: 28%;
+        right: 6.1rem;
     }
 
     .link-container.nav-open {
-        right: 120%;
+        right: 21.1rem;
     }
 
     .profile-container.nav-open h3 {
-        right: 481%;
+        right: 31.9rem;
     }
 
     .image-container {
-        right: 217%
+        right: 21.6rem;
     }
 
     .image-container.nav-open {
-        right: 260%;
+        right: 31.8rem;
     }  
-}
-
-@media screen and (min-width: 2560px) {
-
-    .nav-container {
-        height: 5rem;
-    }
-
-    .logo-container img {
-        width: 10rem;
-    }
-
-    .link-container {
-        gap: 1.8rem;
-    }
-
-    h3,
-    .separator {
-        font-size: 1.5rem;    
-    }
-
-    .profile-container {
-        gap: 1rem;
-        margin-left: -5rem;
-    }
-
-    .image-container {
-        width: 4rem;
-        height: 4rem;
-    }
 }
 </style>

@@ -91,4 +91,36 @@ p {
     padding: 1vw;
     line-height: 1.3rem;
 }
+
+/* Laptop L - 1440px */
+
+/* 4K - 2560px */
+@media screen and (min-width: 2560px) {
+
+}
+
+/* Laptop - 1024px */
+@media screen and (max-width: 1024px) {
+
+}
+
+/* Tablet - 768px */
+@media screen and (max-width: 768px) {
+
+}
+
+/* Mobile L - 425px */
+@media screen and (max-width: 425px) {
+
+}
+
+/* Mobile M - 375px */
+@media screen and (max-width: 375px) {
+
+}
+
+/* Mobile S - 320px */
+@media screen and (max-width: 320px) {
+
+}
 </style>
