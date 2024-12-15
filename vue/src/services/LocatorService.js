@@ -2,15 +2,18 @@
 
 import axios from 'axios';
 
-export default{
-  getCoffee(locationId){
-    let queryURL = "https://api.yelp.com/v3/businesses/search?location="+locationId+"&term=coffee+tea&radius=20000&sort_by=distance&limit=24";
-    const apiKey = "_VJj6fsEV44UAy-Cr65nlJl3GVdKOgK-vjlwwC7Nd6mxMJdt3rVRPGrJ8ZerjT-M7NseO0eyVDRSl2ZrOn2Ck6A8BZmdOUX0svKN-3cQfKt_dtgBaPpLk-RNfoGiZnYx"; 
+export default {
+
+  getCoffee(locationId) {
+    const queryURL = `http://localhost:9000/coffee?locationId=${locationId}`;
     
-    return axios.get(queryURL, { 
-      headers: {
-        Authorization: `Bearer ${apiKey}`
-      }
-    })
+    return axios.get(queryURL)
+      .then(response => {
+        console.log("Full API Response:", response.data);  // Log the full response
+        return response.data;
+      })
+      .catch(error => {
+        console.error('Error fetching coffee locations:', error);
+      });
   }
 };

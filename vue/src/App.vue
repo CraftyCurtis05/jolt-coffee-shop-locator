@@ -63,8 +63,14 @@ html, body {
   overflow-x: hidden;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+}
+
 main {
-  width: 100vw;
+  flex: 1;
+  width: 100%;
   overflow-y: hidden;
 }
 
@@ -80,6 +86,10 @@ h1 {
 h2 {
   font-size: 1rem;
   margin-top: .4rem;
+}
+
+footer {
+  
 }
 
 /* Scrollbar */

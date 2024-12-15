@@ -106,7 +106,7 @@ export default {
     getResults(locationId) {
       LocatorService.getCoffee(locationId)
         .then(response => {
-          this.results = response.data.businesses;
+          this.results = response.businesses;
           console.log(this.results);
         })
         .catch(error => {
@@ -312,5 +312,49 @@ h3 {
 h4 {
   font-weight: lighter;
   margin: 0;
+}
+
+@media screen and (max-width: 1024px) {
+
+  .search-bar {
+    width: 55vw;
+  }
+
+  p {
+    font-size: .9rem;
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+
+  .search-bar {
+    width: 65vw;
+  }
+
+}
+
+@media screen and (max-width: 425px) {
+
+  .search-bar {
+    width: 90vw;
+  }
+
+  p {
+    font-size: .8rem;
+  }
+
+}
+
+@media screen and (max-width: 375px) {
+
+
+
+}
+
+@media screen and (max-width: 320px) {
+
+
+
 }
 </style>

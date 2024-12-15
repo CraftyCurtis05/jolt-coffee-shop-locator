@@ -200,12 +200,20 @@ h3:hover,
 /* Responsive Styles */
 @media screen and (max-width: 1024px) {
 
+    .logo-container {
+        margin-left: .5rem;
+    }
+
     .link-container {
         gap: 1rem;
     }
 
     h3 {
         font-size: .9rem;
+    }
+
+    .profile-container {
+        margin-right: .5rem;
     }
 }
 
@@ -261,24 +269,24 @@ h3:hover,
 
     .logo-container {
         position: relative;
-        left: 37%;
+        left: 39%;
     }
 
     .profile-container {
         position: relative;
-        left: 4.5%;
+        left: 8%;
     }
 }
 
 @media screen and (max-width: 425px) {
 
     .toggle-container button {
-        right: 20%;
+        right: 16%;
         z-index: 5000;
     }
 
     .logo-container {
-        left: -5%;
+        left: 0%;
     }
 
     .logo {
@@ -292,7 +300,7 @@ h3:hover,
     .link-container.nav-open {
         height: 15rem;
         top: 7.5rem;
-        right: 82%;
+        right: 80%;
         padding: 0;
     }
 
@@ -307,7 +315,7 @@ h3:hover,
         position: relative;
         width: 6rem;
         top: 13.5rem;
-        right: 439%;
+        right: 450%;
         font-size: .9rem;
         font-weight: bolder;
         color: rgb(53, 37, 19);
@@ -322,59 +330,59 @@ h3:hover,
         position: relative;
         width: 2.7rem;
         height: 2.7rem;
-        right: 162%;
+        right: 155%;
         contain: content;
         border: .25rem rgb(53, 37, 19) solid;
     }
 
     .image-container.nav-open {
-        right: 217%;
+        right: 211%;
     }
 }
 
 @media screen and (max-width: 375px) {
 
     .toggle-container button {
-        right: 26%;
+        right: 21%;
     }
 
     .link-container.nav-open {
-        right: 101%;
+        right: 95%;
     }
 
     .profile-container.nav-open h3 {
-        right: 464%;
+        right: 461%;
     }
 
     .image-container {
-        right: 193%
+        right: 186%
     }
 
     .image-container.nav-open {
-        right: 241%;
+        right: 235%;
     }
 }
 
 @media screen and (max-width: 320px) {
 
     .toggle-container button {
-        right: 32.5%;
+        right: 28%;
     }
 
     .link-container.nav-open {
-        right: 126%;
+        right: 120%;
     }
 
     .profile-container.nav-open h3 {
-        right: 484%;
+        right: 481%;
     }
 
     .image-container {
-        right: 227%
+        right: 217%
     }
 
     .image-container.nav-open {
-        right: 267%;
+        right: 260%;
     }  
 }
 

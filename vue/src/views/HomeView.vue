@@ -48,14 +48,14 @@ header img {
 }
 
 .carousel-container {
-  margin: 0 auto;
+  margin: .5rem auto;
 }
 
 .description-container {
   font-size: 1rem;
   max-width: 75%;
   line-height: 1.5;
-  margin: 0 auto;
+  margin: -1rem auto;
 }
 
 @media screen and (max-width: 768px) {
