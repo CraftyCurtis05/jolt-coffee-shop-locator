@@ -31,4 +31,4 @@ build/
 .vscode/
 
 ### App Properties ###
-./src/main/resources/application.properties
+java/src/main/resources/application.properties
