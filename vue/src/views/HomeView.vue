@@ -65,7 +65,7 @@ header img {
   }
 
   .description-container {
-    font-size: .9rem;
+    font-size: .85rem;
     max-width: 90%;
   }
 
@@ -74,9 +74,8 @@ header img {
 @media screen and (max-width: 425px) {
 
   .description-container {
-    font-size: .78rem;
+    font-size: .74rem;
     margin-left: .8rem;
   }
-
 }
 </style>

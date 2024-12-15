@@ -266,7 +266,7 @@ h3:hover,
 
     .profile-container {
         position: relative;
-        left: 3%;
+        left: 4.5%;
     }
 }
 

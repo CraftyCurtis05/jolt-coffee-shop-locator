@@ -89,9 +89,7 @@ body::-webkit-scrollbar {
         
 body::-webkit-scrollbar-track {
   background: url("@/assets/app/scrollbar/scrollbar_track.png");
-  background-position: -5px;
-  background-repeat: repeat-y;
-  background-size: 50px;
+  background-size: 20px;
 }
         
 body::-webkit-scrollbar-thumb {
@@ -115,6 +113,17 @@ body::-webkit-scrollbar-thumb {
     font-size: .9rem;
   }
 
+  body::-webkit-scrollbar {
+    width: 10px;
+  }
+          
+  body::-webkit-scrollbar-track {
+    background-size: 16px;
+  }
+          
+  body::-webkit-scrollbar-thumb {
+    background-size: 10px;
+  }
 }
 
 @media screen and (max-width: 425px) {
@@ -134,16 +143,15 @@ body::-webkit-scrollbar-thumb {
   }
 
   body::-webkit-scrollbar {
-    width: 12px;
+    width: 7px;
   }
           
   body::-webkit-scrollbar-track {
-    background-size: 18px;
+    background-size: 13px;
   }
           
   body::-webkit-scrollbar-thumb {
-    background-size: 12px;
+    background-size: 7px;
   }
-
 }
 </style>

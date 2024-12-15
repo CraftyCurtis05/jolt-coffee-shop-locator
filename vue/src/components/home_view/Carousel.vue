@@ -125,4 +125,12 @@ button img {
 .hover:hover {
   opacity: 1; /* Show hover image */
 }
+
+@media screen and (max-width: 768px) {
+
+  .carousel-container {
+    width: 90%;
+  }
+
+}
 </style>
