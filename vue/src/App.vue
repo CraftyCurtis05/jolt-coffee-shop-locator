@@ -58,7 +58,7 @@ html, body {
   padding: 0;
   margin: 0;
   text-align: center;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: 'Raleway', sans-serif;
   font-size: 18px;
   color: #333437;
   overflow-x: hidden;
@@ -80,6 +80,7 @@ header {
 }
 
 h1 {
+  font-family: 'Ubuntu', sans-serif;
   font-size: 1.8rem;
   margin: 0 auto;
 }

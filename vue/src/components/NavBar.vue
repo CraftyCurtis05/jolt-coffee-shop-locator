@@ -102,7 +102,15 @@ export default {
 
 <style scoped>
 /*** Laptop L - 1440px ***/
-nav {  /*  */
+/* src/assets/styles.css or App.vue */
+@font-face {
+  font-family: 'Vonique 43';
+  src: url('@/assets/app/fonts/vonique_43/Vonique 43_D.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+nav { 
     width: 100%;
     background-color: rgb(160, 153, 145);
     padding: 0;
@@ -150,7 +158,8 @@ nav {  /*  */
 
 h3,
 .link {
-    font-weight: bold;
+    font-family: 'Vonique 43', sans-serif;
+    font-weight: bolder;
     font-size: 1rem;
     color: rgb(245, 242, 242);
     text-decoration: none;
