@@ -187,6 +187,7 @@ body::-webkit-scrollbar-thumb {
 @media screen and (max-width: 425px) {
 
   header {
+    width: 98%;
     margin-top: .35rem;
   }
 
