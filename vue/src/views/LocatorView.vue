@@ -9,7 +9,7 @@
 
     <main>
       <section class="locator-container">
-        <Locator />
+        <Locator :user="user" />
       </section>
     </main>
     
@@ -18,11 +18,39 @@
   
 <script>
 import Locator from '../components/locator_view/Locator.vue';
+import ProfileService from '../services/ProfileService';
 
 export default {
   name: 'LocatorView',
   components: {
     Locator
+  },
+
+  data() {
+    return {
+      user: null
+    }
+  },
+
+  methods: {
+    /**
+     * Fetches the user’s profile from the server on component mount.
+     * Handles any errors that occur during the fetch operation.
+     */
+     async fetchProfile() {
+      try {
+        const profile = await ProfileService.getProfile(); // Fetch profile data from API
+        this.user = profile; // Stores fetched profile data in the user variable
+      } catch (error) {
+        console.error("Error fetching user profile:", error); 
+        alert("There was an error fetching your profile!");
+      }
+    }
+  },
+
+  mounted() {
+    // Fetches the user's profile data when the component is mounted
+    this.fetchProfile();
   }
 };
 </script>

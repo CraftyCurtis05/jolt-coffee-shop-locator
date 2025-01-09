@@ -102,7 +102,6 @@ export default {
 
 <style scoped>
 /*** Laptop L - 1440px ***/
-/* src/assets/styles.css or App.vue */
 @font-face {
   font-family: 'Vonique 43';
   src: url('@/assets/app/fonts/vonique_43/Vonique 43_D.otf') format('truetype');
@@ -169,7 +168,7 @@ h3,
 h3:hover,
 .link:hover {
     color: #525459;
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 
 .separator {

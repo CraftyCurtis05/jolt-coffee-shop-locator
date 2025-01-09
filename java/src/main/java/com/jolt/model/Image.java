@@ -1,5 +1,7 @@
 package com.jolt.model;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+
 public class Image {
 
     private int imageId;

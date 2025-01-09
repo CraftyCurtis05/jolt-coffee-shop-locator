@@ -10,7 +10,7 @@
     </section>
 
     <!-- Near Home Search -->
-     <section class="search-home">
+     <section class="search-home" v-if="user">
         <button @click="searchHome()" alt="Search Near Home Button" title="Click to Get Coffee Shops Near Home">Search Near Home</button>
      </section>
 
@@ -79,6 +79,22 @@ import FavoriteService from '../../services/FavoriteService.js';
 
 export default {
   name: "Locator",
+  props: {
+    // Ensure 'user' prop is required and has a default value
+    user: {
+      type: Object,
+      required: true,
+      default: () => ({
+        address1: '',
+        address2: '',
+        city: '',
+        state: '',
+        zipcode: ''
+      })
+    }
+  },
+
+
   data() {
     return {
       locationId: '', // LocationId variable to hold and pass location
@@ -150,7 +166,25 @@ export default {
       .catch(error => {
         console.error('Error fetching favorites:', error);
       });
-  },
+    },
+
+    // Search near home
+    searchHome() {
+      const { address1, address2, city, state, zipcode } = this.user;
+
+      // Check if the address is incomplete
+      if (!address1 || !city || !state || !zipcode) {
+        alert("User address is missing or incomplete. Please complete your profile.");
+        return; // Prevent search if address is incomplete
+      }
+
+      // If address is complete, proceed with the search
+      const fullAddress = `${address1} ${address2 ? address2 + ', ' : ''}${city}, ${state} ${zipcode}`;
+      console.log("Searching near address:", fullAddress);
+
+      // You can replace this with your actual logic to search using the user's address
+      this.getResults(fullAddress); // Example: pass the full address to getResults() or similar logic
+    }
   },
 
   mounted() {
