@@ -50,12 +50,12 @@
             <!-- Profile -->
             <section class="profile-container" :class="{ 'nav-open': isNavOpen }">
 
-                <router-link class="link logout" v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" title="Click to Logout">
+                <router-link class="link" id="logout" v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''" title="Click to Logout">
                     <h3>LOGOUT</h3>
                 </router-link>
 
                 <!-- Profile Picture with dynamic src -->
-                 <div class="image-container" :class="{ 'nav-open': isNavOpen }">
+                <div class="image-container" :class="{ 'nav-open': isNavOpen }">
                     <router-link v-bind:to="{ name: 'profile' }" v-if="$store.state.token != ''" title="Click to Go to Profile">
                         <!-- Fallback image used if no profile image is fetched -->
                         <img :src="imageUrl || 'src/assets/profile_view/profile_pic.png'" alt="Profile Picture" />
@@ -157,6 +157,9 @@ nav {
 
 h3,
 .link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-family: 'Vonique 43', sans-serif;
     font-weight: bolder;
     font-size: 1rem;
@@ -303,6 +306,10 @@ h3:hover,
 
     .separator {
         display: none; /* Hide separators for mobile view */
+        height: 0rem;
+        font-size: 0rem;
+        padding: 0;
+        margin: 0;
     }
 
     .logo-container {
@@ -312,7 +319,7 @@ h3:hover,
 
     .profile-container {
         position: relative;
-        left: 3.1rem;
+        left: 3rem;
     }
 
     .profile-container.nav-open h3,
@@ -343,44 +350,55 @@ h3:hover,
 
     .link-container.nav-open {
         height: 15rem;
-        top: 7.5rem;
-        right: 18.4rem;
-        padding: 0;
+        top: 8rem;
+        right: 18.6rem;
+        padding: 1rem 0;
     }
 
     .link {
-        display: flex;
-        flex-direction: column;
-        padding: 0 1rem;
-        margin: -.3rem;
+        height: 1.4rem;
+        margin: 0 1rem;
     }
 
-    .profile-container.nav-open h3 {
-        position: relative;
+    h3 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         width: 6rem;
-        top: 13.5rem;
-        right: 29.2rem;
-        font-size: .9rem;
+        font-size: .86rem;
         font-weight: bolder;
         color: rgb(53, 37, 19);
         border: .2rem #e8bb64ed solid;
+    }
+
+    .profile-container.nav-open #logout {
+        position: relative;
+        width: 6rem;
+        top: 15.15rem;
+        right: 28.75rem;
         padding: 0;
         margin: 0;
         opacity: .9;
         z-index: 3;
     }
 
+    .profile-container.nav-open h3 {
+        position: absolute;
+        left: -.15rem;
+    } 
+
     .image-container {
         position: relative;
         width: 2.9rem;
         height: 2.9rem;
-        right: 15.7rem;
+        right: 18.8rem;
         contain: content;
         border: .3rem rgb(53, 37, 19) solid;
     }
 
     .image-container.nav-open {
-        right: 25.9rem;
+        right: 18.2rem;
     }
 }
 
@@ -392,19 +410,24 @@ h3:hover,
     }
 
     .link-container.nav-open {
-        right: 19.6rem;
+        right: 20rem;
+    }
+
+    .profile-container.nav-open #logout {
+        position: relative;
+        border: 1px red solid;
     }
 
     .profile-container.nav-open h3 {
-        right: 30.4rem;
+        position: relative;
     }
 
     .image-container {
-        right: 18.6rem;
+        right: 21.4rem;
     }
 
     .image-container.nav-open {
-        right: 28.8rem;
+        right: 20.9rem;
     }
 }
 
