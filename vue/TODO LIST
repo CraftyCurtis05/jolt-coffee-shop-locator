@@ -1,6 +1,7 @@
-Responsive design - NavBar.vue @375px .nav-open #logout
-authorize 
-comments
+Responsive design - Locator, Shop, Articles, About Us, Profile Views
+Stop image from sliding when .nav-open
+Have navbar collaspe after selection from .nav-open
+authorize pages - only if logged in
 uniform code
-adjust styling
+comments
 user testing
