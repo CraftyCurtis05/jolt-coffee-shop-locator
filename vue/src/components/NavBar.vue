@@ -398,7 +398,7 @@ h3:hover,
     }
 
     .image-container.nav-open {
-        right: 18.2rem;
+        right: 24.8rem;
     }
 }
 
@@ -415,19 +415,16 @@ h3:hover,
 
     .profile-container.nav-open #logout {
         position: relative;
-        border: 1px red solid;
-    }
-
-    .profile-container.nav-open h3 {
-        position: relative;
+        width: 6.5rem;
+        right: 30.2rem;
     }
 
     .image-container {
-        right: 21.4rem;
+        right: 21.5rem;
     }
 
     .image-container.nav-open {
-        right: 20.9rem;
+        right: 28rem;
     }
 }
 
@@ -439,19 +436,19 @@ h3:hover,
     }
 
     .link-container.nav-open {
-        right: 21.1rem;
+        right: 21.5rem;
     }
 
-    .profile-container.nav-open h3 {
-        right: 31.9rem;
+    .profile-container.nav-open #logout {
+        right: 31.7rem;
     }
 
     .image-container {
-        right: 21.6rem;
+        right: 24.6rem;
     }
 
     .image-container.nav-open {
-        right: 31.8rem;
+        right: 31.1rem;
     }  
 }
 </style>
