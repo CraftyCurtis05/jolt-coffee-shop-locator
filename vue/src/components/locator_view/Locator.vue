@@ -195,6 +195,7 @@ export default {
 </script>
 
 <style scoped>
+/* Laptop L - 1440px */
 .locator-container {
   display: flex;
   flex-direction: column;
@@ -348,8 +349,6 @@ h4 {
   margin: 0;
 }
 
-/* Laptop L - 1440px */
-
 /* 4K - 2560px */
 @media screen and (min-width: 2560px) {
 
@@ -486,6 +485,10 @@ h4 {
     width: 90vw;
   }
 
+  .search-bar input {
+    font-size: 1rem;
+  }
+
   h3 {
     font-size: .9rem;
   }
@@ -515,7 +518,7 @@ h4 {
 @media screen and (max-width: 320px) {
 
   .search-bar {
-    width: 16.2rem;
+    width: 16rem;
   }
 
   .result {

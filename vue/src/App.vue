@@ -76,7 +76,7 @@ main {
 }
 
 header {
-  margin-top: .5rem;
+  margin: .5rem auto;
 }
 
 h1 {
@@ -87,11 +87,7 @@ h1 {
 
 h2 {
   font-size: 1rem;
-  margin-top: .4rem;
-}
-
-footer {
-  
+  margin: .4rem 1rem;
 }
 
 /* Scrollbar */

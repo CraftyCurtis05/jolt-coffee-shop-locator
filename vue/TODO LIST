@@ -1,6 +1,9 @@
-Responsive design - Locator, Shop, Articles, About Us, Profile Views
+Responsive design - Shop, Articles, About Us, Profile Views
 Stop image from sliding when .nav-open
 Have navbar collaspe after selection from .nav-open
+stop cursor from appearing on text
+stop having to refresh for portfolio image and details
+push footer down on locator view when no results
 authorize pages - only if logged in
 uniform code
 comments
