@@ -17,20 +17,14 @@
             <details>
                 <summary title="Learn More about Steven">Back-End Developer</summary>
                 <p>
-                    &nbsp; I am an aspiring developer currently enrolled in the Tech Elevator program.
-                    Although I am relatively new to the technology field, I have a strong background in problem-solving and complex systems. 
-                    As a passionate drag racer and mechanic, attention to detail and critical thinking are skills I have practiced and honed.
+                    &nbsp; "I’m an aspiring developer in the Tech Elevator program with a background in problem-solving and complex 
+                    systems. Before tech, I honed my attention to detail and critical thinking as a drag racer and mechanic. I thrive 
+                    on tackling challenges, making software development a natural fit. 
                     
-                    <br><br> &nbsp; I find immense enjoyment in tackling challenges and finding creative solutions. This is why I am drawn to 
-                    software development, as it offers constant opportunities to overcome obstacles. While most of my professional experience 
-                    lies in project management within the construction industry, I have also gained valuable insights as a scrum master and 
-                    product owner in an agile environment at Kroger technology.
-                    
-                    <br><br> &nbsp; Additionally, I proudly served in the United States Navy for six years, achieving the rank of second class 
-                    petty officer. During my time in the Navy, I completed two overseas deployments and received several awards, including a 
-                    humanitarian service medal for search and rescue operations immediately following the 2009 tsunami in American Samoa. I am 
-                    now eager to embark on the next phase of my professional journey and I am excited to contribute meaningfully to the success 
-                    of the team.
+                    <br><br>&nbsp; My career has included project management in construction and roles as a scrum master and product 
+                    owner at Kroger Technology. I also served six years in the U.S. Navy, earning a humanitarian service medal for search 
+                    and rescue after the 2009 tsunami in American Samoa. I’m excited to bring my diverse skills to the tech world and 
+                    contribute to a team’s success."
                 </p>
             </details>
         </section>
@@ -50,9 +44,12 @@ export default {
 </script>
 
 <style scoped>
+/* Laptop L - 1440px */
 article {
+    position: relative;
     background-color: rgb(53, 37, 19);
     width: 20vw;
+    border:.2vw #e8bb64 solid;
     padding: 1vw;
 }
 
@@ -61,7 +58,7 @@ img {
     height: 13vw;
     border: .6vw #e8bb64 solid;
     border-radius: 50%;
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.3s ease-in-out;
 }
 
 img:hover {
@@ -83,46 +80,104 @@ h3 {
     font-size: 1.3rem;
 }
 
+details {
+    font-size: .9rem;
+}
+
 summary {
     cursor: pointer;
-    padding-bottom: 1.5rem;
+    padding-bottom: 3vw;
+    z-index: 100;
 }
 
 p {
     text-align: left;
+    max-height: 5vw;
     padding: 1vw;
-    line-height: 1.3rem;
+    line-height: 1.5;
+    overflow-y: auto; /* Adds vertical scroll when content exceeds max height */
 }
-
-/* Laptop L - 1440px */
 
 /* 4K - 2560px */
 @media screen and (min-width: 2560px) {
 
+    h3 {
+        font-size: 1.7rem;
+    }
+
+    details {
+        font-size: 1.5rem;
+    }
 }
 
 /* Laptop - 1024px */
 @media screen and (max-width: 1024px) {
 
+    h3 {
+        font-size: 1rem;
+    }
+
+    details {
+        font-size: .8rem;
+    }
 }
 
 /* Tablet - 768px */
 @media screen and (max-width: 768px) {
 
+    article {
+        width: 30vw;
+    }
+
+    h3 {
+        font-size: 1rem;
+    }
+
+    details {
+        font-size: .8rem;
+    }
+
+    p {
+        position: absolute;
+        background-color: #e8bb64;
+        max-height: 25vw;
+        z-index: 1000;
+    }
 }
 
 /* Mobile L - 425px */
 @media screen and (max-width: 425px) {
 
+    article {
+        width: 45vw;
+    }
+
+    h3 {
+        font-size: .9rem;
+    }
+
+    details {
+        font-size: .7rem;
+    }
+
+    p {
+        max-height: 40vw;
+    }
 }
 
 /* Mobile M - 375px */
 @media screen and (max-width: 375px) {
 
+    p {
+        max-height: 48vw;
+    }
 }
 
 /* Mobile S - 320px */
 @media screen and (max-width: 320px) {
 
+    p {
+        max-height: 58vw;
+    }
 }
 </style>

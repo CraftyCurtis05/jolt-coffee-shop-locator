@@ -17,17 +17,14 @@
             <details>
                 <summary title="Learn More about Jennifer">Full-Stack Developer</summary>
                 <p>
-                    &nbsp; For as long as I can remember, I've had a persistent curiosity and endless questions about how everything 
-                    is connected. I did not realize how useful this need for information was in IT, until I started studying and working 
-                    with data analysis and machine learning last year. That was just the start... From the beginning, I was hooked!
+                    &nbsp; "I've always been the type to ask a lot of questions and wonder how everything connects—something I only 
+                    realized is a huge advantage in IT! Once I dove into data analysis and machine learning, I was hooked. Fast-forward 
+                    to countless hours of studying (COMPTIA A+, Docker, System Admin, Data Science), which led me to Tech Elevator's Java 
+                    Full Stack Bootcamp. 
                     
-                    <br><br> &nbsp; Endless hours of researching and studying, from COMPTIA A+ and Docker to System Administration and 
-                    Data Science, which led me to enrolling in Tech Elevator's Java Full Stack Bootcamp. Learning new languages, endless 
-                    research, focusing on efficiency and organization, plus being surrounded by like-minded people- It's everything I didn't 
-                    even know I wanted!
-                    
-                    <br><br> &nbsp; Inquisitive, tenacious and approachable extrovert interested in career opportunities where I can further 
-                    indulge my love of learning and dive into the endless possibilities of software development and technology.
+                    <br><br> &nbsp; Learning new languages, exploring tech, and collaborating with like-minded people? It's like my 
+                    dream came true! I'm an inquisitive, tenacious extrovert, eager to dive deeper into software development and tech 
+                    opportunities that let me keep learning and exploring."
                 </p>
             </details>
         </section>
@@ -47,9 +44,12 @@ export default {
 </script>
 
 <style scoped>
+/* Laptop L - 1440px */
 article {
+    position: relative;
     background-color: rgb(53, 37, 19);
     width: 20vw;
+    border:.2vw #e8bb64 solid;
     padding: 1vw;
 }
 
@@ -80,46 +80,104 @@ h3 {
     font-size: 1.3rem;
 }
 
+details {
+    font-size: .9rem;
+}
+
 summary {
     cursor: pointer;
-    padding-bottom: 1.5rem;
+    padding-bottom: 3vw;
+    z-index: 100;
 }
 
 p {
     text-align: left;
+    max-height: 5vw;
     padding: 1vw;
-    line-height: 1.3rem;
+    line-height: 1.5;
+    overflow-y: auto; /* Adds vertical scroll when content exceeds max height */
 }
-
-/* Laptop L - 1440px */
 
 /* 4K - 2560px */
 @media screen and (min-width: 2560px) {
 
+    h3 {
+        font-size: 1.7rem;
+    }
+
+    details {
+        font-size: 1.5rem;
+    }
 }
 
 /* Laptop - 1024px */
 @media screen and (max-width: 1024px) {
 
+    h3 {
+        font-size: 1rem;
+    }
+
+    details {
+        font-size: .8rem;
+    }
 }
 
 /* Tablet - 768px */
 @media screen and (max-width: 768px) {
 
+    article {
+        width: 30vw;
+    }
+
+    h3 {
+        font-size: 1rem;
+    }
+
+    details {
+        font-size: .8rem;
+    }
+
+    p {
+        position: absolute;
+        background-color: #e8bb64;
+        max-height: 25vw;
+        z-index: 1000;
+    }
 }
 
 /* Mobile L - 425px */
 @media screen and (max-width: 425px) {
 
+    article {
+        width: 45vw;
+    }
+
+    h3 {
+        font-size: .9rem;
+    }
+
+    details {
+        font-size: .7rem;
+    }
+
+    p {
+        max-height: 41vw;
+    }
 }
 
 /* Mobile M - 375px */
 @media screen and (max-width: 375px) {
 
+    p {
+        max-height: 48vw;
+    }
 }
 
 /* Mobile S - 320px */
 @media screen and (max-width: 320px) {
 
+    p {
+        max-height: 58vw;
+    }
 }
 </style>

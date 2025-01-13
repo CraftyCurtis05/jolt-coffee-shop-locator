@@ -17,17 +17,14 @@
             <details>
                 <summary title="Learn More about Naomi">Front-End Developer</summary>
                 <p>
-                    &nbsp; With over a decade of entrepreneurial experience under my belt, I embarked on a transformative journey that 
-                    has now led me to the world of technology. I successfully completed a rigorous full-stack coding bootcamp, equipping 
-                    myself with the technical skills needed to thrive in this dynamic field.
-
-                    <br><br> &nbsp; My transition from entrepreneurship to tech represents a pivotal moment in my career. It signifies my 
-                    unwavering commitment to growth, learning, and embracing new challenges. The bootcamp experience not only deepened my 
-                    technical knowledge but also sharpened my problem-solving abilities and enhanced my adaptability.
+                    &nbsp; "After over a decade of entrepreneurship, I made a bold pivot into the world of tech, 
+                    completing a full-stack coding bootcamp to equip myself with the skills to thrive in this exciting 
+                    field. This shift marks a key moment in my career—one that reflects my commitment to continuous growth, 
+                    learning, and embracing new challenges. 
                     
-                    <br><br> &nbsp; Having completed the bootcamp, my goal remains the same: to excel in the technology world, where 
-                    opportunities for innovation and growth abound. I am now ready to apply my entrepreneurial spirit, combined with my 
-                    newfound technical expertise, to create solutions that make a meaningful impact.
+                    <br><br>&nbsp; Tech Elevator bootcamp not only boosted my technical expertise but also 
+                    sharpened my problem-solving and adaptability. Now that I've wrapped up my training, I’m eager to apply 
+                    my entrepreneurial mindset and fresh tech skills to create innovative solutions that make a real impact."
                 </p>
             </details>
         </section>
@@ -47,9 +44,12 @@ export default {
 </script>
 
 <style scoped>
+/* Laptop L - 1440px */
 article {
+    position: relative;
     background-color: rgb(53, 37, 19);
     width: 20vw;
+    border:.2vw #e8bb64 solid;
     padding: 1vw;
 }
 
@@ -80,46 +80,104 @@ h3 {
     font-size: 1.3rem;
 }
 
+details {
+    font-size: .9rem;
+}
+
 summary {
     cursor: pointer;
-    padding-bottom: 1.5rem;
+    padding-bottom: 3vw;
+    z-index: 100;
 }
 
 p {
     text-align: left;
+    max-height: 5vw;
     padding: 1vw;
-    line-height: 1.3rem;
+    line-height: 1.5;
+    overflow-y: auto; /* Adds vertical scroll when content exceeds max height */
 }
-
-/* Laptop L - 1440px */
 
 /* 4K - 2560px */
 @media screen and (min-width: 2560px) {
 
+    h3 {
+        font-size: 1.7rem;
+    }
+
+    details {
+        font-size: 1.5rem;
+    }
 }
 
 /* Laptop - 1024px */
 @media screen and (max-width: 1024px) {
 
+    h3 {
+        font-size: 1rem;
+    }
+
+    details {
+        font-size: .8rem;
+    }
 }
 
 /* Tablet - 768px */
 @media screen and (max-width: 768px) {
 
+    article {
+        width: 30vw;
+    }
+
+    h3 {
+        font-size: 1rem;
+    }
+
+    details {
+        font-size: .8rem;
+    }
+
+    p {
+        position: absolute;
+        background-color: #e8bb64;
+        max-height: 25vw;
+        z-index: 1000;
+    }
 }
 
 /* Mobile L - 425px */
 @media screen and (max-width: 425px) {
 
+    article {
+        width: 45vw;
+    }
+
+    h3 {
+        font-size: .9rem;
+    }
+
+    details {
+        font-size: .7rem;
+    }
+
+    p {
+        max-height: 40vw;
+    }
 }
 
 /* Mobile M - 375px */
 @media screen and (max-width: 375px) {
 
+    p {
+        max-height: 48vw;
+    }
 }
 
 /* Mobile S - 320px */
 @media screen and (max-width: 320px) {
 
+    p {
+        max-height: 58vw;
+    }
 }
 </style>

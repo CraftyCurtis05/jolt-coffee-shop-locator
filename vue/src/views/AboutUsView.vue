@@ -49,39 +49,46 @@ export default {
 /* Laptop L - 1440px */
 main {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
-  margin: 1.1rem auto;
-}
-
-/* 4K - 2560px */
-@media screen and (min-width: 2560px) {
-
+  align-items: center;
+  width: 95vw;
+  margin: 0 auto;
+  margin-bottom: 2vw;
 }
 
 /* Laptop - 1024px */
 @media screen and (max-width: 1024px) {
-
-}
-
-/* Tablet - 768px */
-@media screen and (max-width: 768px) {
-
+  
+  main {
+    min-height: 50vh;
+  }
 }
 
 /* Mobile L - 425px */
 @media screen and (max-width: 425px) {
 
+  main {
+    width: 98vw;
+    min-height: 59vh;
+  }
 }
 
 /* Mobile M - 375px */
 @media screen and (max-width: 375px) {
 
+  main {
+    min-height: 61vh;
+  }
 }
 
 /* Mobile S - 320px */
 @media screen and (max-width: 320px) {
 
+  main {
+    min-height: 63vh;
+  }
 }
 </style>
 

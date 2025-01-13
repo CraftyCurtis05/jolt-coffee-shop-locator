@@ -121,7 +121,6 @@ h3 {
     h3 {
         font-size: 1rem;
     }
-
 }
 
 /* Tablet - 768px */
