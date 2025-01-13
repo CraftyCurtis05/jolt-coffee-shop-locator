@@ -51,13 +51,13 @@ export default {
 footer {
   background-color: transparent;
   text-align: center;
+  width: 100vw;
   background-color: rgb(160, 153, 145);
   border-top: .1rem #333437 solid;
   padding: 1rem 0;
 }
 
 .container-footer {
-  max-width: 1440px;
   margin: 0 auto;
 }
 

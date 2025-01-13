@@ -61,9 +61,6 @@ main {
 /* Laptop - 1024px */
 @media screen and (max-width: 1024px) {
   
-  main {
-    min-height: 50vh;
-  }
 }
 
 /* Mobile L - 425px */
@@ -71,24 +68,17 @@ main {
 
   main {
     width: 98vw;
-    min-height: 59vh;
   }
 }
 
 /* Mobile M - 375px */
 @media screen and (max-width: 375px) {
 
-  main {
-    min-height: 61vh;
-  }
 }
 
 /* Mobile S - 320px */
 @media screen and (max-width: 320px) {
 
-  main {
-    min-height: 63vh;
-  }
 }
 </style>
 

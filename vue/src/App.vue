@@ -55,6 +55,7 @@ export default {
 html, body {
   width: 100vw;
   height: 100%;
+  min-height: 62.8vh;
   padding: 0;
   margin: 0;
   text-align: center;
@@ -110,6 +111,9 @@ body::-webkit-scrollbar-thumb {
 /* 4K - 2560px */
 @media screen and (min-width: 2560px) {
 
+  body {
+    min-height: 64.3vh;
+  }
   
   header {
     margin-top: .9rem;
@@ -139,6 +143,10 @@ body::-webkit-scrollbar-thumb {
 /* Laptop - 1024px */
 @media screen and (max-width: 1024px) {
 
+  body {
+    min-height: 65.6vh;
+  }
+
   header {
     margin-top: .5rem;
   }
@@ -154,6 +162,10 @@ body::-webkit-scrollbar-thumb {
 
 /* Tablet - 768px */
 @media screen and (max-width: 768px) {
+
+  body {
+    min-height: 68.5vh;
+  }
 
   header {
     margin-top: .4rem;
@@ -182,6 +194,10 @@ body::-webkit-scrollbar-thumb {
 
 /* Mobile L - 425px */
 @media screen and (max-width: 425px) {
+  
+  body {
+    min-height: 71.3vh;
+  }
 
   header {
     width: 98%;
@@ -212,6 +228,10 @@ body::-webkit-scrollbar-thumb {
 /* Mobile M - 375px */
 @media screen and (max-width: 375px) {
 
+  body {
+    min-height: 72.5vh;
+  }
+
   header {
     margin-top: .30rem;
   }
@@ -228,6 +248,10 @@ body::-webkit-scrollbar-thumb {
 
 /* Mobile S - 320px */
 @media screen and (max-width: 320px) {
+
+  body {
+    min-height: 74.5vh;
+  }
 
   h1 {
     font-size: 1.25rem;
