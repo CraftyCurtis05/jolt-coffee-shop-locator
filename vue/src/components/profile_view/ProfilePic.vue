@@ -148,6 +148,7 @@ export default {
 </script>
 
 <style scoped>
+/* Laptop L - 1440px */
 .profile-pic-container {
   display: flex;
   flex-direction: column;
@@ -196,11 +197,19 @@ form button:hover {
   cursor: pointer;
 }
 
-/* Laptop L - 1440px */
-
 /* 4K - 2560px */
 @media screen and (min-width: 2560px) {
 
+  .image-container {
+    border: .6vw #e8bb64 solid;
+  }
+
+  form button {
+    width: 10rem;
+    height: 2.5rem;
+    font-size: 1.25rem;
+    margin-top: .5vw;
+  }
 }
 
 /* Laptop - 1024px */

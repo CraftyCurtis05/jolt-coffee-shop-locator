@@ -116,7 +116,7 @@ main {
 .profile-container {
   display: flex;
   flex-direction: column;
-  width: 40%;
+  width: 30%;
   background-color: rgb(53, 37, 19);
   box-sizing: border-box;
   padding: 4% 5%;
@@ -146,6 +146,12 @@ main {
 /* 4K - 2560px */
 @media screen and (min-width: 2560px) {
 
+  .profile-form button {
+    width: 10rem;
+    height: 2.5rem;
+    font-size: 1.25rem;
+    margin-top: .5vw;
+  }
 }
 
 /* Laptop - 1024px */
@@ -156,6 +162,9 @@ main {
 /* Tablet - 768px */
 @media screen and (max-width: 768px) {
 
+  .profile-container {
+    width: 30%;
+  }
 }
 
 /* Mobile L - 425px */

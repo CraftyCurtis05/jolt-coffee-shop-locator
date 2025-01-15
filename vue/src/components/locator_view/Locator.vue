@@ -470,9 +470,7 @@ h4 {
   .search-bar {
     width: 70vw;
   }
-
-
-
+  
   .result {
     margin-inline: .5rem;
   }

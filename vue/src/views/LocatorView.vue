@@ -57,11 +57,15 @@ export default {
 
 <style scoped>
 /* Laptop L - 1440px */
+header {
+  margin-top: 2.5vh;
+}
+
 main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 1rem;
+  margin: 2vw auto;
 }
 
 .locator-container {

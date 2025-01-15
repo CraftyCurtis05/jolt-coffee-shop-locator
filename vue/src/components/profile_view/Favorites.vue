@@ -3,8 +3,8 @@
 <template>
     <article class="favorites-container">
         <div class="header-container">
-            <h3>Favorites</h3> 
-            <h4>Coffee Shop Delights: My Personal Selection</h4>
+            <h1>Favorites</h1> 
+            <h2>Coffee Shop Delights: My Personal Selection</h2>
         </div>    
 
         <section class="results-container"> 
@@ -101,6 +101,7 @@ export default {
 </script>
   
 <style scoped>
+/* Laptop L - 1440px */
 .favorites-container {
     display: flex;
     flex-direction: column;
@@ -116,19 +117,6 @@ export default {
     padding: .5rem 0;
 }
 
-h3 {
-    font-weight: bolder;
-    font-size: 1.3rem;
-    margin: 0;
-    margin-top: 1rem;
-}
-
-h4 {
-    font-size: 1rem;
-    font-weight: lighter;
-    margin: .5rem;
-}
-
 .results-container {
     display: flex;
     flex-direction: row;
@@ -141,7 +129,7 @@ h4 {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 15rem;
+    width: 14rem;
     height: 15rem;
     border: .1rem rgb(53, 37, 19) solid;
     border-radius: .1rem;
@@ -155,32 +143,22 @@ h4 {
     transform: scale(1.1);
 }
 
-.result:hover .name {
-    font-size: 1.04rem;
-}
-
-.result:hover .location-container {
-    font-size: .94rem;
-}
-
-.result:hover img {
-    border: .12rem rgb(53, 37, 19) solid;
-    filter: grayscale(70%);
-}
-
-.result a {
-    color: #525459;
-    text-decoration: none;
-}
-
 .result .name {
     font-weight: bold;
     transition: all 0.5s ease-in-out;
 }
 
+.result:hover .name {
+    font-size: 1.04rem;
+}
+
 .result .location-container {
     font-size: .9rem;
     transition: all 0.5s ease-in-out;
+}
+
+.result:hover .location-container {
+    font-size: .94rem;
 }
 
 .result .name:hover,
@@ -201,6 +179,16 @@ h4 {
     transform: scale(1.05);
 }
 
+.result:hover img {
+    border: .12rem rgb(53, 37, 19) solid;
+    filter: grayscale(70%);
+}
+
+.result a {
+    color: #525459;
+    text-decoration: none;
+}
+
 button {
     width: 5rem;
     height: 1.3rem;
@@ -217,21 +205,94 @@ button:hover {
     cursor: pointer;
 }
 
-/* Laptop L - 1440px */
-
 /* 4K - 2560px */
 @media screen and (min-width: 2560px) {
 
+    .result {
+        width: 20rem;
+        height: 21.5rem;
+    }
+
+    .result .name {
+        font-size: 1.45rem;
+    }
+
+    .result .location-container {
+        font-size: 1.3rem;
+    }
+
+    .result img {
+        width: 14rem;
+        height: 14rem;
+    }
+
+    button {
+        width: 6rem;
+        height: 2rem;
+        font-size: 1.1rem;
+        margin-top: .5vw;
+    }
 }
 
 /* Laptop - 1024px */
 @media screen and (max-width: 1024px) {
 
+    .result {
+        width: 9rem;
+        height: 10.5rem;
+    }
+
+    .result .name {
+        font-size: .75rem;
+    }
+
+    .result .location-container {
+        font-size: .65rem;
+    }
+
+    .result img {
+        width: 7rem;
+        height: 7rem;
+        margin-top: .2vw;
+    }
+
+    button {
+        width: 3.5rem;
+        height: 1.1rem;
+        font-size: .6rem;
+        margin-top: .1vw;
+    }
 }
 
 /* Tablet - 768px */
 @media screen and (max-width: 768px) {
 
+    .result {
+        width: 10rem;
+        height: 11rem;
+    }
+
+    .result .name {
+        font-size: .75rem;
+    }
+
+    .result .location-container {
+        font-size: .65rem;
+    }
+
+    .result img {
+        width: 7.5rem;
+        height: 7.5rem;
+        margin-top: .5vw;
+    }
+
+    button {
+        width: 3.5rem;
+        height: 1.1rem;
+        font-size: .6rem;
+        margin-top: 0;
+        margin-bottom: .5vw;
+    }
 }
 
 /* Mobile L - 425px */

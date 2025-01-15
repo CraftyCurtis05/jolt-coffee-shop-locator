@@ -36,12 +36,15 @@ export default {
 </script>
 
 <style scoped>
+/* Laptop L - 1440px */
 .profile-details-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   color: rgb(245, 242, 242);
+  border: .1rem #e8bb64 solid;
+  margin-top: 1vw;
 }
 
 .name {
@@ -57,7 +60,7 @@ export default {
 }
 
 .location-container {
-  margin-top: 1rem;
+  margin: 1.8rem auto;
 }
 
 .address1,
@@ -66,11 +69,26 @@ export default {
   margin: .1rem auto;
 }
 
-/* Laptop L - 1440px */
-
 /* 4K - 2560px */
 @media screen and (min-width: 2560px) {
 
+  .name {
+    font-size: 2rem;
+    margin-top: 1vw;
+  }
+
+  .birthday {
+    font-size: 1.5rem;
+  }
+
+  .location-container {
+    margin-top: 1.5rem;
+  }
+
+  .address1,
+  .address2 {
+    font-size: 1.6rem;
+  }
 }
 
 /* Laptop - 1024px */

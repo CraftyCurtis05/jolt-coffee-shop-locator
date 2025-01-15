@@ -17,6 +17,7 @@
       </section>
 
     <main>
+
       <section class="carousel-container">
         <Carousel />
       </section>
@@ -41,22 +42,22 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 3vh;
 }
 
 header img {
-  width: 5.5rem;
+  width: 6vw;
 }
 
 .carousel-container {
-  margin: .5rem auto;
+  margin: 1vh auto;
 }
 
 .description-container {
   font-size: 1rem;
   max-width: 80%;
   line-height: 1.5;
-  margin: -1rem auto;
+  margin: -2.5vh auto;
 }
 
 /* 4K - 2560px */
@@ -67,8 +68,8 @@ header img {
   }
 
   .description-container {
-    font-size: 1.5rem;
-    max-width: 70%;
+    font-size: 1.6rem;
+    max-width: 80%;
   }
 }
 
@@ -81,7 +82,7 @@ header img {
 
   .description-container {
     font-size: .85rem;
-    max-width: 92%;
+    max-width: 80%;
   }
 }
 
@@ -94,7 +95,7 @@ header img {
 
   .description-container {
     font-size: .80rem;
-    max-width: 90%;
+    max-width: 95%;
   }
 }
 
@@ -107,7 +108,7 @@ header img {
 
   .description-container {
     font-size: .7rem;
-    max-width: 93%
+    max-width: 90%
   }
 }
 
@@ -120,7 +121,7 @@ header img {
 
   .description-container {
     font-size: .67rem;
-    max-width: 91%
+    max-width: 93%
   }
 }
 
@@ -133,7 +134,7 @@ header img {
 
   .description-container {
     font-size: .68rem;
-    max-width: 93%
+    max-width: 90%
   }
 }
 </style>

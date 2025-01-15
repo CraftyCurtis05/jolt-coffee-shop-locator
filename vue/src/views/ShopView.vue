@@ -29,6 +29,10 @@ export default {
 
 <style scoped>
 /* Laptop L - 1440px */
+header {
+  margin-top: 1.8vw;
+}
+
 main {
   display: flex;
   flex-direction: column;

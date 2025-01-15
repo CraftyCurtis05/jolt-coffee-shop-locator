@@ -56,12 +56,12 @@ html, body {
   width: 100vw;
   height: 100%;
   min-height: 62.8vh;
-  padding: 0;
-  margin: 0;
   text-align: center;
   font-family: 'Raleway', sans-serif;
   font-size: 18px;
   color: #333437;
+  padding: 0;
+  margin: 0 auto;
   overflow-x: hidden;
 }
 
@@ -77,18 +77,20 @@ main {
 }
 
 header {
-  margin: .5rem auto;
+  margin-top: 1vh;
 }
 
 h1 {
   font-family: 'Ubuntu', sans-serif;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
+  font-weight: 500;
   margin: 0 auto;
 }
 
 h2 {
   font-size: 1rem;
-  margin: .4rem 1rem;
+  font-weight: 600;
+  margin: 1.5vh auto;
 }
 
 /* Scrollbar */
@@ -116,11 +118,11 @@ body::-webkit-scrollbar-thumb {
   }
   
   header {
-    margin-top: .9rem;
+    margin-top: .5vh;
   }
 
   h1 {
-    font-size: 3rem;
+    font-size: 2.8rem;
   }
 
   h2 {
@@ -148,7 +150,7 @@ body::-webkit-scrollbar-thumb {
   }
 
   header {
-    margin-top: .5rem;
+    margin-top: .5vh;
   }
 
   h1 {
@@ -168,7 +170,7 @@ body::-webkit-scrollbar-thumb {
   }
 
   header {
-    margin-top: .4rem;
+    margin-top: .4vh;
   }
 
   h1 {
@@ -201,7 +203,7 @@ body::-webkit-scrollbar-thumb {
 
   header {
     width: 98%;
-    margin-top: .35rem;
+    margin-top: .35vh;
   }
 
   h1 {
@@ -233,7 +235,7 @@ body::-webkit-scrollbar-thumb {
   }
 
   header {
-    margin-top: .30rem;
+    margin-top: .30vh;
   }
 
   h1 {

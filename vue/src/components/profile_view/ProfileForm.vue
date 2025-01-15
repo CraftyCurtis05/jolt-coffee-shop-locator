@@ -325,12 +325,13 @@ export default {
 </script>
 
 <style scoped>
+/* Laptop L - 1440px */
 .profile-form-container {
   margin: 1rem auto;
 }
 
 .profile-form {
-  width: 25vw;
+  width: 20vw;
   background-color: rgb(160, 153, 145);
   border: 1vw rgb(160, 153, 145) solid;
 }
@@ -344,7 +345,7 @@ export default {
 }
 
 fieldset {
-  width: 20vw;
+  width: 16vw;
 }
 
 fieldset:after {
@@ -355,6 +356,7 @@ fieldset:after {
 
 legend {
   font-size: .9rem;
+  font-weight: 500;
 }
 
 .form {
@@ -365,6 +367,7 @@ legend {
   display: flex;
   justify-content: center;
   font-size: .9rem;
+  font-weight: 500;
   margin-top: .8rem;
 }
 
@@ -378,7 +381,7 @@ legend {
 }
 
 .col-30 {
-  width: 30%;
+  width: 35%;
 }
 
 .col-70,
@@ -414,11 +417,26 @@ form button:hover {
   cursor: pointer;
 }
 
-/* Laptop L - 1440px */
-
 /* 4K - 2560px */
 @media screen and (min-width: 2560px) {
 
+  legend {
+    font-size: 1.5rem;
+  }
+
+  .form label {
+    font-size: 1.3rem;
+  }
+
+  .form input {
+    font-size: 1.2rem;
+  }
+
+  form button {
+    width: 7.5rem;
+    height: 2.3rem;
+    font-size: 1.1rem;
+  }
 }
 
 /* Laptop - 1024px */

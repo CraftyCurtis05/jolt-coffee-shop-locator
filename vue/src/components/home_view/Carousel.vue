@@ -54,7 +54,7 @@ export default {
 /* Laptop L - 1440px */
 .carousel-container {
   position: relative;
-  width: 60rem;
+  width: 70vw;
   background-color: rgb(53, 37, 19);
   box-sizing: border-box;
   padding: 2%;
@@ -129,16 +129,14 @@ button img {
 
 /* 4K - 2560px */
 @media screen and (min-width: 2560px) {
-  .carousel-container {
-    width: 95rem;
-  }
+
 }
 
 /* Laptop - 1024px */
 @media screen and (max-width: 1024px) {
 
   .carousel-container {
-    width: 45rem;
+    width: 80vw;
   }
 }
 
@@ -146,7 +144,7 @@ button img {
 @media screen and (max-width: 768px) {
 
   .carousel-container {
-    width: 36rem;
+    width: 85vw;
   }
 }
 
@@ -154,23 +152,17 @@ button img {
 @media screen and (max-width: 425px) {
 
   .carousel-container {
-    width: 21rem;
+    width: 90vw;
   }
 }
 
 /* Mobile M - 375px */
 @media screen and (max-width: 375px) {
 
-  .carousel-container {
-    width: 19rem;
-  }
 }
 
 /* Mobile S - 320px */
 @media screen and (max-width: 320px) {
 
-  .carousel-container {
-    width: 16rem;
-  }
 }
 </style>
