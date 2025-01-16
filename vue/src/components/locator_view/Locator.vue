@@ -66,7 +66,7 @@
     </section>
 
     <!-- No Search Results -->
-    <section v-if="results.length === 0">
+    <section class="no-caret" v-if="results.length === 0">
       <p>No results found. Please try a different location.</p>
     </section>
 

@@ -120,8 +120,6 @@ export default {
         const imageUrl = await ProfileService.getImage();
         // Set the fetched image URL to be displayed in the component
         this.imageUrl = imageUrl;
-        // Emit the fetched image URL to the parent
-        this.$emit('update-image', this.imageUrl);
       } catch (error) {
         console.error("Error fetching image:", error);
       }
@@ -158,7 +156,9 @@ export default {
 }
 
 .image-container {
-  position: relative; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 16vw; 
   height: 16vw; 
   overflow: hidden; 
@@ -168,7 +168,7 @@ export default {
 }
 
 img,
-form { 
+form {
   width: 18vw; 
   height: auto;
 }

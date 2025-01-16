@@ -2,10 +2,10 @@
 
 <template>
     <article class="favorites-container">
-        <div class="header-container">
+        <header>
             <h1>Favorites</h1> 
             <h2>Coffee Shop Delights: My Personal Selection</h2>
-        </div>    
+        </header>    
 
         <section class="results-container"> 
             <div class="result" v-for="result in results" :key="result.favoriteId">
@@ -109,12 +109,13 @@ export default {
     width: 100%;
 }
 
-.header-container {
+header {
     width: 100%;
     color: rgb(245, 242, 242);
     background-color: rgb(53, 37, 19);
     border-bottom: .4rem  #e8bb64 solid;
     padding: .5rem 0;
+    margin-top: 0;
 }
 
 .results-container {

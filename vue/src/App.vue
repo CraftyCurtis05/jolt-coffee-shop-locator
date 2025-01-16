@@ -1,5 +1,8 @@
-<!-- App.vue -->
+<!-- npm install -->
+<!-- npm install axios -->
 <!-- npm run dev -->
+
+<!-- App.vue -->
 
 <template>
   <body id="app">
@@ -78,6 +81,7 @@ main {
 
 header {
   margin-top: 1vh;
+  caret-color: transparent; /* Hides the caret */
 }
 
 h1 {
@@ -91,6 +95,12 @@ h2 {
   font-size: 1rem;
   font-weight: 600;
   margin: 1.5vh auto;
+}
+
+p,
+nav,
+footer {
+  caret-color: transparent; /* Hides the caret */
 }
 
 /* Scrollbar */

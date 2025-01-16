@@ -96,6 +96,11 @@ export default {
 
   mounted() {
     this.fetchImage();
+
+    // Watch for route changes to close the navbar
+    this.$router.afterEach(() => {
+        this.isNavOpen = false; // Close the navbar after route change
+    });
   }
 };
 </script>
@@ -185,11 +190,13 @@ h3:hover,
     align-items: center;
     gap: .5rem;
     margin-right: 1.3rem;
+    position: relative;
 }
 
 .image-container {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    align-items: center;
     width: 3.1rem; 
     height: 3.1rem; 
     overflow: hidden; 
@@ -319,13 +326,13 @@ h3:hover,
 
     .profile-container {
         position: relative;
-        left: 3rem;
+        margin-left: 2.7rem;
     }
 
     .profile-container.nav-open h3,
     .image-container.nav-open {
         position: relative;
-        right: 10.35rem;
+        right: 10.32rem;
     }
 }
 
@@ -376,7 +383,7 @@ h3:hover,
         position: relative;
         width: 6rem;
         top: 15.15rem;
-        right: 28.75rem;
+        right: 28.4rem;
         padding: 0;
         margin: 0;
         opacity: .9;
@@ -392,13 +399,12 @@ h3:hover,
         position: relative;
         width: 2.9rem;
         height: 2.9rem;
-        right: 18.8rem;
-        contain: content;
+        right: 18.5rem;
         border: .3rem rgb(53, 37, 19) solid;
     }
 
     .image-container.nav-open {
-        right: 24.8rem;
+        right: 24.5rem;
     }
 }
 
@@ -416,15 +422,15 @@ h3:hover,
     .profile-container.nav-open #logout {
         position: relative;
         width: 6.5rem;
-        right: 30.2rem;
+        right: 29.9rem;
     }
 
     .image-container {
-        right: 21.5rem;
+        right: 21rem;
     }
 
     .image-container.nav-open {
-        right: 28rem;
+        right: 27.5rem;
     }
 }
 
@@ -440,15 +446,15 @@ h3:hover,
     }
 
     .profile-container.nav-open #logout {
-        right: 31.7rem;
+        right: 31.4rem;
     }
 
     .image-container {
-        right: 24.6rem;
+        right: 24rem;
     }
 
     .image-container.nav-open {
-        right: 31.1rem;
+        right: 30.5rem;
     }  
 }
 </style>
