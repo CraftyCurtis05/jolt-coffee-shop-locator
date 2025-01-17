@@ -95,11 +95,10 @@ export default {
   },
 
   mounted() {
-    this.fetchImage();
-
-    // Watch for route changes to close the navbar
+    // Watch for route changes
     this.$router.afterEach(() => {
         this.isNavOpen = false; // Close the navbar after route change
+        this.fetchImage(); // Get image for profile pic
     });
   }
 };

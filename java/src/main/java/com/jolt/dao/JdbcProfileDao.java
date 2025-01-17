@@ -76,7 +76,15 @@ public class JdbcProfileDao implements ProfileDao {
         Profile newProfile = null;
 
         try {
-            // Step 1: Check if the profile exists for the given userId
+            // Capitalize fields before saving
+            String capitalizedFirstName = capitalizeName(profile.getFirstName());
+            String capitalizedLastName = capitalizeName(profile.getLastName());
+            String capitalizedAddress1 = capitalizeAddress(profile.getAddress1());
+            String capitalizedAddress2 = capitalizeAddress(profile.getAddress2());
+            String capitalizedCity = capitalizeCity(profile.getCity());
+            String capitalizedState = capitalizeState(profile.getState());
+
+            // Check if the profile exists for the given userId
             String checkSql = "SELECT COUNT(*) FROM profile WHERE user_id = ?";
             int count = jdbcTemplate.queryForObject(checkSql, Integer.class, userId);
 
@@ -86,10 +94,10 @@ public class JdbcProfileDao implements ProfileDao {
                         "address1, address2, city, state_abbr, zipcode, is_form_submitted) " +
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-                jdbcTemplate.update(insertSql, userId, profile.getFirstName(), profile.getLastName(),
-                profile.getBirthMonth(), profile.getBirthDay(), profile.getBirthYear(),
-                profile.getAddress1(), profile.getAddress2(), profile.getCity(),
-                profile.getState(), profile.getZipcode(), true);
+                jdbcTemplate.update(insertSql, userId, capitalizedFirstName, capitalizedLastName,
+                        profile.getBirthMonth(), profile.getBirthDay(), profile.getBirthYear(),
+                        capitalizedAddress1, capitalizedAddress2, capitalizedCity,
+                        capitalizedState, profile.getZipcode(), true);
 
                 // Retrieve the newly created profile
                 newProfile = getProfileByUserId(userId);
@@ -115,7 +123,15 @@ public class JdbcProfileDao implements ProfileDao {
         Profile updatedProfile = null;
 
         try {
-            // Step 1: Check if the profile exists for the given userId
+            // Capitalize fields before updating
+            String capitalizedFirstName = capitalizeName(profile.getFirstName());
+            String capitalizedLastName = capitalizeName(profile.getLastName());
+            String capitalizedAddress1 = capitalizeAddress(profile.getAddress1());
+            String capitalizedAddress2 = capitalizeAddress(profile.getAddress2());
+            String capitalizedCity = capitalizeCity(profile.getCity());
+            String capitalizedState = capitalizeState(profile.getState());
+
+            // Check if the profile exists for the given userId
             String checkSql = "SELECT COUNT(*) FROM profile WHERE user_id = ?";
             int count = jdbcTemplate.queryForObject(checkSql, Integer.class, userId);
 
@@ -126,11 +142,11 @@ public class JdbcProfileDao implements ProfileDao {
             // Dynamically append fields that have been changed
             if (profile.getFirstName() != null) {
                 updateSql.append("first_name = ?, ");
-                parameters.add(profile.getFirstName());
+                parameters.add(capitalizedFirstName);
             }
             if (profile.getLastName() != null) {
                 updateSql.append("last_name = ?, ");
-                parameters.add(profile.getLastName());
+                parameters.add(capitalizedLastName);
             }
             if (profile.getBirthMonth() != null) {
                 updateSql.append("birth_month = ?, ");
@@ -146,19 +162,19 @@ public class JdbcProfileDao implements ProfileDao {
             }
             if (profile.getAddress1() != null) {
                 updateSql.append("address1 = ?, ");
-                parameters.add(profile.getAddress1());
+                parameters.add(capitalizedAddress1);
             }
             if (profile.getAddress2() != null) {
                 updateSql.append("address2 = ?, ");
-                parameters.add(profile.getAddress2());
+                parameters.add(capitalizedAddress2);
             }
             if (profile.getCity() != null) {
                 updateSql.append("city = ?, ");
-                parameters.add(profile.getCity());
+                parameters.add(capitalizedCity);
             }
             if (profile.getState() != null) {
                 updateSql.append("state_abbr = ?, ");
-                parameters.add(profile.getState());
+                parameters.add(capitalizedState);
             }
             if (profile.getZipcode() != null) {
                 updateSql.append("zipcode = ?, ");
@@ -237,6 +253,54 @@ public class JdbcProfileDao implements ProfileDao {
             // Handle database connection issues
             throw new DaoException("Unable to connect to server or database", e);
         }
+    }
+
+    // Helper method to capitalize first and last names
+    private String capitalizeName(String name) {
+        if (name == null || name.isEmpty()) {
+            return name;
+        }
+        return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+    }
+
+    // Helper method to capitalize address (first letter of each word)
+    private String capitalizeAddress(String address) {
+        if (address == null || address.isEmpty()) {
+            return address;
+        }
+        String[] words = address.split("\\s+");
+        StringBuilder capitalizedAddress = new StringBuilder();
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                capitalizedAddress.append(word.substring(0, 1).toUpperCase())
+                        .append(word.substring(1).toLowerCase()).append(" ");
+            }
+        }
+        return capitalizedAddress.toString().trim();
+    }
+
+    // Helper method to capitalize city (first letter of each word)
+    private String capitalizeCity(String city) {
+        if (city == null || city.isEmpty()) {
+            return city;
+        }
+        String[] words = city.split("\\s+");
+        StringBuilder capitalizedCity = new StringBuilder();
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                capitalizedCity.append(word.substring(0, 1).toUpperCase())
+                        .append(word.substring(1).toLowerCase()).append(" ");
+            }
+        }
+        return capitalizedCity.toString().trim();
+    }
+
+    // Helper method to capitalize state (both letters uppercase)
+    private String capitalizeState(String state) {
+        if (state == null || state.isEmpty()) {
+            return state;
+        }
+        return state.toUpperCase();
     }
 
     private Profile mapRowToProfile(SqlRowSet rs) {

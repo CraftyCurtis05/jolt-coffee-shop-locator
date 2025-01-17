@@ -8,7 +8,7 @@
   <body id="app">
 
     <nav>
-      <NavBar/>
+      <NavBar />
     </nav>
 
     <main>
@@ -58,7 +58,7 @@ export default {
 html, body {
   width: 100vw;
   height: 100%;
-  min-height: 62.8vh;
+  min-height: 67.2vh;
   text-align: center;
   font-family: 'Raleway', sans-serif;
   font-size: 18px;

@@ -4,7 +4,7 @@ import axios from 'axios';
 export function createStore(currentToken, currentUser) {
   let store = _createStore({
     state: {
-      token: currentToken || '',
+      token: currentToken,
       user: currentUser || {},
       locationID: ''
     },
@@ -24,9 +24,6 @@ export function createStore(currentToken, currentUser) {
         state.token = '';
         state.user = {};
         axios.defaults.headers.common = {};
-      },
-      SET_FAVORITE_STATUS(favorite, payload) {                  
-        payload.locationID.favorite = payload.value;
       }
     }
   });
