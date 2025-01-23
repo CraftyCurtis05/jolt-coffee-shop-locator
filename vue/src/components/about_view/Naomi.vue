@@ -3,19 +3,26 @@
 <template>
     <article>
 
+        <!-- Naomi Image -->
         <section class="image-container">
             <a href="https://www.linkedin.com/in/naomi-adams-0804a4106/" target="_blank">
                 <img src="@/assets/about_view/naomi.jpg" alt="Naomi Adams" title="Naomi Adams">
             </a>
         </section>
 
+        <!-- About Section -->
         <section class="about-container">
+
+            <!-- Name -->
             <header>
                 <h3>Naomi Adams</h3>
             </header>
 
+            <!-- Job Description -->
             <details>
                 <summary title="Learn More about Naomi">Front-End Developer</summary>
+                
+                <!-- Dropdown Quote -->
                 <p>
                     &nbsp; "After over a decade of entrepreneurship, I made a bold pivot into the world of tech, 
                     completing a full-stack coding bootcamp to equip myself with the skills to thrive in this exciting 
@@ -34,12 +41,7 @@
 
 <script>
 export default {
-    name: 'Naomi',
-    data() {
-        return {
-            active: false
-        }    
-    }
+    name: 'Naomi'
 };
 </script>
 

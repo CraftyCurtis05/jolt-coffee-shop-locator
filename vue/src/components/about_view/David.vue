@@ -3,19 +3,26 @@
  <template>
     <article>
 
+        <!-- David Image -->
         <section class="image-container">
             <a href="https://www.linkedin.com/in/daviddefoshajr/" target="_blank">
                 <img src="@/assets/about_view/david.jpg" alt="David DeFosha" title="David Defosha">
             </a>
         </section>
 
+        <!-- About Section -->
         <section class="about-container">
+
+            <!-- Name -->
             <header>
                 <h3>David DeFosha</h3>
             </header>
 
             <details>
+                <!-- Job Description -->
                 <summary title="Learn More about David">Front-End Developer</summary>
+                
+                <!-- Dropdown Quote -->
                 <p> 
                     &nbsp; "I've been fascinated by coding since I was 14 when I learned to create macros in World of Warcraft, 
                     which gave me an edge by allowing me to perform complex actions with a single keystroke. That was the moment 
@@ -34,12 +41,7 @@
 
 <script>
 export default {
-    name: 'David',
-    data() {
-        return {
-            active: false
-        }    
-    }
+    name: 'David'
 };
 </script>
 

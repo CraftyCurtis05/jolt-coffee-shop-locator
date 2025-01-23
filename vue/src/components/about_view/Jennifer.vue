@@ -3,19 +3,26 @@
 <template>
     <article>
 
+        <!-- Jennifer Image -->
         <section class="image-container">
             <a href="https://www.linkedin.com/in/jcurtisdeveloper/" target="_blank">
                 <img src="@/assets/about_view/jennifer.jpg" alt="Jennifer Curtis" title="Jennifer Curtis">
             </a>
         </section>
 
+        <!-- About Section -->
         <section class="about-container">
+
+            <!-- Name -->
             <header>
                 <h3>Jennifer Curtis</h3>
             </header>
 
+            <!-- Job Description -->
             <details>
                 <summary title="Learn More about Jennifer">Full-Stack Developer</summary>
+
+                <!-- Dropdown Quote -->
                 <p>
                     &nbsp; "I've always been the type to ask a lot of questions and wonder how everything connects—something I only 
                     realized is a huge advantage in IT! Once I dove into data analysis and machine learning, I was hooked. Fast-forward 
@@ -34,12 +41,7 @@
 
  <script>
 export default {
-    name: 'Jennifer',
-    data() {
-        return {
-            active: false
-        }    
-    }
+    name: 'Jennifer'
 };
 </script>
 

@@ -44,6 +44,7 @@ export default {
   width: 100%;
   color: rgb(245, 242, 242);
   border: .1rem #e8bb64 solid;
+  padding-top: 2vw;
   margin-top: 1vw;
 }
 

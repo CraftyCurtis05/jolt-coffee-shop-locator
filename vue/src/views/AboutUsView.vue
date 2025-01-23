@@ -2,27 +2,36 @@
 
 <template>
   <body>
+
+    <!-- View Header -->
     <header>
       <h1>Who We Are</h1>
       <h2>Meet Our Developers</h2>
     </header>
     
+    <!-- Main Content -->
     <main>
+
+      <!-- Jennifer Component -->
       <section class="jennifer">
         <Jennifer/>
       </section>
       
+      <!-- Steven Component -->
       <section class="steven">
         <Steven/>
       </section>
 
+      <!-- Naomi Component -->
       <section class="naomi">
         <Naomi/>
       </section>
 
+      <!-- David Component -->
       <section class="david">
         <David/>
       </section>
+
     </main>
 
   </body>  
@@ -85,4 +94,3 @@ main {
 
 }
 </style>
-

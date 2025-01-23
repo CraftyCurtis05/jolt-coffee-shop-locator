@@ -3,19 +3,26 @@
 <template>
     <article>
 
+        <!-- Steven Image -->
         <section class="image-container">
             <a href="https://www.linkedin.com/in/steven-riggle/" target="_blank">
                 <img src="@/assets/about_view/steven.jpg" alt="Steven Riggle" title="Jennifer Curtis">
             </a>
         </section>
 
+        <!-- About Section -->
         <section class="about-container">
+
+            <!-- Name -->
             <header>
                 <h3>Steven Riggle</h3>
             </header>
 
+            <!-- Job Description -->
             <details>
                 <summary title="Learn More about Steven">Back-End Developer</summary>
+                
+                <!-- Dropdown Quote -->
                 <p>
                     &nbsp; "I’m an aspiring developer in the Tech Elevator program with a background in problem-solving and complex 
                     systems. Before tech, I honed my attention to detail and critical thinking as a drag racer and mechanic. I thrive 
@@ -34,12 +41,7 @@
 
 <script>
 export default {
-    name: 'Steven',
-    data() {
-        return {
-            active: false
-        }    
-    }
+    name: 'Steven'
 };
 </script>
 
