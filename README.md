@@ -96,7 +96,7 @@ The application is built using **Vue.js** for the frontend and **Spring Boot** f
 Before you start, make sure you have the following installed:
 
 A code editor (e.g., **VS Code**, **IntelliJ IDEA**)
-Ensure you have **Node.js** installed, including **npm**.
+Ensure you have **Node.js** installed, including **npm**
 **Java 11** or newer
 **PostgreSQL** (or any compatible relational database)
 **Maven** (for backend)
