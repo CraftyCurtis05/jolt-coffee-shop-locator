@@ -344,8 +344,13 @@ export default {
   margin: 0 auto;  
 }
 
+#birthMonth {
+  width: 12vw;
+  height: 2.5vw;
+}
+
 fieldset {
-  width: 16vw;
+  width: 18vw;
 }
 
 fieldset:after {

@@ -85,6 +85,7 @@ body {
   font-family: 'Ubuntu', sans-serif;
   color: #333437;
   z-index: 0;
+  caret-color: transparent; /* Hides the caret */
 }
 
 img {
@@ -131,6 +132,7 @@ h1 {
   font-size: 1.1rem;
   width: 14rem;
   height: 3.5rem;
+  caret-color: black; /* Hides the caret */
 }
 
 .form-input input {

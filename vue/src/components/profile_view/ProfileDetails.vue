@@ -44,7 +44,7 @@ export default {
   width: 100%;
   color: rgb(245, 242, 242);
   border: .1rem #e8bb64 solid;
-  padding-top: 2vw;
+  padding-top: 1vw;
   margin-top: 1vw;
 }
 
@@ -70,6 +70,7 @@ export default {
   margin: .1rem auto;
 }
 
+
 /* 4K - 2560px */
 @media screen and (min-width: 2560px) {
 
@@ -88,7 +89,7 @@ export default {
 
   .address1,
   .address2 {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
   }
 }
 

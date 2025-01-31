@@ -26,7 +26,7 @@ public class CoffeeController {
     @GetMapping()
     public String getCoffee(@RequestParam String locationId) {
         // Construct the URL for the external API request
-        String queryURL = "https://api.yelp.com/v3/businesses/search?location=" + locationId + "&term=coffee+tea&radius=20000&sort_by=distance&limit=50";
+        String queryURL = "https://api.yelp.com/v3/businesses/search?location=" + locationId + "&term=coffee+tea&radius=20000&sort_by=distance&limit=20";
 
         // Prepare the request headers with the API key
         HttpHeaders headers = new HttpHeaders();
