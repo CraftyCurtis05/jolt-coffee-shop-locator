@@ -14,14 +14,14 @@ Originally developed as a collaborative project, the application was later redes
 
 Jolt helps users discover and evaluate local coffee shops by consolidating business information from external data sources into a single application.
 
-Users can search nearby coffee shops, view business details, manage profiles, and save favorite locations without navigating multiple services.
+Users can:
 
-Jolt streamlines this process by consolidating business information into a single user experience where customers can:
-
-- Search for nearby coffee shops
+- Search nearby coffee shops
 - View real-time business information
 - Save favorite locations
 - Manage personalized user profiles
+
+All within a single, streamlined user experience.
 
 ---
 
@@ -68,11 +68,13 @@ Jolt streamlines this process by consolidating business information into a singl
 
 ---
 
-## Technical Highlights
+## Technical Implementation
+
+The application follows a traditional client-server architecture with a Vue.js frontend communicating with a Spring Boot REST API backed by PostgreSQL.
 
 - Designed intuitive user interfaces focused on usability and efficient business discovery
 - Integrated Yelp Fusion API to aggregate real-time business data
-- Developed user authentication, profiles, and favorites functionality
+- Implemented user authentication, profile management, and favorites functionality
 - Implemented RESTful communication between frontend and backend systems
 - Designed PostgreSQL database structures to support user and application workflows
 - Applied full-stack development practices using Java, Spring Boot, Vue.js, and PostgreSQL
@@ -83,7 +85,7 @@ Jolt streamlines this process by consolidating business information into a singl
 
 | Category | Technologies |
 |-----------|-------------|
-| Frontend | Vue.js, JavaScript, HTML5, CSS3 |
+| Frontend | Vue.js, JavaScript, HTML5, CSS3, Axios |
 | Backend | Java, Spring Boot, JDBC |
 | Database | PostgreSQL |
 | APIs | Yelp Fusion API |
@@ -97,7 +99,7 @@ The following screenshots demonstrate the primary user workflows throughout the 
 
 ### Home Page
 
-Landing page introducing the application and primary navigation.
+Introduces the application and primary navigation.
 
 ![Home Page](images/03-jolt-home.png)
 
@@ -105,7 +107,7 @@ Landing page introducing the application and primary navigation.
 
 ### Search Results
 
-Location-based coffee shop search powered by the Yelp Fusion API.
+Displays nearby coffee shops retrieved from the Yelp Fusion API.
 
 ![Search Results](images/07-jolt-locator-search.png)
 
@@ -113,7 +115,7 @@ Location-based coffee shop search powered by the Yelp Fusion API.
 
 ### Shop Details
 
-Business details including location information and user actions.
+Displays shop details and available user actions.
 
 ![Shop Details](images/10-jolt-shop.png)
 
@@ -121,7 +123,7 @@ Business details including location information and user actions.
 
 ### Profile Management
 
-User profile creation and account management.
+Allows users to create and manage their profile information.
 
 ![Profile Form](images/04-jolt-profile-form.png)
 
@@ -129,7 +131,7 @@ User profile creation and account management.
 
 ### Favorites
 
-Authenticated user profile displaying saved favorite coffee shops.
+Displays saved coffee shops for authenticated users.
 
 ![Favorites](images/09-jolt-profile-favs.png)
 
@@ -137,11 +139,11 @@ Authenticated user profile displaying saved favorite coffee shops.
 
 ## Future Enhancements
 
+- Responsive layout for tablets and mobile devices
 - User reviews and ratings
 - Enhanced search filtering
 - Interactive mapping functionality
 - Search history and recommendations
-- Responive Design
 
 ---
 
@@ -151,8 +153,9 @@ Authenticated user profile displaying saved favorite coffee shops.
 
 Business Systems Analyst | Full-Stack Developer
 
-Portfolio: https://jennifercurtis.me
+🌐 **Portfolio:** [jennifercurtis.me](https://jennifercurtis.me)
 
-LinkedIn: https://linkedin.com/in/jcurtisdeveloper
+💼 **LinkedIn:** [linkedin.com/in/jcurtisdeveloper](https://linkedin.com/in/jcurtisdeveloper)
 
-GitHub: https://github.com/craftycurtis05
+💻 **GitHub:** [github.com/craftycurtis05](https://github.com/craftycurtis05)
+
