@@ -2,17 +2,19 @@
 
 ### Full-Stack Business Discovery Application
 
-Jolt is a full-stack web application designed to improve how users discover and evaluate local coffee shops through a centralized, data-driven experience.
+Jolt is a full-stack business discovery application that centralizes local business information into a unified user experience.
 
-The application integrates real-time business data from the Yelp Fusion API and combines it with user authentication, profiles, and favorites functionality to create a personalized business discovery platform.
+The application demonstrates business systems analysis, API integration, relational database design, and full-stack web development by combining external business data with authenticated user features, personalized favorites, and structured workflows.
 
-Originally developed as a collaborative project, the application was later redesigned and expanded to improve usability, application structure, and overall functionality.
+Originally developed as a collaborative project, the application was later redesigned and expanded to improve application architecture, user workflows, and overall functionality.
 
 ---
 
-## Business Problem
+## Project Overview
 
-Finding and comparing local coffee shops often requires users to navigate multiple websites and applications.
+Jolt helps users discover and evaluate local coffee shops by consolidating business information from external data sources into a single application.
+
+Users can search nearby coffee shops, view business details, manage profiles, and save favorite locations without navigating multiple services.
 
 Jolt streamlines this process by consolidating business information into a single user experience where customers can:
 
@@ -20,7 +22,6 @@ Jolt streamlines this process by consolidating business information into a singl
 - View real-time business information
 - Save favorite locations
 - Manage personalized user profiles
-- Access information across desktop and mobile devices
 
 ---
 
@@ -38,12 +39,6 @@ Jolt streamlines this process by consolidating business information into a singl
 - User profile management
 - Personalized favorites functionality
 
-### Responsive Design
-
-- Mobile-first user experience
-- Desktop and tablet support
-- Consistent interface across devices
-
 ---
 
 ## System Architecture
@@ -60,14 +55,14 @@ Jolt streamlines this process by consolidating business information into a singl
 
 - Java
 - Spring Boot
-- REST API Architecture
+- RESTful API
 - JDBC
 
 ### Database
 
 - PostgreSQL
 
-### External Integrations
+### External Services
 
 - Yelp Fusion API
 
@@ -75,7 +70,7 @@ Jolt streamlines this process by consolidating business information into a singl
 
 ## Technical Highlights
 
-- Designed responsive user interfaces for desktop and mobile environments
+- Designed intuitive user interfaces focused on usability and efficient business discovery
 - Integrated Yelp Fusion API to aggregate real-time business data
 - Developed user authentication, profiles, and favorites functionality
 - Implemented RESTful communication between frontend and backend systems
@@ -98,17 +93,45 @@ Jolt streamlines this process by consolidating business information into a singl
 
 ## Screenshots
 
+The following screenshots demonstrate the primary user workflows throughout the application.
+
 ### Home Page
 
-![Home Page](images/home-page.png)
+Landing page introducing the application and primary navigation.
+
+![Home Page](images/03-jolt-home.png)
+
+---
 
 ### Search Results
 
-![Search Results](images/search-results.png)
+Location-based coffee shop search powered by the Yelp Fusion API.
 
-### User Profile
+![Search Results](images/07-jolt-locator-search.png)
 
-![User Profile](images/profile-page.png)
+---
+
+### Shop Details
+
+Business details including location information and user actions.
+
+![Shop Details](images/10-jolt-shop.png)
+
+---
+
+### Profile Management
+
+User profile creation and account management.
+
+![Profile Form](images/04-jolt-profile-form.png)
+
+---
+
+### Favorites
+
+Authenticated user profile displaying saved favorite coffee shops.
+
+![Favorites](images/09-jolt-profile-favs.png)
 
 ---
 
@@ -118,6 +141,7 @@ Jolt streamlines this process by consolidating business information into a singl
 - Enhanced search filtering
 - Interactive mapping functionality
 - Search history and recommendations
+- Responive Design
 
 ---
 
