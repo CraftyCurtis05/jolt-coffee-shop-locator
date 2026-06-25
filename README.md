@@ -97,6 +97,14 @@ The application follows a traditional client-server architecture with a Vue.js f
 
 The following screenshots demonstrate the primary user workflows throughout the application.
 
+### Login Page
+
+Secure user authentication for personalized features.
+
+![Login](images/01-jolt-register.png)
+
+---
+
 ### Home Page
 
 Introduces the application and primary navigation.
