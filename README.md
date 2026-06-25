@@ -101,7 +101,7 @@ The following screenshots demonstrate the primary user workflows throughout the 
 
 Secure user authentication for personalized features.
 
-![Login](images/01-jolt-register.png)
+![Login](images/01-register.png)
 
 ---
 
@@ -109,7 +109,7 @@ Secure user authentication for personalized features.
 
 Introduces the application and primary navigation.
 
-![Home Page](images/03-jolt-home.png)
+![Home Page](images/02-home.png)
 
 ---
 
@@ -117,7 +117,7 @@ Introduces the application and primary navigation.
 
 Displays nearby coffee shops retrieved from the Yelp Fusion API.
 
-![Search Results](images/07-jolt-locator-search.png)
+![Search Results](images/03-locator-search.png)
 
 ---
 
@@ -125,7 +125,7 @@ Displays nearby coffee shops retrieved from the Yelp Fusion API.
 
 Displays shop details and available user actions.
 
-![Shop Details](images/10-jolt-shop.png)
+![Shop Details](images/04-shop.png)
 
 ---
 
@@ -133,7 +133,7 @@ Displays shop details and available user actions.
 
 Allows users to create and manage their profile information.
 
-![Profile Form](images/04-jolt-profile-form.png)
+![Profile Form](images/05-profile-form.png)
 
 ---
 
@@ -141,7 +141,7 @@ Allows users to create and manage their profile information.
 
 Displays saved coffee shops for authenticated users.
 
-![Favorites](images/09-jolt-profile-favs.png)
+![Favorites](images/06-profile-favs.png)
 
 ---
 
