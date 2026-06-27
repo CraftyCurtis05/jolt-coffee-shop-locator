@@ -2,11 +2,17 @@
 
 ### Full-Stack Business Discovery Application
 
-Jolt is a full-stack business discovery application that centralizes local business information into a unified user experience.
+Jolt is a full-stack business discovery application that centralizes local coffee shop information into a unified user experience.
 
-The application demonstrates business systems analysis, API integration, relational database design, and full-stack web development by combining external business data with authenticated user features, personalized favorites, and structured workflows.
+Originally developed as a collaborative capstone project during the Tech Elevator Full-Stack Java Bootcamp, the application was later independently redesigned and expanded to improve its architecture, user experience, and overall functionality. The version contained in this repository reflects the continued development completed after the original capstone project.
 
-Originally developed as a collaborative project, the application was later redesigned and expanded to improve application architecture, user workflows, and overall functionality.
+---
+
+## Project Evolution
+
+Jolt began as a collaborative capstone project focused on helping users discover nearby coffee shops using real-time business data from the Yelp Fusion API.
+
+After completing the bootcamp, I continued developing the application independently. I redesigned the user interface, reorganized the application's architecture, expanded user workflows, improved maintainability, and added additional functionality while preserving the original goal of creating a centralized coffee shop discovery experience.
 
 ---
 
@@ -14,7 +20,7 @@ Originally developed as a collaborative project, the application was later redes
 
 Jolt helps users discover and evaluate local coffee shops by consolidating business information from external data sources into a single application.
 
-Users can:
+The current application allows users to:
 
 - Search nearby coffee shops
 - View real-time business information
@@ -33,11 +39,22 @@ All within a single, streamlined user experience.
 - View business details and location information
 - Browse local businesses through a centralized interface
 
-### User Management
+### Personalized User Experience
 
 - Secure user authentication
 - User profile management
 - Personalized favorites functionality
+
+### Independent Enhancements
+
+Following the original capstone project, I independently:
+
+- Redesigned the application's user interface
+- Improved application architecture and organization
+- Expanded user workflows
+- Implemented user profile management
+- Added favorites functionality
+- Improved overall usability and maintainability
 
 ---
 
@@ -73,10 +90,10 @@ All within a single, streamlined user experience.
 The application follows a traditional client-server architecture with a Vue.js frontend communicating with a Spring Boot REST API backed by PostgreSQL.
 
 - Designed intuitive user interfaces focused on usability and efficient business discovery
-- Integrated Yelp Fusion API to aggregate real-time business data
-- Implemented user authentication, profile management, and favorites functionality
+- Integrated the Yelp Fusion API to retrieve and display real-time business information
 - Implemented RESTful communication between frontend and backend systems
-- Designed PostgreSQL database structures to support user and application workflows
+- Designed PostgreSQL database structures to support authenticated user workflows
+- Expanded the application through continued development, including profile management, favorites functionality, and improved application architecture
 - Applied full-stack development practices using Java, Spring Boot, Vue.js, and PostgreSQL
 
 ---
@@ -95,7 +112,7 @@ The application follows a traditional client-server architecture with a Vue.js f
 
 ## Screenshots
 
-The following screenshots demonstrate the primary user workflows throughout the application.
+The following screenshots demonstrate the current application after the independent redesign and continued development.
 
 ### Login Page
 
@@ -123,7 +140,7 @@ Displays nearby coffee shops retrieved from the Yelp Fusion API.
 
 ### Shop Details
 
-Displays shop details and available user actions.
+Displays coffee shop information and available user actions.
 
 ![Shop Details](images/04-shop.png)
 
@@ -131,7 +148,7 @@ Displays shop details and available user actions.
 
 ### Profile Management
 
-Allows users to create and manage their profile information.
+Allows users to create and manage profile information.
 
 ![Profile Form](images/05-profile-form.png)
 
@@ -147,11 +164,11 @@ Displays saved coffee shops for authenticated users.
 
 ## Future Enhancements
 
-- Responsive layout for tablets and mobile devices
+- Responsive optimization for tablets and mobile devices
 - User reviews and ratings
 - Enhanced search filtering
-- Interactive mapping functionality
-- Search history and recommendations
+- Interactive map integration
+- Search history and personalized recommendations
 
 ---
 
@@ -161,9 +178,8 @@ Displays saved coffee shops for authenticated users.
 
 Business Systems Analyst | Full-Stack Developer
 
-🌐 **Portfolio:** [jennifercurtis.me](https://jennifercurtis.me)
+🌐 **Portfolio:** https://jennifercurtis.me
 
-💼 **LinkedIn:** [linkedin.com/in/jcurtisdeveloper](https://linkedin.com/in/jcurtisdeveloper)
+💼 **LinkedIn:** https://linkedin.com/in/jcurtisdeveloper
 
-💻 **GitHub:** [github.com/craftycurtis05](https://github.com/craftycurtis05)
-
+💻 **GitHub:** https://github.com/craftycurtis05
