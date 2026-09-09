@@ -82,7 +82,7 @@ public class JdbcFavoritesDao implements FavoritesDao {
      *
      * @param favorite The Favorites object containing details about the business to be favorite.
      * @param userId The ID of the user adding the favorite.
-     * @return The newly created Favorites object, including the generated favorites_id.
+     * @return The newly created Favorites object, including the generated favorite_id.
      */
     @Override
     public Favorites createFavorite(Favorites favorite, int userId) {
@@ -106,8 +106,8 @@ public class JdbcFavoritesDao implements FavoritesDao {
             // Handle database connection issues
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
-            // Handle any data integrity issues (e.g., foreign key violations)
-            throw new DaoException("Data integrity violation", e);
+            // Handle database constraint violations
+            throw new DaoException("Unable to create favorite due to a database constraint", e);
         }
         return newFavorite;
     }
@@ -137,7 +137,7 @@ public class JdbcFavoritesDao implements FavoritesDao {
         }
     }
 
-    // Check if favorite already exists for userID
+    // Check if favorite already exists for the user
     public boolean isFavoriteExists(int userId, String businessId) {
         String sql = "SELECT COUNT(*) FROM favorites WHERE user_id = ? AND business_id = ?";
         Integer count = jdbcTemplate.queryForObject(sql, Integer.class, userId, businessId);

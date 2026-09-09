@@ -44,8 +44,7 @@ export default {
       user: {
         username: '',
         password: '',
-        confirmPassword: '',
-        role: 'user',
+        confirmPassword: ''
       },
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',

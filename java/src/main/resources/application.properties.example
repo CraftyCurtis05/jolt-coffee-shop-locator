@@ -1,0 +1,24 @@
+server.port=9000
+server.error.include-stacktrace=never
+
+# datasource connection properties
+spring.datasource.url=${DB_URL}
+spring.datasource.username=${DB_USERNAME}
+spring.datasource.password=${DB_PASSWORD}
+
+# jwt authorization properties
+jwt.header=Authorization
+jwt.base64-secret=${JWT_BASE64_SECRET}
+jwt.secret=${JWT_SECRET}
+jwt.expiration=604800
+jwt.token-validity-in-seconds=86400
+jwt.token-validity-in-seconds-for-remember-me=108000
+jwt.route.authentication.path=/login
+jwt.route.authentication.refresh=/refresh
+
+# file size properties
+spring.servlet.multipart.max-file-size=10MB
+spring.servlet.multipart.max-request-size=10MB
+
+# Yelp Fusion API
+yelp.api.key=${YELP_API_KEY}

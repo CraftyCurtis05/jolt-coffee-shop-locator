@@ -70,7 +70,6 @@ public class JdbcUserDaoTests extends BaseDaoTests {
         RegisterUserDto registerUserDto = new RegisterUserDto();
         registerUserDto.setUsername(null);
         registerUserDto.setPassword(USER_3.getPassword());
-        registerUserDto.setRole("ROLE_USER");
         sut.createUser(registerUserDto);
     }
 
@@ -79,7 +78,6 @@ public class JdbcUserDaoTests extends BaseDaoTests {
         RegisterUserDto registerUserDto = new RegisterUserDto();
         registerUserDto.setUsername(USER_1.getUsername());
         registerUserDto.setPassword(USER_3.getPassword());
-        registerUserDto.setRole("ROLE_USER");
         sut.createUser(registerUserDto);
     }
 
@@ -88,7 +86,6 @@ public class JdbcUserDaoTests extends BaseDaoTests {
         RegisterUserDto registerUserDto = new RegisterUserDto();
         registerUserDto.setUsername(USER_3.getUsername());
         registerUserDto.setPassword(null);
-        registerUserDto.setRole("ROLE_USER");
         sut.createUser(registerUserDto);
     }
 
@@ -97,7 +94,6 @@ public class JdbcUserDaoTests extends BaseDaoTests {
         RegisterUserDto user = new RegisterUserDto();
         user.setUsername("new");
         user.setPassword("user");
-        user.setRole("ROLE_USER");
         User createdUser = sut.createUser(user);
 
         Assert.assertNotNull(createdUser);

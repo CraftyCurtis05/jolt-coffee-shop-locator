@@ -4,16 +4,13 @@ import axios from 'axios';
 
 export default {
 
+  // GET coffee shops based on searched location
   getCoffee(locationId) {
-    const queryURL = `http://localhost:9000/coffee?locationId=${locationId}`;
-    
-    return axios.get(queryURL)
-      .then(response => {
-        console.log("Full API Response:", response.data);  // Log the full response
-        return response.data;
-      })
-      .catch(error => {
-        console.error('Error fetching coffee locations:', error);
-      });
+    return axios.get('/coffee', {
+      params: {
+        locationId: locationId
+      }
+    })
+    .then(response => response.data);
   }
 };

@@ -4,7 +4,7 @@
   <article v-if="isVisible" class="profile-form-container">
     
     <section class="profile-form">
-      <form @submit.prevent="submitForm">
+      <form @submit.prevent="saveProfile">
 
         <!-- Personal Information Section -->
         <fieldset class="name">
@@ -180,7 +180,7 @@
 
         <!-- Save and cancel form buttons -->
         <div class="button-container">
-          <button type="submit" @click="saveProfile" title="Click to Save Updated Profile">Save Profile</button>
+          <button type="submit" title="Click to Save Updated Profile">Save Profile</button>
           <button type="button" @click="closeForm" title="Click to Close Update Profile">Cancel</button>
         </div>
 
@@ -226,7 +226,7 @@ export default {
   },
   methods: {
 
-    /**
+    /*
      * Opens the profile form and emits visibility change event.
      */
     openForm() {
@@ -234,7 +234,7 @@ export default {
       this.$emit('form-visible', true);
     },
 
-    /**
+    /*
      * Closes the profile form and emits visibility change event.
      */
     closeForm() {
@@ -242,7 +242,7 @@ export default {
       this.$emit('form-visible', false);
     },
 
-    /**
+    /*
      * Fetches the profile creation/update status from the backend.
      * Sets `status` to determine if the form is for creating or updating a profile.
      */
@@ -255,7 +255,7 @@ export default {
       }
     },
 
-    /**
+    /*
      * Saves the profile data by either creating a new profile or updating an existing one.
      * Depending on the status, it calls the appropriate service method.
      */
@@ -264,6 +264,13 @@ export default {
         if (!this.status) {
           // Create new profile if status is false
           await ProfileService.createProfile(this.user);
+
+          // Switch the form to update mode after the profile is created
+          this.status = true;
+
+          // Emit the new profile so the displayed details update
+          this.$emit('profile-updated', this.user);
+
           alert('Profile created successfully!');
           this.closeForm();
         } else {
@@ -282,7 +289,7 @@ export default {
       }
     },
 
-    /**
+    /*
      * Fetches the existing profile data from the backend to populate the form.
      */
     async fetchProfile() {
@@ -294,7 +301,7 @@ export default {
       }
     },
 
-    /**
+    /*
      * Tracks changes to form fields and updates the `changedFields` object 
      * to store modified values.
      */

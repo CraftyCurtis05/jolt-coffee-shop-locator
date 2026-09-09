@@ -101,6 +101,9 @@ public class JdbcProfileDao implements ProfileDao {
 
                 // Retrieve the newly created profile
                 newProfile = getProfileByUserId(userId);
+            } else {
+                // Profile already exists, return the existing profile
+                newProfile = getProfileByUserId(userId);
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
@@ -116,7 +119,7 @@ public class JdbcProfileDao implements ProfileDao {
      *
      * @param profile The Profile object containing details about the user.
      * @param userId The ID of the user saving the profile.
-     * @return The newly created profile object, including the generated profile_id.
+     * @return The updated profile object.
      */
     @Override
     public Profile updateProfile(Profile profile, int userId) {
@@ -181,6 +184,11 @@ public class JdbcProfileDao implements ProfileDao {
                 parameters.add(profile.getZipcode());
             }
 
+            // If no fields were provided, return the existing profile
+            if (parameters.isEmpty()) {
+                return getProfileByUserId(userId);
+            }
+
             // Remove the last comma and space
             updateSql.setLength(updateSql.length() - 2);
 
@@ -223,7 +231,7 @@ public class JdbcProfileDao implements ProfileDao {
             // Execute the query and retrieve the result set
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
             if (results.next()) {
-                // If a row is found, map it to a Favorites object
+                // If a row is found, map it to a Profile object
                 profile = mapRowToProfile(results);
             }
         } catch (CannotGetJdbcConnectionException e) {
@@ -234,10 +242,10 @@ public class JdbcProfileDao implements ProfileDao {
     }
 
     /**
-     * Deletes a favorite for a given user.
+     * Deletes a profile for a given user.
      *
-     * @param userId The ID of the user who wants to delete the favorite.
-     * @throws DaoException if the favorite does not exist or the user is not authorized to delete it.
+     * @param userId The ID of the user who wants to delete the profile.
+     * @throws DaoException if the profile does not exist or the user is not authorized to delete it.
      */
     @Override
     public void deleteProfile(int userId) {
@@ -317,7 +325,7 @@ public class JdbcProfileDao implements ProfileDao {
         profile.setState(rs.getString("state_abbr"));
         profile.setZipcode(rs.getString("zipcode"));
 
-        // Fetch the user object associated with the favorite (from UserDao)
+        // Fetch the user object associated with the profile
         User user = userDao.getUserById(rs.getInt("user_id"));
         profile.setUser(user);  // Set the User object for this favorite
         return profile;

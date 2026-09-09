@@ -4,14 +4,17 @@
   <article class="locator-container">
 
     <!-- Search Bar -->
-    <section class="search-bar">
-      <input type="text" v-model="locationId" placeholder="Enter Your Location" title="Enter Your Search Location"/>
-      <button @click="search()" alt="Search Location Button" title="Click to Get Coffee Shops">Search</button>
-    </section>
+    <form class="search-bar" @submit.prevent="search">
+      <label for="location-search" class="visually-hidden">Search Location</label>
+
+      <input id="location-search" type="text" v-model="locationId" placeholder="Enter Your Location" title="Enter Your Search Location">
+
+      <button type="submit" title="Click to Get Coffee Shops">Search</button>
+    </form>
 
     <!-- Near Home Search -->
      <section class="search-home" v-if="user">
-        <button @click="searchHome()" alt="Search Near Home Button" title="Click to Get Coffee Shops Near Home">Search Near Home</button>
+        <button @click="searchHome()" title="Click to Get Coffee Shops Near Home">Search Near Home</button>
      </section>
 
     <h3 v-if="results.length > 0">List of Coffee Shops Near You:</h3>
@@ -20,53 +23,61 @@
     <section class="results-container">
       <div class="result" v-for="result in results" :key="result.id">
 
-        <a class="name" :href="result.url" target="_blank" title="Click for Yelp Page">{{ result.name }}</a>
+        <a class="name" :href="result.url" target="_blank" rel="noopener noreferrer" title="Click for Yelp Page">{{ result.name }}</a>
 
         <div class="location-container" title="Click for Directions">
           <div class="top">
-            <a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(result.location.address1)" target="_blank">
+            <a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(getDirectionsAddress(result))" target="_blank" rel="noopener noreferrer">
               {{ result.location.address1 }},&nbsp;
             </a>
 
-            <a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(result.location.address1)" target="_blank">
+            <a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(getDirectionsAddress(result))" target="_blank" rel="noopener noreferrer">
               {{ result.location.address2 }}
             </a>
           </div>
             
           <div class="bottom">
-            <a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(result.location.address1)" target="_blank">
+            <a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(getDirectionsAddress(result))" target="_blank" rel="noopener noreferrer">
               {{ result.location.city }},&nbsp;
             </a>
 
-            <a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(result.location.address1)" target="_blank">
+            <a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(getDirectionsAddress(result))" target="_blank" rel="noopener noreferrer">
               {{ result.location.state }}&nbsp;
             </a>
 
-            <a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(result.location.address1)" target="_blank">
+            <a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(getDirectionsAddress(result))" target="_blank" rel="noopener noreferrer">
               {{ result.location.zip_code }}
             </a>
           </div>  
         </div>
 
         <div class="image">  
-          <a :href="result.url" target="_blank">
-            <img :src="result.image_url || defaultImage" alt="Yelp Coffee Shop Image" title="Click for Yelp Page"/>
+          <a :href="result.url" target="_blank" rel="noopener noreferrer">
+            <img :src="result.image_url || defaultImage" :alt="result.name + ' coffee shop'" title="Click for Yelp Page"/>
           </a>
         </div>
 
         <div class="favorite">
-          <button @click="setFavorite(result)">
+          <button
+            type="button"
+            @click="setFavorite(result)"
+            :disabled="userFavorites.includes(result.id)"
+          >
             <!-- Conditionally set the favorite button image -->
-            <img :src="userFavorites.includes(result.id) ? 'src/assets/locator_view/favorite_added_btn.png' : 'src/assets/locator_view/favorite_btn.png'" alt="Favorite Button" title="Click to Add to Favorites">
+            <img
+              :src="userFavorites.includes(result.id) ? favoriteAddedButton : favoriteButton"
+              alt=""
+              :title="userFavorites.includes(result.id) ? 'Added to Favorites' : 'Click to Add to Favorites'"
+            >
             <h4>{{ userFavorites.includes(result.id) ? 'Added to Favorites' : 'Add to Favorites' }}</h4>
-          </button>  
+          </button>
         </div>
 
       </div> 
     </section>
 
     <!-- No Search Results -->
-    <section class="no-caret" v-if="results.length === 0">
+    <section class="no-caret" v-if="hasSearched && results.length === 0">
       <p>No results found. Please try a different location.</p>
     </section>
 
@@ -76,67 +87,82 @@
 <script>
 import LocatorService from '../../services/LocatorService.js';
 import FavoriteService from '../../services/FavoriteService.js';
+import defaultImage from '../../assets/locator_view/default_image.png';
+import favoriteButton from '../../assets/locator_view/favorite_btn.png';
+import favoriteAddedButton from '../../assets/locator_view/favorite_added_btn.png';
 
 export default {
   name: "Locator",
+
   props: {
-    // Ensure 'user' prop is required and has a default value
     user: {
       type: Object,
-      required: true,
-      default: () => ({
-        address1: '',
-        address2: '',
-        city: '',
-        state: '',
-        zipcode: ''
-      })
+      default: null
     }
   },
 
-
   data() {
     return {
-      locationId: '', // LocationId variable to hold and pass location
-      results: [], // Results array to hold the locator search results
-      defaultImage: 'src/assets/locator_view/default_image.png',
-      userFavorites: [] // Array to hold the list of favorited shops IDs for the user
+      locationId: '',
+      results: [],
+      defaultImage: defaultImage,
+      favoriteButton: favoriteButton,
+      favoriteAddedButton: favoriteAddedButton,
+      userFavorites: [],
+      hasSearched: false
     }
   },
   
   methods: {
-    // Update search method to fetch data and populate results
-    search() {
-      this.clearResults();
-      setTimeout(() => {
-        this.$store.state.locationId = this.locationId;
-        this.getResults(this.locationId);
-      }, 500);
+  
+    // Create the full address for Google Maps directions
+    getDirectionsAddress(result) {
+      const { address1, address2, city, state, zip_code } = result.location;
+
+      return `${address1}${address2 ? ', ' + address2 : ''}, ${city}, ${state} ${zip_code}`;
     },
+
+    // Search for coffee shops by entered location
+    search() {
+      const location = this.locationId.trim();
+
+      if (!location) {
+        alert("Please enter a location.");
+        return;
+      }
+
+      this.clearResults();
+      this.getResults(location);
+    },
+
     // Clear previous search results
     clearResults() {
       this.results = [];
-      this.$store.state.locationId = null;
+      this.hasSearched = false;
     },
+
     // Fetch the results from LocatorService
     getResults(locationId) {
       LocatorService.getCoffee(locationId)
         .then(response => {
-          this.results = response.businesses;
-          console.log(this.results);
+          this.results = response.businesses || [];
+          this.hasSearched = true;
         })
         .catch(error => {
+          this.hasSearched = false;
           alert('There was a problem fetching coffee shops! Please try again.');
           console.error('Error fetching Yelp results:', error);
         });
     },
+
     // Sending the favorite shop details to the backend
     setFavorite(result) {
-       // Check if the shop is already favorited by the user
+      // Check if the shop is already favorited by the user
       if (this.userFavorites.includes(result.id)) {
         alert("You've already favorited this shop.");
         return;
       }
+
       FavoriteService.createFavorite({
         businessId: result.id,
         businessName: result.name,
@@ -149,9 +175,21 @@ export default {
         businessUrl: result.url
       })
       .then(() => {
-        // Add the business ID to the userFavorites array after a successful favorite action
+        // Add the business ID after the favorite is successfully saved
         this.userFavorites.push(result.id);
-      }).catch(error => {
+      })
+      .catch(error => {
+        if (error.response && error.response.status === 409) {
+          // Update the frontend if the favorite already exists in the database
+          if (!this.userFavorites.includes(result.id)) {
+            this.userFavorites.push(result.id);
+          }
+
+          alert("You've already favorited this shop.");
+        } else {
+          alert("There was a problem adding this favorite. Please try again.");
+        }
+
         console.error('Error adding favorite:', error);
       });
     },
@@ -159,13 +197,13 @@ export default {
     // Fetch the user's favorites from the database
     getUserFavorites() {
       FavoriteService.getFavorites()
-      .then(response => {
-        // Populate userFavorites with the list of favorited shop IDs
-        this.userFavorites = response.map(favorite => favorite.businessId); // Assuming each favorite has a `businessId`
-      })
-      .catch(error => {
-        console.error('Error fetching favorites:', error);
-      });
+        .then(response => {
+          // Store the business IDs for the user's saved favorites
+          this.userFavorites = response.map(favorite => favorite.businessId);
+        })
+        .catch(error => {
+          console.error('Error fetching favorites:', error);
+        });
     },
 
     // Search near home
@@ -175,15 +213,15 @@ export default {
       // Check if the address is incomplete
       if (!address1 || !city || !state || !zipcode) {
         alert("User address is missing or incomplete. Please complete your profile.");
-        return; // Prevent search if address is incomplete
+        return;
       }
 
       // If address is complete, proceed with the search
       const fullAddress = `${address1} ${address2 ? address2 + ', ' : ''}${city}, ${state} ${zipcode}`;
-      console.log("Searching near address:", fullAddress);
 
-      // You can replace this with your actual logic to search using the user's address
-      this.getResults(fullAddress); // Example: pass the full address to getResults() or similar logic
+      // Clear previous results and search using the user's saved address
+      this.clearResults();
+      this.getResults(fullAddress);
     }
   },
 

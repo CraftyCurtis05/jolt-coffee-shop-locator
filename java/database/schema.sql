@@ -24,15 +24,16 @@ CREATE TABLE favorites (
     business_zipcode varchar(15),
     business_image varchar(255),
     business_url varchar(255),
+    CONSTRAINT uq_favorites_user_business UNIQUE (user_id, business_id),
     CONSTRAINT fk_favorites_users FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
 );
 
 -- Create profile table
 CREATE TABLE profile (
     profile_id SERIAL PRIMARY KEY,
-    user_id int NOT NULL,
-	first_name varchar(50) NOT NULL,
-	last_name varchar(50) NOT NULL,
+    user_id int NOT NULL UNIQUE,
+    first_name varchar(50) NOT NULL,
+    last_name varchar(50) NOT NULL,
     birth_month varchar(9) NOT NULL,
     birth_day int NOT NULL,
     birth_year int NOT NULL,
@@ -41,15 +42,15 @@ CREATE TABLE profile (
     city varchar(100) NOT NULL,
     state_abbr varchar(2) NOT NULL,
     zipcode varchar(5) NOT NULL,
-	is_form_submitted BOOLEAN DEFAULT FALSE, -- Default value is false (form not submitted)
+    is_form_submitted BOOLEAN DEFAULT FALSE, -- Default value is false (form not submitted)
     CONSTRAINT fk_profile_users FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
 );
 
 -- Create image table for storing profile images
 CREATE TABLE image (
     image_id SERIAL PRIMARY KEY,
-    user_id int NOT NULL,
-	image_name varchar (100),
+    user_id int NOT NULL UNIQUE,
+    image_name varchar(100),
     image BYTEA,  -- Store the binary data of the profile image here
     CONSTRAINT fk_image_users FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
 );

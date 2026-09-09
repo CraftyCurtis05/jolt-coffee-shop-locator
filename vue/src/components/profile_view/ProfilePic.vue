@@ -6,7 +6,7 @@
     <section class="profile-pic">
 
       <!-- Display the profile image if available, use the defaultImage if not -->
-      <div v-if="imageUrl" class="image-container">
+      <div class="image-container">
         <img :src="imageUrl || defaultImage" alt="Profile Picture" title="Profile Picture"/>
       </div>
 
@@ -32,6 +32,7 @@
 
 <script>
 import ProfileService from '../../services/ProfileService.js';
+import defaultImage from '../../assets/profile_view/profile_pic.png';
 
 export default {
 
@@ -42,7 +43,7 @@ export default {
       // URL of the uploaded profile image
       imageUrl: null,
       // Used as default profile image
-      defaultImage: 'src/assets/profile_view/profile_pic.png'
+      defaultImage: defaultImage
     };
   },
 
@@ -98,16 +99,16 @@ export default {
 
       try {
         // Attempt to upload the image through the ProfileService
-        const profileImage = await ProfileService.saveImage(formData);
-        // Set the URL of the uploaded image after a successful upload
-        this.imageUrl = profileImage.imageUrl;
-        // Emit the updated image URL to the parent
-        this.$emit('update-image', this.imageUrl);
-        // Reset the selected file and button text
-        this.selectedFile = null;  // Reset selected file so the button switches back
+        await ProfileService.saveImage(formData);
+
+        // Fetch the newly saved image from the backend
+        await this.fetchImage();
+
+        // Reset selected file so the button switches back
+        this.selectedFile = null;
       } catch (error) {
         console.error("Error uploading image:", error);
-        alert("Error uploading profile picture!")
+        alert("Error uploading profile picture!");
       }
     },
 
@@ -129,18 +130,6 @@ export default {
   async created() {
     // Fetch the user's profile image when the component is created
     this.fetchImage();
-  },
-
-  watch: {
-    /**
-     * Watches for changes to the image URL and refetches the image when it changes.
-     * This ensures the image is updated correctly when the URL changes.
-     */
-    imageUrl(newImageUrl, oldImageUrl) {
-      if (newImageUrl !== oldImageUrl) {
-        this.fetchImage();
-      }
-    }
   }
 };
 </script>

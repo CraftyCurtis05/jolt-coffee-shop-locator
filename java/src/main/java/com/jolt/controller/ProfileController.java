@@ -15,7 +15,8 @@ import java.security.Principal;
 @RestController
 @PreAuthorize("isAuthenticated()")
 @RequestMapping("/profile")
-@CrossOrigin(origins = "http://localhost:5173")  // Allow this controller to accept requests from the frontend
+@CrossOrigin(origins = {"http://localhost:5173", "https://jolt.jennifercurtis.me"})
+
 public class ProfileController {
 
     private final ProfileDao profileDao;
@@ -49,7 +50,7 @@ public class ProfileController {
      * @param principal The authenticated user's principal object
      * @return The created profile
      */
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping()
     public Profile createProfile(@RequestBody Profile profile, Principal principal) {
 
@@ -99,7 +100,7 @@ public class ProfileController {
      *
      * @param principal The authenticated user's principal object
      */
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping()
     public void deleteProfile(Principal principal) {
 

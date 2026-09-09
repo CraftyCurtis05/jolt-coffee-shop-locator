@@ -20,6 +20,7 @@ import com.jolt.security.jwt.TokenProvider;
 
 @RestController
 @CrossOrigin
+
 public class AuthenticationController {
 
     private final TokenProvider tokenProvider;
@@ -57,13 +58,29 @@ public class AuthenticationController {
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/register", method = RequestMethod.POST)
     public void register(@Valid @RequestBody RegisterUserDto newUser) {
+
+        if (!newUser.getPassword().equals(newUser.getConfirmPassword())) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Passwords do not match."
+            );
+        }
+
         try {
             User user = userDao.createUser(newUser);
+
             if (user == null) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User registration failed.");
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "User registration failed."
+                );
             }
+
         } catch (DaoException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "User registration failed.");
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "User registration failed."
+            );
         }
     }
 }

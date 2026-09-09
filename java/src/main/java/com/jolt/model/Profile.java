@@ -86,5 +86,5 @@ public class Profile {
     public void setZipcode(String zipcode) { this.zipcode = zipcode; }
 
     public boolean isFormSubmitted() { return isFormSubmitted; }
-    public void setIsFormSubmitted(boolean isFormSubmitted) { isFormSubmitted = isFormSubmitted; }
+    public void setIsFormSubmitted(boolean isFormSubmitted) { this.isFormSubmitted = isFormSubmitted; }
 }

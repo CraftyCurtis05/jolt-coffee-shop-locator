@@ -16,7 +16,8 @@ import java.util.List;
 @RestController
 @PreAuthorize("isAuthenticated()")
 @RequestMapping("/favorites")
-@CrossOrigin(origins = "http://localhost:5173")  // Allow this controller to accept requests from the frontend
+@CrossOrigin(origins = {"http://localhost:5173", "https://jolt.jennifercurtis.me"})
+
 public class FavoritesController {
 
     private final FavoritesDao favoritesDao;
@@ -81,7 +82,7 @@ public class FavoritesController {
      *
      * @param favoriteId from favorite body
      **/
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = "/{favoriteId}")
     public void deleteFavorite(@PathVariable int favoriteId, Principal principal) {
         

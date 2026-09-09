@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -19,7 +20,8 @@ import java.util.Map;
 @RestController
 @PreAuthorize("isAuthenticated()")
 @RequestMapping("/image")
-@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600, allowCredentials = "true")  // Allow this controller to accept requests from the frontend
+@CrossOrigin(origins = {"http://localhost:5173", "https://jolt.jennifercurtis.me"})
+
 public class ImageController {
 
     private final ImageDao imageDao;
@@ -45,9 +47,24 @@ public class ImageController {
         if (image != null) {
             // Image found, convert byte[] to base64
             String base64Image = Base64.getEncoder().encodeToString(image.getImage());
+
+            // Determine the image type from the saved file name
+            String imageType = "image/jpeg";
+            String imageName = image.getImageName();
+
+            if (imageName != null) {
+                String lowerCaseName = imageName.toLowerCase();
+
+                if (lowerCaseName.endsWith(".png")) {
+                    imageType = "image/png";
+                } else if (lowerCaseName.endsWith(".webp")) {
+                    imageType = "image/webp";
+                }
+            }
+
             response.put("imageId", image.getImageId());
             response.put("imageName", image.getImageName());
-            response.put("imageUrl", "data:image/jpeg;base64," + base64Image);
+            response.put("imageUrl", "data:" + imageType + ";base64," + base64Image);
         } else {
             // No image found, return a default response or handle the case as needed
             response.put("imageId", null);  // Or provide a default ID if you prefer
@@ -62,7 +79,28 @@ public class ImageController {
     @PostMapping()
     public Image saveImage(@RequestParam("image") MultipartFile file, Principal principal) {
         try {
-            String username = principal.getName();  // Get the username from the authenticated user
+            // Make sure a file was actually uploaded
+            if (file.isEmpty()) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "Please select an image to upload"
+                );
+            }
+
+            // Make sure the uploaded file is a supported image type
+            String contentType = file.getContentType();
+
+            if (!"image/jpeg".equals(contentType) &&
+                    !"image/png".equals(contentType) &&
+                    !"image/webp".equals(contentType)) {
+
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "Only JPG, PNG and WEBP images are allowed"
+                );
+            }
+
+            String username = principal.getName();
             User user = userDao.getUserByUsername(username); // Get User object from username
             int userId = user.getId(); // Get userId from User object
 

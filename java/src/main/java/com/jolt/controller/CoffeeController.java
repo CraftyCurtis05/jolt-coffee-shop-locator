@@ -7,11 +7,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @PreAuthorize("isAuthenticated()")
 @RequestMapping("/coffee")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = {"http://localhost:5173", "https://jolt.jennifercurtis.me"})
+
 public class CoffeeController {
 
     @Value("${yelp.api.key}")  // Store API key in application.properties
@@ -26,7 +28,16 @@ public class CoffeeController {
     @GetMapping()
     public String getCoffee(@RequestParam String locationId) {
         // Construct the URL for the external API request
-        String queryURL = "https://api.yelp.com/v3/businesses/search?location=" + locationId + "&term=coffee+tea&radius=20000&sort_by=distance&limit=20";
+        String queryURL = UriComponentsBuilder
+                .fromHttpUrl("https://api.yelp.com/v3/businesses/search")
+                .queryParam("location", locationId)
+                .queryParam("term", "coffee tea")
+                .queryParam("radius", 20000)
+                .queryParam("sort_by", "distance")
+                .queryParam("limit", 20)
+                .build()
+                .encode()
+                .toUriString();
 
         // Prepare the request headers with the API key
         HttpHeaders headers = new HttpHeaders();

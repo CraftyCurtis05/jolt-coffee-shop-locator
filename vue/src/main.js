@@ -24,6 +24,26 @@ if (currentToken) {
 // Create the Vuex store passing in the stored credentials
 const store = createStore(currentToken, currentUser);
 
+/*
+ * If a saved token has expired, log the user out and return them
+ * to the login page.
+ */
+axios.interceptors.response.use(
+  response => response,
+  error => {
+    if (
+      error.response &&
+      error.response.status === 401 &&
+      store.state.token
+    ) {
+      store.commit("LOGOUT");
+      router.push("/login");
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 const app = createApp(CapstoneApp);
 app.use(store);
 app.use(router);
