@@ -1,19 +1,26 @@
 <!-- ProfileForm.vue Component -->
 
 <template>
-  <article v-if="isVisible" class="profile-form-container">
-    
+  <article
+    v-if="isVisible"
+    class="profile-form-container"
+  >
+
+    <!-- Profile Form -->
     <section class="profile-form">
       <form @submit.prevent="saveProfile">
 
-        <!-- Personal Information Section -->
+        <!-- Personal Information -->
         <fieldset class="name">
           <legend>Personal Information</legend>
+
+          <!-- First Name -->
           <div class="form">
             <div class="col-30">
               <label for="firstName">First Name:</label>
             </div>
-            <div class="col-70">  
+
+            <div class="col-70">
               <input
                 type="text"
                 id="firstName"
@@ -24,10 +31,13 @@
               />
             </div>
           </div>
+
+          <!-- Last Name -->
           <div class="form">
             <div class="col-30">
               <label for="lastName">Last Name:</label>
             </div>
+
             <div class="col-70">
               <input
                 type="text"
@@ -41,13 +51,19 @@
           </div>
         </fieldset>
 
-        <!-- Birthday Section (only visible if the status is false) -->
-        <fieldset class="birthday" v-if="!status">
+        <!-- Birthday -->
+        <fieldset
+          class="birthday"
+          v-if="!status"
+        >
           <legend>Birthday</legend>
+
+          <!-- Birth Month -->
           <div class="form">
             <div class="col-30">
               <label for="birthMonth">Birth Month:</label>
             </div>
+
             <div class="col-70">
               <select
                 id="birthMonth"
@@ -56,16 +72,30 @@
                 :required="!status"
                 title="Enter Birth Month"
               >
-                <option value="" disabled>Select Month</option>
-                <option v-for="month in months" :key="month" :value="month">{{ month }}</option>
-              </select>
-            </div>  
-          </div> 
+                <option
+                  value=""
+                  disabled
+                >
+                  Select Month
+                </option>
 
+                <option
+                  v-for="month in months"
+                  :key="month"
+                  :value="month"
+                >
+                  {{ month }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Birth Day -->
           <div class="form">
             <div class="col-30">
               <label for="birthDay">Birth Day:</label>
             </div>
+
             <div class="col-70">
               <input
                 type="number"
@@ -77,14 +107,16 @@
                 max="31"
                 title="Enter Birth Day"
               />
-            </div>  
+            </div>
           </div>
-  
+
+          <!-- Birth Year -->
           <div class="form">
             <div class="col-30">
               <label for="birthYear">Birth Year:</label>
             </div>
-            <div class="col-70">  
+
+            <div class="col-70">
               <input
                 type="number"
                 id="birthYear"
@@ -92,20 +124,23 @@
                 :disabled="status"
                 :required="!status"
                 min="1900"
-                max="2024"
+                :max="currentYear"
                 title="Enter Birth Year"
               />
-            </div>  
+            </div>
           </div>
         </fieldset>
 
-        <!-- Location Section -->
+        <!-- Location Details -->
         <fieldset class="location">
           <legend>Location Details</legend>
+
+          <!-- Address 1 -->
           <div class="form">
             <div class="col-30">
               <label for="address1">Address 1:</label>
             </div>
+
             <div class="col-70">
               <input
                 type="text"
@@ -117,11 +152,14 @@
               />
             </div>
           </div>
+
+          <!-- Address 2 -->
           <div class="form">
             <div class="col-30">
               <label for="address2">Address 2:</label>
             </div>
-            <div class="col-70">  
+
+            <div class="col-70">
               <input
                 type="text"
                 id="address2"
@@ -129,12 +167,15 @@
                 @input="trackChanges"
                 title="Enter Address 2"
               />
-            </div>  
+            </div>
           </div>
+
+          <!-- City -->
           <div class="form">
             <div class="col-30">
               <label for="city">City:</label>
             </div>
+
             <div class="col-70">
               <input
                 type="text"
@@ -144,13 +185,16 @@
                 @input="trackChanges"
                 title="Enter City"
               />
-            </div>  
+            </div>
           </div>
+
+          <!-- State -->
           <div class="form">
             <div class="col-30">
               <label for="state">State:</label>
             </div>
-            <div class="col-70"> 
+
+            <div class="col-70">
               <input
                 type="text"
                 id="state"
@@ -160,13 +204,16 @@
                 @input="trackChanges"
                 title="Enter State Abbreviation"
               />
-            </div>  
+            </div>
           </div>
+
+          <!-- Zip Code -->
           <div class="form">
             <div class="col-30">
               <label for="zipcode">Zip Code:</label>
             </div>
-            <div class="col-70">  
+
+            <div class="col-70">
               <input
                 type="text"
                 id="zipcode"
@@ -175,14 +222,26 @@
                 @input="trackChanges"
                 title="Enter Zip Code"
               />
-            </div>  
+            </div>
           </div>
         </fieldset>
 
-        <!-- Save and cancel form buttons -->
+        <!-- Profile Form Buttons -->
         <div class="button-container">
-          <button type="submit" title="Click to Save Updated Profile">Save Profile</button>
-          <button type="button" @click="closeForm" title="Click to Close Update Profile">Cancel</button>
+          <button
+            type="submit"
+            title="Click to Save Updated Profile"
+          >
+            Save Profile
+          </button>
+
+          <button
+            type="button"
+            @click="closeForm"
+            title="Click to Close Update Profile"
+          >
+            Cancel
+          </button>
         </div>
 
       </form>
@@ -196,21 +255,38 @@ import ProfileService from '../../services/ProfileService.js';
 
 export default {
   name: 'ProfileForm',
+
   data() {
     return {
-      // Array of months used for the birth month dropdown
-      months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      // Months used for the birth month dropdown
+      months: [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+      ],
 
-      // Indicates if the form is in 'update' mode (true = updating, false = creating)
+      // Current year used for birth year validation
+      currentYear: new Date().getFullYear(),
+
+      // Profile status: false = creating, true = updating
       status: false,
 
-      // Toggles the visibility of the profile form
+      // Control the visibility of the profile form
       isVisible: false,
 
-      // Tracks the fields that have been modified
+      // Store profile fields after the user makes changes
       changedFields: {},
 
-      // User's profile data
+      // User profile information
       user: {
         firstName: '',
         lastName: '',
@@ -225,94 +301,106 @@ export default {
       }
     };
   },
+
   methods: {
 
-    /*
-     * Opens the profile form and emits visibility change event.
-     */
+    // Open the profile form
     openForm() {
       this.isVisible = true;
       this.$emit('form-visible', true);
     },
 
-    /*
-     * Closes the profile form and emits visibility change event.
-     */
+    // Close the profile form
     closeForm() {
       this.isVisible = false;
       this.$emit('form-visible', false);
     },
 
-    /*
-     * Fetches the profile creation/update status from the backend.
-     * Sets `status` to determine if the form is for creating or updating a profile.
-     */
+    // Check whether the user already has a profile
     async fetchStatus() {
       try {
         const response = await ProfileService.getStatus();
-        this.status = response;   // Set form status (true = updating, false = creating)
+        this.status = response;
+
+        // *DEBUG* Log the profile status for debugging
+        // console.log('Profile status:', response);
+
       } catch (error) {
-        console.error('Error fetching status:', error);
+        console.error('Error fetching profile status:', error);
       }
     },
 
-    /*
-     * Saves the profile data by either creating a new profile or updating an existing one.
-     * Depending on the status, it calls the appropriate service method.
-     */
+    // Create or update the user's profile
     async saveProfile() {
       try {
-        if (!this.status) {
-          // Create new profile if status is false
-          await ProfileService.createProfile(this.user);
 
-          // Switch the form to update mode after the profile is created
+        // Create a new profile
+        if (!this.status) {
+          const savedProfile = await ProfileService.createProfile(this.user);
+
+          // Store the profile returned by the server
+          this.user = { ...savedProfile };
+
+          // Switch the form to update mode
           this.status = true;
 
-          // Emit the new profile so the displayed details update
-          this.$emit('profile-updated', this.user);
+          // Update the profile displayed on the page
+          this.$emit('profile-updated', savedProfile);
+
+          // *DEBUG* Log the created profile for debugging
+          // console.log('Profile created:', savedProfile);
 
           alert('Profile created successfully!');
           this.closeForm();
-        } else {
-          // Update existing profile with changed fields
-          const updatedProfile = { ...this.changedFields };
-          await ProfileService.updateProfile(updatedProfile);
 
-          // Emit updated profile and close form
-          this.$emit('profile-updated', this.user);
+        } else {
+
+          // Send the updated profile fields to the server
+          const updatedProfile = { ...this.changedFields };
+          const savedProfile = await ProfileService.updateProfile(updatedProfile);
+
+          // Store the profile returned by the server
+          this.user = { ...savedProfile };
+          this.changedFields = {};
+
+          // Update the profile displayed on the page
+          this.$emit('profile-updated', savedProfile);
+
+          // *DEBUG* Log the updated profile for debugging
+          // console.log('Profile updated:', savedProfile);
+
           alert('Profile updated successfully!');
           this.closeForm();
         }
+
       } catch (error) {
         console.error('Error saving profile:', error);
 
+        // Display an error based on the server response
         if (error.response && error.response.status === 400) {
-          alert("Make sure to fill out all required profile fields!");
+          alert('Make sure to fill out all required profile fields!');
         } else {
-          alert("There was a problem saving your profile. Please try again.");
+          alert('There was a problem saving your profile. Please try again.');
         }
       }
     },
 
-    /*
-     * Fetches the existing profile data from the backend to populate the form.
-     */
+    // Get the user's existing profile information
     async fetchProfile() {
       try {
         const response = await ProfileService.getProfile();
-        this.user = { ...response };  // Populate form with existing data
+        this.user = { ...response };
+
+        // *DEBUG* Log the profile for debugging
+        // console.log('Existing profile:', response);
+
       } catch (error) {
-        console.error("Error fetching profile:", error);
+        console.error('Error fetching profile:', error);
       }
     },
 
-    /*
-     * Tracks changes to form fields and updates the `changedFields` object 
-     * to store modified values.
-     */
+    // Store the profile information after a field is changed
     trackChanges() {
-      // Only track fields that have been modified from the original state
       this.changedFields = {
         firstName: this.user.firstName,
         lastName: this.user.lastName,
@@ -325,13 +413,14 @@ export default {
         state: this.user.state,
         zipcode: this.user.zipcode
       };
-    }  
+    }
   },
 
   mounted() {
-    // Fetch the initial status of the profile (new or updating)
+    // Check whether the user already has a profile
     this.fetchStatus();
-    // Load the user's profile data if available
+
+    // Get the user's existing profile information
     this.fetchProfile();
   }
 };
@@ -339,6 +428,7 @@ export default {
 
 <style scoped>
 /* Laptop L - 1440px */
+
 .profile-form-container {
   margin: 1rem auto;
 }
@@ -354,7 +444,7 @@ export default {
 .location {
   display: flex;
   flex-direction: column;
-  margin: 0 auto;  
+  margin: 0 auto;
 }
 
 #birthMonth {
@@ -366,7 +456,7 @@ fieldset {
   width: 18vw;
 }
 
-fieldset:after {
+fieldset::after {
   content: "";
   display: table;
   clear: both;
@@ -424,7 +514,7 @@ form button {
   font-size: .7rem;
   color: rgb(53, 37, 19);
   background-color: #e8bb64;
-  border-radius:.1rem;
+  border-radius: .1rem;
   margin-inline: .5rem;
   transition: all 0.5s ease-in-out;
 }
@@ -434,6 +524,7 @@ form button:hover {
   background-color: rgb(53, 37, 19);
   cursor: pointer;
 }
+
 
 /* 4K - 2560px */
 @media screen and (min-width: 2560px) {
@@ -457,25 +548,30 @@ form button:hover {
   }
 }
 
+
 /* Laptop - 1024px */
 @media screen and (max-width: 1024px) {
 
 }
+
 
 /* Tablet - 768px */
 @media screen and (max-width: 768px) {
 
 }
 
+
 /* Mobile L - 425px */
 @media screen and (max-width: 425px) {
 
 }
 
+
 /* Mobile M - 375px */
 @media screen and (max-width: 375px) {
 
 }
+
 
 /* Mobile S - 320px */
 @media screen and (max-width: 320px) {

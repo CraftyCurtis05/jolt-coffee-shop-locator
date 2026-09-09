@@ -4,40 +4,57 @@
   <body>
 
     <main>
+
+      <!-- User Profile -->
       <section class="profile-container">
 
-        <!-- User Profile Picture Section -->
+        <!-- Profile Picture -->
         <article class="profile-pic">
           <ProfilePic />
         </article>
-        
-        <!-- Display Profile Details if User Data is Available -->
+
+        <!-- Profile Details -->
         <article class="profile-details">
-          <ProfileDetails v-if="user" :user="user" />
+          <ProfileDetails
+            v-if="user"
+            :user="user"
+          />
         </article>
 
-        <!-- Profile Form Section for Editing User Data -->
-        <article class="profile-form"> 
-          <!-- Profile Form with Event Listeners for Update and Toggle -->
-          <ProfileForm @profile-updated="updateProfile" @form-visible="toggleUpdateButton" ref="profileForm" />
+        <!-- Profile Form -->
+        <article class="profile-form">
+          <ProfileForm
+            ref="profileForm"
+            @profile-updated="updateProfile"
+            @form-visible="toggleUpdateButton"
+          />
 
-          <!-- Button to Trigger Profile Form (Visible When Form is Hidden) -->
-          <button v-if="showUpdateButton" @click="showForm" title="Click to Create or Update Profile">Update Profile</button>
+          <!-- Update Profile Button -->
+          <button
+            v-if="showUpdateButton"
+            type="button"
+            @click="showForm"
+            title="Click to Create or Update Profile"
+          >
+            Update Profile
+          </button>
         </article>
 
       </section>
 
-      <!-- User Favorites Section -->
+      <!-- User Favorites -->
       <section class="favorites-container">
         <Favorites />
       </section>
 
     </main>
+
   </body>
 </template>
 
 <script>
-import ProfileService from '../services/ProfileService';
+import ProfileService from '../services/ProfileService.js';
+
 import ProfilePic from '../components/profile_view/ProfilePic.vue';
 import ProfileDetails from '../components/profile_view/ProfileDetails.vue';
 import ProfileForm from '../components/profile_view/ProfileForm.vue';
@@ -45,6 +62,7 @@ import Favorites from '../components/profile_view/Favorites.vue';
 
 export default {
   name: 'ProfileView',
+
   components: {
     ProfilePic,
     ProfileDetails,
@@ -54,53 +72,51 @@ export default {
 
   data() {
     return {
-      user: null, // Holds user profile data (null initially)
-      showUpdateButton: true  // Controls visibility of the "Update Profile" button
+      // Store the user's profile information
+      user: null,
+
+      // Control the visibility of the Update Profile button
+      showUpdateButton: true
     };
   },
 
   methods: {
-    /**
-     * Opens the profile form for editing when "Update Profile" button is clicked.
-     * Delegates the opening action to the ProfileForm component.
-     */
+
+    // Open the profile form
     showForm() {
-      this.$refs.profileForm.openForm(); // Calls openForm method in ProfileForm component
+      this.$refs.profileForm.openForm();
     },
 
-    /**
-     * Toggles the visibility of the "Update Profile" button based on the form's visibility.
-     * @param {boolean} isFormVisible - Indicates if the profile form is visible
-     */
+    // Hide the Update Profile button while the form is visible
     toggleUpdateButton(isFormVisible) {
-      this.showUpdateButton = !isFormVisible; // Hides button when form is visible, otherwise shows it
+      this.showUpdateButton = !isFormVisible;
     },
 
-    /**
-     * Updates the local user data with the newly updated profile information.
-     * @param {Object} updatedUser - Contains updated profile data from the form submission
-     */
+    // Update the displayed profile information
     updateProfile(updatedUser) {
-      this.user = updatedUser; // Sets the updated user data
+      this.user = updatedUser;
     },
 
-    /**
-     * Fetches the user’s profile from the server on component mount.
-     * Handles any errors that occur during the fetch operation.
-     */
+    // Get the user's profile information
     async fetchProfile() {
       try {
-        const profile = await ProfileService.getProfile(); // Fetch profile data from API
-        this.user = profile; // Stores fetched profile data in the user variable
+
+        // Get the user's profile from the server
+        const profile = await ProfileService.getProfile();
+        this.user = profile;
+
+        // *DEBUG* Log the user's profile for debugging
+        // console.log('User profile:', profile);
+
       } catch (error) {
-        console.error("Error fetching user profile:", error); 
-        alert("There was an error fetching your profile!");
+        console.error('Error fetching user profile:', error);
+        alert('There was an error fetching your profile!');
       }
     }
   },
 
   mounted() {
-    // Fetches the user's profile data when the component is mounted
+    // Get the user's profile when the page loads
     this.fetchProfile();
   }
 };
@@ -108,6 +124,7 @@ export default {
 
 <style scoped>
 /* Laptop L - 1440px */
+
 main {
   display: flex;
   flex-direction: row;
@@ -143,6 +160,7 @@ main {
   width: 100%;
 }
 
+
 /* 4K - 2560px */
 @media screen and (min-width: 2560px) {
 
@@ -154,10 +172,12 @@ main {
   }
 }
 
+
 /* Laptop - 1024px */
 @media screen and (max-width: 1024px) {
 
 }
+
 
 /* Tablet - 768px */
 @media screen and (max-width: 768px) {
@@ -167,15 +187,18 @@ main {
   }
 }
 
+
 /* Mobile L - 425px */
 @media screen and (max-width: 425px) {
 
 }
 
+
 /* Mobile M - 375px */
 @media screen and (max-width: 375px) {
 
 }
+
 
 /* Mobile S - 320px */
 @media screen and (max-width: 320px) {

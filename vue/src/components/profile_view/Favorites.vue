@@ -1,310 +1,367 @@
 <!-- Favorites.vue -->
 
 <template>
-    <article class="favorites-container">
-        <header>
-            <h1>Favorites</h1> 
-            <h2>Coffee Shop Delights: My Personal Selection</h2>
-        </header>    
+  <article class="favorites-container">
 
-        <section class="results-container"> 
-            <div class="result" v-for="result in results" :key="result.favoriteId">
+    <!-- Favorites Header -->
+    <header>
+      <h1>Favorites</h1>
+      <h2>Coffee Shop Delights: My Personal Selection</h2>
+    </header>
 
-                <div class="name">
-                    <a :href="result.businessUrl" target="_blank" title="Click for Yelp Page">{{ result.businessName }}</a>
-                </div>
+    <!-- Favorite Coffee Shops -->
+    <section class="results-container">
+      <div
+        class="result"
+        v-for="result in results"
+        :key="result.favoriteId"
+      >
 
-                <div class="location-container" title="Click for Directions">
-                    <div class="top">
-                        <a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(result.businessAddress1)" target="_blank">
-                            {{ result.businessAddress1 }}
-                        </a>
-                        <a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(result.businessAddress1)" target="_blank">
-                            {{ result.businessAddress2 }}
-                        </a>
-                    </div>
+        <!-- Coffee Shop Name -->
+        <div class="name">
+          <a
+            :href="result.businessUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Click for Yelp Page"
+          >
+            {{ result.businessName }}
+          </a>
+        </div>
 
-                    <div class="bottom">
-                        <a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(result.businessAddress1)" target="_blank">
-                            {{ result.businessCity }},
-                        </a>
-                        <a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(result.businessAddress1)" target="_blank">
-                            {{ result.businessState }}&nbsp;
-                        </a>
-                        <a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(result.businessAddress1)" target="_blank">
-                            {{ result.businessZipcode }}
-                        </a>
-                    </div>
-                </div>
+        <!-- Coffee Shop Location -->
+        <div
+          class="location-container"
+          title="Click for Directions"
+        >
+          <div class="top">
+            <a
+              :href="getDirectionsUrl(result)"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ result.businessAddress1 }}
+            </a>
 
-                <div class="image-container">
-                    <a :href="result.businessUrl" target="_blank">
-                        <img :src="result.businessImage || defaultImage" alt="Yelp Coffee Shop Image" title="Click for Yelp Page">
-                    </a>
-                </div>
+            <a
+              v-if="result.businessAddress2"
+              :href="getDirectionsUrl(result)"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ result.businessAddress2 }}
+            </a>
+          </div>
 
-                <div class="button-container">
-                    <button @click="deleteFavorite(result.favoriteId)" title="Delete Favorite">Delete</button>
-                </div>
+          <div class="bottom">
+            <a
+              :href="getDirectionsUrl(result)"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ result.businessCity }},
+              {{ result.businessState }}
+              {{ result.businessZipcode }}
+            </a>
+          </div>
+        </div>
 
-            </div>
-        </section>
+        <!-- Coffee Shop Image -->
+        <div class="image-container">
+          <a
+            :href="result.businessUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              :src="result.businessImage || defaultImage"
+              alt="Yelp Coffee Shop Image"
+              title="Click for Yelp Page"
+            />
+          </a>
+        </div>
 
-        <!-- No Search Results -->
-        <section v-if="results.length === 0">
-            <p>You have no favorite coffee shops saved yet!</p>
-        </section>
+        <!-- Delete Favorite -->
+        <div class="button-container">
+          <button
+            type="button"
+            @click="deleteFavorite(result.favoriteId)"
+            title="Delete Favorite"
+          >
+            Delete
+          </button>
+        </div>
 
-    </article>
-  </template>
-  
+      </div>
+    </section>
+
+    <!-- No Favorites -->
+    <section v-if="results.length === 0">
+      <p>You have no favorite coffee shops saved yet!</p>
+    </section>
+
+  </article>
+</template>
+
 <script>
 import FavoriteService from '../../services/FavoriteService.js';
+import defaultImage from '../../assets/locator_view/default_image.webp';
 
 export default {
-    name: 'Favorites',
-    data() {
-        return {
-            results: [],  // To store the user's favorites
-            defaultImage: 'src/assets/locator_view/default_image.webp'
-        };
-    },
-    methods: {
-        getUserFavorites() {
-        FavoriteService.getFavorites()
-            .then(response => {
-                // console.log('API Response:', response); // *DEBUG* Confirm API connection
-                this.results = response; // Ensure it's an array
-                // console.log('Favorites Updated:', this.results); // *DEBUG* Confirm update
-            })
-            .catch(error => {
-                console.error('Error fetching favorites:', error); // Log error
-            });
-        },
+  name: 'Favorites',
 
-        deleteFavorite(favoriteId) {
-        FavoriteService.deleteFavorite(favoriteId)
-            .then(() => {
-                console.log('Favorite deleted successfully');
-                // Update the UI by removing the favorite
-                this.results = this.results.filter(result => result.favoriteId !== favoriteId);
-            })
-            .catch(error => {
-                console.error('Error deleting favorite:', error);
-            });
-        },
+  data() {
+    return {
+      // Store the user's favorite coffee shops
+      results: [],
+
+      // Default image used when a coffee shop has no image
+      defaultImage: defaultImage
+    };
+  },
+
+  methods: {
+
+    // Build the full coffee shop address for Google Maps
+    getDirectionsAddress(result) {
+      return [
+        result.businessAddress1,
+        result.businessAddress2,
+        result.businessCity,
+        result.businessState,
+        result.businessZipcode
+      ]
+        .filter(Boolean)
+        .join(', ');
     },
-    mounted() {
-        this.getUserFavorites();  // Fetch favorites when the component is mounted
-    }  
+
+    // Build the Google Maps directions URL
+    getDirectionsUrl(result) {
+      const address = this.getDirectionsAddress(result);
+
+      return 'https://www.google.com/maps/dir/?api=1&destination=' +
+        encodeURIComponent(address);
+    },
+
+    // Get the user's saved favorites
+    getUserFavorites() {
+      FavoriteService.getFavorites()
+        .then(response => {
+          this.results = response || [];
+
+          // *DEBUG* Log the user's favorites for debugging
+          // console.log('Favorites:', this.results);
+        })
+        .catch(error => {
+          console.error('Error fetching favorites:', error);
+        });
+    },
+
+    // Delete a favorite coffee shop
+    deleteFavorite(favoriteId) {
+      FavoriteService.deleteFavorite(favoriteId)
+        .then(() => {
+
+          // Remove the deleted favorite from the page
+          this.results = this.results.filter(
+            result => result.favoriteId !== favoriteId
+          );
+
+          // *DEBUG* Log the deleted favorite for debugging
+          // console.log('Favorite deleted:', favoriteId);
+        })
+        .catch(error => {
+          console.error('Error deleting favorite:', error);
+        });
+    }
+  },
+
+  mounted() {
+    // Get the user's favorites when the component loads
+    this.getUserFavorites();
+  }
 };
 </script>
   
 <style scoped>
 /* Laptop L - 1440px */
+
 .favorites-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 header {
-    width: 100%;
-    color: rgb(245, 242, 242);
-    background-color: rgb(53, 37, 19);
-    border-bottom: .4rem  #e8bb64 solid;
-    padding: .5rem 0;
-    margin-top: 0;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  color: #e8bb64;
+  margin-bottom: 0;
+}
+
+header h2 {
+  font-size: 1rem;
+  font-weight: 400;
+  color: rgb(245, 242, 242);
+  margin-top: .3rem;
 }
 
 .results-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
 }
 
 .result {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 14rem;
-    height: 15rem;
-    border: .1rem rgb(53, 37, 19) solid;
-    border-radius: .1rem;
-    padding: .8rem;
-    margin: 1rem;
-    transition: all 0.6s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 20vw;
+  background-color: rgb(160, 153, 145);
+  border: .5vw rgb(160, 153, 145) solid;
+  margin: 1vw;
 }
 
-.result:hover {
-    background-color: #e8bb64;
-    transform: scale(1.1);
+.name {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: .5rem;
 }
 
-.result .name {
-    font-weight: bold;
-    transition: all 0.5s ease-in-out;
+.name a {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: rgb(53, 37, 19);
+  text-align: center;
+  text-decoration: none;
 }
 
-.result:hover .name {
-    font-size: 1.04rem;
+.name a:hover {
+  color: #e8bb64;
 }
 
-.result .location-container {
-    font-size: .9rem;
-    transition: all 0.5s ease-in-out;
+.location-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: .5rem;
 }
 
-.result:hover .location-container {
-    font-size: .94rem;
+.location-container .top,
+.location-container .bottom {
+  display: flex;
+  justify-content: center;
 }
 
-.result .name:hover,
-.result .location-container:hover {
-    text-decoration: underline;
+.location-container a {
+  font-size: .8rem;
+  color: rgb(53, 37, 19);
+  text-align: center;
+  text-decoration: none;
 }
 
-.result img {
-    width: 10rem;
-    height: 10rem;
-    margin-top: .5rem;
-    border: .1rem rgb(53, 37, 19) solid;
-    border-radius: .1rem;
-    transition: all 0.5s ease-in-out;
+.location-container a:hover {
+  color: #e8bb64;
 }
 
-.result img:hover {
-    transform: scale(1.05);
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 18vw;
+  height: 18vw;
+  overflow: hidden;
 }
 
-.result:hover img {
-    border: .12rem rgb(53, 37, 19) solid;
-    filter: grayscale(70%);
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.result a {
-    color: #525459;
-    text-decoration: none;
+.button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
-button {
-    width: 5rem;
-    height: 1.3rem;
-    font-size: .7rem;
-    color: rgb(53, 37, 19);
-    background-color: #e8bb64;
-    border-radius: .1rem;
-    transition: all 0.5s ease-in-out;
+.button-container button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 6rem;
+  height: 1.5rem;
+  font-size: .7rem;
+  color: rgb(53, 37, 19);
+  background-color: #e8bb64;
+  border-radius: .1rem;
+  margin: .5rem auto;
+  transition: all 0.5s ease-in-out;
 }
 
-button:hover {
-    color: #e8bb64;
-    background-color: rgb(53, 37, 19);
-    cursor: pointer;
+.button-container button:hover {
+  color: #e8bb64;
+  background-color: rgb(53, 37, 19);
+  cursor: pointer;
 }
+
 
 /* 4K - 2560px */
 @media screen and (min-width: 2560px) {
 
-    .result {
-        width: 20rem;
-        height: 21.5rem;
-    }
+  header h1 {
+    font-size: 2.5rem;
+  }
 
-    .result .name {
-        font-size: 1.45rem;
-    }
+  header h2 {
+    font-size: 1.5rem;
+  }
 
-    .result .location-container {
-        font-size: 1.3rem;
-    }
+  .name a {
+    font-size: 1.5rem;
+  }
 
-    .result img {
-        width: 14rem;
-        height: 14rem;
-    }
+  .location-container a {
+    font-size: 1.2rem;
+  }
 
-    button {
-        width: 6rem;
-        height: 2rem;
-        font-size: 1.1rem;
-        margin-top: .5vw;
-    }
+  .button-container button {
+    width: 10rem;
+    height: 2.5rem;
+    font-size: 1.25rem;
+  }
 }
+
 
 /* Laptop - 1024px */
 @media screen and (max-width: 1024px) {
 
-    .result {
-        width: 9rem;
-        height: 10.5rem;
-    }
-
-    .result .name {
-        font-size: .75rem;
-    }
-
-    .result .location-container {
-        font-size: .65rem;
-    }
-
-    .result img {
-        width: 7rem;
-        height: 7rem;
-        margin-top: .2vw;
-    }
-
-    button {
-        width: 3.5rem;
-        height: 1.1rem;
-        font-size: .6rem;
-        margin-top: .1vw;
-    }
 }
+
 
 /* Tablet - 768px */
 @media screen and (max-width: 768px) {
 
-    .result {
-        width: 10rem;
-        height: 11rem;
-    }
-
-    .result .name {
-        font-size: .75rem;
-    }
-
-    .result .location-container {
-        font-size: .65rem;
-    }
-
-    .result img {
-        width: 7.5rem;
-        height: 7.5rem;
-        margin-top: .5vw;
-    }
-
-    button {
-        width: 3.5rem;
-        height: 1.1rem;
-        font-size: .6rem;
-        margin-top: 0;
-        margin-bottom: .5vw;
-    }
 }
+
 
 /* Mobile L - 425px */
 @media screen and (max-width: 425px) {
 
 }
 
+
 /* Mobile M - 375px */
 @media screen and (max-width: 375px) {
 
 }
+
 
 /* Mobile S - 320px */
 @media screen and (max-width: 320px) {

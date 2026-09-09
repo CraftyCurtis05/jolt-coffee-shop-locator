@@ -2,11 +2,16 @@
 
 <template>
   <body>
+
+    <!-- Shop Header -->
     <header>
       <h1>Shop</h1>
-      <h2>Shop for More Than Just Coffee: Discover Equipment, Unique Merchandise and Snacks</h2>
+      <h2>
+        Shop for More Than Just Coffee: Discover Equipment, Unique Merchandise and Snacks
+      </h2>
     </header>
 
+    <!-- Shop Content -->
     <main>
       <section class="shop-container">
         <Shop />
@@ -21,6 +26,7 @@ import Shop from '../components/shop_view/Shop.vue';
 
 export default {
   name: 'ShopView',
+
   components: {
     Shop
   }
@@ -29,6 +35,7 @@ export default {
 
 <style scoped>
 /* Laptop L - 1440px */
+
 header {
   margin-top: 1.8vw;
 }

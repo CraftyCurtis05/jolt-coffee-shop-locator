@@ -7,14 +7,17 @@
 <template>
   <body id="app">
 
+    <!-- Application Navigation -->
     <nav>
       <NavBar />
     </nav>
 
+    <!-- Application Page Content -->
     <main>
       <router-view />
-    </main>  
+    </main>
 
+    <!-- Application Footer -->
     <footer>
       <Footer />
     </footer>
@@ -28,34 +31,20 @@ import Footer from './components/Footer.vue';
 
 export default {
   name: 'App',
+
+  // Components used throughout the application
   components: {
     NavBar,
     Footer
-  },
-
-  computed: {
-    notification() {
-      return this.$store.state.notification;
-    },
-    notificationClass() {
-      return {
-        'status-message': true,
-        error: this.notification?.type?.toLowerCase() === 'error',
-        success: this.notification?.type?.toLowerCase() === 'success'
-      };
-    }
-  },
-  methods: {
-    clearNotification() {
-      this.$store.commit('CLEAR_NOTIFICATION');
-    }
   }
 };
 </script>
 
 <style>
 /* Laptop L - 1440px */
-html, body {
+
+html,
+body {
   width: 100vw;
   height: 100%;
   min-height: 67.2vh;
@@ -103,22 +92,25 @@ footer {
   caret-color: transparent; /* Hides the caret */
 }
 
+
 /* Scrollbar */
+
 body::-webkit-scrollbar {
   width: 15px;
 }
-        
+
 body::-webkit-scrollbar-track {
   background: url("@/assets/app/scrollbar/scrollbar_track.webp");
   background-size: 15px;
 }
-        
+
 body::-webkit-scrollbar-thumb {
   background-image: url("@/assets/app/scrollbar/scrollbar_thumb.webp");
-  background-position:center center;
+  background-position: center center;
   background-repeat: no-repeat;
   background-size: 15px;
 }
+
 
 /* 4K - 2560px */
 @media screen and (min-width: 2560px) {
@@ -126,7 +118,7 @@ body::-webkit-scrollbar-thumb {
   body {
     min-height: 64.3vh;
   }
-  
+
   header {
     margin-top: .5vh;
   }
@@ -142,15 +134,16 @@ body::-webkit-scrollbar-thumb {
   body::-webkit-scrollbar {
     width: 23px;
   }
-          
+
   body::-webkit-scrollbar-track {
     background-size: 20px;
   }
-          
+
   body::-webkit-scrollbar-thumb {
     background-size: 23px;
   }
 }
+
 
 /* Laptop - 1024px */
 @media screen and (max-width: 1024px) {
@@ -171,6 +164,7 @@ body::-webkit-scrollbar-thumb {
     font-size: .9rem;
   }
 }
+
 
 /* Tablet - 768px */
 @media screen and (max-width: 768px) {
@@ -194,19 +188,20 @@ body::-webkit-scrollbar-thumb {
   body::-webkit-scrollbar {
     width: 10px;
   }
-          
+
   body::-webkit-scrollbar-track {
     background-size: 16px;
   }
-          
+
   body::-webkit-scrollbar-thumb {
     background-size: 10px;
   }
 }
 
+
 /* Mobile L - 425px */
 @media screen and (max-width: 425px) {
-  
+
   body {
     min-height: 71.3vh;
   }
@@ -227,15 +222,16 @@ body::-webkit-scrollbar-thumb {
   body::-webkit-scrollbar {
     width: 7px;
   }
-          
+
   body::-webkit-scrollbar-track {
     background-size: 13px;
   }
-          
+
   body::-webkit-scrollbar-thumb {
     background-size: 7px;
   }
 }
+
 
 /* Mobile M - 375px */
 @media screen and (max-width: 375px) {
@@ -257,6 +253,7 @@ body::-webkit-scrollbar-thumb {
     max-width: 98%;
   }
 }
+
 
 /* Mobile S - 320px */
 @media screen and (max-width: 320px) {

@@ -3,38 +3,38 @@
 <template>
   <body>
 
-    <!-- View Header -->
+    <!-- About Header -->
     <header>
       <h1>Who We Are</h1>
       <h2>Meet Our Developers</h2>
     </header>
-    
-    <!-- Main Content -->
+
+    <!-- Developer Profiles -->
     <main>
 
-      <!-- Jennifer Component -->
+      <!-- Jennifer -->
       <section class="jennifer">
-        <Jennifer/>
+        <Jennifer />
       </section>
-      
-      <!-- Steven Component -->
+
+      <!-- Steven -->
       <section class="steven">
-        <Steven/>
+        <Steven />
       </section>
 
-      <!-- Naomi Component -->
+      <!-- Naomi -->
       <section class="naomi">
-        <Naomi/>
+        <Naomi />
       </section>
 
-      <!-- David Component -->
+      <!-- David -->
       <section class="david">
-        <David/>
+        <David />
       </section>
 
     </main>
 
-  </body>  
+  </body>
 </template>
 
 <script>
@@ -45,36 +45,33 @@ import David from '../components/about_view/David.vue';
 
 export default {
   name: 'AboutUsView',
+
   components: {
     Jennifer,
     Steven,
     Naomi,
     David
   }
-}
+};
 </script>
-  
+
 <style scoped>
 /* Laptop L - 1440px */
+
 header {
   margin-top: 1.8vw;
 }
 
 main {
   display: flex;
-  flex-wrap: wrap;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   width: 95vw;
-  margin: 0 auto;
-  margin-bottom: 2vw;
+  margin: 0 auto 2vw;
 }
 
-/* Laptop - 1024px */
-@media screen and (max-width: 1024px) {
-  
-}
 
 /* Mobile L - 425px */
 @media screen and (max-width: 425px) {
@@ -82,15 +79,5 @@ main {
   main {
     width: 98vw;
   }
-}
-
-/* Mobile M - 375px */
-@media screen and (max-width: 375px) {
-
-}
-
-/* Mobile S - 320px */
-@media screen and (max-width: 320px) {
-
 }
 </style>

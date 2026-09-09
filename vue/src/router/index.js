@@ -1,9 +1,8 @@
 // index.js Router
 
 import { createRouter, createWebHistory } from 'vue-router';
-import { useStore } from 'vuex'
 
-// Import components
+// Import views
 import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
@@ -14,13 +13,14 @@ import LocatorView from '../views/LocatorView.vue';
 import ProfileView from '../views/ProfileView.vue';
 import AboutUsView from '../views/AboutUsView.vue';
 
-/**
- * The Vue Router is used to "direct" the browser to render a specific view component
- * inside of App.vue depending on the URL.
+
+/*
+ * The Vue Router directs the browser to render a specific view
+ * inside App.vue based on the current URL.
  *
- * It also is used to detect whether or not a route requires the user to have first authenticated.
- * If the user has not yet authenticated (and needs to) they are redirected to /login
- * If they have (or don't need to) they're allowed to go about their way.
+ * It also checks whether a route requires the user to be authenticated.
+ * If authentication is required and the user is not logged in,
+ * they are redirected to the login page.
  */
 const routes = [
   {
@@ -32,8 +32,8 @@ const routes = [
     }
   },
   {
-    path: "/login",
-    name: "login",
+    path: '/login',
+    name: 'login',
     component: LoginView,
     meta: {
       hideNavBar: true,
@@ -41,16 +41,16 @@ const routes = [
     }
   },
   {
-    path: "/logout",
-    name: "logout",
+    path: '/logout',
+    name: 'logout',
     component: LogoutView,
     meta: {
       requiresAuth: true
     }
   },
   {
-    path: "/register",
-    name: "register",
+    path: '/register',
+    name: 'register',
     component: RegisterView,
     meta: {
       hideNavBar: true,
@@ -58,40 +58,40 @@ const routes = [
     }
   },
   {
-    path: "/shop",
-    name: "shop",
+    path: '/shop',
+    name: 'shop',
     component: ShopView,
     meta: {
       requiresAuth: true
     }
   },
   {
-    path: "/articles",
-    name: "articles",
+    path: '/articles',
+    name: 'articles',
     component: ArticlesView,
     meta: {
       requiresAuth: true
     }
   },
   {
-    path: "/locator",
-    name: "locator",
+    path: '/locator',
+    name: 'locator',
     component: LocatorView,
     meta: {
       requiresAuth: true
     }
   },
   {
-    path: "/profile",
-    name: "profile",
+    path: '/profile',
+    name: 'profile',
     component: ProfileView,
     meta: {
       requiresAuth: true
     }
   },
   {
-    path: "/aboutUs",
-    name: "aboutUs",
+    path: '/aboutUs',
+    name: 'aboutUs',
     component: AboutUsView,
     meta: {
       requiresAuth: true
@@ -99,26 +99,28 @@ const routes = [
   }
 ];
 
+
 // Create the router
 const router = createRouter({
   history: createWebHistory(),
   routes: routes
 });
 
+
+// Check authentication before navigating to protected routes
 router.beforeEach((to) => {
 
-  // Get the Vuex store
-  const store = useStore();
+  // Determine if the route requires authentication
+  const requiresAuth = to.matched.some(route => route.meta.requiresAuth);
 
-  // Determine if the route requires Authentication
-  const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
+  // Get the saved authentication token
+  const token = localStorage.getItem('token');
 
-  // If it does and they are not logged in, send the user to "/login"
-  if (requiresAuth && !store.state.token) {
-    return { name: "login" };
+  // Redirect unauthenticated users to the login page
+  if (requiresAuth && !token) {
+    return { name: 'login' };
   }
-
-  // Otherwise, do nothing and they'll go to their next destination
 });
+
 
 export default router;

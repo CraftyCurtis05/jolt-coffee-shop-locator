@@ -1,50 +1,57 @@
-import { createApp } from 'vue'
-import CapstoneApp from './App.vue'
-import { createStore } from './store'
-import router from './router'
-import axios from 'axios'
+// main.js
 
-/* sets the base url for server API communication with axios */
+import { createApp } from 'vue';
+import axios from 'axios';
+
+import CapstoneApp from './App.vue';
+import { createStore } from './store';
+import router from './router';
+
+
+// Set the base URL for server API communication
 axios.defaults.baseURL = import.meta.env.VITE_REMOTE_API;
 
-/*
- * The authorization header is set for axios when you login but what happens when 
- * you come back or the page is refreshed. When that happens you need to check 
- * for the token in local storage and if it exists you should set the header 
- * so that it will be attached to each request.
- */
-let currentToken = localStorage.getItem('token');
-let currentUser = JSON.parse(localStorage.getItem('user'));
 
+// Get any saved authentication data
+const currentToken = localStorage.getItem('token');
+const currentUser = JSON.parse(localStorage.getItem('user'));
+
+// Restore the authorization header after a page refresh
 if (currentToken) {
-  // Set token axios requests
   axios.defaults.headers.common['Authorization'] = `Bearer ${currentToken}`;
 }
 
-// Create the Vuex store passing in the stored credentials
+
+// Create the Vuex store using any saved authentication data
 const store = createStore(currentToken, currentUser);
 
+
 /*
- * If a saved token has expired, log the user out and return them
- * to the login page.
+ * If a saved token has expired, log the user out and
+ * return them to the login page.
  */
 axios.interceptors.response.use(
   response => response,
+
   error => {
     if (
       error.response &&
       error.response.status === 401 &&
       store.state.token
     ) {
-      store.commit("LOGOUT");
-      router.push("/login");
+      store.commit('LOGOUT');
+      router.push('/login');
     }
 
     return Promise.reject(error);
   }
 );
 
+
+// Create and mount the Vue application
 const app = createApp(CapstoneApp);
+
 app.use(store);
 app.use(router);
+
 app.mount('#app');
