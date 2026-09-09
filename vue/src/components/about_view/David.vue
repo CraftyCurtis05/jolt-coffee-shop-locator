@@ -6,7 +6,7 @@
         <!-- David Image -->
         <section class="image-container">
             <a href="https://www.linkedin.com/in/daviddefoshajr/" target="_blank">
-                <img src="@/assets/about_view/david.jpg" alt="David DeFosha" title="David Defosha">
+                <img src="@/assets/about_view/david.webp" alt="David DeFosha" title="David Defosha">
             </a>
         </section>
 

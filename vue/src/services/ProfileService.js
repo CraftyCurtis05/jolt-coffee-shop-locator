@@ -29,7 +29,10 @@ export default {
    */
   createProfile(user) {
     return axios.post('/profile', user)
-    .then(response => response.data)
+    .then(response => {
+      this.originalProfile = response.data;  // Set the original profile data
+      return response.data;
+    })
     .catch(error => {
       console.error("Error creating profile:", error);
       throw error;

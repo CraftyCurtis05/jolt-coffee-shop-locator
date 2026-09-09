@@ -6,7 +6,7 @@
         <!-- Jennifer Image -->
         <section class="image-container">
             <a href="https://www.linkedin.com/in/jcurtisdeveloper/" target="_blank">
-                <img src="@/assets/about_view/jennifer.jpg" alt="Jennifer Curtis" title="Jennifer Curtis">
+                <img src="@/assets/about_view/jennifer.webp" alt="Jennifer Curtis" title="Jennifer Curtis">
             </a>
         </section>
 

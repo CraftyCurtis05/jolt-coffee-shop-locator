@@ -58,7 +58,7 @@
                 <div class="image-container" :class="{ 'nav-open': isNavOpen }">
                     <router-link v-bind:to="{ name: 'profile' }" v-if="$store.state.token != ''" title="Click to Go to Profile">
                         <!-- Fallback image used if no profile image is fetched -->
-                        <img :src="imageUrl || 'src/assets/profile_view/profile_pic.png'" alt="Profile Picture" />
+                        <img :src="imageUrl || 'src/assets/profile_view/profile_pic.webp'" alt="Profile Picture" />
                     </router-link>
                 </div>
             </section>
@@ -77,8 +77,8 @@ export default {
     return {
         isNavOpen: false, // Tracks whether the nav is open
         imageUrl: null,
-        logo: 'src/assets/app/logo/jolt_logo.png',
-        logoResponsive: 'src/assets/app/logo/logo_responsive.png'
+        logo: 'src/assets/app/logo/jolt_logo.webp',
+        logoResponsive: 'src/assets/app/logo/logo_responsive.webp'
     };
   },
 
@@ -95,11 +95,18 @@ export default {
   },
 
   mounted() {
+
     // Watch for route changes
     this.$router.afterEach(() => {
-        this.isNavOpen = false; // Close the navbar after route change
+
+      this.isNavOpen = false; // Close the navbar after route change
+
+      if (this.$store.state.token) {
         this.fetchImage(); // Get image for profile pic
+      }
+
     });
+
   }
 };
 </script>

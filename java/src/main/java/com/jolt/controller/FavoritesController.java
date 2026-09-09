@@ -4,10 +4,12 @@ import com.jolt.model.User;
 import com.jolt.model.Favorites;
 import com.jolt.dao.UserDao;
 import com.jolt.dao.FavoritesDao;
+import com.jolt.exception.DaoException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
@@ -85,12 +87,24 @@ public class FavoritesController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = "/{favoriteId}")
     public void deleteFavorite(@PathVariable int favoriteId, Principal principal) {
-        
+
         String username = principal.getName();  // Get the username from the authenticated user
         User user = userDao.getUserByUsername(username); // Get User object from username
         int userId = user.getId(); // Get userId from User object
 
-        // Call the DAO to delete the favorite
-        favoritesDao.deleteFavorite(favoriteId, userId);
+        try {
+            // Call the DAO to delete the favorite
+            favoritesDao.deleteFavorite(favoriteId, userId);
+        } catch (DaoException e) {
+            if (e.getMessage().equals("Favorite not found or not authorized to delete")) {
+                throw new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Favorite not found",
+                        e
+                );
+            }
+
+            throw e;
+        }
     }
 }

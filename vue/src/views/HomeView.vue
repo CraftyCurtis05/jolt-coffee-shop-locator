@@ -2,22 +2,38 @@
 
 <template>
   <body>
+
+    <!-- Home Page Header -->
     <header>
-      <h1>Welcome to <img src="@/assets/app/logo/jolt_logo.png"></h1>
-      <h2>Discover the best coffee shops with friends and savor your favorite brews together!</h2>
+      <h1>
+        Welcome to
+        <img
+          src="@/assets/app/logo/jolt_logo.webp"
+          alt="Jolt logo"
+        />
+      </h1>
+
+      <h2>
+        Discover the best coffee shops with friends and savor your favorite brews together!
+      </h2>
     </header>
 
+    <!-- Jolt Description -->
     <section class="description-container">
-        <p>
-          Welcome to Jolt, your ultimate coffee locator hub! With us, you can easily locate and explore the best coffee shops near you, 
-          read reviews from fellow coffee enthusiasts, organize meet-ups with friends over a cup of your favorite brew, and embark on 
-          exciting adventures to discover new coffee destinations. Join our vibrant coffee-loving community and let Jolt guide you to 
-          your next perfect coffee spot. <br> Start your coffee journey with us today!
-        </p>
-      </section>
+      <p>
+        Welcome to Jolt, your ultimate coffee locator hub! With us, you can easily locate and explore the best coffee shops near you,
+        read reviews from fellow coffee enthusiasts, organize meet-ups with friends over a cup of your favorite brew, and embark on
+        exciting adventures to discover new coffee destinations. Join our vibrant coffee-loving community and let Jolt guide you to
+        your next perfect coffee spot.
+        <br />
+        Start your coffee journey with us today!
+      </p>
+    </section>
 
+    <!-- Home Page Content -->
     <main>
 
+      <!-- Coffee Shop Image Carousel -->
       <section class="carousel-container">
         <Carousel />
       </section>
@@ -32,12 +48,17 @@ import Carousel from '../components/home_view/Carousel.vue';
 
 export default {
   name: 'HomeView',
-  components: { Carousel }
+
+  // Components used on the home page
+  components: {
+    Carousel
+  }
 };
 </script>
 
 <style scoped>
 /* Laptop L - 1440px */
+
 main {
   display: flex;
   flex-direction: column;
@@ -60,6 +81,7 @@ header img {
   margin: -2.5vh auto;
 }
 
+
 /* 4K - 2560px */
 @media screen and (min-width: 2560px) {
 
@@ -72,6 +94,7 @@ header img {
     max-width: 80%;
   }
 }
+
 
 /* Laptop - 1024px */
 @media screen and (max-width: 1024px) {
@@ -86,6 +109,7 @@ header img {
   }
 }
 
+
 /* Tablet - 768px */
 @media screen and (max-width: 768px) {
 
@@ -99,6 +123,7 @@ header img {
   }
 }
 
+
 /* Mobile L - 425px */
 @media screen and (max-width: 425px) {
 
@@ -108,9 +133,10 @@ header img {
 
   .description-container {
     font-size: .7rem;
-    max-width: 90%
+    max-width: 90%;
   }
 }
+
 
 /* Mobile M - 375px */
 @media screen and (max-width: 375px) {
@@ -121,9 +147,10 @@ header img {
 
   .description-container {
     font-size: .67rem;
-    max-width: 93%
+    max-width: 93%;
   }
 }
+
 
 /* Mobile S - 320px */
 @media screen and (max-width: 320px) {
@@ -134,7 +161,7 @@ header img {
 
   .description-container {
     font-size: .68rem;
-    max-width: 90%
+    max-width: 90%;
   }
 }
 </style>

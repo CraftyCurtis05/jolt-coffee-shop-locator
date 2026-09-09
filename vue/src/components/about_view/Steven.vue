@@ -6,7 +6,7 @@
         <!-- Steven Image -->
         <section class="image-container">
             <a href="https://www.linkedin.com/in/steven-riggle/" target="_blank">
-                <img src="@/assets/about_view/steven.jpg" alt="Steven Riggle" title="Jennifer Curtis">
+                <img src="@/assets/about_view/steven.webp" alt="Steven Riggle" title="Jennifer Curtis">
             </a>
         </section>
 

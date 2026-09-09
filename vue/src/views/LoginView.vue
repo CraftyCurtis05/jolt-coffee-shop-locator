@@ -2,71 +2,173 @@
 
 <template>
   <body>
-    <img src="@/assets/app/logo/jolt_logo.png" alt="logo"/>
+
+    <!-- Background Video -->
+    <video
+      class="background-video"
+      autoplay
+      muted
+      loop
+      playsinline
+    >
+      <source
+        src="@/assets/log_view/beans-coffee.webm"
+        type="video/webm"
+      />
+
+      <source
+        src="@/assets/log_view/beans-coffee.mp4"
+        type="video/mp4"
+      />
+    </video>
+
+    <!-- Jolt Logo -->
+    <img
+      class="jolt-logo"
+      src="@/assets/app/logo/jolt_logo.webp"
+      alt="Jolt logo"
+    />
+
+    <!-- Background opacity for login form -->
     <div class="form-container-opacity">
     </div>
+
+    <!-- Login Form -->
     <div class="login-form">
       <form v-on:submit.prevent="login">
+
         <h1>Please Sign In</h1>
+
+        <!-- User Login Information -->
         <div class="form-input-container">
+
+          <!-- Username -->
           <div class="form-input username">
             <label for="username">Username</label>
-            <input type="text" v-model="user.username" required autofocus/>
+            <input
+              type="text"
+              id="username"
+              v-model="user.username"
+              autocomplete="username"
+              required
+              autofocus
+            />
           </div>
+
+          <!-- Password -->
           <div class="form-input password">
-            <label for="password">Password </label>
-            <input type="password" v-model="user.password" required/>
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              v-model="user.password"
+              autocomplete="current-password"
+              required
+            />
           </div>
+
         </div>
+
+        <!-- Login Messages -->
         <div class="alert-container">
-          <div role="alert" v-if="this.$route.query.registration" id="alert1">
+
+          <!-- Successful Registration Message -->
+          <div
+            role="alert"
+            v-if="this.$route.query.registration"
+            id="alert1"
+          >
             Thank you for registering!<br>Please sign in.
           </div>
-          <div role="alert invalid" v-if="invalidCredentials" id="alert2">
+
+          <!-- Invalid Login Message -->
+          <div
+            role="alert"
+            v-if="invalidCredentials"
+            id="alert2"
+          >
             Invalid username and password!
           </div>
+
         </div>
+
+        <!-- Login and Registration Buttons -->
         <div class="button-container">
           <button id="sign-in" type="submit">Sign in</button>
-          <router-link v-bind:to="{ name: 'register' }"><button id="register">Register</button></router-link>
+
+          <router-link
+            id="register"
+            v-bind:to="{ name: 'register' }"
+          >
+            Register
+          </router-link>
         </div>
+
       </form>
     </div>
+
   </body>
 </template>
 
 <script>
-import authService from "../services/AuthService";
+import authService from '../services/AuthService.js';
 
 export default {
   name: 'LoginView',
-  components: {},
+
   data() {
     return {
+      // Store the information entered into the login form
       user: {
-        username: "",
-        password: ""
+        username: '',
+        password: ''
       },
+
+      // Track invalid login information
       invalidCredentials: false
     };
   },
+
   methods: {
+
+    // Log in an existing user
     login() {
+
+      // Clear previous login errors before trying again
+      this.invalidCredentials = false;
+
+      // Send the user's login information to the server
       authService
-        .login(this.user)
-        .then(response => {
-          if (response.status == 200) {
-            this.$store.commit("SET_AUTH_TOKEN", response.data.token);
-            this.$store.commit("SET_USER", response.data.user);
-            this.$router.push("/");
-          }
-        })
-        .catch(error => {
-          const response = error.response;
-          if (response.status === 401) {
-            this.invalidCredentials = true;
-          }
-        });
+      .login(this.user)
+      .then((response) => {
+
+        // *DEBUG* Log the login response for debugging
+        // console.log('Login response:', response);
+
+        // Save the authentication information after successful login
+        if (response.status == 200) {
+          this.$store.commit('SET_AUTH_TOKEN', response.data.token);
+          this.$store.commit('SET_USER', response.data.user);
+
+          // Send the user to the home page
+          this.$router.push('/');
+        }
+      })
+      .catch((error) => {
+
+        // *DEBUG* Log the login error for debugging
+        // console.log('Login error:', error);
+
+        const response = error.response;
+
+        // Display a message for an incorrect username or password
+        if (response && response.status === 401) {
+          this.invalidCredentials = true;
+
+        } else {
+          alert('There was a problem signing in. Please try again.');
+        }
+      });
     }
   }
 };
@@ -74,21 +176,34 @@ export default {
 
 <style scoped>
 /* Laptop L - 1440px */
+
 body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
   width: 100vw;
   height: 100vh;
-  background: url('@/assets/log_view/beans-coffee.gif');
-  background-size: cover;
+  overflow: hidden;
   font-family: 'Ubuntu', sans-serif;
   color: #333437;
   z-index: 0;
   caret-color: transparent; /* Hides the caret */
 }
 
-img {
+/* Login and registration background video */
+.background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  pointer-events: none; /* Prevents the video from blocking page clicks */
+  z-index: 0;
+}
+
+.jolt-logo {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -132,7 +247,7 @@ h1 {
   font-size: 1.1rem;
   width: 14rem;
   height: 3.5rem;
-  caret-color: black; /* Hides the caret */
+  caret-color: black; /* Shows the caret inside form inputs */
 }
 
 .form-input input {
@@ -168,7 +283,8 @@ h1 {
   padding-top: 1rem;
 }
 
-button {
+button,
+#register {
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
@@ -181,13 +297,14 @@ button {
   color: #ffffff;
   border: .1rem solid #e8bb64;
   border-radius: .1rem;
-  transition: all 0.5s; /* add this line */
-  -webkit-transition: all 0.5s; /* add this line, chrome, safari, etc */
-  -moz-transition: all 0.5s; /* add this line, firefox */
-  -o-transition: all 0.5s; /* add this line, opera */
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s; /* Chrome, Safari, etc. */
+  -moz-transition: all 0.5s; /* Firefox */
+  -o-transition: all 0.5s; /* Opera */
 }
 
-button:hover {
+button:hover,
+#register:hover {
   background-color: #e8bb64;
   color: rgb(53, 37, 19);
   text-decoration: underline;
@@ -198,30 +315,40 @@ button:hover {
   margin-right: 2rem;
 }
 
+#register {
+  text-decoration: none;
+}
+
+
 /* 4K - 2560px */
 @media screen and (min-width: 2560px) {
 
 }
+
 
 /* Laptop - 1024px */
 @media screen and (max-width: 1024px) {
 
 }
 
+
 /* Tablet - 768px */
 @media screen and (max-width: 768px) {
 
 }
+
 
 /* Mobile L - 425px */
 @media screen and (max-width: 425px) {
 
 }
 
+
 /* Mobile M - 375px */
 @media screen and (max-width: 375px) {
 
 }
+
 
 /* Mobile S - 320px */
 @media screen and (max-width: 320px) {

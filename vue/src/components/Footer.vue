@@ -8,19 +8,19 @@
       <section class="social-links">
 
         <a href="https://www.facebook.com/" target="_blank" class="social-link">
-          <img src="@/assets/app/social_media/facebook_logo.png" title="Facebook">
+          <img src="@/assets/app/social_media/facebook_logo.webp" title="Facebook">
         </a>
 
         <a href="https://www.instagram.com/" target="_blank" class="social-link">
-          <img src="@/assets/app/social_media/instagram_logo.png" title="Instagram">
+          <img src="@/assets/app/social_media/instagram_logo.webp" title="Instagram">
         </a>
 
         <a href="https://www.linkedin.com/" target="_blank" class="social-link">
-          <img src="@/assets/app\social_media/linkedIn_logo.png" title="LinkedIn">
+          <img src="@/assets/app\social_media/linkedIn_logo.webp" title="LinkedIn">
         </a>
 
         <a href="https://www.twitter.com/" target="_blank" class="social-link">
-          <img src="@/assets/app/social_media/twitter_logo.png" title="Twitter">
+          <img src="@/assets/app/social_media/twitter_logo.webp" title="Twitter">
         </a>
         
       </section>

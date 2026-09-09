@@ -6,7 +6,7 @@
         <!-- Naomi Image -->
         <section class="image-container">
             <a href="https://www.linkedin.com/in/naomi-adams-0804a4106/" target="_blank">
-                <img src="@/assets/about_view/naomi.jpg" alt="Naomi Adams" title="Naomi Adams">
+                <img src="@/assets/about_view/naomi.webp" alt="Naomi Adams" title="Naomi Adams">
             </a>
         </section>
 

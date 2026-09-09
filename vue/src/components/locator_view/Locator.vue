@@ -87,9 +87,9 @@
 <script>
 import LocatorService from '../../services/LocatorService.js';
 import FavoriteService from '../../services/FavoriteService.js';
-import defaultImage from '../../assets/locator_view/default_image.png';
-import favoriteButton from '../../assets/locator_view/favorite_btn.png';
-import favoriteAddedButton from '../../assets/locator_view/favorite_added_btn.png';
+import defaultImage from '../../assets/locator_view/default_image.webp';
+import favoriteButton from '../../assets/locator_view/favorite_btn.webp';
+import favoriteAddedButton from '../../assets/locator_view/favorite_added_btn.webp';
 
 export default {
   name: "Locator",
@@ -142,13 +142,22 @@ export default {
     },
 
     // Fetch the results from LocatorService
-    getResults(locationId) {
+    getResults(locationId, fallbackLocation = null) {
       LocatorService.getCoffee(locationId)
         .then(response => {
           this.results = response.businesses || [];
           this.hasSearched = true;
         })
         .catch(error => {
+          // If the full home address cannot be found, try the saved ZIP code
+          if (fallbackLocation && error.response && error.response.status === 400) {
+            // *DEBUG* Log the ZIP code fallback for debugging
+            // console.log('Home address not found. Searching saved ZIP code:', fallbackLocation);
+
+            this.getResults(fallbackLocation);
+            return;
+          }
+
           this.hasSearched = false;
           alert('There was a problem fetching coffee shops! Please try again.');
           console.error('Error fetching Yelp results:', error);
@@ -221,7 +230,7 @@ export default {
 
       // Clear previous results and search using the user's saved address
       this.clearResults();
-      this.getResults(fullAddress);
+      this.getResults(fullAddress, zipcode);
     }
   },
 

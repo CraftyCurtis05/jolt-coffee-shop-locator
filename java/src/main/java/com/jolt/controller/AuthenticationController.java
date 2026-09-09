@@ -2,8 +2,13 @@ package com.jolt.controller;
 
 import javax.validation.Valid;
 
-import com.jolt.exception.DaoException;
 import com.jolt.model.*;
+import com.jolt.dao.UserDao;
+import com.jolt.security.jwt.TokenProvider;
+import com.jolt.security.jwt.JWTFilter;
+import com.jolt.exception.DaoException;
+
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +18,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
-import com.jolt.dao.UserDao;
-import com.jolt.security.jwt.JWTFilter;
-import com.jolt.security.jwt.TokenProvider;
 
 @RestController
 @CrossOrigin
@@ -77,9 +78,18 @@ public class AuthenticationController {
             }
 
         } catch (DaoException e) {
+            if (e.getCause() instanceof DataIntegrityViolationException) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "Username is already taken.",
+                        e
+                );
+            }
+
             throw new ResponseStatusException(
                     HttpStatus.INTERNAL_SERVER_ERROR,
-                    "User registration failed."
+                    "User registration failed.",
+                    e
             );
         }
     }

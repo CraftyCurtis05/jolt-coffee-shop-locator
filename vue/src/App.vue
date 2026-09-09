@@ -109,12 +109,12 @@ body::-webkit-scrollbar {
 }
         
 body::-webkit-scrollbar-track {
-  background: url("@/assets/app/scrollbar/scrollbar_track.png");
+  background: url("@/assets/app/scrollbar/scrollbar_track.webp");
   background-size: 15px;
 }
         
 body::-webkit-scrollbar-thumb {
-  background-image: url("@/assets/app/scrollbar/scrollbar_thumb.png");
+  background-image: url("@/assets/app/scrollbar/scrollbar_thumb.webp");
   background-position:center center;
   background-repeat: no-repeat;
   background-size: 15px;

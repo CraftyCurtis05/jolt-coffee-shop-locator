@@ -32,7 +32,7 @@
 
 <script>
 import ProfileService from '../../services/ProfileService.js';
-import defaultImage from '../../assets/profile_view/profile_pic.png';
+import defaultImage from '../../assets/profile_view/profile_pic.webp';
 
 export default {
 
@@ -79,7 +79,7 @@ export default {
 
         // Ensure the selected file is of a valid type
         if (!validImageTypes.includes(file.type)) {
-          alert("Unsupported file type. Please upload a .jpg, .jpeg, .png or .webp image.");
+          alert("Unsupported file type. Please upload a .jpg, .jpeg, .webp or .webp image.");
           this.selectedFile = null;
           return;
         }

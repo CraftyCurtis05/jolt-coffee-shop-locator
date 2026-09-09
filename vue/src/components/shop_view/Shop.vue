@@ -5,7 +5,7 @@
 
         <section class="shop" id="purchase-coffee">
             <a href="https://store.coffeebean.com/collections/coffee" target="_blank">
-                <img src="@/assets/shop_view/shop_01.png" title="Click to Purchase Coffee">
+                <img src="@/assets/shop_view/shop_01.webp" title="Click to Purchase Coffee">
             </a>
 
             <a href="https://store.coffeebean.com/collections/coffee" target="_blank" title="Click to Purchase Coffee">
@@ -15,7 +15,7 @@
 
         <section class="shop" id="purchase-equipment">
             <a href="https://www.ozocoffee.com/brew-equipment/" target="_blank">
-                <img src="@/assets/shop_view/shop_02.png" title="Click to Purchase Coffee Equipment">
+                <img src="@/assets/shop_view/shop_02.webp" title="Click to Purchase Coffee Equipment">
             </a>
 
             <a href="https://www.ozocoffee.com/brew-equipment/" target="_blank" title="Click to Purchase Coffee Equipment">
@@ -25,7 +25,7 @@
 
         <section class="shop" id="purchase-merchandise">
             <a href="https://www.etsy.com/market/coffee_novelties" target="_blank">
-                <img src="@/assets/shop_view/shop_03.png" title="Click to Purchase Merchandise">
+                <img src="@/assets/shop_view/shop_03.webp" title="Click to Purchase Merchandise">
             </a>
 
             <a href="https://www.etsy.com/market/coffee_novelties" target="_blank" title="Click to Purchase Merchandise">
@@ -35,7 +35,7 @@
 
         <section class="shop" id="purchase-snacks">
             <a href="https://shop.shatila.com/default.aspx" target="_blank">
-                <img src="@/assets/shop_view/shop_04.png" title="Click to Purchase Snacks">
+                <img src="@/assets/shop_view/shop_04.webp" title="Click to Purchase Snacks">
             </a>
 
             <a href="https://shop.shatila.com/default.aspx" target="_blank" title="Click to Purchase Snacks">

@@ -66,16 +66,16 @@ export default {
     data() {
         return {
             results: [],  // To store the user's favorites
-            defaultImage: 'src/assets/locator_view/default_image.png'
+            defaultImage: 'src/assets/locator_view/default_image.webp'
         };
     },
     methods: {
         getUserFavorites() {
         FavoriteService.getFavorites()
             .then(response => {
-                console.log('API Response:', response); // Confirm API connection
+                // console.log('API Response:', response); // *DEBUG* Confirm API connection
                 this.results = response; // Ensure it's an array
-                console.log('Favorites Updated:', this.results); // Confirm update
+                // console.log('Favorites Updated:', this.results); // *DEBUG* Confirm update
             })
             .catch(error => {
                 console.error('Error fetching favorites:', error); // Log error

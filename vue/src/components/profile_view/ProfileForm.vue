@@ -155,9 +155,10 @@
                 type="text"
                 id="state"
                 v-model="user.state"
+                maxlength="2"
                 :required="!status"
                 @input="trackChanges"
-                title="Enter State"
+                title="Enter State Abbreviation"
               />
             </div>  
           </div>
@@ -285,7 +286,12 @@ export default {
         }
       } catch (error) {
         console.error('Error saving profile:', error);
-        alert("Make sure to fill out all required profile fields!")
+
+        if (error.response && error.response.status === 400) {
+          alert("Make sure to fill out all required profile fields!");
+        } else {
+          alert("There was a problem saving your profile. Please try again.");
+        }
       }
     },
 

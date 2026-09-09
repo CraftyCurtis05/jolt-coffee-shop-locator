@@ -3,6 +3,7 @@ package com.jolt.controller;
 import com.jolt.dao.ImageDao;
 import com.jolt.dao.UserDao;
 import com.jolt.model.Image;
+import com.jolt.exception.DaoException;
 
 import com.jolt.model.User;
 import org.springframework.http.HttpStatus;
@@ -119,7 +120,7 @@ public class ImageController {
         }
     }
 
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping()
     public void deleteImage(Principal principal) {
 
@@ -127,6 +128,18 @@ public class ImageController {
         User user = userDao.getUserByUsername(username); // Get User object from username
         int userId = user.getId(); // Get userId from User object
 
-        imageDao.deleteImage(userId);
+        try {
+            imageDao.deleteImage(userId);
+        } catch (DaoException e) {
+            if (e.getMessage().equals("Image not found or not authorized to delete")) {
+                throw new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Image not found",
+                        e
+                );
+            }
+
+            throw e;
+        }
     }
 }

@@ -2,35 +2,104 @@
 
 <template>
   <body>
-    <img src="@/assets/app/logo/jolt_logo.png" alt="logo"/>
+
+    <!-- Background Video -->
+    <video
+      class="background-video"
+      autoplay
+      muted
+      loop
+      playsinline
+    >
+      <source
+        src="@/assets/log_view/beans-coffee.webm"
+        type="video/webm"
+      />
+
+      <source
+        src="@/assets/log_view/beans-coffee.mp4"
+        type="video/mp4"
+      />
+    </video>
+
+    <!-- Jolt Logo -->
+    <img
+      class="jolt-logo"
+      src="@/assets/app/logo/jolt_logo.webp"
+      alt="Jolt logo"
+    />
+
+    <!-- Background opacity for registration form -->
     <div class="form-container-opacity">
     </div>
+
+    <!-- Registration Form -->
     <div class="register-form">
       <form v-on:submit.prevent="register">
+
         <h1>Create Account</h1>
+
+        <!-- User Registration Information -->
         <div class="form-input-container">
+
+          <!-- Username -->
           <div class="form-input username">
             <label for="username">Username</label>
-            <input type="text" v-model="user.username" required autofocus/>
+            <input
+              type="text"
+              id="username"
+              v-model="user.username"
+              autocomplete="username"
+              required
+              autofocus
+            />
           </div>
+
+          <!-- Password -->
           <div class="form-input password">
             <label for="password">Password</label>
-            <input type="password" v-model="user.password" required/>
+            <input
+              type="password"
+              id="password"
+              v-model="user.password"
+              autocomplete="new-password"
+              required
+            />
           </div>
+
+          <!-- Confirm Password -->
           <div class="form-input confirm">
             <label for="confirmPassword">Confirm Password</label>
-            <input type="password" v-model="user.confirmPassword" required/>
+            <input
+              type="password"
+              id="confirmPassword"
+              v-model="user.confirmPassword"
+              autocomplete="new-password"
+              required
+            />
+          </div>
+
+        </div>
+
+        <!-- Registration Error Message -->
+        <div class="alert-container">
+          <div role="alert" v-if="registrationErrors">
+            {{ registrationErrorMsg }}
           </div>
         </div>
-        <div class="alert-container">
-          <div role="alert" v-if="registrationErrors">{{ registrationErrorMsg }}</div>
-        </div>
+
+        <!-- Registration Button and Login Link -->
         <div class="button-container">
           <button id="create" type="submit">Create Account</button>
-          <router-link id="account" v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link>
+
+          <router-link id="account" v-bind:to="{ name: 'login' }">
+            Already have an account? Log in.
+          </router-link>
         </div>
+
       </form>
     </div>
+
   </body>
 </template>
 
@@ -39,42 +108,69 @@ import authService from '../services/AuthService.js';
 
 export default {
   name: 'RegisterView',
+
   data() {
     return {
+      // Store the information entered into the registration form
       user: {
         username: '',
         password: '',
         confirmPassword: ''
       },
+
+      // Registration error information
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',
     };
   },
+
   methods: {
+
+    // Register a new user
     register() {
+
+      // Check that the password and confirmation password match
       if (this.user.password != this.user.confirmPassword) {
         this.registrationErrors = true;
         this.registrationErrorMsg = 'Password & Confirm Password do not match.';
+
       } else {
+
+        // Send the new user information to the server
         authService
-          .register(this.user)
-          .then((response) => {
-            if (response.status == 201) {
-              this.$router.push({
-                path: '/login',
-                query: { registration: 'success' },
-              });
-            }
-          })
-          .catch((error) => {
-            const response = error.response;
-            this.registrationErrors = true;
-            if (response.status === 400) {
-              this.registrationErrorMsg = 'Bad Request: Validation Errors';
-            }
-          });
+        .register(this.user)
+        .then((response) => {
+
+          // *DEBUG* Log the registration response for debugging
+          // console.log('Registration response:', response);
+
+          // Send the user to the login page after successful registration
+          if (response.status == 201) {
+            this.$router.push({
+              path: '/login',
+              query: { registration: 'success' },
+            });
+          }
+        })
+        .catch((error) => {
+
+          // *DEBUG* Log the registration error for debugging
+          // console.log('Registration error:', error);
+
+          const response = error.response;
+          this.registrationErrors = true;
+
+          // Display an error message based on the server response
+          if (response && response.status === 400) {
+            this.registrationErrorMsg = 'Bad Request: Validation Errors';
+          } else {
+            this.registrationErrorMsg = 'There were problems registering this user.';
+          }
+        });
       }
     },
+
+    // Clear registration errors
     clearErrors() {
       this.registrationErrors = false;
       this.registrationErrorMsg = 'There were problems registering this user.';
@@ -85,21 +181,34 @@ export default {
 
 <style scoped>
 /* Laptop L - 1440px */
+
 body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
   width: 100vw;
   height: 100vh;
-  background: url('@/assets/log_view/beans-coffee.gif');
-  background-size: cover;
+  overflow: hidden;
   font-family: 'Ubuntu', sans-serif;
   color: #333437;
   z-index: 0;
   caret-color: transparent; /* Hides the caret */
 }
 
-img {
+/* Login and registration background video */
+.background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  pointer-events: none; /* Prevents the video from blocking page clicks */
+  z-index: 0;
+}
+
+.jolt-logo {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -143,7 +252,7 @@ h1 {
   font-size: 1.1rem;
   width: 18rem;
   height: 3.5rem;
-  caret-color: black; /* Hides the caret */
+  caret-color: black; /* Shows the caret inside form inputs */
 }
 
 .form-input input {
@@ -186,10 +295,10 @@ button {
   color: #ffffff;
   border: .1rem solid #e8bb64;
   border-radius: .1rem;
-  transition: all 0.5s; /* add this line */
-  -webkit-transition: all 0.5s; /* add this line, chrome, safari, etc */
-  -moz-transition: all 0.5s; /* add this line, firefox */
-  -o-transition: all 0.5s; /* add this line, opera */
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s; /* Chrome, Safari, etc. */
+  -moz-transition: all 0.5s; /* Firefox */
+  -o-transition: all 0.5s; /* Opera */
 }
 
 button:hover {
@@ -211,30 +320,36 @@ button:hover {
   font-weight: bold;
 }
 
+
 /* 4K - 2560px */
 @media screen and (min-width: 2560px) {
 
 }
+
 
 /* Laptop - 1024px */
 @media screen and (max-width: 1024px) {
 
 }
 
+
 /* Tablet - 768px */
 @media screen and (max-width: 768px) {
 
 }
+
 
 /* Mobile L - 425px */
 @media screen and (max-width: 425px) {
 
 }
 
+
 /* Mobile M - 375px */
 @media screen and (max-width: 375px) {
 
 }
+
 
 /* Mobile S - 320px */
 @media screen and (max-width: 320px) {

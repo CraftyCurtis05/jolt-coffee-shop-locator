@@ -3,12 +3,14 @@ package com.jolt.controller;
 import com.jolt.dao.ProfileDao;
 import com.jolt.dao.UserDao;
 import com.jolt.model.Profile;
-
 import com.jolt.model.User;
+import com.jolt.exception.DaoException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 
@@ -58,7 +60,19 @@ public class ProfileController {
         User user = userDao.getUserByUsername(username); // Get User object from username
         int userId = user.getId(); // Get userId from User object
 
-        return profileDao.createProfile(profile, userId);
+        try {
+            return profileDao.createProfile(profile, userId);
+        } catch (DaoException e) {
+            if (e.getCause() instanceof DataIntegrityViolationException) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "Invalid profile data",
+                        e
+                );
+            }
+
+            throw e;
+        }
     }
 
     /**
@@ -76,7 +90,19 @@ public class ProfileController {
         User user = userDao.getUserByUsername(username); // Get User object from username
         int userId = user.getId(); // Get userId from User object
 
-        return profileDao.updateProfile(profile, userId);
+        try {
+            return profileDao.updateProfile(profile, userId);
+        } catch (DaoException e) {
+            if (e.getCause() instanceof DataIntegrityViolationException) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "Invalid profile data",
+                        e
+                );
+            }
+
+            throw e;
+        }
     }
 
     /**
