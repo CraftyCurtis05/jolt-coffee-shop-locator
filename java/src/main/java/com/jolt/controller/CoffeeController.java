@@ -37,7 +37,7 @@ public class CoffeeController {
                 .queryParam("term", "coffee")
                 .queryParam("radius", 20000)
                 .queryParam("sort_by", "distance")
-                .queryParam("limit", 20)
+                .queryParam("limit", 12)
                 .build()
                 .encode()
                 .toUriString();

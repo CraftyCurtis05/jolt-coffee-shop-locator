@@ -5,8 +5,11 @@
 
     <!-- Locator Header -->
     <header>
-      <h1>Locator</h1>
-      <h2>Uncover your next coffee adventure. Locate the perfect brew near you</h2>
+      <h1>Coffee Shop Locator</h1>
+      <h2>Find Your Next Favorite Coffee Shop</h2>
+      <p class="locator-intro">
+        Search by city, ZIP code or address, or use your saved profile to find coffee shops near home.
+      </p>
     </header>
 
     <!-- Coffee Shop Locator -->
@@ -68,17 +71,24 @@ export default {
 /* Laptop L - 1440px */
 
 header {
-  margin-top: 2.5vh;
+  margin-top: 1.5rem;
+}
+
+.locator-intro {
+  font-size: .85rem;
+  margin: .25rem auto 0;
 }
 
 main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 2vw auto;
+  width: 100%;
+  margin: 1.5rem auto;
 }
 
 .locator-container {
+  width: 100%;
   margin: 0 auto;
 }
 </style>
