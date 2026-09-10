@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import Locator from '../components/locator_view/Locator.vue';
+import Locator from '../components/locator/Locator.vue';
 import ProfileService from '../services/ProfileService.js';
 
 export default {

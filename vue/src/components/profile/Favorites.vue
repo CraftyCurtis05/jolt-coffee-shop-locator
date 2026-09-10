@@ -105,7 +105,7 @@
 
 <script>
 import FavoriteService from '../../services/FavoriteService.js';
-import defaultImage from '../../assets/locator_view/default_image.webp';
+import defaultImage from '../../assets/locator/default_image.webp';
 
 export default {
   name: 'Favorites',

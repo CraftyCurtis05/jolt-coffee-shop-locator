@@ -43,7 +43,7 @@
 
 <script>
 import ProfileService from '../../services/ProfileService.js';
-import defaultImage from '../../assets/profile_view/profile_pic.webp';
+import defaultImage from '../../assets/profile/profile_pic.webp';
 
 export default {
   name: 'ProfilePic',

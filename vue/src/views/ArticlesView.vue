@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import Articles from '../components/articles_view/Articles.vue';
+import Articles from '../components/articles/Articles.vue';
 
 export default {
   name: 'ArticlesView',

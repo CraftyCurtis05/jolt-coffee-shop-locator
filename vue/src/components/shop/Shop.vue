@@ -11,7 +11,7 @@
         rel="noopener noreferrer"
       >
         <img
-          src="@/assets/shop_view/shop_01.webp"
+          src="@/assets/shop/shop_01.webp"
           alt="Coffee available for purchase"
           title="Click to Purchase Coffee"
         />
@@ -35,7 +35,7 @@
         rel="noopener noreferrer"
       >
         <img
-          src="@/assets/shop_view/shop_02.webp"
+          src="@/assets/shop/shop_02.webp"
           alt="Coffee brewing equipment available for purchase"
           title="Click to Purchase Coffee Equipment"
         />
@@ -59,7 +59,7 @@
         rel="noopener noreferrer"
       >
         <img
-          src="@/assets/shop_view/shop_03.webp"
+          src="@/assets/shop/shop_03.webp"
           alt="Coffee merchandise available for purchase"
           title="Click to Purchase Merchandise"
         />
@@ -83,7 +83,7 @@
         rel="noopener noreferrer"
       >
         <img
-          src="@/assets/shop_view/shop_04.webp"
+          src="@/assets/shop/shop_04.webp"
           alt="Snacks available for purchase"
           title="Click to Purchase Snacks"
         />

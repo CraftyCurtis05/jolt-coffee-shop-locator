@@ -118,7 +118,7 @@ The following screenshots demonstrate the current application after the independ
 
 Secure user authentication for personalized features.
 
-![Login](screenshots/01-register.png)
+![Login](images/01-register.png)
 
 ---
 
@@ -126,7 +126,7 @@ Secure user authentication for personalized features.
 
 Introduces the application and primary navigation.
 
-![Home Page](screenshots/02-home.png)
+![Home Page](images/02-home.png)
 
 ---
 
@@ -134,7 +134,7 @@ Introduces the application and primary navigation.
 
 Displays nearby coffee shops retrieved from the Yelp Fusion API.
 
-![Search Results](screenshots/03-locator-search.png)
+![Search Results](images/03-locator-search.png)
 
 ---
 
@@ -142,7 +142,7 @@ Displays nearby coffee shops retrieved from the Yelp Fusion API.
 
 Displays coffee shop information and available user actions.
 
-![Shop Details](screenshots/04-shop.png)
+![Shop Details](images/04-shop.png)
 
 ---
 
@@ -150,7 +150,7 @@ Displays coffee shop information and available user actions.
 
 Allows users to create and manage profile information.
 
-![Profile Form](screenshots/05-profile-form.png)
+![Profile Form](images/05-profile-form.png)
 
 ---
 
@@ -158,7 +158,7 @@ Allows users to create and manage profile information.
 
 Displays saved coffee shops for authenticated users.
 
-![Favorites](screenshots/06-profile-favs.png)
+![Favorites](images/06-profile-favs.png)
 
 ---
 

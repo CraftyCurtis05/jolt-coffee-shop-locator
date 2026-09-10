@@ -11,7 +11,7 @@
         rel="noopener noreferrer"
       >
         <img
-          src="@/assets/about_view/steven.webp"
+          src="@/assets/about/steven.webp"
           alt="Steven Riggle"
           title="Steven Riggle"
         />

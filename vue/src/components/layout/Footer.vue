@@ -22,7 +22,7 @@
           class="social-link"
         >
           <img
-            src="@/assets/app/social_media/facebook_logo.webp"
+            src="@/assets/app/social/facebook_logo.webp"
             alt="Facebook"
             title="Facebook"
           >
@@ -36,7 +36,7 @@
           class="social-link"
         >
           <img
-            src="@/assets/app/social_media/instagram_logo.webp"
+            src="@/assets/app/social/instagram_logo.webp"
             alt="Instagram"
             title="Instagram"
           >
@@ -50,7 +50,7 @@
           class="social-link"
         >
           <img
-            src="@/assets/app/social_media/linkedIn_logo.webp"
+            src="@/assets/app/social/linkedIn_logo.webp"
             alt="LinkedIn"
             title="LinkedIn"
           >
@@ -64,7 +64,7 @@
           class="social-link"
         >
           <img
-            src="@/assets/app/social_media/twitter_logo.webp"
+            src="@/assets/app/social/twitter_logo.webp"
             alt="Twitter"
             title="Twitter"
           >

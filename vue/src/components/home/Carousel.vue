@@ -31,13 +31,13 @@
       title="Previous Image"
     >
       <img
-        src="@/assets/home_view/carousel/prev_icon_wht.webp"
+        src="@/assets/home/carousel/prev_icon_wht.webp"
         class="default"
         alt=""
       />
 
       <img
-        src="@/assets/home_view/carousel/prev_icon_bwn.webp"
+        src="@/assets/home/carousel/prev_icon_bwn.webp"
         class="hover"
         alt=""
       />
@@ -51,13 +51,13 @@
       title="Next Image"
     >
       <img
-        src="@/assets/home_view/carousel/next_icon_wht.webp"
+        src="@/assets/home/carousel/next_icon_wht.webp"
         class="default"
         alt=""
       />
 
       <img
-        src="@/assets/home_view/carousel/next_icon_bwn.webp"
+        src="@/assets/home/carousel/next_icon_bwn.webp"
         class="hover"
         alt=""
       />
@@ -67,10 +67,10 @@
 </template>
 
 <script>
-import carousel01 from '../../assets/home_view/carousel/carousel_01.webp';
-import carousel02 from '../../assets/home_view/carousel/carousel_02.webp';
-import carousel03 from '../../assets/home_view/carousel/carousel_03.webp';
-import carousel04 from '../../assets/home_view/carousel/carousel_04.webp';
+import carousel01 from '../../assets/home/carousel/carousel_01.webp';
+import carousel02 from '../../assets/home/carousel/carousel_02.webp';
+import carousel03 from '../../assets/home/carousel/carousel_03.webp';
+import carousel04 from '../../assets/home/carousel/carousel_04.webp';
 
 export default {
   name: 'Carousel',

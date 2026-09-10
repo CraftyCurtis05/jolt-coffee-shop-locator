@@ -38,10 +38,10 @@
 </template>
 
 <script>
-import Jennifer from '../components/about_view/Jennifer.vue';
-import Steven from '../components/about_view/Steven.vue';
-import Naomi from '../components/about_view/Naomi.vue';
-import David from '../components/about_view/David.vue';
+import Jennifer from '../components/about/Jennifer.vue';
+import Steven from '../components/about/Steven.vue';
+import Naomi from '../components/about/Naomi.vue';
+import David from '../components/about/David.vue';
 
 export default {
   name: 'AboutUsView',

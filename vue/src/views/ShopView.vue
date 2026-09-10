@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import Shop from '../components/shop_view/Shop.vue';
+import Shop from '../components/shop/Shop.vue';
 
 export default {
   name: 'ShopView',

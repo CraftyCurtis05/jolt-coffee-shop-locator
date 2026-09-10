@@ -12,12 +12,12 @@
       playsinline
     >
       <source
-        src="@/assets/log_view/beans-coffee.webm"
+        src="@/assets/login/beans-coffee.webm"
         type="video/webm"
       />
 
       <source
-        src="@/assets/log_view/beans-coffee.mp4"
+        src="@/assets/login/beans-coffee.mp4"
         type="video/mp4"
       />
     </video>

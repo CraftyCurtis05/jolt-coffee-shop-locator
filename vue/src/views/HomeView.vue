@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import Carousel from '../components/home_view/Carousel.vue';
+import Carousel from '../components/home/Carousel.vue';
 
 export default {
   name: 'HomeView',

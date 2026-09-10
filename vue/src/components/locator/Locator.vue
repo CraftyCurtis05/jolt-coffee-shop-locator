@@ -168,9 +168,9 @@
 import LocatorService from '../../services/LocatorService.js';
 import FavoriteService from '../../services/FavoriteService.js';
 
-import defaultImage from '../../assets/locator_view/default_image.webp';
-import favoriteButton from '../../assets/locator_view/favorite_btn.webp';
-import favoriteAddedButton from '../../assets/locator_view/favorite_added_btn.webp';
+import defaultImage from '../../assets/locator/default_image.webp';
+import favoriteButton from '../../assets/locator/favorite_btn.webp';
+import favoriteAddedButton from '../../assets/locator/favorite_added_btn.webp';
 
 export default {
   name: 'Locator',

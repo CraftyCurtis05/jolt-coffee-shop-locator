@@ -55,10 +55,10 @@
 <script>
 import ProfileService from '../services/ProfileService.js';
 
-import ProfilePic from '../components/profile_view/ProfilePic.vue';
-import ProfileDetails from '../components/profile_view/ProfileDetails.vue';
-import ProfileForm from '../components/profile_view/ProfileForm.vue';
-import Favorites from '../components/profile_view/Favorites.vue';
+import ProfilePic from '../components/profile/ProfilePic.vue';
+import ProfileDetails from '../components/profile/ProfileDetails.vue';
+import ProfileForm from '../components/profile/ProfileForm.vue';
+import Favorites from '../components/profile/Favorites.vue';
 
 export default {
   name: 'ProfileView',

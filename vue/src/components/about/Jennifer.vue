@@ -11,7 +11,7 @@
         rel="noopener noreferrer"
       >
         <img
-          src="@/assets/about_view/jennifer.webp"
+          src="@/assets/about/jennifer.webp"
           alt="Jennifer Curtis"
           title="Jennifer Curtis"
         />

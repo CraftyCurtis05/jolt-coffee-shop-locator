@@ -11,7 +11,7 @@
         rel="noopener noreferrer"
       >
         <img
-          src="@/assets/articles_view/articles_01.webp"
+          src="@/assets/articles/articles_01.webp"
           alt="Coffee representing the health benefits of coffee"
           title="Learn More About Health Benefits of Coffee"
         />
@@ -35,7 +35,7 @@
         rel="noopener noreferrer"
       >
         <img
-          src="@/assets/articles_view/articles_02.webp"
+          src="@/assets/articles/articles_02.webp"
           alt="Coffee representing the brain boosting effects of coffee"
           title="Learn More About Brain Boosting Effects of Coffee"
         />
@@ -59,7 +59,7 @@
         rel="noopener noreferrer"
       >
         <img
-          src="@/assets/articles_view/articles_03.webp"
+          src="@/assets/articles/articles_03.webp"
           alt="Coffee representing the best time to drink coffee"
           title="Learn More About The Best Time to Drink Coffee"
         />
@@ -83,7 +83,7 @@
         rel="noopener noreferrer"
       >
         <img
-          src="@/assets/articles_view/articles_04.webp"
+          src="@/assets/articles/articles_04.webp"
           alt="Coffee representing how much coffee is too much"
           title="Learn More About How Much Coffee is Too Much"
         />

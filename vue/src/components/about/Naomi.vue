@@ -1,19 +1,19 @@
-<!-- David.vue Component -->
+<!-- Naomi.vue Component -->
 
 <template>
   <article>
 
-    <!-- David Image -->
+    <!-- Naomi Image -->
     <section class="image-container">
       <a
-        href="https://www.linkedin.com/in/daviddefoshajr/"
+        href="https://www.linkedin.com/in/naomi-adams-0804a4106/"
         target="_blank"
         rel="noopener noreferrer"
       >
         <img
-          src="@/assets/about_view/david.webp"
-          alt="David DeFosha"
-          title="David DeFosha"
+          src="@/assets/about/naomi.webp"
+          alt="Naomi Adams"
+          title="Naomi Adams"
         />
       </a>
     </section>
@@ -23,27 +23,27 @@
 
       <!-- Name -->
       <header>
-        <h3>David DeFosha</h3>
+        <h3>Naomi Adams</h3>
       </header>
 
       <!-- Job Description -->
       <details>
-        <summary title="Learn More about David">
+        <summary title="Learn More about Naomi">
           Front-End Developer
         </summary>
 
         <!-- Dropdown Quote -->
         <p>
-          &nbsp; "I've been fascinated by coding since I was 14 when I learned to create macros in World of Warcraft,
-          which gave me an edge by allowing me to perform complex actions with a single keystroke. That was the moment
-          I knew coding was my passion.
+          &nbsp; "After over a decade of entrepreneurship, I made a bold pivot into the world of tech,
+          completing a full-stack coding bootcamp to equip myself with the skills to thrive in this exciting
+          field. This shift marks a key moment in my career—one that reflects my commitment to continuous growth,
+          learning, and embracing new challenges.
 
           <br><br>
 
-          &nbsp; With a background in sales and customer service, I bring strong people skills, team collaboration,
-          and experience with deadlines—all essential in the development world. I’m always eager to learn, grow, and take
-          on new challenges, and I’m excited to continue my journey in programming. My goal is to use my passion for coding
-          to build innovative solutions and make a real impact."
+          &nbsp; Tech Elevator bootcamp not only boosted my technical expertise but also
+          sharpened my problem-solving and adaptability. Now that I've wrapped up my training, I’m eager to apply
+          my entrepreneurial mindset and fresh tech skills to create innovative solutions that make a real impact."
         </p>
       </details>
 
@@ -54,7 +54,7 @@
 
 <script>
 export default {
-  name: 'David'
+  name: 'Naomi'
 };
 </script>
 

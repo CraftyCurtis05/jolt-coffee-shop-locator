@@ -147,11 +147,11 @@
 </template>
 
 <script>
-import ProfileService from '../services/ProfileService.js';
+import ProfileService from '../../services/ProfileService.js';
 
-import joltLogo from '../assets/app/logo/jolt_logo.webp';
-import responsiveLogo from '../assets/app/logo/logo_responsive.webp';
-import defaultProfileImage from '../assets/profile_view/profile_pic.webp';
+import joltLogo from '../../assets/app/logo/jolt_logo.webp';
+import responsiveLogo from '../../assets/app/logo/logo_responsive.webp';
+import defaultProfileImage from '../../assets/profile/profile_pic.webp';
 
 export default {
   name: 'NavBar',
