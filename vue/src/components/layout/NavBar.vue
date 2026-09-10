@@ -33,6 +33,8 @@
           type="button"
           @click="isNavOpen = !isNavOpen"
           v-if="$store.state.token != ''"
+          :aria-expanded="isNavOpen"
+          aria-label="Toggle navigation menu"
           title="Open Navigation Menu"
         >
           ☰
@@ -134,7 +136,10 @@
         <!-- Profile Picture -->
         <div
           class="image-container"
-          :class="{ 'nav-open': isNavOpen }"
+          :class="{
+            'nav-open': isNavOpen,
+            'profile-active': $route.name === 'profile'
+          }"
         >
           <router-link
             v-bind:to="{ name: 'profile' }"
@@ -243,7 +248,8 @@ nav {
   align-items: center;
   position: relative;
   width: 100%;
-  height: 4rem;
+  min-width: 0;
+  min-height: 4rem;
   padding: 0 1rem;
   margin: 0;
 }
@@ -256,7 +262,9 @@ nav {
 }
 
 .logo {
+  display: block;
   width: 8rem;
+  max-width: 100%;
   height: auto;
 }
 
@@ -276,15 +284,10 @@ nav {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  position: absolute;
+  flex: 1;
+  min-width: 0;
   gap: 1.25rem;
-  left: 50%;
-  transform: translateX(-50%);
-  margin: 0;
-}
-
-.mobile-logout {
-  display: none;
+  margin: 0 .5rem;
 }
 
 h3,
@@ -297,6 +300,7 @@ h3,
   font-size: 1rem;
   color: rgb(245, 242, 242);
   text-decoration: none;
+  white-space: nowrap;
   transition: all 0.3s ease-in-out;
 }
 
@@ -306,8 +310,17 @@ h3:hover,
   transform: scale(1.03);
 }
 
+.link.router-link-active h3 {
+  color: #525459;
+  border-bottom: .15rem #e8bb64 solid;
+}
+
 .separator {
   color: #333437;
+}
+
+.mobile-logout {
+  display: none;
 }
 
 .nav-profile-container {
@@ -315,6 +328,7 @@ h3:hover,
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+  flex-shrink: 0;
   gap: .5rem;
   margin-left: auto;
   position: relative;
@@ -350,5 +364,114 @@ h3:hover,
   border: .25rem rgb(53, 37, 19) solid;
   transform: scale(1.05);
   filter: grayscale(70%);
+}
+
+.image-container.profile-active {
+  border: .25rem rgb(53, 37, 19) solid;
+}
+
+/* Laptop - 900px */
+@media screen and (max-width: 900px) {
+
+  .nav-container {
+    padding: 0 .75rem;
+  }
+
+  .logo {
+    width: 7rem;
+  }
+
+  .link-container {
+    gap: .75rem;
+    margin: 0 .25rem;
+  }
+
+  h3,
+  .link {
+    font-size: .9rem;
+  }
+
+}
+
+
+/* Tablet - 768px */
+@media screen and (max-width: 768px) {
+
+  .nav-container {
+    justify-content: space-between;
+    padding: 0 .75rem;
+  }
+
+  .toggle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .toggle-container button {
+    display: block;
+    background-color: transparent;
+    font-size: 2rem;
+    color: rgb(245, 242, 242);
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .toggle-container button:hover {
+    color: #525459;
+    transform: scale(1.05);
+  }
+
+  .link-container {
+    display: none;
+    position: absolute;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+    width: 10rem;
+    background-color: rgb(160, 153, 145);
+    top: 4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1rem;
+    margin: 0;
+    z-index: 3;
+  }
+
+  .link-container.nav-open {
+    display: flex;
+  }
+
+  .separator {
+    display: none;
+  }
+}
+
+
+/* Mobile L - 426px */
+@media screen and (max-width: 426px) {
+
+  .logo {
+    display: none;
+  }
+
+  .logo-responsive {
+    display: block;
+  }
+
+  .nav-profile-container #logout {
+    display: none;
+  }
+
+  .mobile-logout {
+    display: flex;
+  }
+
 }
 </style>

@@ -99,7 +99,7 @@ export default {
 /* Laptop L - 1440px */
 
 footer {
-  width: 100vw;
+  width: 100%;
   text-align: center;
   background-color: rgb(160, 153, 145);
   border-top: .1rem #333437 solid;
@@ -107,6 +107,8 @@ footer {
 }
 
 .footer-container {
+  width: 100%;
+  padding: 0 1rem;
   margin: 0 auto;
 }
 
@@ -114,25 +116,67 @@ footer {
   font-size: 1rem;
   font-weight: bold;
   color: rgb(234, 189, 99);
-  margin-top: .7rem;
+  margin: 0;
 }
 
 .social-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
   margin: 1rem 0;
 }
 
 .social-link {
-  margin-inline: .5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .social-link img {
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
+  transition: all 0.3s ease-in-out;
+}
+
+.social-link img:hover {
+  transform: scale(1.1);
+  filter: brightness(85%);
 }
 
 footer span {
+  display: block;
   color: #333437;
   font-size: .7rem;
+  margin-top: .25rem;
+}
+
+
+/* Mobile L - 426px */
+@media screen and (max-width: 426px) {
+
+  footer {
+    padding: .8rem 0;
+  }
+
+  .footer-container {
+    padding: 0 .75rem;
+  }
+
+  .slogan {
+    font-size: .9rem;
+  }
+
+  .social-links {
+    gap: .75rem;
+    margin: .8rem 0;
+  }
+
+  .social-link img {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+
 }
 </style>

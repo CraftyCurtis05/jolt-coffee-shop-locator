@@ -8,9 +8,7 @@
   <div class="app-container">
 
     <!-- Application Navigation -->
-    <nav>
-      <NavBar />
-    </nav>
+    <NavBar />
 
     <!-- Application Page Content -->
     <div class="app-content">
@@ -18,9 +16,7 @@
     </div>
 
     <!-- Application Footer -->
-    <footer>
-      <Footer />
-    </footer>
+    <Footer />
 
   </div>
 </template>
