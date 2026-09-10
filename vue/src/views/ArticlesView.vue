@@ -7,6 +7,7 @@
     <header>
       <h1>Articles</h1>
       <h2>Dive into the Coffee Chronicles: A World of Brew-tiful Stories</h2>
+      <p class="articles-intro">Explore a few curated reads for coffee lovers.</p>
     </header>
 
     <!-- Articles Content -->
@@ -25,6 +26,7 @@ import Articles from '../components/articles/Articles.vue';
 export default {
   name: 'ArticlesView',
 
+  // Components used on the articles page
   components: {
     Articles
   }
@@ -36,5 +38,21 @@ export default {
 
 .articles-container {
   margin: 0 auto;
+}
+
+.articles-intro {
+  font-size: .85rem;
+  margin: .25rem auto 0;
+}
+
+
+/* Mobile L - 426px */
+@media screen and (max-width: 426px) {
+
+  header {
+    max-width: 90%;
+    margin: .75rem auto;
+  }
+
 }
 </style>
