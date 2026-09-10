@@ -1,7 +1,7 @@
 <!-- David.vue Component -->
 
 <template>
-  <article>
+  <article class="developer">
 
     <!-- David Image -->
     <section class="image-container">
@@ -9,6 +9,7 @@
         href="https://www.linkedin.com/in/daviddefoshajr/"
         target="_blank"
         rel="noopener noreferrer"
+        aria-label="Visit David DeFosha on LinkedIn"
       >
         <img
           src="@/assets/about/david.webp"
@@ -27,23 +28,31 @@
       </header>
 
       <!-- Job Description -->
+      <p class="developer-role">Front-End Developer</p>
+
+      <!-- Developer Bio -->
       <details>
-        <summary title="Learn More about David">
-          Front-End Developer
+        <summary title="Learn more about David DeFosha">
+          Meet David
         </summary>
 
-        <!-- Dropdown Quote -->
-        <p>
-          &nbsp; "I've been fascinated by coding since I was 14 when I learned to create macros in World of Warcraft,
-          which gave me an edge by allowing me to perform complex actions with a single keystroke. That was the moment
-          I knew coding was my passion.
+        <!-- Bio Content -->
+        <p
+          class="bio-content"
+          tabindex="0"
+        >
+          I've been fascinated by coding since I was 14 when I learned to create macros
+          in World of Warcraft, which gave me an edge by allowing me to perform complex
+          actions with a single keystroke. That was the moment I knew coding was my
+          passion.
 
           <br><br>
 
-          &nbsp; With a background in sales and customer service, I bring strong people skills, team collaboration,
-          and experience with deadlines—all essential in the development world. I’m always eager to learn, grow, and take
-          on new challenges, and I’m excited to continue my journey in programming. My goal is to use my passion for coding
-          to build innovative solutions and make a real impact."
+          With a background in sales and customer service, I bring strong people skills,
+          team collaboration, and experience with deadlines—all essential in the
+          development world. I’m always eager to learn, grow, and take on new challenges,
+          and I’m excited to continue my journey in programming. My goal is to use my
+          passion for coding to build innovative solutions and make a real impact.
         </p>
       </details>
 
@@ -61,56 +70,112 @@ export default {
 <style scoped>
 /* Laptop L - 1440px */
 
-article {
-  position: relative;
-  width: 20vw;
+.developer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 20rem;
+  max-width: 100%;
   background-color: rgb(53, 37, 19);
-  border: .2vw #e8bb64 solid;
-  padding: 1vw;
+  border: .15rem #e8bb64 solid;
+  border-radius: .25rem;
+  padding: 1rem;
+  margin: .75rem;
+  transition: transform 0.3s ease-in-out;
+}
+
+.developer:hover {
+  transform: translateY(-.2rem);
+}
+
+.image-container a:focus-visible {
+  outline: .15rem #e8bb64 solid;
+  outline-offset: .2rem;
+  border-radius: 50%;
 }
 
 img {
-  width: 13vw;
-  height: 13vw;
-  border: .6vw #e8bb64 solid;
+  display: block;
+  width: 11rem;
+  height: 11rem;
+  object-fit: cover;
+  border: .5rem #e8bb64 solid;
   border-radius: 50%;
   transition: transform 0.3s ease-in-out;
 }
 
 img:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .about-container {
+  width: 100%;
   color: rgb(245, 242, 242);
-  border: .2vw #e8bb64 solid;
-  transition: all 0.5s ease-in-out;
+  border: .15rem #e8bb64 solid;
+  margin-top: 1rem;
+  transition: border-color 0.3s ease-in-out;
 }
 
 .about-container:hover {
-  background-color: #e8bb64;
-  color: rgb(53, 37, 19);
+  border-color: rgb(245, 242, 242);
 }
 
 h3 {
   font-size: 1.3rem;
+  margin: 1rem auto .5rem;
+}
+
+.developer-role {
+  font-size: .9rem;
+  text-align: center;
+  padding: 0 .75rem;
+  margin: 0 auto .75rem;
 }
 
 details {
+  width: 100%;
   font-size: .9rem;
 }
 
 summary {
-  cursor: pointer;
-  padding-bottom: 3vw;
+  padding: 0 .75rem 1rem;
+  transition: color 0.3s ease-in-out;
   z-index: 100;
 }
 
-p {
-  max-height: 5vw;
+summary:hover {
+  color: #e8bb64;
+}
+
+summary:focus-visible {
+  outline: .15rem #e8bb64 solid;
+  outline-offset: .2rem;
+}
+
+.bio-content {
+  max-height: 9rem;
   text-align: left;
-  padding: 1vw;
+  font-size: .85rem;
   line-height: 1.5;
+  padding: .75rem;
+  margin: 0;
   overflow-y: auto; /* Adds vertical scroll when content exceeds max height */
+}
+
+.bio-content:focus-visible {
+  outline: .15rem #e8bb64 solid;
+  outline-offset: -.15rem;
+}
+
+.bio-content::-webkit-scrollbar {
+  width: 15px;
+}
+
+.bio-content::-webkit-scrollbar-thumb {
+  min-height: 1rem;
+  background-image: url("/assets/scrollbar/scrollbar_thumb_small.webp");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 15px;
 }
 </style>

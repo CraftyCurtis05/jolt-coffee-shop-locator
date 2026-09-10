@@ -419,7 +419,6 @@ h3:hover,
     border: none;
     padding: 0;
     margin: 0;
-    cursor: pointer;
     transition: all 0.3s ease-in-out;
   }
 

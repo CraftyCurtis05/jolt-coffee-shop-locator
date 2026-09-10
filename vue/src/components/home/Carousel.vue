@@ -160,7 +160,6 @@ export default {
   border: none;
   border-radius: 50%;
   transform: translateY(-50%);
-  cursor: pointer;
   padding: 10px;
   z-index: 10;
   transition: all 0.5s ease-in-out;

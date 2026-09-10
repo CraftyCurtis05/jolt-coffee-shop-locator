@@ -411,7 +411,6 @@ export default {
 .search-home button:hover {
   background-color: #e8bb64;
   color: rgb(53, 37, 19);
-  cursor: pointer;
 }
 
 h3 {
@@ -511,7 +510,6 @@ h3 {
 .favorite img:hover {
   transform: scale(1.2);
   border: none;
-  cursor: pointer;
 }
 
 h4 {

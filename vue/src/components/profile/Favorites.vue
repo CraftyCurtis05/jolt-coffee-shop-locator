@@ -308,6 +308,5 @@ header h2 {
 .button-container button:hover {
   color: #e8bb64;
   background-color: rgb(53, 37, 19);
-  cursor: pointer;
 }
 </style>

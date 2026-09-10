@@ -88,18 +88,57 @@ footer {
 
 /* Scrollbar */
 
-body::-webkit-scrollbar {
+/* Chrome, Edge and Safari */
+*::-webkit-scrollbar {
   width: 15px;
+  height: 15px;
 }
 
-body::-webkit-scrollbar-track {
-  background: url("@/assets/app/scrollbar/scrollbar_track.webp");
-  background-size: 15px;
+*::-webkit-scrollbar-track {
+  background-color: #e8bb64;
 }
 
-body::-webkit-scrollbar-thumb {
-  background-image: url("@/assets/app/scrollbar/scrollbar_thumb.webp");
+*::-webkit-scrollbar-thumb {
+  min-height: 2rem;
+  background-image: url("/assets/scrollbar/scrollbar_thumb.webp");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: 15px;
+}
+
+
+/* Firefox */
+@supports not selector(::-webkit-scrollbar) {
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(53, 37, 19) #e8bb64;
+  }
+
+}
+
+
+/* Cursor */
+
+a,
+button,
+summary,
+select,
+input[type="checkbox"],
+input[type="radio"],
+input[type="submit"] {
+  cursor: pointer;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+  cursor: text;
+}
+
+button:disabled,
+input:disabled,
+select:disabled {
+  cursor: not-allowed;
 }
