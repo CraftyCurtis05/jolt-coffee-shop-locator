@@ -29,6 +29,7 @@
       class="prev-btn"
       @click="prevSlide"
       title="Previous Image"
+      aria-label="Previous carousel image"
     >
       <img
         src="@/assets/home/carousel/prev_icon_wht.webp"
@@ -49,6 +50,7 @@
       class="next-btn"
       @click="nextSlide"
       title="Next Image"
+      aria-label="Next carousel image"
     >
       <img
         src="@/assets/home/carousel/next_icon_wht.webp"
@@ -123,6 +125,7 @@ export default {
 .carousel-container {
   position: relative;
   width: 70vw;
+  max-width: 70rem;
   background-color: rgb(53, 37, 19);
   box-sizing: border-box;
   padding: 2%;
@@ -139,7 +142,7 @@ export default {
 .carousel img {
   width: 85%;
   height: auto;
-  border: .4vw #e8bb64 solid;
+  border: .2rem #e8bb64 solid;
 }
 
 .prev-btn,
@@ -176,6 +179,12 @@ export default {
   background-color: #e8bb64;
 }
 
+.prev-btn:focus-visible,
+.next-btn:focus-visible {
+  outline: .15rem #e8bb64 solid;
+  outline-offset: .15rem;
+}
+
 button img {
   display: block;
   position: absolute;
@@ -200,5 +209,43 @@ button img {
 .prev-btn:hover .hover,
 .next-btn:hover .hover {
   opacity: 1;
+}
+
+
+/* Tablet - 768px */
+@media screen and (max-width: 768px) {
+
+  .carousel-container {
+    width: 95vw;
+  }
+
+  .prev-btn,
+  .next-btn {
+    width: 2.2rem;
+    min-width: 2.2rem;
+    height: 2.2rem;
+    min-height: 2.2rem;
+    padding: .4rem;
+  }
+
+}
+
+
+/* Mobile L - 426px */
+@media screen and (max-width: 426px) {
+
+  .carousel-container {
+    width: 90vw;
+  }
+
+  .prev-btn,
+  .next-btn {
+    width: 2rem;
+    min-width: 2rem;
+    height: 2rem;
+    min-height: 2rem;
+    padding: .2rem;
+  }
+
 }
 </style>

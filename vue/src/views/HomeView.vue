@@ -18,6 +18,16 @@
       </h2>
     </header>
 
+    <!-- Jolt Invitation -->
+    <section class="invitation-container">
+      <router-link
+        v-bind:to="{ name: 'locator' }"
+        title="Click to Find a Coffee Shop"
+      >
+        Start your coffee journey with us today!
+      </router-link>
+    </section>
+
     <!-- Jolt Description -->
     <section class="description-container">
       <p>
@@ -25,8 +35,6 @@
         read reviews from fellow coffee enthusiasts, organize meet-ups with friends over a cup of your favorite brew, and embark on
         exciting adventures to discover new coffee destinations. Join our vibrant coffee-loving community and let Jolt guide you to
         your next perfect coffee spot.
-        <br />
-        Start your coffee journey with us today!
       </p>
     </section>
 
@@ -67,17 +75,74 @@ main {
 }
 
 header img {
-  width: 6vw;
+  width: 5rem;
+  max-width: 100%;
+  height: auto;
 }
 
 .carousel-container {
-  margin: 1vh auto;
+  margin: .5vh auto;
+}
+
+.invitation-container {
+  padding-bottom: .5rem;
+}
+
+.invitation-container a {
+  display: inline-block;
+  font-size: .9rem;
+  font-weight: 600;
+  color: #333437;
+  text-decoration: underline;
+  text-decoration-color: #e8bb64;
+  text-underline-offset: .25rem;
+  transition: transform 0.3s ease-in-out;
+}
+
+.invitation-container a:hover {
+  transform: scale(1.05);
+}
+
+.invitation-container a:focus-visible {
+  color: #e8bb64;
+  outline: .1rem #e8bb64 solid;
+  outline-offset: .2rem;
 }
 
 .description-container {
+  width: 90%;
+  max-width: 60rem;
   font-size: 1rem;
-  max-width: 80%;
   line-height: 1.5;
-  margin: -2.5vh auto;
+  margin: auto;
+}
+
+
+/* Mobile L - 426px */
+@media screen and (max-width: 426px) {
+
+  .view-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    order: 1;
+  }
+
+  .invitation-container {
+    padding-bottom: .75rem;
+    order: 2;
+  }
+
+  main {
+    order: 3;
+  }
+
+  .description-container {
+    margin-top: -1.75rem;
+    order: 4;
+  }
+
 }
 </style>
