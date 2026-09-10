@@ -1,7 +1,7 @@
 <!-- ProfileView.vue -->
 
 <template>
-  <body>
+  <div class="view-container">
 
     <main>
 
@@ -49,7 +49,7 @@
 
     </main>
 
-  </body>
+  </div>
 </template>
 
 <script>
@@ -170,38 +170,5 @@ main {
     font-size: 1.25rem;
     margin-top: .5vw;
   }
-}
-
-
-/* Laptop - 1024px */
-@media screen and (max-width: 1024px) {
-
-}
-
-
-/* Tablet - 768px */
-@media screen and (max-width: 768px) {
-
-  .profile-container {
-    width: 30%;
-  }
-}
-
-
-/* Mobile L - 425px */
-@media screen and (max-width: 425px) {
-
-}
-
-
-/* Mobile M - 375px */
-@media screen and (max-width: 375px) {
-
-}
-
-
-/* Mobile S - 320px */
-@media screen and (max-width: 320px) {
-
 }
 </style>

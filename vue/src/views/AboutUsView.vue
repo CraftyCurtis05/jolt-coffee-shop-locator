@@ -1,7 +1,7 @@
 <!-- AboutUsView.vue -->
 
 <template>
-  <body>
+  <div class="view-container">
 
     <!-- About Header -->
     <header>
@@ -34,7 +34,7 @@
 
     </main>
 
-  </body>
+  </div>
 </template>
 
 <script>
@@ -57,10 +57,6 @@ export default {
 
 <style scoped>
 /* Laptop L - 1440px */
-
-header {
-  margin-top: 1.8vw;
-}
 
 main {
   display: flex;

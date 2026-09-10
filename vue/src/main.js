@@ -7,6 +7,8 @@ import CapstoneApp from './App.vue';
 import { createStore } from './store';
 import router from './router';
 
+import './global.css';
+
 
 // Set the base URL for server API communication
 axios.defaults.baseURL = import.meta.env.VITE_REMOTE_API;

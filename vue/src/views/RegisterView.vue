@@ -1,7 +1,7 @@
 <!-- RegisterView.vue -->
 
 <template>
-  <body>
+  <div class="register-view">
 
     <!-- Background Video -->
     <video
@@ -100,7 +100,7 @@
       </form>
     </div>
 
-  </body>
+  </div>
 </template>
 
 <script>
@@ -182,7 +182,7 @@ export default {
 <style scoped>
 /* Laptop L - 1440px */
 
-body {
+.register-view {
   display: flex;
   flex-direction: column;
   align-items: center;

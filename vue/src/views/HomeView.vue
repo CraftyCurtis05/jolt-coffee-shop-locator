@@ -1,7 +1,7 @@
 <!-- HomeView.vue -->
 
 <template>
-  <body>
+  <div class="view-container">
 
     <!-- Home Page Header -->
     <header>
@@ -40,7 +40,7 @@
 
     </main>
 
-  </body>
+  </div>
 </template>
 
 <script>
@@ -91,7 +91,6 @@ header img {
 
   .description-container {
     font-size: 1.6rem;
-    max-width: 80%;
   }
 }
 
@@ -105,7 +104,6 @@ header img {
 
   .description-container {
     font-size: .85rem;
-    max-width: 80%;
   }
 }
 
