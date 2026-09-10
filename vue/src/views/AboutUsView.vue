@@ -67,13 +67,4 @@ main {
   width: 95vw;
   margin: 0 auto 2vw;
 }
-
-
-/* Mobile L - 425px */
-@media screen and (max-width: 425px) {
-
-  main {
-    width: 98vw;
-  }
-}
 </style>

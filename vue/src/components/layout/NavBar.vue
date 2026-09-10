@@ -103,11 +103,20 @@
           <h3 class="open">ABOUT US</h3>
         </router-link>
 
+        <!-- Mobile Logout -->
+        <router-link
+          class="link mobile-logout"
+          v-bind:to="{ name: 'logout' }"
+          v-if="$store.state.token != ''"
+          title="Click to Logout"
+        >
+          <h3 class="open">LOGOUT</h3>
+        </router-link>
       </section>
 
       <!-- User Profile -->
       <section
-        class="profile-container"
+        class="nav-profile-container"
         :class="{ 'nav-open': isNavOpen }"
       >
 
@@ -232,13 +241,18 @@ nav {
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
+  position: relative;
+  width: 100%;
   height: 4rem;
+  padding: 0 1rem;
+  margin: 0;
 }
 
 .logo-container {
   display: flex;
   justify-content: flex-start;
-  margin-left: 1rem;
+  flex-shrink: 0;
+  margin: 0;
 }
 
 .logo {
@@ -262,8 +276,15 @@ nav {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  position: absolute;
   gap: 1.25rem;
-  margin: 0 auto;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+}
+
+.mobile-logout {
+  display: none;
 }
 
 h3,
@@ -289,13 +310,13 @@ h3:hover,
   color: #333437;
 }
 
-.profile-container {
+.nav-profile-container {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
   gap: .5rem;
-  margin-right: 1.3rem;
+  margin-left: auto;
   position: relative;
 }
 
@@ -303,6 +324,7 @@ h3:hover,
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
   width: 3.1rem;
   height: 3.1rem;
   overflow: hidden;
@@ -311,262 +333,22 @@ h3:hover,
   transition: all 0.3s ease-in-out;
 }
 
-.image-container img {
+.image-container a {
+  display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+}
+
+.image-container img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .image-container:hover {
   border: .25rem rgb(53, 37, 19) solid;
   transform: scale(1.05);
   filter: grayscale(70%);
-}
-
-
-/* 4K - 2560px */
-@media screen and (min-width: 2560px) {
-
-  .nav-container {
-    height: 6rem;
-  }
-
-  .logo-container img {
-    width: 12rem;
-  }
-
-  .link-container {
-    gap: 1.9rem;
-  }
-
-  h3,
-  .separator {
-    font-size: 1.7rem;
-  }
-
-  .profile-container {
-    gap: 1rem;
-    margin-right: 1.5rem;
-  }
-
-  .image-container {
-    width: 5rem;
-    height: 5rem;
-    border: .35rem #e8bb64 solid;
-  }
-}
-
-
-/* Laptop - 1024px */
-@media screen and (max-width: 1024px) {
-
-  .logo-container {
-    margin-left: .5rem;
-  }
-
-  .link-container {
-    gap: 1rem;
-  }
-
-  h3 {
-    font-size: .9rem;
-  }
-}
-
-
-/* Tablet - 768px */
-@media screen and (max-width: 768px) {
-
-  .toggle-container button {
-    display: block; /* Show toggle button on smaller screens */
-    position: relative;
-    right: 17rem;
-    background-color: transparent;
-    font-size: 2rem;
-    color: rgb(245, 242, 242);
-    border: none;
-    margin: 0 10rem;
-    z-index: 2;
-  }
-
-  .link-container {
-    visibility: hidden;
-    display: none;
-    position: relative;
-    background-color: rgb(160, 153, 145);
-    opacity: .9;
-    transition: max-height 0.3s ease-in-out, visibility 0.3s ease-in-out;
-    z-index: 1;
-  }
-
-  .link-container.nav-open {
-    visibility: visible;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    right: 31rem;
-    max-height: 15rem;
-    font-size: .7rem;
-    padding: 1rem 2rem;
-    top: 9rem;
-  }
-
-  .open {
-    width: 6rem;
-    font-size: .9rem;
-    font-weight: bolder;
-    color: rgb(53, 37, 19);
-    border: .2rem #e8bb64ed solid;
-    padding: 0;
-    margin: 0;
-  }
-
-  .separator {
-    display: none; /* Hide separators for mobile view */
-    height: 0rem;
-    font-size: 0rem;
-    padding: 0;
-    margin: 0;
-  }
-
-  .logo-container {
-    position: relative;
-    left: 16.5rem;
-  }
-
-  .profile-container {
-    position: relative;
-    margin-left: 2.7rem;
-  }
-
-  .profile-container.nav-open h3,
-  .image-container.nav-open {
-    position: relative;
-    right: 10.32rem;
-  }
-}
-
-
-/* Mobile L - 425px */
-@media screen and (max-width: 425px) {
-
-  .toggle-container button {
-    right: 3.2rem;
-  }
-
-  .logo-container {
-    left: 0rem;
-  }
-
-  .logo {
-    display: none; /* Hide original logo */
-  }
-
-  .logo-responsive {
-    display: block; /* Show responsive logo */
-  }
-
-  .link-container.nav-open {
-    height: 15rem;
-    top: 8rem;
-    right: 18.6rem;
-    padding: 1rem 0;
-  }
-
-  .link {
-    height: 1.4rem;
-    margin: 0 1rem;
-  }
-
-  h3 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 6rem;
-    font-size: .86rem;
-    font-weight: bolder;
-    color: rgb(53, 37, 19);
-    border: .2rem #e8bb64ed solid;
-  }
-
-  .profile-container.nav-open #logout {
-    position: relative;
-    width: 6rem;
-    top: 15.15rem;
-    right: 28.4rem;
-    padding: 0;
-    margin: 0;
-    opacity: .9;
-    z-index: 3;
-  }
-
-  .profile-container.nav-open h3 {
-    position: absolute;
-    left: -.15rem;
-  }
-
-  .image-container {
-    position: relative;
-    width: 2.9rem;
-    height: 2.9rem;
-    right: 18.5rem;
-    border: .3rem rgb(53, 37, 19) solid;
-  }
-
-  .image-container.nav-open {
-    right: 24.5rem;
-  }
-}
-
-
-/* Mobile M - 375px */
-@media screen and (max-width: 375px) {
-
-  .toggle-container button {
-    right: 4.6rem;
-  }
-
-  .link-container.nav-open {
-    right: 20rem;
-  }
-
-  .profile-container.nav-open #logout {
-    position: relative;
-    width: 6.5rem;
-    right: 29.9rem;
-  }
-
-  .image-container {
-    right: 21rem;
-  }
-
-  .image-container.nav-open {
-    right: 27.5rem;
-  }
-}
-
-
-/* Mobile S - 320px */
-@media screen and (max-width: 320px) {
-
-  .toggle-container button {
-    right: 6.1rem;
-  }
-
-  .link-container.nav-open {
-    right: 21.5rem;
-  }
-
-  .profile-container.nav-open #logout {
-    right: 31.4rem;
-  }
-
-  .image-container {
-    right: 24rem;
-  }
-
-  .image-container.nav-open {
-    right: 30.5rem;
-  }
 }
 </style>

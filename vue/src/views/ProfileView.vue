@@ -159,16 +159,4 @@ main {
 .favorites-container {
   width: 100%;
 }
-
-
-/* 4K - 2560px */
-@media screen and (min-width: 2560px) {
-
-  .profile-form button {
-    width: 10rem;
-    height: 2.5rem;
-    font-size: 1.25rem;
-    margin-top: .5vw;
-  }
-}
 </style>

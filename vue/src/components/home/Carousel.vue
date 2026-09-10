@@ -201,49 +201,4 @@ button img {
 .next-btn:hover .hover {
   opacity: 1;
 }
-
-
-/* 4K - 2560px */
-@media screen and (min-width: 2560px) {
-
-}
-
-
-/* Laptop - 1024px */
-@media screen and (max-width: 1024px) {
-
-  .carousel-container {
-    width: 80vw;
-  }
-}
-
-
-/* Tablet - 768px */
-@media screen and (max-width: 768px) {
-
-  .carousel-container {
-    width: 85vw;
-  }
-}
-
-
-/* Mobile L - 425px */
-@media screen and (max-width: 425px) {
-
-  .carousel-container {
-    width: 90vw;
-  }
-}
-
-
-/* Mobile M - 375px */
-@media screen and (max-width: 375px) {
-
-}
-
-
-/* Mobile S - 320px */
-@media screen and (max-width: 320px) {
-
-}
 </style>
