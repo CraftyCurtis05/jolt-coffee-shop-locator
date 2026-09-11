@@ -9,4 +9,5 @@ public interface ImageDao {
     Image saveImage(Image image, int userId);
 
     void deleteImage(int userId);
+
 }
