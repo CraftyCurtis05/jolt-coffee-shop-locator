@@ -144,11 +144,12 @@
           <router-link
             v-bind:to="{ name: 'profile' }"
             v-if="$store.state.token != ''"
+            aria-label="Go to your profile"
             title="Click to Go to Profile"
           >
             <img
               :src="imageUrl || defaultProfileImage"
-              alt="Profile Picture"
+              alt=""
             />
           </router-link>
         </div>
@@ -204,10 +205,21 @@ export default {
         // *DEBUG* Log the profile image error for debugging
         // console.log('Profile image not found:', error);
       }
+    },
+
+    // Update the profile image after the user changes it
+    handleProfileImageUpdate() {
+      this.fetchImage();
     }
   },
 
   mounted() {
+
+    // Update the navigation profile image when it changes
+    window.addEventListener(
+      'profile-image-updated',
+      this.handleProfileImageUpdate
+    );
 
     // Watch for route changes throughout the application
     this.$router.afterEach(() => {
@@ -220,6 +232,15 @@ export default {
         this.fetchImage();
       }
     });
+  },
+
+  beforeUnmount() {
+
+    // Remove the profile image update listener
+    window.removeEventListener(
+      'profile-image-updated',
+      this.handleProfileImageUpdate
+    );
   }
 };
 </script>
@@ -351,6 +372,12 @@ h3:hover,
   display: block;
   width: 100%;
   height: 100%;
+}
+
+.image-container a:focus-visible {
+  outline: .15rem #e8bb64 solid;
+  outline-offset: .2rem;
+  border-radius: 50%;
 }
 
 .image-container img {

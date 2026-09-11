@@ -7,20 +7,19 @@
 
     <!-- Current Carousel Image -->
     <section class="carousel">
-      <transition name="slide" mode="out-in">
 
-        <div
-          class="carousel-item"
-          :key="currentIndex"
-        >
-          <img
-            :src="images[currentIndex]"
-            :alt="'Coffee shop carousel image ' + (currentIndex + 1)"
-            title="Carousel Image Slide"
-          />
-        </div>
+      <div
+        class="carousel-item"
+        :key="currentIndex"
+      >
+        <img
+          :src="images[currentIndex]"
+          :alt="'Coffee shop carousel image ' + (currentIndex + 1)"
+          title="Carousel Image Slide"
+          fetchpriority="high"
+        />
+      </div>
 
-      </transition>
     </section>
 
     <!-- Previous Image Button -->
@@ -115,6 +114,15 @@ export default {
       // *DEBUG* Log the current carousel image for debugging
       // console.log('Next carousel image:', this.currentIndex);
     }
+  },
+
+  mounted() {
+
+    // Preload the carousel images
+    this.images.forEach(image => {
+      const preloadImage = new Image();
+      preloadImage.src = image;
+    });
   }
 };
 </script>
@@ -136,12 +144,13 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: auto;
 }
 
 .carousel img {
+  display: block;
   width: 85%;
-  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
   border: .2rem #e8bb64 solid;
 }
 

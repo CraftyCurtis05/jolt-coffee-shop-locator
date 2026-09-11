@@ -9,7 +9,7 @@
       <!-- Current Profile Picture -->
       <div class="image-container">
         <img
-          :src="imageUrl || defaultImage"
+          :src="previewUrl || imageUrl || defaultImage"
           alt="User profile picture"
           title="Profile Picture"
         />
@@ -32,7 +32,7 @@
           @click="handleButtonClick"
           :title="selectedFile ? 'Click to Save Profile Picture' : 'Click to Change Profile Picture'"
         >
-          {{ selectedFile ? 'Save Picture' : 'Change Picture' }}
+          {{ selectedFile ? 'Save New Picture' : 'Change Picture' }}
         </button>
 
       </form>
@@ -52,6 +52,9 @@ export default {
     return {
       // Store the image selected by the user
       selectedFile: null,
+
+      // Store a preview of the selected image
+      previewUrl: null,
 
       // Store the user's uploaded profile image
       imageUrl: null,
@@ -98,6 +101,9 @@ export default {
         // Store the selected image until it is saved
         this.selectedFile = file;
 
+        // Preview the selected image before it is saved
+        this.previewUrl = URL.createObjectURL(file);
+
         // *DEBUG* Log the selected image for debugging
         // console.log('Selected profile image:', file);
       }
@@ -116,8 +122,12 @@ export default {
         // Get the newly saved image
         await this.fetchImage();
 
-        // Clear the selected image after a successful upload
+        // Tell the navigation bar that the profile image changed
+        window.dispatchEvent(new Event('profile-image-updated'));
+
+        // Clear the selected image and preview after a successful upload
         this.selectedFile = null;
+        this.previewUrl = null;
 
         // *DEBUG* Log a successful profile image upload
         // console.log('Profile image uploaded successfully');
