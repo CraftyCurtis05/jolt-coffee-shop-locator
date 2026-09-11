@@ -85,9 +85,9 @@ public class ImageController {
         return response;
     }
 
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping
-    public Image saveImage(
+    public void saveImage(
             @RequestParam("image") MultipartFile file,
             Principal principal) {
 
@@ -120,7 +120,7 @@ public class ImageController {
             image.setImageName(file.getOriginalFilename());
             image.setImage(file.getBytes());
 
-            return imageDao.saveImage(image, userId);
+            imageDao.saveImage(image, userId);
 
         } catch (IOException e) {
             throw new ResponseStatusException(
