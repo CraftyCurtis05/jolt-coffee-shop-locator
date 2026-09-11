@@ -2,6 +2,7 @@ package com.jolt.security;
 
 import com.jolt.security.jwt.JWTConfigurer;
 import com.jolt.security.jwt.TokenProvider;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -26,8 +27,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             TokenProvider tokenProvider,
             JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
             JwtAccessDeniedHandler jwtAccessDeniedHandler,
-            UserModelDetailsService userModelDetailsService
-    ) {
+            UserModelDetailsService userModelDetailsService) {
+
         this.tokenProvider = tokenProvider;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
@@ -39,30 +40,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    /**
-     * Configure paths and requests that should be ignored by Spring Security
-     * @param web
-     */
+    @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
+        web.ignoring()
+                .antMatchers(HttpMethod.OPTIONS, "/**");
     }
 
-    /**
-     * Configure com.jolt.auctions.security settings
-     * @param httpSecurity
-     * @throws Exception
-     */
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                // we don't need CSRF because our token is invulnerable
-                .csrf().disable()
+                // Jolt uses stateless JWT authentication instead of server-side sessions
+                .csrf()
+                .disable()
 
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
 
-                // create no session
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -74,4 +68,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private JWTConfigurer securityConfigurerAdapter() {
         return new JWTConfigurer(tokenProvider);
     }
+
 }

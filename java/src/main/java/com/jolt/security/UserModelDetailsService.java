@@ -3,6 +3,11 @@ package com.jolt.security;
 import com.jolt.dao.UserDao;
 import com.jolt.model.Authority;
 import com.jolt.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,17 +16,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-/**
- * Authenticate a user from the database.
- */
 @Component("userDetailsService")
 public class UserModelDetailsService implements UserDetailsService {
 
-    private final Logger log = LoggerFactory.getLogger(UserModelDetailsService.class);
+    private static final Logger LOG =
+            LoggerFactory.getLogger(UserModelDetailsService.class);
 
     private final UserDao userDao;
 
@@ -30,26 +29,41 @@ public class UserModelDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(final String login) {
-        log.debug("Authenticating user '{}'", login);
+    public UserDetails loadUserByUsername(String login) {
+        LOG.debug("Authenticating user '{}'", login);
+
         String lowercaseLogin = login.toLowerCase();
-        return createSpringSecurityUser(lowercaseLogin, userDao.getUserByUsername(lowercaseLogin));
+
+        return createSpringSecurityUser(
+                lowercaseLogin,
+                userDao.getUserByUsername(lowercaseLogin)
+        );
     }
 
-    private org.springframework.security.core.userdetails.User createSpringSecurityUser(String lowercaseLogin, User user) {
+    private org.springframework.security.core.userdetails.User createSpringSecurityUser(
+            String lowercaseLogin,
+            User user) {
+
         if (!user.isActivated()) {
-            throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
+            throw new UserNotActivatedException(
+                    "User " + lowercaseLogin + " was not activated"
+            );
         }
 
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         Set<Authority> userAuthorities = user.getAuthorities();
+
         for (Authority authority : userAuthorities) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(authority.getName()));
+            grantedAuthorities.add(
+                    new SimpleGrantedAuthority(authority.getName())
+            );
         }
 
-        return new org.springframework.security.core.userdetails.User(user.getUsername(),
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
                 user.getPassword(),
-                grantedAuthorities);
+                grantedAuthorities
+        );
     }
-}
 
+}

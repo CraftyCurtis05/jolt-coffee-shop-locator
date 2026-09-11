@@ -9,4 +9,5 @@ public class UserNotActivatedException extends AuthenticationException {
     public UserNotActivatedException(String message) {
         super(message);
     }
+
 }
