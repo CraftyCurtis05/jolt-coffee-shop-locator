@@ -1,12 +1,15 @@
 package com.jolt.controller;
 
-import javax.validation.Valid;
-
-import com.jolt.model.*;
 import com.jolt.dao.UserDao;
-import com.jolt.security.jwt.TokenProvider;
-import com.jolt.security.jwt.JWTFilter;
 import com.jolt.exception.DaoException;
+import com.jolt.model.LoginDto;
+import com.jolt.model.LoginResponseDto;
+import com.jolt.model.RegisterUserDto;
+import com.jolt.model.User;
+import com.jolt.security.jwt.JWTFilter;
+import com.jolt.security.jwt.TokenProvider;
+
+import javax.validation.Valid;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
@@ -16,49 +19,82 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @CrossOrigin
-
 public class AuthenticationController {
 
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final UserDao userDao;
 
-    public AuthenticationController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, UserDao userDao) {
+    public AuthenticationController(
+            TokenProvider tokenProvider,
+            AuthenticationManagerBuilder authenticationManagerBuilder,
+            UserDao userDao) {
+
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.userDao = userDao;
     }
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginDto loginDto) {
+    public ResponseEntity<LoginResponseDto> login(
+            @Valid @RequestBody LoginDto loginDto) {
 
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
+                new UsernamePasswordAuthenticationToken(
+                        loginDto.getUsername(),
+                        loginDto.getPassword()
+                );
 
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        Authentication authentication =
+                authenticationManagerBuilder
+                        .getObject()
+                        .authenticate(authenticationToken);
+
+        SecurityContextHolder
+                .getContext()
+                .setAuthentication(authentication);
+
         String jwt = tokenProvider.createToken(authentication, false);
 
         User user;
+
         try {
             user = userDao.getUserByUsername(loginDto.getUsername());
+
         } catch (DaoException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Username or password is incorrect.");
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED,
+                    "Username or password is incorrect."
+            );
         }
 
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-        return new ResponseEntity<>(new LoginResponseDto(jwt, user), httpHeaders, HttpStatus.OK);
+        httpHeaders.add(
+                JWTFilter.AUTHORIZATION_HEADER,
+                "Bearer " + jwt
+        );
+
+        return new ResponseEntity<>(
+                new LoginResponseDto(jwt, user),
+                httpHeaders,
+                HttpStatus.OK
+        );
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/register", method = RequestMethod.POST)
-    public void register(@Valid @RequestBody RegisterUserDto newUser) {
+    public void register(
+            @Valid @RequestBody RegisterUserDto newUser) {
 
         if (!newUser.getPassword().equals(newUser.getConfirmPassword())) {
             throw new ResponseStatusException(
@@ -93,4 +129,5 @@ public class AuthenticationController {
             );
         }
     }
+
 }
