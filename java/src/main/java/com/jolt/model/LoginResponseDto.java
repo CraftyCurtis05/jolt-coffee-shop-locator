@@ -1,12 +1,15 @@
 package com.jolt.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 /*
-    The acronym DTO is being used for "data transfer object". It means that this type of class is specifically
-    created to transfer data between the client and the server. For example, CredentialsDto represents the data a client must
-    pass to the server for a login endpoint, and TokenDto represents the object that's returned from the server
-    to the client from a login endpoint.
+ * DTO stands for "Data Transfer Object".
+ * This type of class transfers data between the client and server.
+ *
+ * LoginDto contains the information sent by the client when logging in,
+ * while LoginResponseDto contains the information returned to the client.
  */
+
 public class LoginResponseDto {
 
     private String token;
@@ -18,11 +21,11 @@ public class LoginResponseDto {
     }
 
     @JsonProperty("token")
-    String getToken() {
+    public String getToken() {
         return token;
     }
 
-    void setToken(String token) {
+    public void setToken(String token) {
         this.token = token;
     }
 
@@ -34,4 +37,5 @@ public class LoginResponseDto {
     public void setUser(User user) {
         this.user = user;
     }
+
 }

@@ -3,7 +3,7 @@ package com.jolt.model;
 public class Profile {
 
     private int profileId;
-    private User user;  // Assuming you have a User entity
+    private User user;
     private String firstName;
     private String lastName;
     private String birthMonth;
@@ -16,7 +16,9 @@ public class Profile {
     private String zipcode;
     private boolean isFormSubmitted;
 
-    // Constructor to create a Profile object with all necessary fields.
+    public Profile() {
+    }
+
     public Profile(int profileId,
                    User user,
                    String firstName,
@@ -30,6 +32,7 @@ public class Profile {
                    String state,
                    String zipcode,
                    boolean isFormSubmitted) {
+
         this.profileId = profileId;
         this.user = user;
         this.firstName = firstName;
@@ -45,46 +48,108 @@ public class Profile {
         this.isFormSubmitted = isFormSubmitted;
     }
 
-    // Default constructor for creating an empty Profile object.
-    public Profile() {}
+    public int getProfileId() {
+        return profileId;
+    }
 
-    // Getters and Setters
-    public int getProfileId() { return profileId; }
-    public void setProfileId(int profileId) { this.profileId = profileId; }
+    public void setProfileId(int profileId) {
+        this.profileId = profileId;
+    }
 
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
+    public User getUser() {
+        return user;
+    }
 
-    public String getFirstName() { return firstName; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-    public String getLastName() { return lastName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
+    public String getFirstName() {
+        return firstName;
+    }
 
-    public String getBirthMonth() { return birthMonth; }
-    public void setBirthMonth(String birthMonth) { this.birthMonth = birthMonth; }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-    public int getBirthDay() { return birthDay; }
-    public void setBirthDay(int birthDay) { this.birthDay = birthDay; }
+    public String getLastName() {
+        return lastName;
+    }
 
-    public int getBirthYear() { return birthYear; }
-    public void setBirthYear(int birthYear) { this.birthYear = birthYear; }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-    public String getAddress1() { return address1; }
-    public void setAddress1(String address1) { this.address1 = address1; }
+    public String getBirthMonth() {
+        return birthMonth;
+    }
 
-    public String getAddress2() { return address2; }
-    public void setAddress2(String address2) { this.address2 = address2; }
+    public void setBirthMonth(String birthMonth) {
+        this.birthMonth = birthMonth;
+    }
 
-    public String getCity() { return city; }
-    public void setCity(String city) { this.city = city; }
+    public int getBirthDay() {
+        return birthDay;
+    }
 
-    public String getState() { return state; }
-    public void setState(String state) { this.state = state; }
+    public void setBirthDay(int birthDay) {
+        this.birthDay = birthDay;
+    }
 
-    public String getZipcode() { return zipcode; }
-    public void setZipcode(String zipcode) { this.zipcode = zipcode; }
+    public int getBirthYear() {
+        return birthYear;
+    }
 
-    public boolean isFormSubmitted() { return isFormSubmitted; }
-    public void setIsFormSubmitted(boolean isFormSubmitted) { this.isFormSubmitted = isFormSubmitted; }
+    public void setBirthYear(int birthYear) {
+        this.birthYear = birthYear;
+    }
+
+    public String getAddress1() {
+        return address1;
+    }
+
+    public void setAddress1(String address1) {
+        this.address1 = address1;
+    }
+
+    public String getAddress2() {
+        return address2;
+    }
+
+    public void setAddress2(String address2) {
+        this.address2 = address2;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public boolean isFormSubmitted() {
+        return isFormSubmitted;
+    }
+
+    public void setIsFormSubmitted(boolean isFormSubmitted) {
+        this.isFormSubmitted = isFormSubmitted;
+    }
+
 }

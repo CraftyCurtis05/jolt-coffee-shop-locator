@@ -1,5 +1,3 @@
-- Responsive optimization for tablets and mobile devices
-
 - User reviews and ratings
 
 - Enhanced search filtering
