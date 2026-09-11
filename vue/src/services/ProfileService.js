@@ -87,5 +87,10 @@ export default {
   getImage() {
     return axios.get('/image')
       .then(response => response.data.imageUrl);
+  },
+
+  // DELETE the user's current profile image
+  deleteImage() {
+    return axios.delete('/image');
   }
 };

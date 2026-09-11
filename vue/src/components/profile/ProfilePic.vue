@@ -35,6 +35,17 @@
           {{ selectedFile ? 'Save New Picture' : 'Change Picture' }}
         </button>
 
+        <!-- Remove Profile Picture -->
+        <button
+          v-if="imageUrl"
+          type="button"
+          class="remove-image-button"
+          @click="deleteImage"
+          title="Click to Remove Profile Picture"
+        >
+          Remove Picture
+        </button>
+
       </form>
     </section>
 
@@ -156,6 +167,38 @@ export default {
       }
     },
 
+    // Delete the user's current profile image
+    async deleteImage() {
+      try {
+
+        // Delete the image from the server
+        await ProfileService.deleteImage();
+
+        // Clear the current image
+        this.imageUrl = null;
+
+        // Tell the navigation bar that the profile image changed
+        window.dispatchEvent(new Event('profile-image-updated'));
+
+        // Confirm the profile image was removed
+        window.dispatchEvent(new CustomEvent('app-notification', {
+          detail: {
+            message: 'Profile picture removed successfully!',
+            type: 'success'
+          }
+        }));
+
+      } catch (error) {
+        console.error('Error deleting image:', error);
+        window.dispatchEvent(new CustomEvent('app-notification', {
+          detail: {
+            message: 'Error removing profile picture!',
+            type: 'error'
+          }
+        }));
+      }
+    },
+
     // Get the user's current profile image
     async fetchImage() {
       try {
@@ -224,7 +267,9 @@ export default {
 form {
   display: flex;
   justify-content: center;
+  gap: .5rem;
   width: 100%;
+  margin-top: .75rem;
 }
 
 form input {
@@ -235,23 +280,38 @@ form button {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 7rem;
-  min-height: 2rem;
+  width: 8rem;
+  min-height: 2.2rem;
   font-size: .8rem;
   color: rgb(53, 37, 19);
   background-color: #e8bb64;
   border: .1rem rgb(53, 37, 19) solid;
   border-radius: .2rem;
-  padding: .4rem .75rem;
-  margin: .75rem auto 0;
+  padding: .4rem .6rem;
+  margin: 0;
   transition:
     background-color 0.3s ease-in-out,
-    color 0.3s ease-in-out;
+    color 0.3s ease-in-out,
+    border-color 0.3s ease-in-out,
+    box-shadow 0.2s ease-in-out,
+    transform 0.15s ease-in-out;
 }
 
 form button:hover {
   color: #e8bb64;
   background-color: rgb(53, 37, 19);
+  border-color: #e8bb64;
+  box-shadow:
+    inset 0 .15rem .3rem rgba(0, 0, 0, .35),
+    0 0 .35rem rgba(232, 187, 100, .35);
+  transform: translateY(.05rem);
+}
+
+form button:active {
+  box-shadow:
+    inset 0 .25rem .4rem rgba(0, 0, 0, .45),
+    0 0 .25rem rgba(232, 187, 100, .3);
+  transform: translateY(.1rem);
 }
 
 form button:focus-visible {

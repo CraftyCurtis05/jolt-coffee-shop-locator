@@ -385,7 +385,7 @@ export default {
 }
 
 .button-container button:hover {
-  color: rgb(245, 242, 242);
+  color: #e8bb64;
   background-color: rgb(53, 37, 19);
 }
 

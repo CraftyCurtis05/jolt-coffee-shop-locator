@@ -501,28 +501,18 @@ export default {
   border-radius: .2rem 0 0 .2rem;
 }
 
-.search-bar button {
-  flex-shrink: 0;
-  width: 5.5rem;
-  color: rgb(245, 242, 242);
-  background-color: rgb(53, 37, 19);
-  border-radius: 0 .2rem .2rem 0;
-}
-
 
 /* Search Near Home */
 
 .search-home {
   margin: .5rem auto;
+  width: 10rem;
 }
 
 .search-home button {
-  display: flex;
   flex-direction: row;
   gap: .4rem;
   width: 12rem;
-  color: rgb(53, 37, 19);
-  background-color: #e8bb64;
 }
 
 .home-button img {
@@ -535,29 +525,55 @@ export default {
 
 /* Search Buttons */
 
+.search-bar button {
+  width: 7rem;
+}
+
 .search-bar button,
 .search-home button {
   display: flex;
+  flex-shrink: 0;
   justify-content: center;
   align-items: center;
   min-height: 2.2rem;
-  font-size: .9rem;
+  font-size: .8rem;
+  color: rgb(53, 37, 19);
+  background-color: #e8bb64;
   border: .1rem rgb(53, 37, 19) solid;
+  border-radius: .2rem;
   padding: .4rem .75rem;
+  margin: 0;
   transition:
     background-color 0.3s ease-in-out,
     color 0.3s ease-in-out,
-    border-color 0.3s ease-in-out;
+    border-color 0.3s ease-in-out,
+    box-shadow 0.2s ease-in-out,
+    transform 0.15s ease-in-out;
 }
 
-.search-bar button:hover {
-  color: rgb(53, 37, 19);
-  background-color: #e8bb64;
-}
-
+.search-bar button:hover,
 .search-home button:hover {
-  color: rgb(245, 242, 242);
+  color: #e8bb64;
   background-color: rgb(53, 37, 19);
+  border-color: #e8bb64;
+  box-shadow:
+    inset 0 .15rem .3rem rgba(0, 0, 0, .35),
+    0 0 .35rem rgba(232, 187, 100, .35);
+  transform: translateY(.05rem);
+}
+
+.search-bar button:active,
+.search-home button:active {
+  box-shadow:
+    inset 0 .25rem .4rem rgba(0, 0, 0, .45),
+    0 0 .25rem rgba(232, 187, 100, .3);
+  transform: translateY(.1rem);
+}
+
+.search-bar button:focus-visible,
+.search-home button:focus-visible {
+  outline: .15rem #e8bb64 solid;
+  outline-offset: .2rem;
 }
 
 .search-home button img {

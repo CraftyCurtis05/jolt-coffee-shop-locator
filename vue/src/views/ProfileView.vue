@@ -229,22 +229,41 @@ main {
 /* Update Profile Button */
 
 .profile-form button {
-  width: 8rem;
-  min-height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 12rem;
+  min-height: 2.2rem;
   font-size: .8rem;
   color: rgb(53, 37, 19);
   background-color: #e8bb64;
   border: .1rem rgb(53, 37, 19) solid;
   border-radius: .2rem;
-  margin-top: 1rem;
+  padding: .4rem .6rem;
+  margin: 1rem;
   transition:
     background-color 0.3s ease-in-out,
-    color 0.3s ease-in-out;
+    color 0.3s ease-in-out,
+    border-color 0.3s ease-in-out,
+    box-shadow 0.2s ease-in-out,
+    transform 0.15s ease-in-out;
 }
 
 .profile-form button:hover {
   color: #e8bb64;
   background-color: rgb(53, 37, 19);
+  border-color: #e8bb64;
+  box-shadow:
+    inset 0 .15rem .3rem rgba(0, 0, 0, .35),
+    0 0 .35rem rgba(232, 187, 100, .35);
+  transform: translateY(.05rem);
+}
+
+.profile-form button:active {
+  box-shadow:
+    inset 0 .25rem .4rem rgba(0, 0, 0, .45),
+    0 0 .25rem rgba(232, 187, 100, .3);
+  transform: translateY(.1rem);
 }
 
 .profile-form button:focus-visible {
