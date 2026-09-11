@@ -240,7 +240,12 @@ export default {
 
       // Make sure a location was entered
       if (!location) {
-        alert('Please enter a location.');
+        window.dispatchEvent(new CustomEvent('app-notification', {
+          detail: {
+            message: 'Please enter a location.',
+            type: 'info'
+          }
+        }));
         return;
       }
 
@@ -286,7 +291,12 @@ export default {
 
           // Display an error if the search fails
           this.hasSearched = false;
-          alert('There was a problem fetching coffee shops! Please try again.');
+          window.dispatchEvent(new CustomEvent('app-notification', {
+            detail: {
+              message: 'There was a problem fetching coffee shops! Please try again.',
+              type: 'error'
+            }
+          }));
           console.error('Error fetching Yelp results:', error);
         });
     },
@@ -296,7 +306,12 @@ export default {
 
       // Check if the shop is already favorited by the user
       if (this.userFavorites.includes(result.id)) {
-        alert("You've already favorited this shop.");
+        window.dispatchEvent(new CustomEvent('app-notification', {
+          detail: {
+            message: "You've already favorited this shop.",
+            type: 'warning'
+          }
+        }));
         return;
       }
 
@@ -331,7 +346,12 @@ export default {
               this.userFavorites.push(result.id);
             }
 
-            alert("You've already favorited this shop.");
+            window.dispatchEvent(new CustomEvent('app-notification', {
+              detail: {
+                message: "You've already favorited this shop.",
+                type: 'warning'
+              }
+            }));
 
             // *DEBUG* Log the duplicate favorite for debugging
             // console.log('Favorite already exists:', result.id);
@@ -339,7 +359,12 @@ export default {
           } else {
 
             // Display an error if the favorite cannot be saved
-            alert('There was a problem adding this favorite. Please try again.');
+            window.dispatchEvent(new CustomEvent('app-notification', {
+              detail: {
+                message: 'There was a problem adding this favorite. Please try again.',
+                type: 'error'
+              }
+            }));
             console.error('Error adding favorite:', error);
           }
         });
@@ -374,7 +399,12 @@ export default {
 
       // Make sure the user's address is complete
       if (!address1 || !city || !state || !zipcode) {
-        alert('User address is missing or incomplete. Please complete your profile.');
+        window.dispatchEvent(new CustomEvent('app-notification', {
+          detail: {
+            message: 'User address is missing or incomplete. Please complete your profile.',
+            type: 'warning'
+          }
+        }));
         return;
       }
 

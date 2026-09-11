@@ -1,23 +1,29 @@
 -- ********************************************************************************
--- This script creates the database users and grants them the necessary permissions
+-- This script creates the Jolt database roles if they do not already exist
 -- ********************************************************************************
 
-CREATE USER jolt_owner;
+-- Database owner
+DO
+$$
+BEGIN
+    IF NOT EXISTS (
+        SELECT FROM pg_catalog.pg_roles
+        WHERE rolname = 'jolt_owner'
+    ) THEN
+        CREATE ROLE jolt_owner NOLOGIN;
+    END IF;
+END
+$$;
 
-GRANT ALL
-ON ALL TABLES IN SCHEMA public
-TO jolt_owner;
-
-GRANT ALL
-ON ALL SEQUENCES IN SCHEMA public
-TO jolt_owner;
-
-CREATE USER jolt_appuser;
-
-GRANT SELECT, INSERT, UPDATE, DELETE
-ON ALL TABLES IN SCHEMA public
-TO jolt_appuser;
-
-GRANT USAGE, SELECT
-ON ALL SEQUENCES IN SCHEMA public
-TO jolt_appuser;
+-- Application user
+DO
+$$
+BEGIN
+    IF NOT EXISTS (
+        SELECT FROM pg_catalog.pg_roles
+        WHERE rolname = 'jolt_appuser'
+    ) THEN
+        CREATE ROLE jolt_appuser LOGIN;
+    END IF;
+END
+$$;

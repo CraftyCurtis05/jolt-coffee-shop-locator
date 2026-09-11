@@ -7,6 +7,9 @@
 <template>
   <div class="app-container">
 
+    <!-- Application Notifications -->
+    <AppNotification />
+
     <!-- Application Navigation -->
     <NavBar />
 
@@ -24,6 +27,7 @@
 <script>
 import NavBar from './components/layout/NavBar.vue';
 import Footer from './components/layout/Footer.vue';
+import AppNotification from './components/layout/AppNotification.vue';
 
 export default {
   name: 'App',
@@ -31,7 +35,8 @@ export default {
   // Components used throughout the application
   components: {
     NavBar,
-    Footer
+    Footer,
+    AppNotification
   }
 };
 </script>

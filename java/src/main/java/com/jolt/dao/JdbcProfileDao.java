@@ -85,7 +85,7 @@ public class JdbcProfileDao implements ProfileDao {
 
         String sql =
                 "SELECT profile_id, user_id, first_name, last_name, birth_month, birth_day, birth_year, " +
-                "address1, address2, city, state_abbr, zipcode " +
+		"address1, address2, city, state_abbr, zipcode, is_form_submitted " +
                 "FROM profile " +
                 "WHERE user_id = ?";
 
@@ -133,21 +133,6 @@ public class JdbcProfileDao implements ProfileDao {
             if (profile.getLastName() != null) {
                 updateSql.append("last_name = ?, ");
                 parameters.add(capitalizedLastName);
-            }
-
-            if (profile.getBirthMonth() != null) {
-                updateSql.append("birth_month = ?, ");
-                parameters.add(profile.getBirthMonth());
-            }
-
-            if (profile.getBirthDay() > 0) {
-                updateSql.append("birth_day = ?, ");
-                parameters.add(profile.getBirthDay());
-            }
-
-            if (profile.getBirthYear() > 0) {
-                updateSql.append("birth_year = ?, ");
-                parameters.add(profile.getBirthYear());
             }
 
             if (profile.getAddress1() != null) {
@@ -322,6 +307,7 @@ public class JdbcProfileDao implements ProfileDao {
         profile.setCity(results.getString("city"));
         profile.setState(results.getString("state_abbr"));
         profile.setZipcode(results.getString("zipcode"));
+	profile.setIsFormSubmitted(results.getBoolean("is_form_submitted"));
 
         User user = userDao.getUserById(results.getInt("user_id"));
         profile.setUser(user);

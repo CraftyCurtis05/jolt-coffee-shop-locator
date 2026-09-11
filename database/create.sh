@@ -3,16 +3,36 @@
 BASEDIR="$(dirname "$0")"
 
 DATABASE="${DB_NAME:-jolt}"
-DB_USERNAME="${DB_USERNAME:-postgres}"
+ADMIN_USERNAME="${DB_ADMIN_USERNAME:-postgres}"
+APP_USERNAME="${DB_APP_USERNAME:-jolt_appuser}"
+OWNER_USERNAME="${DB_OWNER_USERNAME:-jolt_owner}"
 
-export PGPASSWORD="${DB_PASSWORD:-}"
+export PGPASSWORD="${DB_ADMIN_PASSWORD:-}"
 
-psql -U "$DB_USERNAME" -f "$BASEDIR/dropdb.sql" &&
+psql -U "$ADMIN_USERNAME" -f "$BASEDIR/dropdb.sql" &&
 
-createdb -U "$DB_USERNAME" "$DATABASE" &&
+psql -U "$ADMIN_USERNAME" -f "$BASEDIR/user.sql" &&
 
-psql -U "$DB_USERNAME" -d "$DATABASE" -f "$BASEDIR/schema.sql" &&
+createdb -U "$ADMIN_USERNAME" -O "$OWNER_USERNAME" "$DATABASE" &&
 
-psql -U "$DB_USERNAME" -d "$DATABASE" -f "$BASEDIR/data.sql" &&
+psql -U "$ADMIN_USERNAME" -d "$DATABASE" \
+  -v ON_ERROR_STOP=1 \
+  -c "SET ROLE $OWNER_USERNAME;" \
+  -f "$BASEDIR/schema.sql" &&
 
-psql -U "$DB_USERNAME" -d "$DATABASE" -f "$BASEDIR/user.sql"
+psql -U "$ADMIN_USERNAME" -d "$DATABASE" \
+  -v ON_ERROR_STOP=1 \
+  -c "SET ROLE $OWNER_USERNAME;" \
+  -f "$BASEDIR/data.sql" &&
+
+psql -U "$ADMIN_USERNAME" -d "$DATABASE" -c \
+"GRANT CONNECT ON DATABASE $DATABASE TO $APP_USERNAME;" &&
+
+psql -U "$ADMIN_USERNAME" -d "$DATABASE" -c \
+"GRANT USAGE ON SCHEMA public TO $APP_USERNAME;" &&
+
+psql -U "$ADMIN_USERNAME" -d "$DATABASE" -c \
+"GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO $APP_USERNAME;" &&
+
+psql -U "$ADMIN_USERNAME" -d "$DATABASE" -c \
+"GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO $APP_USERNAME;"

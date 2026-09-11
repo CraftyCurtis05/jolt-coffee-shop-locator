@@ -135,7 +135,12 @@ export default {
 
       } catch (error) {
         console.error('Error fetching user profile:', error);
-        alert('There was an error fetching your profile!');
+        window.dispatchEvent(new CustomEvent('app-notification', {
+          detail: {
+            message: 'There was an error fetching your profile!',
+            type: 'error'
+          }
+        }));
       }
     }
   },

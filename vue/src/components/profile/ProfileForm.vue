@@ -350,7 +350,12 @@ export default {
           // *DEBUG* Log the created profile for debugging
           // console.log('Profile created:', savedProfile);
 
-          alert('Profile created successfully!');
+          window.dispatchEvent(new CustomEvent('app-notification', {
+            detail: {
+              message: 'Profile created successfully!',
+              type: 'success'
+            }
+          }));
           this.closeForm();
 
         } else {
@@ -369,7 +374,12 @@ export default {
           // *DEBUG* Log the updated profile for debugging
           // console.log('Profile updated:', savedProfile);
 
-          alert('Profile updated successfully!');
+          window.dispatchEvent(new CustomEvent('app-notification', {
+            detail: {
+              message: 'Profile updated successfully!',
+              type: 'success'
+            }
+          }));
           this.closeForm();
         }
 
@@ -378,9 +388,19 @@ export default {
 
         // Display an error based on the server response
         if (error.response && error.response.status === 400) {
-          alert('Make sure to fill out all required profile fields!');
+          window.dispatchEvent(new CustomEvent('app-notification', {
+            detail: {
+              message: 'Make sure to fill out all required profile fields!',
+              type: 'warning'
+            }
+          }));
         } else {
-          alert('There was a problem saving your profile. Please try again.');
+          window.dispatchEvent(new CustomEvent('app-notification', {
+            detail: {
+              message: 'There was a problem saving your profile. Please try again.',
+              type: 'error'
+            }
+          }));
         }
       }
     },
@@ -389,7 +409,10 @@ export default {
     async fetchProfile() {
       try {
         const response = await ProfileService.getProfile();
+
+      if (response) {
         this.user = { ...response };
+      }
 
         // *DEBUG* Log the profile for debugging
         // console.log('Existing profile:', response);

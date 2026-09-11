@@ -93,7 +93,12 @@ export default {
 
         // Make sure the selected file is a supported image type
         if (!validImageTypes.includes(file.type)) {
-          alert('Unsupported file type. Please upload a .jpg, .jpeg, .png or .webp image.');
+          window.dispatchEvent(new CustomEvent('app-notification', {
+            detail: {
+              message: 'Unsupported file type. Please upload a .jpg, .jpeg, .png or .webp image.',
+              type: 'warning'
+            }
+          }));
           this.selectedFile = null;
           return;
         }
@@ -125,7 +130,15 @@ export default {
         // Tell the navigation bar that the profile image changed
         window.dispatchEvent(new Event('profile-image-updated'));
 
-        // Clear the selected image and preview after a successful upload
+        // Confirm the profile image was updated
+        window.dispatchEvent(new CustomEvent('app-notification', {
+          detail: {
+            message: 'Profile picture updated successfully!',
+            type: 'success'
+          }
+        }));
+
+	// Clear the selected image and preview after a successful upload
         this.selectedFile = null;
         this.previewUrl = null;
 
@@ -134,7 +147,12 @@ export default {
 
       } catch (error) {
         console.error('Error uploading image:', error);
-        alert('Error uploading profile picture!');
+        window.dispatchEvent(new CustomEvent('app-notification', {
+          detail: {
+            message: 'Error uploading profile picture!',
+            type: 'error'
+          }
+        }));
       }
     },
 

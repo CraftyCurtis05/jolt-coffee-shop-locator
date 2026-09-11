@@ -166,7 +166,12 @@ export default {
           this.invalidCredentials = true;
 
         } else {
-          alert('There was a problem signing in. Please try again.');
+          window.dispatchEvent(new CustomEvent('app-notification', {
+            detail: {
+              message: 'There was a problem signing in. Please try again.',
+              type: 'error'
+            }
+          }));
         }
       });
     }
