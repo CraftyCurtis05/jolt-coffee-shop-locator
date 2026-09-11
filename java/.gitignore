@@ -1,5 +1,6 @@
 HELP.md
 target/
+
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
@@ -31,4 +32,5 @@ build/
 .vscode/
 
 ### App Properties ###
-application.properties
+# Contains application secrets and local configuration
+**/application.properties

@@ -1,59 +1,72 @@
 BEGIN TRANSACTION;
 
--- Drop the existing tables if they exist
+-- Drop existing tables
 DROP TABLE IF EXISTS users, favorites, profile, image;
 
--- Create users table
+-- Users
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
-    username varchar(50) NOT NULL UNIQUE,
-    password_hash varchar(200) NOT NULL,
-    role varchar(50) NOT NULL
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password_hash VARCHAR(200) NOT NULL,
+    role VARCHAR(50) NOT NULL
 );
 
--- Create favorites table
+-- Favorites
 CREATE TABLE favorites (
     favorite_id SERIAL PRIMARY KEY,
-    user_id int NOT NULL,
-    business_id varchar(100) NOT NULL,
-    business_name varchar(100) NOT NULL,
-    business_address1 varchar(100),
-    business_address2 varchar(50),
-    business_city varchar(100),
-    business_state varchar(50),
-    business_zipcode varchar(15),
-    business_image varchar(255),
-    business_url varchar(255),
-    CONSTRAINT uq_favorites_user_business UNIQUE (user_id, business_id),
-    CONSTRAINT fk_favorites_users FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
+    user_id INT NOT NULL,
+    business_id VARCHAR(100) NOT NULL,
+    business_name VARCHAR(100) NOT NULL,
+    business_address1 VARCHAR(100),
+    business_address2 VARCHAR(50),
+    business_city VARCHAR(100),
+    business_state VARCHAR(50),
+    business_zipcode VARCHAR(15),
+    business_image VARCHAR(255),
+    business_url VARCHAR(255),
+
+    CONSTRAINT uq_favorites_user_business
+        UNIQUE (user_id, business_id),
+
+    CONSTRAINT fk_favorites_users
+        FOREIGN KEY (user_id)
+        REFERENCES users (user_id)
+        ON DELETE CASCADE
 );
 
--- Create profile table
+-- Profile
 CREATE TABLE profile (
     profile_id SERIAL PRIMARY KEY,
-    user_id int NOT NULL UNIQUE,
-    first_name varchar(50) NOT NULL,
-    last_name varchar(50) NOT NULL,
-    birth_month varchar(9) NOT NULL,
-    birth_day int NOT NULL,
-    birth_year int NOT NULL,
-    address1 varchar(150) NOT NULL,
-    address2 varchar(50),
-    city varchar(100) NOT NULL,
-    state_abbr varchar(2) NOT NULL,
-    zipcode varchar(5) NOT NULL,
-    is_form_submitted BOOLEAN DEFAULT FALSE, -- Default value is false (form not submitted)
-    CONSTRAINT fk_profile_users FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
+    user_id INT NOT NULL UNIQUE,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    birth_month VARCHAR(9) NOT NULL,
+    birth_day INT NOT NULL,
+    birth_year INT NOT NULL,
+    address1 VARCHAR(150) NOT NULL,
+    address2 VARCHAR(50),
+    city VARCHAR(100) NOT NULL,
+    state_abbr VARCHAR(2) NOT NULL,
+    zipcode VARCHAR(5) NOT NULL,
+    is_form_submitted BOOLEAN DEFAULT FALSE,
+
+    CONSTRAINT fk_profile_users
+        FOREIGN KEY (user_id)
+        REFERENCES users (user_id)
+        ON DELETE CASCADE
 );
 
--- Create image table for storing profile images
+-- Profile Image
 CREATE TABLE image (
     image_id SERIAL PRIMARY KEY,
-    user_id int NOT NULL UNIQUE,
-    image_name varchar(100),
-    image BYTEA,  -- Store the binary data of the profile image here
-    CONSTRAINT fk_image_users FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
+    user_id INT NOT NULL UNIQUE,
+    image_name VARCHAR(100),
+    image BYTEA,
+
+    CONSTRAINT fk_image_users
+        FOREIGN KEY (user_id)
+        REFERENCES users (user_id)
+        ON DELETE CASCADE
 );
 
--- Commit the transaction
 COMMIT TRANSACTION;

@@ -1,101 +1,242 @@
-# Capstone Starter Project
+# Jolt Coffee Shop Locator — Java Backend
+
+This directory contains the Java and Spring Boot backend for the Jolt Coffee Shop Locator.
+
+Jolt began as a team capstone project during my Java Full-Stack Application Development bootcamp at Tech Elevator. The project was originally built from the Tech Elevator capstone starter project, which provided the initial Spring Boot, PostgreSQL, authentication, and testing structure.
+
+After the capstone, I independently revisited and expanded the application while continuing to develop my Java and full-stack development skills.
+
+## Backend Technologies
+
+- Java 11
+- Spring Boot
+- Spring Security
+- Spring JDBC
+- JdbcTemplate
+- PostgreSQL
+- JWT authentication
+- Maven
+- Yelp Fusion API
+
+## Project Structure
+
+The backend application is organized under:
+
+```text
+src/main/java/com/jolt/
+├── controller/
+├── dao/
+├── exception/
+├── model/
+├── security/
+│   └── jwt/
+└── Application.java
+```
+
+The main application layers include:
+
+- **Controllers** — Handle HTTP requests and responses.
+- **DAOs** — Handle database access using `JdbcTemplate`.
+- **Models** — Represent application and authentication data.
+- **Security** — Handles Spring Security configuration and authentication.
+- **JWT** — Creates, validates, and processes JSON Web Tokens.
+- **Exceptions** — Provides application-specific database exception handling.
 
 ## Database
 
-Inside the `<project-root>/database/` directory, you'll find an executable Bash script (`.sh` file) and several SQL scripts (`.sql` files). These can be used to build and rebuild a PostgreSQL database for the capstone project.
+Inside the `database/` directory, there is an executable Bash script (`.sh` file) and several SQL scripts (`.sql` files). These can be used to build and rebuild the PostgreSQL database for the application.
 
-From a terminal session, execute the following commands:
+From a terminal session, run:
 
-```
-cd <project-root>/database/
+```bash
+cd database
 ./create.sh
 ```
 
-This Bash script drops the existing database, if necessary, creates a new database named `final_capstone`, and runs the various SQL scripts in the correct order. You don't need to modify the Bash script unless you want to change the database name.
+The Bash script drops the existing database when necessary, creates the application database, and runs the SQL scripts in the required order.
 
-Each SQL script has a specific purpose as described here:
+Each SQL script has a specific purpose:
 
 | File Name | Description |
-| --------- | ----------- |
-| `data.sql` | This script populates the database with any static setup data or test/demo data. The project team should modify this script. |
-| `dropdb.sql` | This script destroys the database so that it can be recreated. It drops the database and associated users. The project team shouldn't have to modify this script. |
-| `schema.sql` | This script creates all of the database objects, such as tables and sequences. The project team should modify this script. |
-| `user.sql` | This script creates the database application users and grants them the appropriate privileges. The project team shouldn't have to modify this script. <br /> See the next section for more information on these users. |
+| --- | --- |
+| `data.sql` | Populates the database with setup or development data. |
+| `dropdb.sql` | Drops the existing database and associated database users so the database can be recreated. |
+| `schema.sql` | Creates the application's database objects, including tables and sequences. |
+| `user.sql` | Creates the database application users and grants the required database privileges. |
 
-### Database users
+### Database Users
 
-The database superuser—meaning `postgres`—must only be used for database administration. It must not be used by applications. As such, two database users are created for the capstone application to use as described here:
+The PostgreSQL `postgres` superuser should only be used for database administration and should not be used by the application.
 
-| Username | Description |
-| -------- | ----------- |
-| `final_capstone_owner` | This user is the schema owner. It has full access—meaning granted all privileges—to all database objects within the `capstone` schema and also has privileges to create new schema objects. This user can be used to connect to the database from PGAdmin for administrative purposes. |
-| `final_capstone_appuser` | The application uses this user to make connections to the database. This user is granted `SELECT`, `INSERT`, `UPDATE`, and `DELETE` privileges for all database tables and can `SELECT` from all sequences. The application datasource has been configured to connect using this user. |
+The database setup creates separate users for database ownership and application access.
 
+The application user is granted the database privileges required by the backend, including `SELECT`, `INSERT`, `UPDATE`, and `DELETE` access to application tables and appropriate sequence access.
+
+Database connection credentials are stored in the local `application.properties` file and are not included in this repository.
 
 ## Spring Boot
-Note: Spring Boot has been configured to run on port `9000` for this project. You might be used to port `8080` from earlier in the cohort, but it's changed so as not to conflict with the Vue server that you'll be running concurrently.
+
+The Spring Boot backend is configured to run on port `9000` during local development. This allows it to run alongside the Vue development server.
+
+The main application entry point is:
+
+```text
+src/main/java/com/jolt/Application.java
+```
 
 ### Datasource
 
-A Datasource has been configured for you in `/src/resources/application.properties`. It connects to the database using the `capstone_appuser` database user. You can change the name of this database if you want, but remember to change it here and in the `create.sh` script in the database folder:
+The PostgreSQL datasource is configured through:
 
+```text
+src/main/resources/application.properties
 ```
-# datasource connection properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/final_capstone
-spring.datasource.name=final_capstone
-spring.datasource.username=final_capstone_appuser
-spring.datasource.password=finalcapstone
-```
+
+The configuration includes the database connection information required by Spring Boot.
+
+The `application.properties` file is intentionally excluded from Git because it also contains environment-specific configuration and application secrets.
 
 ### JdbcTemplate
 
-If you look in `/src/main/java/com/techelevator/dao`, you'll see `JdbcUserDao`. This is an example of how to get an instance of `JdbcTemplate` in your DAOs. If you declare a field of type `JdbcTemplate` and add it as an argument to the constructor, Spring automatically injects an instance for you:
+Jolt uses Spring's `JdbcTemplate` for database access.
+
+DAO implementations receive a `JdbcTemplate` instance through constructor injection:
 
 ```java
-@Service
-public class JdbcUserDao implements UserDao {
+private final JdbcTemplate jdbcTemplate;
 
-    private JdbcTemplate jdbcTemplate;
-
-    public JdbcUserDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+public JdbcUserDao(JdbcTemplate jdbcTemplate) {
+    this.jdbcTemplate = jdbcTemplate;
 }
 ```
 
-### CORS
+The DAO layer is responsible for SQL queries, updates, database result mapping, and application-specific database error handling.
 
-Any controller that'll be accessed from a client like the Vue Starter application needs the `@CrossOrigin` annotation. This
-tells the browser that you're allowing the client application to access this resource:
+## REST Controllers
 
-```java
-@RestController
-@CrossOrigin
-public class AuthenticationController {
-    // ...
-}
+The backend exposes REST endpoints through controllers in:
+
+```text
+src/main/java/com/jolt/controller/
 ```
+
+The controllers handle functionality for:
+
+- Authentication and registration
+- Coffee shop searches
+- Favorites
+- User profiles
+- Profile images
+
+The coffee shop search communicates with the Yelp Fusion API through the Spring Boot backend so the Yelp API key is not exposed to the Vue client.
+
+## CORS
+
+Controllers that are accessed by the Vue frontend allow requests from the application's configured frontend origins.
+
+During local development, the Vue application runs separately from the Spring Boot server, so Cross-Origin Resource Sharing (CORS) configuration is required to allow the frontend and backend to communicate.
 
 ## Security
 
-Most of the functionality related to Security is located in the `/src/main/java/com/techelevator/security` package. You shouldn't have to modify anything here, but feel free to go through the code if you want to see how things work.
+Security-related functionality is located in:
+
+```text
+src/main/java/com/jolt/security/
+```
+
+JWT-specific functionality is located in:
+
+```text
+src/main/java/com/jolt/security/jwt/
+```
+
+Jolt uses Spring Security and JSON Web Tokens (JWT) for authentication.
+
+When a user successfully logs in, the backend creates a JWT. The Vue frontend sends that token with later authenticated requests, and the backend validates the token before establishing the user's Spring Security authentication.
+
+The application uses stateless authentication rather than maintaining a server-side login session.
 
 ### Authentication Controller
 
-There is a single controller in the `com.jolt.controller` package called `AuthenticationController.java`.
+The `AuthenticationController` provides the `/login` and `/register` routes.
 
-This controller contains the `/login` and `/register` routes and works with the Vue starter as is. If you need to modify the user registration form, start here.
+Registration creates standard application users, while login authenticates the supplied credentials and returns a JWT for subsequent authenticated requests.
 
-The authentication controller uses the `JdbcUserDao` to read and write data from the users table.
+Passwords are stored using BCrypt hashing rather than as plaintext.
 
+### Protected User Data
+
+User-specific backend operations determine the current user from the authenticated Spring Security principal.
+
+This allows operations involving profiles, profile images, and favorites to be associated with the authenticated account rather than trusting a user ID supplied by the frontend.
+
+## External API
+
+Coffee shop searches use the Yelp Fusion API.
+
+The backend receives a location from the frontend and sends the search request to Yelp. Yelp API configuration is stored on the backend so credentials are not exposed in client-side code.
+
+## Application Configuration
+
+Local application configuration is stored in:
+
+```text
+src/main/resources/application.properties
+```
+
+This includes configuration such as:
+
+- PostgreSQL datasource settings
+- JWT settings
+- Yelp API configuration
+
+Because this file contains local configuration and secrets, it is excluded from source control.
+
+API keys, JWT secrets, and database credentials should not be committed to the repository.
+
+## Running the Backend
+
+Before starting the backend, create the local database:
+
+```bash
+cd database
+./create.sh
+```
+
+Then run the Spring Boot application from the Java project directory:
+
+```bash
+./mvnw spring-boot:run
+```
+
+The backend runs locally at:
+
+```text
+http://localhost:9000
+```
 
 ## Testing
 
+The original Tech Elevator capstone starter project included support for DAO integration testing using a separate test datasource and test data.
 
-### DAO integration tests
+Backend tests belong under:
 
-`com.jolt.dao.BaseDaoTests` has been provided for you to use as a base class for any DAO integration test. It initializes a Datasource for testing and manages rollback of database changes between tests.
+```text
+src/test/
+```
 
-`com.jolt.dao.JdbUserDaoTests` has been provided for you as an example for writing your own DAO integration tests.
+The application database schema is defined in:
 
-Remember that when testing, you're using a copy of the real database. The schema for the test database is defined in the same schema script for the real database, `database/schema.sql`. The data for the test database is defined separately within `/src/test/resources/test-data.sql`.
+```text
+database/schema.sql
+```
+
+Test-specific data can be maintained separately from development data so database changes made during tests do not affect the development database.
+
+## Project Background
+
+The original capstone starter project provided the foundation for the database setup, Spring Boot application, authentication system, and testing structure.
+
+During the original team capstone and my later independent development, Jolt grew beyond that starter foundation with application-specific models, database access, REST endpoints, user profiles, profile images, favorite coffee shops, Yelp-powered coffee shop searches, validation, error handling, and user-specific security.
+
+I have intentionally maintained the project's original Java 11, Spring Boot, JdbcTemplate, and JWT-based architecture while revisiting the application. This keeps the project's development history visible while allowing me to improve its functionality, organization, security, error handling, and maintainability.
