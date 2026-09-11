@@ -1,6 +1,7 @@
-package com.jolt.model;
+package com.jolt.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.jolt.model.User;
 
 /*
  * DTO stands for "Data Transfer Object".

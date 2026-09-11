@@ -1,4 +1,4 @@
-package com.jolt.security;
+package com.jolt.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

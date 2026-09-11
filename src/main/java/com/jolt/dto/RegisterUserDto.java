@@ -1,17 +1,25 @@
-package com.jolt.model;
+package com.jolt.dto;
+
+import javax.validation.constraints.NotEmpty;
 
 /*
  * DTO stands for "Data Transfer Object".
  * This type of class transfers data between the client and server.
  *
- * LoginDto contains the information sent by the client when logging in,
- * while LoginResponseDto contains the information returned to the client.
+ * RegisterUserDto contains the information sent by the client
+ * when creating a new user account.
  */
 
-public class LoginDto {
+public class RegisterUserDto {
 
+    @NotEmpty
     private String username;
+
+    @NotEmpty
     private String password;
+
+    @NotEmpty
+    private String confirmPassword;
 
     public String getUsername() {
         return username;
@@ -29,11 +37,12 @@ public class LoginDto {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "LoginDto{" +
-                "username='" + username + '\'' +
-                '}';
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
 }

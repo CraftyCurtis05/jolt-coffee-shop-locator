@@ -1,4 +1,4 @@
-package com.jolt.model;
+package com.jolt.dto;
 
 import javax.validation.constraints.NotEmpty;
 

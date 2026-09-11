@@ -1,4 +1,4 @@
-package com.jolt.dao;
+package com.jolt.config;
 
 import java.sql.SQLException;
 import java.util.Objects;
@@ -34,7 +34,7 @@ public class TestingDatabaseConfig {
     private static final String DB_NAME =
             Objects.requireNonNullElse(
                     System.getenv("DB_NAME"),
-                    "final_capstone_test"
+                    "jolt_test"
             );
 
     private static final String DB_USERNAME =
