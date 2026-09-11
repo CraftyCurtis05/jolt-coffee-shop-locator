@@ -63,3 +63,5 @@ coverage
 
 ### App Properties ###
 application.properties
+
+.env
