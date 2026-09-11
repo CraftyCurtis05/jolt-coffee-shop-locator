@@ -37,15 +37,15 @@ public class TestingDatabaseConfig {
                     "jolt_test"
             );
 
-    private static final String DB_USERNAME =
+    private static final String DB_ADMIN_USERNAME =
             Objects.requireNonNullElse(
-                    System.getenv("DB_USERNAME"),
+                    System.getenv("DB_ADMIN_USERNAME"),
                     "postgres"
             );
 
-    private static final String DB_PASSWORD =
+    private static final String DB_ADMIN_PASSWORD =
             Objects.requireNonNullElse(
-                    System.getenv("DB_PASSWORD"),
+                    System.getenv("DB_ADMIN_PASSWORD"),
                     ""
             );
 
@@ -61,8 +61,8 @@ public class TestingDatabaseConfig {
             adminDataSource.setUrl(
                     "jdbc:postgresql://localhost:5432/postgres"
             );
-            adminDataSource.setUsername(DB_USERNAME);
-            adminDataSource.setPassword(DB_PASSWORD);
+            adminDataSource.setUsername(DB_ADMIN_USERNAME);
+            adminDataSource.setPassword(DB_ADMIN_PASSWORD);
 
             adminJdbcTemplate = new JdbcTemplate(adminDataSource);
 
@@ -94,8 +94,8 @@ public class TestingDatabaseConfig {
                 )
         );
 
-        testDataSource.setUsername(DB_USERNAME);
-        testDataSource.setPassword(DB_PASSWORD);
+        testDataSource.setUsername(DB_ADMIN_USERNAME);
+        testDataSource.setPassword(DB_ADMIN_PASSWORD);
 
         // Disable auto-commit so database changes can be rolled back after each test
         testDataSource.setAutoCommit(false);
