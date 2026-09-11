@@ -380,7 +380,7 @@ export default {
 
       // Create the full address from the user's saved profile
       const fullAddress =
-        `${address1} ${address2 ? address2 + ', ' : ''}${city}, ${state} ${zipcode}`;
+        `${address1}${address2 ? ', ' + address2 : ''}, ${city}, ${state} ${zipcode}`;
 
       // Clear previous results and search using the user's saved address
       this.clearResults();
