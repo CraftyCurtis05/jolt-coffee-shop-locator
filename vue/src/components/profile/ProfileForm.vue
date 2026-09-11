@@ -430,97 +430,133 @@ export default {
 /* Laptop L - 1440px */
 
 .profile-form-container {
-  margin: 1rem auto;
+  width: 100%;
+  margin: 1rem auto 0;
 }
 
 .profile-form {
-  width: 20vw;
+  width: 100%;
+  color: rgb(53, 37, 19);
   background-color: rgb(160, 153, 145);
-  border: 1vw rgb(160, 153, 145) solid;
+  border: .15rem #e8bb64 solid;
+  border-radius: .25rem;
+  padding: 1rem;
 }
+
+.profile-form form {
+  width: 100%;
+}
+
+
+/* Profile Form Sections */
 
 .name,
 .birthday,
 .location {
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
-}
-
-#birthMonth {
-  width: 12vw;
-  height: 2.5vw;
-}
-
-fieldset {
-  width: 18vw;
-}
-
-fieldset::after {
-  content: "";
-  display: table;
-  clear: both;
+  width: 100%;
+  border: .1rem rgb(245, 242, 242) solid;
+  padding: .75rem;
+  margin: 0 auto .75rem;
 }
 
 legend {
   font-size: .9rem;
   font-weight: 500;
+  padding: 0 .25rem;
 }
+
+
+/* Profile Form Fields */
 
 .form {
   display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: .5rem;
+}
+
+.form:last-child {
+  margin-bottom: 0;
 }
 
 .form label {
   display: flex;
-  justify-content: center;
-  font-size: .9rem;
+  align-items: center;
+  width: 100%;
+  font-size: .85rem;
   font-weight: 500;
-  margin-top: .8rem;
+  text-align: left;
+  padding-right: .5rem;
 }
 
-.form input {
+.form input,
+.form select {
   width: 100%;
+  min-width: 0;
+  min-height: 2.2rem;
   font-size: .8rem;
-  border: .1rem solid #ccc;
-  border-radius: .1rem;
-  box-sizing: border-box;
-  padding: .6rem;
+  color: rgb(53, 37, 19);
+  background-color: rgb(245, 242, 242);
+  border: .1rem #ccc solid;
+  border-radius: .2rem;
+  padding: .5rem;
 }
+
+.form input:focus-visible,
+.form select:focus-visible {
+  outline: .15rem #e8bb64 solid;
+  outline-offset: .1rem;
+}
+
+
+/* Profile Form Columns */
 
 .col-30 {
+  display: flex;
   width: 35%;
 }
 
-.col-70,
-option {
-  width: 70%;
-  margin-top: .3rem;
+.col-70 {
+  width: 65%;
 }
 
-form .button-container {
+
+/* Profile Form Buttons */
+
+.button-container {
   display: flex;
-  flex-direction: row;
   justify-content: center;
-  margin-top: .9rem;
+  gap: .75rem;
+  width: 100%;
+  margin-top: .25rem;
 }
 
-form button {
+.button-container button {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 6rem;
-  height: 1.5rem;
-  font-size: .7rem;
+  width: 7rem;
+  min-height: 2rem;
+  font-size: .75rem;
   color: rgb(53, 37, 19);
   background-color: #e8bb64;
-  border-radius: .1rem;
-  margin-inline: .5rem;
-  transition: all 0.5s ease-in-out;
+  border: .1rem rgb(53, 37, 19) solid;
+  border-radius: .2rem;
+  padding: .4rem .6rem;
+  transition:
+    background-color 0.3s ease-in-out,
+    color 0.3s ease-in-out;
 }
 
-form button:hover {
+.button-container button:hover {
   color: #e8bb64;
   background-color: rgb(53, 37, 19);
+}
+
+.button-container button:focus-visible {
+  outline: .15rem #e8bb64 solid;
+  outline-offset: .2rem;
 }
 </style>

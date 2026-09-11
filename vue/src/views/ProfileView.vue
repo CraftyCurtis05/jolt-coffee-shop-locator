@@ -3,48 +3,73 @@
 <template>
   <div class="view-container">
 
+    <!-- Profile Header -->
+    <header>
+      <h1>Your Profile</h1>
+      <h2>Manage your personal details and profile picture</h2>
+    </header>
+
     <main>
 
       <!-- User Profile -->
-      <section class="profile-container">
+      <section class="profile-content">
 
-        <!-- Profile Picture -->
-        <article class="profile-pic">
-          <ProfilePic />
-        </article>
+        <!-- Profile Section Header -->
+        <header class="section-header">
+          <h2>Profile Information</h2>
+          <p>Your personal details and profile picture.</p>
+        </header>
 
-        <!-- Profile Details -->
-        <article class="profile-details">
-          <ProfileDetails
-            v-if="user"
-            :user="user"
-          />
-        </article>
+        <!-- Profile Card -->
+        <div class="profile-container">
 
-        <!-- Profile Form -->
-        <article class="profile-form">
-          <ProfileForm
-            ref="profileForm"
-            @profile-updated="updateProfile"
-            @form-visible="toggleUpdateButton"
-          />
+          <!-- Profile Picture -->
+          <article class="profile-pic">
+            <ProfilePic />
+          </article>
 
-          <!-- Update Profile Button -->
-          <button
-            v-if="showUpdateButton"
-            type="button"
-            @click="showForm"
-            title="Click to Create or Update Profile"
-          >
-            Update Profile
-          </button>
-        </article>
+          <!-- Profile Details -->
+          <article class="profile-details">
+            <ProfileDetails
+              v-if="user"
+              :user="user"
+            />
+          </article>
+
+          <!-- Profile Form -->
+          <article class="profile-form">
+            <ProfileForm
+              ref="profileForm"
+              @profile-updated="updateProfile"
+              @form-visible="toggleUpdateButton"
+            />
+
+            <!-- Update Profile Button -->
+            <button
+              v-if="showUpdateButton"
+              type="button"
+              @click="showForm"
+              title="Click to Create or Update Profile"
+            >
+              Update Profile
+            </button>
+          </article>
+
+        </div>
 
       </section>
 
       <!-- User Favorites -->
-      <section class="favorites-container">
+      <section class="favorites-content">
+
+        <!-- Favorites Section Header -->
+        <header class="section-header">
+          <h2>Saved Coffee Shops</h2>
+          <p>Your favorite places, all in one spot.</p>
+        </header>
+
         <Favorites />
+
       </section>
 
     </main>
@@ -127,36 +152,180 @@ export default {
 
 main {
   display: flex;
-  flex-direction: row;
+  align-items: flex-start;
+  width: 95%;
+  max-width: 100rem;
+  margin: 1.5rem auto;
 }
+
+
+/* Profile Page Sections */
+
+.profile-content {
+  width: 22rem;
+  flex-shrink: 0;
+}
+
+.favorites-content {
+  flex: 1;
+  min-width: 0;
+  margin-left: 1.5rem;
+}
+
+.section-header {
+  width: 100%;
+  text-align: left;
+  border-bottom: .1rem #e8bb64 solid;
+  padding-bottom: .75rem;
+  margin-bottom: 1rem;
+}
+
+.section-header h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: rgb(53, 37, 19);
+  margin: 0;
+}
+
+.section-header p {
+  font-size: .85rem;
+  color: #525459;
+  margin: .2rem 0 0;
+}
+
+
+/* User Profile */
 
 .profile-container {
   display: flex;
   flex-direction: column;
-  width: 30%;
+  align-items: center;
+  width: 100%;
   background-color: rgb(53, 37, 19);
-  box-sizing: border-box;
-  padding: 4% 5%;
+  border: .15rem #e8bb64 solid;
+  border-radius: .25rem;
+  box-shadow: 0 .35rem .75rem rgba(53, 37, 19, .15);
+  padding: 1.25rem;
 }
 
+.profile-pic,
+.profile-details,
+.profile-form {
+  width: 100%;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* Update Profile Button */
+
 .profile-form button {
-  width: 6rem;
-  height: 1.5rem;
-  font-size: .7rem;
+  width: 8rem;
+  min-height: 2rem;
+  font-size: .8rem;
   color: rgb(53, 37, 19);
   background-color: #e8bb64;
-  border-radius: .1rem;
+  border: .1rem rgb(53, 37, 19) solid;
+  border-radius: .2rem;
   margin-top: 1rem;
-  transition: all 0.5s ease-in-out;
+  transition:
+    background-color 0.3s ease-in-out,
+    color 0.3s ease-in-out;
 }
 
 .profile-form button:hover {
   color: #e8bb64;
   background-color: rgb(53, 37, 19);
-  cursor: pointer;
 }
 
-.favorites-container {
-  width: 100%;
+.profile-form button:focus-visible {
+  outline: .15rem #e8bb64 solid;
+  outline-offset: .2rem;
+}
+
+
+/* Tablet - 900px */
+@media screen and (max-width: 900px) {
+
+  main {
+    flex-direction: column;
+    width: 92%;
+  }
+
+  .profile-content {
+    width: 100%;
+    max-width: 36rem;
+    margin: 0 auto;
+  }
+
+  .favorites-content {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 1.5rem;
+  }
+
+  .profile-container {
+    width: 100%;
+    max-width: 32rem;
+    margin: 0 auto;
+  }
+
+}
+
+
+/* Mobile - 700px */
+@media screen and (max-width: 700px) {
+
+  main {
+    width: 95%;
+  }
+
+  .profile-content {
+    max-width: 30rem;
+  }
+
+  .profile-container {
+    max-width: 28rem;
+  }
+
+}
+
+
+/* Mobile - 500px */
+@media screen and (max-width: 500px) {
+
+  .profile-content {
+    width: 100%;
+    max-width: none;
+  }
+
+  .profile-container {
+    width: 94%;
+    max-width: none;
+  }
+
+}
+
+
+/* Mobile L - 426px */
+@media screen and (max-width: 426px) {
+
+  main {
+    width: 96%;
+  }
+
+  .profile-content {
+    width: 100%;
+  }
+
+  .section-header {
+    padding-bottom: .5rem;
+    margin-bottom: .75rem;
+  }
+
 }
 </style>

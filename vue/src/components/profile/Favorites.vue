@@ -3,11 +3,14 @@
 <template>
   <article class="favorites-container">
 
-    <!-- Favorites Header -->
-    <header>
-      <h1>Favorites</h1>
-      <h2>Coffee Shop Delights: My Personal Selection</h2>
-    </header>
+    <!-- Favorites Count -->
+    <p
+      class="favorites-count"
+      v-if="results.length > 0"
+    >
+      {{ results.length }}
+      {{ results.length === 1 ? 'saved coffee shop' : 'saved coffee shops' }}
+    </p>
 
     <!-- Favorite Coffee Shops -->
     <section class="results-container">
@@ -75,7 +78,11 @@
           >
             <img
               :src="result.businessImage || defaultImage"
-              alt="Yelp Coffee Shop Image"
+              :alt="
+                result.businessImage
+                  ? result.businessName + ' coffee shop'
+                  : 'No photo available for ' + result.businessName
+              "
               title="Click for Yelp Page"
             />
           </a>
@@ -86,6 +93,7 @@
           <button
             type="button"
             @click="deleteFavorite(result.favoriteId)"
+            :aria-label="'Delete ' + result.businessName + ' from favorites'"
             title="Delete Favorite"
           >
             Delete
@@ -96,8 +104,20 @@
     </section>
 
     <!-- No Favorites -->
-    <section v-if="results.length === 0">
-      <p>You have no favorite coffee shops saved yet!</p>
+    <section
+      class="no-favorites"
+      v-if="results.length === 0"
+    >
+      <p>
+        You have no saved coffee shops yet.
+        <router-link
+          :to="{ name: 'locator' }"
+          title="Find Coffee Shops"
+        >
+          Visit the Locator
+        </router-link>
+        to find one!
+      </p>
     </section>
 
   </article>
@@ -159,6 +179,14 @@ export default {
 
     // Delete a favorite coffee shop
     deleteFavorite(favoriteId) {
+      const confirmDelete = confirm(
+        'Are you sure you want to remove this coffee shop from your favorites?'
+      );
+
+      if (!confirmDelete) {
+        return;
+      }
+
       FavoriteService.deleteFavorite(favoriteId)
         .then(() => {
 
@@ -193,120 +221,250 @@ export default {
   width: 100%;
 }
 
-header {
-  text-align: center;
+.favorites-count {
+  width: 100%;
+  text-align: right;
+  font-size: .8rem;
+  color: #525459;
+  margin: 0 0 .75rem;
 }
 
-header h1 {
-  font-size: 1.8rem;
-  color: #e8bb64;
-  margin-bottom: 0;
-}
 
-header h2 {
-  font-size: 1rem;
-  font-weight: 400;
-  color: rgb(245, 242, 242);
-  margin-top: .3rem;
-}
+/* Favorites Grid */
 
 .results-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
   width: 100%;
 }
+
+
+/* Favorite Card */
 
 .result {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 20vw;
-  background-color: rgb(160, 153, 145);
-  border: .5vw rgb(160, 153, 145) solid;
-  margin: 1vw;
+  width: 100%;
+  min-width: 0;
+  background-color: rgb(245, 242, 242);
+  border: .15rem #e8bb64 solid;
+  border-radius: .25rem;
+  box-shadow: 0 .25rem .5rem rgba(53, 37, 19, .1);
+  padding: 1rem;
+  transition:
+    transform 0.3s ease-in-out,
+    border-color 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
 }
+
+.result:hover {
+  border-color: rgb(53, 37, 19);
+  box-shadow: 0 .4rem .75rem rgba(53, 37, 19, .16);
+  transform: translateY(-.2rem);
+}
+
+
+/* Coffee Shop Name */
 
 .name {
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
-  margin-bottom: .5rem;
+  min-height: 2.5rem;
 }
 
 .name a {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: bold;
+  line-height: 1.25;
   color: rgb(53, 37, 19);
   text-align: center;
   text-decoration: none;
+  transition: color 0.3s ease-in-out;
 }
 
 .name a:hover {
-  color: #e8bb64;
+  color: #9b6a20;
+  text-decoration: underline;
 }
+
+
+/* Coffee Shop Location */
 
 .location-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: .5rem;
+  width: 100%;
+  min-height: 3.5rem;
+  margin-top: .25rem;
 }
 
 .location-container .top,
 .location-container .bottom {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .location-container a {
   font-size: .8rem;
-  color: rgb(53, 37, 19);
+  line-height: 1.4;
+  color: #525459;
   text-align: center;
   text-decoration: none;
 }
 
 .location-container a:hover {
-  color: #e8bb64;
+  text-decoration: underline;
 }
+
+
+/* Coffee Shop Image */
 
 .image-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 18vw;
-  height: 18vw;
+  width: 100%;
+  border-top: .1rem #e8bb64 solid;
+  padding-top: .75rem;
+  margin-top: .5rem;
   overflow: hidden;
 }
 
-.image-container img {
+.image-container a {
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
+
+.image-container img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border: .1rem rgb(53, 37, 19) solid;
+  border-radius: .2rem;
+  transition: transform 0.3s ease-in-out;
+}
+
+.image-container a:hover img {
+  transform: scale(1.02);
+}
+
+
+/* Delete Favorite */
 
 .button-container {
   display: flex;
   justify-content: center;
   width: 100%;
+  border-top: .1rem #e8bb64 solid;
+  padding-top: .75rem;
+  margin-top: .75rem;
 }
 
 .button-container button {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 6rem;
-  height: 1.5rem;
-  font-size: .7rem;
+  width: 7rem;
+  min-height: 2rem;
+  font-size: .75rem;
   color: rgb(53, 37, 19);
-  background-color: #e8bb64;
-  border-radius: .1rem;
-  margin: .5rem auto;
-  transition: all 0.5s ease-in-out;
+  background-color: transparent;
+  border: .1rem rgb(53, 37, 19) solid;
+  border-radius: .2rem;
+  padding: .4rem .6rem;
+  transition:
+    background-color 0.3s ease-in-out,
+    color 0.3s ease-in-out;
 }
 
 .button-container button:hover {
-  color: #e8bb64;
+  color: rgb(245, 242, 242);
   background-color: rgb(53, 37, 19);
+}
+
+.name a:focus-visible,
+.location-container a:focus-visible,
+.image-container a:focus-visible,
+.button-container button:focus-visible {
+  outline: .15rem #e8bb64 solid;
+  outline-offset: .15rem;
+}
+
+
+/* No Favorite */
+
+.no-favorites {
+  width: 100%;
+  text-align: center;
+  background-color: rgb(245, 242, 242);
+  border: .15rem #e8bb64 solid;
+  border-radius: .25rem;
+  padding: 1.5rem;
+}
+
+.no-favorites p {
+  font-size: .9rem;
+  color: #525459;
+  margin: 0;
+}
+
+.no-favorites a {
+  color: rgb(53, 37, 19);
+  font-weight: 600;
+  text-decoration-color: #e8bb64;
+  text-underline-offset: .15rem;
+  transition: color 0.3s ease-in-out;
+}
+
+.no-favorites a:hover {
+  color: #9b6a20;
+}
+
+.no-favorites a:focus-visible {
+  outline: .15rem #e8bb64 solid;
+  outline-offset: .15rem;
+}
+
+
+/* Tablet - 1100px */
+@media screen and (max-width: 1100px) {
+
+  .results-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* Small Tablet - 700px */
+@media screen and (max-width: 700px) {
+
+  .results-container {
+    gap: .75rem;
+  }
+
+}
+
+
+/* Mobile - 500px */
+@media screen and (max-width: 500px) {
+
+  .results-container {
+    grid-template-columns: 1fr;
+  }
+
+  .result {
+    width: 100%;
+    max-width: 22rem;
+    margin: 0 auto;
+  }
+
 }
 </style>

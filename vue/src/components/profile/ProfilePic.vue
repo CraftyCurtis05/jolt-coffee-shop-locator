@@ -10,7 +10,7 @@
       <div class="image-container">
         <img
           :src="imageUrl || defaultImage"
-          alt="Profile Picture"
+          alt="User profile picture"
           title="Profile Picture"
         />
       </div>
@@ -161,22 +161,42 @@ export default {
   color: rgb(245, 242, 242);
 }
 
+
+/* Profile Picture */
+
+.profile-pic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .image-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 16vw;
-  height: 16vw;
+  width: 11rem;
+  height: 11rem;
   overflow: hidden;
-  border: .7vw #e8bb64 solid;
+  border: .45rem #e8bb64 solid;
   border-radius: 50%;
   margin: 0 auto;
 }
 
-img,
+.image-container img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+/* Profile Picture Upload */
+
 form {
-  width: 18vw;
-  height: auto;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 form input {
@@ -187,18 +207,27 @@ form button {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 6rem;
-  height: 1.5rem;
-  font-size: .7rem;
+  width: 7rem;
+  min-height: 2rem;
+  font-size: .8rem;
   color: rgb(53, 37, 19);
   background-color: #e8bb64;
-  border-radius: .1rem;
-  margin: .5rem auto;
-  transition: all 0.5s ease-in-out;
+  border: .1rem rgb(53, 37, 19) solid;
+  border-radius: .2rem;
+  padding: .4rem .75rem;
+  margin: .75rem auto 0;
+  transition:
+    background-color 0.3s ease-in-out,
+    color 0.3s ease-in-out;
 }
 
 form button:hover {
   color: #e8bb64;
   background-color: rgb(53, 37, 19);
+}
+
+form button:focus-visible {
+  outline: .15rem #e8bb64 solid;
+  outline-offset: .2rem;
 }
 </style>

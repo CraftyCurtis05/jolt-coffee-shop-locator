@@ -28,10 +28,13 @@
         title="Your Address"
       >
         <p class="address1">
-          {{ user.address1 }} {{ user.address2 }}
+          {{ user.address1 }}
+          <template v-if="user.address2">
+            {{ user.address2 }}
+          </template>
         </p>
 
-        <p class="address2">
+        <p class="city-state-zip">
           {{ user.city }}, {{ user.state }} {{ user.zipcode }}
         </p>
       </div>
@@ -67,30 +70,46 @@ export default {
   align-items: center;
   width: 100%;
   color: rgb(245, 242, 242);
-  border: .1rem #e8bb64 solid;
-  padding-top: 1vw;
-  margin-top: 1vw;
+  padding: .75rem 0 0;
+  margin-top: .75rem;
 }
+
+.profile-details {
+  width: 100%;
+}
+
+
+/* User Name */
 
 .name {
   font-size: 1.3rem;
   font-weight: bold;
-  margin: 0 auto;
+  margin: 0 auto .15rem;
 }
+
+
+/* User Birthday */
 
 .birthday {
   font-size: .8rem;
-  font-style: italic;
+  color: #e8bb64;
   margin: 0 auto;
 }
 
+
+/* User Address */
+
 .location-container {
-  margin: 1.8rem auto;
+  width: 100%;
+  border-top: .1rem #e8bb64 solid;
+  padding-top: .75rem;
+  margin-top: .75rem;
 }
 
 .address1,
-.address2 {
+.city-state-zip {
   font-size: .9rem;
+  line-height: 1.4;
   margin: .1rem auto;
 }
 </style>
