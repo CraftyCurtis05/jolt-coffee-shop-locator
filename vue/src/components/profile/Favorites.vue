@@ -93,6 +93,7 @@
           <button
             type="button"
             @click="deleteFavorite(result.favoriteId)"
+            :disabled="removingFavoriteId === result.favoriteId"
             :aria-label="'Delete ' + result.businessName + ' from favorites'"
             title="Delete Favorite"
           >
@@ -104,7 +105,11 @@
             </span>
 
             <span>
-              Remove
+              {{
+                removingFavoriteId === result.favoriteId
+                  ? 'Removing...'
+                  : 'Remove'
+              }}
             </span>
           </button>
         </div>
@@ -156,6 +161,9 @@ export default {
       // Store the user's favorite coffee shops
       results: [],
 
+      // Store the favorite currently being removed
+      removingFavoriteId: null,
+
       // Default image used when a coffee shop has no image
       defaultImage: defaultImage
     };
@@ -205,6 +213,9 @@ export default {
         return;
       }
 
+      // Show that this favorite is being removed
+      this.removingFavoriteId = favoriteId;
+
       FavoriteService.deleteFavorite(favoriteId)
         .then(() => {
 
@@ -216,6 +227,9 @@ export default {
         })
         .catch(error => {
           console.error('Error deleting favorite:', error);
+        })
+        .finally(() => {
+          this.removingFavoriteId = null;
         });
     }
   },
@@ -403,7 +417,7 @@ export default {
     transform 0.15s ease-in-out;
 }
 
-.button-container button:hover {
+.button-container button:hover:not(:disabled) {
   color: #ffffff;
   background-color: #8b1e1e;
   border-color: #8b1e1e;
@@ -411,6 +425,12 @@ export default {
     inset 0 .15rem .3rem rgba(0, 0, 0, .25),
     0 0 .3rem rgba(139, 30, 30, .25);
   transform: translateY(-.05rem);
+}
+
+.button-container button:disabled {
+  cursor: wait;
+  opacity: .75;
+  transform: none;
 }
 
 .button-container button:active {

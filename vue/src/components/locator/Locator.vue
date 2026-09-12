@@ -152,7 +152,10 @@
             <button
               type="button"
               @click="setFavorite(result)"
-              :disabled="userFavorites.includes(result.id)"
+              :disabled="
+                userFavorites.includes(result.id) ||
+                savingFavoriteId === result.id
+              "
               :aria-label="
                 userFavorites.includes(result.id)
                   ? result.name + ' is already in favorites'
@@ -166,7 +169,15 @@
               />
 
               <span>
-                {{ userFavorites.includes(result.id) ? 'Added to Favorites' : 'Add to Favorites' }}
+                <span>
+                  {{
+                    savingFavoriteId === result.id
+                      ? 'Saving...'
+                      : userFavorites.includes(result.id)
+                        ? 'Added to Favorites'
+                        : 'Add to Favorites'
+                  }}
+                </span>
               </span>
             </button>
           </section>
@@ -224,7 +235,10 @@ export default {
       favoriteAddedButton: favoriteAddedButton,
 
       // Store the user's saved favorite business IDs
-      userFavorites: []
+      userFavorites: [],
+
+      // Store the coffee shop currently being added to favorites
+      savingFavoriteId: null
     };
   },
 
@@ -344,6 +358,9 @@ export default {
         return;
       }
 
+      // Show that this favorite is being saved
+      this.savingFavoriteId = result.id;
+
       // Send the coffee shop information to the server
       FavoriteService
         .createFavorite({
@@ -391,6 +408,10 @@ export default {
             }));
             console.error('Error adding favorite:', error);
           }
+        })
+        .finally(() => {
+          // Allow the favorite button to be used again
+          this.savingFavoriteId = null;
         });
     },
 
@@ -989,6 +1010,10 @@ export default {
   .results-section {
     width: 98%;
     padding: 0 .4rem;
+  }
+
+  .results-header {
+    padding-top: .5rem;
   }
 
   .results-container {
