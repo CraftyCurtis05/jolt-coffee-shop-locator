@@ -8,14 +8,14 @@ import javax.annotation.PreDestroy;
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 
-@Configuration
+@TestConfiguration
 public class TestingDatabaseConfig {
 
     // Use environment variables when provided, otherwise use local test defaults
