@@ -25,6 +25,7 @@
                 type="text"
                 id="firstName"
                 v-model="user.firstName"
+                autocomplete="given-name"
                 :required="!status"
                 @input="trackChanges"
                 title="Enter First Name"
@@ -43,6 +44,7 @@
                 type="text"
                 id="lastName"
                 v-model="user.lastName"
+                autocomplete="family-name"
                 :required="!status"
                 @input="trackChanges"
                 title="Enter Last Name"
@@ -138,7 +140,7 @@
           <!-- Address 1 -->
           <div class="form">
             <div class="col-30">
-              <label for="address1">Address 1:</label>
+              <label for="address1">Street Address:</label>
             </div>
 
             <div class="col-70">
@@ -146,9 +148,10 @@
                 type="text"
                 id="address1"
                 v-model="user.address1"
+                autocomplete="address-line1"
                 :required="!status"
                 @input="trackChanges"
-                title="Enter Address"
+                title="Enter Street Address"
               />
             </div>
           </div>
@@ -156,7 +159,7 @@
           <!-- Address 2 -->
           <div class="form">
             <div class="col-30">
-              <label for="address2">Address 2:</label>
+              <label for="address2">Apt / Unit:</label>
             </div>
 
             <div class="col-70">
@@ -164,8 +167,9 @@
                 type="text"
                 id="address2"
                 v-model="user.address2"
+                autocomplete="address-line2"
                 @input="trackChanges"
-                title="Enter Address 2"
+                title="Enter Apartment or Unit Number (Optional)"
               />
             </div>
           </div>
@@ -181,6 +185,8 @@
                 type="text"
                 id="city"
                 v-model="user.city"
+                placeholder="Columbus"
+                autocomplete="address-level2"
                 :required="!status"
                 @input="trackChanges"
                 title="Enter City"
@@ -200,9 +206,11 @@
                 id="state"
                 v-model="user.state"
                 maxlength="2"
+                placeholder="OH"
+                autocomplete="address-level1"
                 :required="!status"
                 @input="trackChanges"
-                title="Enter State Abbreviation"
+                title="Enter 2-letter state abbreviation"
               />
             </div>
           </div>
@@ -218,9 +226,14 @@
                 type="text"
                 id="zipcode"
                 v-model="user.zipcode"
+                maxlength="5"
+                pattern="\d{5}"
+                inputmode="numeric"
+                placeholder="43215"
+                autocomplete="postal-code"
                 :required="!status"
                 @input="trackChanges"
-                title="Enter Zip Code"
+                title="Enter 5-digit ZIP code"
               />
             </div>
           </div>

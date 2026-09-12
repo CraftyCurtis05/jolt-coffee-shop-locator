@@ -21,8 +21,8 @@
           id="location-search"
           type="text"
           v-model="locationId"
-          placeholder="City, ZIP code or address"
-          title="Enter Your Search Location"
+          placeholder="City, state or ZIP code"
+          title="Enter a city, state or ZIP code"
         />
 
         <button
@@ -249,9 +249,28 @@ export default {
         return;
       }
 
+      const isZipCode = /^\d{5}$/.test(location);
+      const isCityOrState = /^[A-Za-z][A-Za-z\s.'-]*$/.test(location);
+
+      // Only allow a city, state or 5-digit ZIP code
+      if (!isZipCode && !isCityOrState) {
+        window.dispatchEvent(new CustomEvent('app-notification', {
+          detail: {
+            message: 'Please enter a city, state or 5-digit ZIP code.',
+            type: 'warning'
+          }
+        }));
+        return;
+      }
+
+      // Format multi-word locations for the Yelp search
+      const searchLocation = isZipCode
+        ? location
+        : location.replace(/\s+/g, '_');
+
       // Clear the previous search and get new results
       this.clearResults();
-      this.getResults(location);
+      this.getResults(searchLocation);
     },
 
     // Clear previous search results
