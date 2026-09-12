@@ -31,9 +31,10 @@
 
         <button
           type="submit"
-          title="Click to Get Coffee Shops"
+          :disabled="isSearching"
+          :title="isSearching ? 'Searching for Coffee Shops' : 'Click to Get Coffee Shops'"
         >
-          Search
+          {{ isSearching ? 'Searching...' : 'Search' }}
         </button>
       </form>
 
@@ -43,13 +44,14 @@
           class="home-button"
           type="button"
           @click="searchHome()"
-          title="Click to Get Coffee Shops Near Home"
+          :disabled="isSearching"
+          :title="isSearching ? 'Searching for Coffee Shops Near Home' : 'Click to Get Coffee Shops Near Home'"
         >
           <img
             :src="houseIcon"
             alt=""
           />
-          Search Near Home
+          {{ isSearching ? 'Searching...' : 'Search Near Home' }}
         </button>
       </section>
 
@@ -213,6 +215,7 @@ export default {
       locationId: '',
       results: [],
       hasSearched: false,
+      isSearching: false,
 
       // Locator images
       houseIcon: houseIcon,
@@ -287,6 +290,9 @@ export default {
 
     // Get coffee shops for a searched location
     getResults(locationId, fallbackLocation = null) {
+      // Show that a coffee shop search is in progress
+      this.isSearching = true;
+
       LocatorService
         .getCoffee(locationId)
         .then((response) => {
@@ -294,6 +300,7 @@ export default {
           // Store the coffee shops returned by Yelp
           this.results = response.businesses || [];
           this.hasSearched = true;
+          this.isSearching = false;
 
         })
         .catch((error) => {
@@ -311,6 +318,8 @@ export default {
 
           // Display an error if the search fails
           this.hasSearched = false;
+          this.isSearching = false;
+
           window.dispatchEvent(new CustomEvent('app-notification', {
             detail: {
               message: 'There was a problem fetching coffee shops! Please try again.',
@@ -583,8 +592,8 @@ export default {
     transform 0.15s ease-in-out;
 }
 
-.search-bar button:hover,
-.search-home button:hover {
+.search-bar button:hover:not(:disabled),
+.search-home button:hover:not(:disabled) {
   color: #e8bb64;
   background-color: rgb(53, 37, 19);
   border-color: #e8bb64;
@@ -602,6 +611,13 @@ export default {
   transform: translateY(.1rem);
 }
 
+.search-bar button:disabled,
+.search-home button:disabled {
+  cursor: wait;
+  opacity: .75;
+  transform: none;
+}
+
 .search-bar button:focus-visible,
 .search-home button:focus-visible {
   outline: .15rem #e8bb64 solid;
@@ -614,7 +630,7 @@ export default {
     transform 0.3s ease-in-out;
 }
 
-.search-home button:hover img {
+.search-home button:hover:not(:disabled) img {
   transform: scale(1.08);
   filter:
     brightness(0)
