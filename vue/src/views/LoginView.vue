@@ -94,7 +94,13 @@
 
         <!-- Login and Registration Buttons -->
         <div class="button-container">
-          <button id="sign-in" type="submit">Sign in</button>
+          <button
+            type="submit"
+            :disabled="isLoggingIn"
+            :title="isLoggingIn ? 'Signing In' : 'Click to Sign In'"
+          >
+            {{ isLoggingIn ? 'Signing in...' : 'Sign In' }}
+          </button>
 
           <router-link
             id="register"
@@ -124,6 +130,9 @@ export default {
         password: ''
       },
 
+      // Track whether the login request is being processed
+      isLoggingIn: false,
+
       // Track invalid login information
       invalidCredentials: false
     };
@@ -133,6 +142,8 @@ export default {
 
     // Log in an existing user
     login() {
+      // Show that the login request is being processed
+      this.isLoggingIn = true;
 
       // Clear previous login errors before trying again
       this.invalidCredentials = false;
@@ -167,6 +178,10 @@ export default {
             }
           }));
         }
+      })
+      .finally(() => {
+        // Allow another login attempt if needed
+        this.isLoggingIn = false;
       });
     }
   }
@@ -302,12 +317,22 @@ button,
   -o-transition: all 0.5s; /* Opera */
 }
 
-button:hover,
+button:hover:not(:disabled),
 #register:hover {
   background-color: #e8bb64;
   color: rgb(53, 37, 19);
   text-decoration: underline;
   border: .1rem solid #ffffff;
+}
+
+button:active:not(:disabled) {
+
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: .75;
+  transform: none;
 }
 
 #sign-in {

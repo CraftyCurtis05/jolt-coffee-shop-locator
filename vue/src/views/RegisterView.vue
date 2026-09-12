@@ -90,7 +90,14 @@
 
         <!-- Registration Button and Login Link -->
         <div class="button-container">
-          <button id="create" type="submit">Create Account</button>
+          <button
+            id="create"
+            type="submit"
+            :disabled="isRegistering"
+            :title="isRegistering ? 'Creating Account' : 'Click to Create Account'"
+          >
+            {{ isRegistering ? 'Creating Account...' : 'Create Account' }}
+          </button>
 
           <router-link id="account" v-bind:to="{ name: 'login' }">
             Already have an account? Log in.
@@ -121,6 +128,9 @@ export default {
       // Registration error information
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',
+
+      // Track whether the registration request is being processed
+      isRegistering: false,
     };
   },
 
@@ -135,6 +145,9 @@ export default {
         this.registrationErrorMsg = 'Password & Confirm Password do not match.';
 
       } else {
+
+        // Show that the registration request is being processed
+        this.isRegistering = true;
 
         // Send the new user information to the server
         authService
@@ -160,6 +173,10 @@ export default {
           } else {
             this.registrationErrorMsg = 'There were problems registering this user.';
           }
+        })
+        .finally(() => {
+          // Allow another registration attempt if needed
+          this.isRegistering = false;
         });
       }
     },
@@ -295,11 +312,16 @@ button {
   -o-transition: all 0.5s; /* Opera */
 }
 
-button:hover {
+button:hover:not(:disabled) {
   background-color: #e8bb64;
   color: rgb(53, 37, 19);
   text-decoration: underline;
   border: .1vw solid #ffffff;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: .75;
 }
 
 #account {
