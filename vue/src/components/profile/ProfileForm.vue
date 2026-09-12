@@ -265,14 +265,16 @@
         <div class="button-container">
           <button
             type="submit"
-            title="Click to Save Updated Profile"
+            :disabled="isSaving"
+            :title="isSaving ? 'Saving Profile' : 'Click to Save Updated Profile'"
           >
-            Save Profile
+            {{ isSaving ? 'Saving...' : 'Save Profile' }}
           </button>
 
           <button
             type="button"
             @click="cancelChanges"
+            :disabled="isSaving"
             title="Click to Close Update Profile"
           >
             Cancel
@@ -375,6 +377,9 @@ export default {
       // Store profile fields after the user makes changes
       changedFields: {},
 
+      // Track whether the profile is currently being saved
+      isSaving: false,
+
       // User profile information
       user: {
         firstName: '',
@@ -387,7 +392,7 @@ export default {
         city: '',
         state: '',
         zipcode: ''
-      }
+      },
     };
   },
 
@@ -428,6 +433,8 @@ export default {
 
     // Create or update the user's profile
     async saveProfile() {
+      this.isSaving = true;
+
       try {
 
         // Create a new profile
@@ -458,6 +465,7 @@ export default {
 
           // Close the form when no profile fields were changed
           if (Object.keys(updatedProfile).length === 0) {
+            this.isSaving = false;
             this.closeForm();
             return;
           }
@@ -499,6 +507,9 @@ export default {
             }
           }));
         }
+      } finally {
+        // Allow the profile form to be saved again
+        this.isSaving = false;
       }
     },
 
@@ -671,7 +682,7 @@ legend {
     transform 0.15s ease-in-out;
 }
 
-.button-container button:hover {
+.button-container button:hover:not(:disabled) {
   color: #e8bb64;
   background-color: rgb(53, 37, 19);
   border-color: #e8bb64;
@@ -681,11 +692,17 @@ legend {
   transform: translateY(.05rem);
 }
 
-.button-container button:active {
+.button-container button:active:not(:disabled) {
   box-shadow:
     inset 0 .25rem .4rem rgba(0, 0, 0, .45),
     0 0 .25rem rgba(232, 187, 100, .3);
   transform: translateY(.1rem);
+}
+
+.button-container button:disabled {
+  cursor: wait;
+  opacity: .75;
+  transform: none;
 }
 
 .button-container button:focus-visible {

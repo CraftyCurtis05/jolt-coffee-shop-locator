@@ -30,9 +30,22 @@
         <button
           type="button"
           @click="handleButtonClick"
-          :title="selectedFile ? 'Click to Save Profile Picture' : 'Click to Change Profile Picture'"
+          :disabled="isUploading || isRemoving"
+          :title="
+            isUploading
+              ? 'Uploading Profile Picture'
+              : selectedFile
+                ? 'Click to Save Profile Picture'
+                : 'Click to Change Profile Picture'
+          "
         >
-          {{ selectedFile ? 'Save New Picture' : 'Change Picture' }}
+          {{
+            isUploading
+              ? 'Uploading...'
+              : selectedFile
+                ? 'Save New Picture'
+                : 'Change Picture'
+          }}
         </button>
 
         <!-- Remove Profile Picture -->
@@ -41,9 +54,10 @@
           type="button"
           class="remove-image-button"
           @click="deleteImage"
-          title="Click to Remove Profile Picture"
+          :disabled="isUploading || isRemoving"
+          :title="isRemoving ? 'Removing Profile Picture' : 'Click to Remove Profile Picture'"
         >
-          Remove Picture
+          {{ isRemoving ? 'Removing...' : 'Remove Picture' }}
         </button>
 
       </form>
@@ -69,6 +83,10 @@ export default {
 
       // Store the user's uploaded profile image
       imageUrl: null,
+
+      // Track profile picture requests
+      isUploading: false,
+      isRemoving: false,
 
       // Default profile image
       defaultImage: defaultImage
@@ -125,6 +143,9 @@ export default {
 
     // Upload the selected profile image
     async uploadImage() {
+      // Show that the profile picture is being uploaded
+      this.isUploading = true;
+
       const formData = new FormData();
       formData.append('image', this.selectedFile);
 
@@ -159,11 +180,17 @@ export default {
             type: 'error'
           }
         }));
+      } finally {
+        // Allow profile picture actions again
+        this.isUploading = false;
       }
     },
 
     // Delete the user's current profile image
     async deleteImage() {
+      // Show that the profile picture is being removed
+      this.isRemoving = true;
+
       try {
 
         // Delete the image from the server
@@ -191,6 +218,9 @@ export default {
             type: 'error'
           }
         }));
+      } finally {
+        // Allow profile picture actions again
+        this.isRemoving = false;
       }
     },
 
@@ -289,7 +319,7 @@ form button {
     transform 0.15s ease-in-out;
 }
 
-form button:hover {
+form button:hover:not(:disabled) {
   color: #e8bb64;
   background-color: rgb(53, 37, 19);
   border-color: #e8bb64;
@@ -299,11 +329,17 @@ form button:hover {
   transform: translateY(.05rem);
 }
 
-form button:active {
+form button:active:not(:disabled) {
   box-shadow:
     inset 0 .25rem .4rem rgba(0, 0, 0, .45),
     0 0 .25rem rgba(232, 187, 100, .3);
   transform: translateY(.1rem);
+}
+
+form button:disabled {
+  cursor: wait;
+  opacity: .75;
+  transform: none;
 }
 
 form button:focus-visible {
