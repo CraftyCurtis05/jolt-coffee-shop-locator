@@ -28,7 +28,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = {
+        "http://localhost:5173",
+        "https://jolt.jennifercurtis.me"
+})
 public class AuthenticationController {
 
     private final TokenProvider tokenProvider;

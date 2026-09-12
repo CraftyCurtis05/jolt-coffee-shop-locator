@@ -61,9 +61,6 @@ public class CoffeeController {
                     String.class
             );
 
-            // *DEBUG* Log the Yelp response for debugging
-            // System.out.println("Yelp Response: " + response.getBody());
-
             return response.getBody();
 
         } catch (HttpClientErrorException.BadRequest e) {
