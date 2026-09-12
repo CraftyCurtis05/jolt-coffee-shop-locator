@@ -1,6 +1,7 @@
 package com.jolt.dto;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /*
  * DTO stands for "Data Transfer Object".
@@ -12,13 +13,17 @@ import javax.validation.constraints.NotEmpty;
 
 public class RegisterUserDto {
 
-    @NotEmpty
+    @NotBlank
+    @Size(
+        max = 50,
+        message = "Username cannot be longer than 50 characters"
+    )
     private String username;
 
-    @NotEmpty
+    @NotBlank
     private String password;
 
-    @NotEmpty
+    @NotBlank
     private String confirmPassword;
 
     public String getUsername() {

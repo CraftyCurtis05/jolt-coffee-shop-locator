@@ -29,10 +29,6 @@
       alt="Jolt logo"
     />
 
-    <!-- Background opacity for login form -->
-    <div class="form-container-opacity">
-    </div>
-
     <!-- Login Form -->
     <div class="login-form">
       <form v-on:submit.prevent="login">
@@ -82,13 +78,12 @@
           </div>
 
           <!-- Invalid Login Message -->
-          <div
-            role="alert"
+          <p
             v-if="invalidCredentials"
-            id="alert2"
+            class="alert-container"
           >
-            Invalid username and password!
-          </div>
+            Invalid username or password.
+          </p>
 
         </div>
 
@@ -103,10 +98,10 @@
           </button>
 
           <router-link
-            id="register"
-            v-bind:to="{ name: 'register' }"
+            :to="{ name: 'register' }"
+            class="register-link"
           >
-            Register
+            Don't have an account? Register.
           </router-link>
         </div>
 
@@ -194,15 +189,17 @@ export default {
 .login-view {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   position: relative;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
   font-family: 'Ubuntu', sans-serif;
   color: #333437;
+  padding: 2rem 1rem;
   z-index: 0;
-  caret-color: transparent; /* Hides the caret */
+  caret-color: transparent;
 }
 
 /* Login and registration background video */
@@ -218,34 +215,25 @@ export default {
 }
 
 .jolt-logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 20rem;
+  width: clamp(12rem, 24vw, 20rem);
   height: auto;
-  padding-top: 15vh;
-  z-index: 10;
-}
-
-.form-container-opacity {
-  position: absolute;
-  width: 16rem;
-  height: 20rem;
-  background-color: rgb(160, 153, 145);
-  border: .2rem rgb(53, 37, 19) solid;
-  border-radius: .2rem;
-  margin-top: 14rem;
-  opacity: .7;
-  z-index: 1;
+  margin-bottom: -.75rem;
+  z-index: 100;
 }
 
 .login-form {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  justify-content: center;
-  padding-top: .2rem;
+  position: relative;
+  width: min(90%, 24rem);
+  background-color: rgba(160, 153, 145, .82);
+  border: .15rem rgb(53, 37, 19) solid;
+  border-radius: .25rem;
+  box-shadow: 0 .4rem 1rem rgba(0, 0, 0, .3);
+  padding: 1.5rem;
   z-index: 10;
+}
+
+.login-form form {
+  width: 100%;
 }
 
 h1 {
@@ -257,22 +245,27 @@ h1 {
 .form-input {
   display: flex;
   flex-direction: column;
-  align-items: start;
-  font-size: 1.1rem;
-  width: 14rem;
-  height: 3.5rem;
+  width: 100%;
+  font-size: 1rem;
+  margin-bottom: .9rem;
   caret-color: black; /* Shows the caret inside form inputs */
 }
 
 .form-input input {
-  height: 4rem;
-  width: 13.5rem;
-  font-size: 1.1rem;
+  width: 100%;
+  min-height: 2.5rem;
+  font-size: 1rem;
+  background-color: #ffffff;
   border: .1rem rgb(53, 37, 19) solid;
+  border-radius: .2rem;
+  padding: .45rem .6rem;
 }
 
-.password {
-  padding-top: .5rem;
+.form-input label {
+  width: 100%;
+  text-align: left;
+  font-weight: 500;
+  margin-bottom: .25rem;
 }
 
 .alert-container {
@@ -289,12 +282,12 @@ h1 {
 }
 
 .button-container {
-  position: absolute;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
-  width: 14rem;
-  padding-top: 1rem;
+  align-items: center;
+  width: 100%;
+  padding-top: .5rem;
 }
 
 button,
@@ -341,5 +334,68 @@ button:disabled {
 
 #register {
   text-decoration: none;
+}
+
+.register-link {
+  font-size: .9rem;
+  color: #333437;
+  text-decoration: underline;
+  text-underline-offset: .15rem;
+  margin-top: 1rem;
+}
+
+.register-link:hover {
+  color: rgb(53, 37, 19);
+}
+
+.register-link:focus-visible {
+  outline: .15rem #e8bb64 solid;
+  outline-offset: .15rem;
+}
+
+.alert-container {
+  width: 100%;
+  font-size: .8rem;
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: center;
+  color: #681c29;
+  margin-top: .25rem;
+}
+
+
+/* Mobile - 500px */
+@media screen and (max-width: 500px) {
+
+  .login-view {
+    justify-content: flex-start;
+    padding: 2rem 1rem;
+  }
+
+  .jolt-logo {
+    width: 13rem;
+    margin-top: 1rem;
+    margin-bottom: -.5rem;
+  }
+
+  .login-form {
+    width: 100%;
+    max-width: 22rem;
+    padding: 1.25rem;
+  }
+
+  h1 {
+    font-size: 1.25rem;
+  }
+
+  .form-input {
+    font-size: .9rem;
+  }
+
+  .form-input input {
+    min-height: 2.75rem;
+    font-size: 1rem;
+  }
+
 }
 </style>
