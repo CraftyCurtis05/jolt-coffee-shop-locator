@@ -34,7 +34,14 @@ public class JdbcProfileDao implements ProfileDao {
             String capitalizedFirstName = capitalizeName(profile.getFirstName());
             String capitalizedLastName = capitalizeName(profile.getLastName());
             String capitalizedAddress1 = capitalizeAddress(profile.getAddress1());
-            String capitalizedAddress2 = capitalizeAddress(profile.getAddress2());
+            // Trim optional address information before formatting
+            String address2 = profile.getAddress2();
+
+            if (address2 != null) {
+                address2 = address2.trim();
+            }
+
+            String capitalizedAddress2 = capitalizeAddress(address2);
             String capitalizedCity = capitalizeCity(profile.getCity());
             String capitalizedState = capitalizeState(profile.getState());
 

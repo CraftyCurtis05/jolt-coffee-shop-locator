@@ -25,10 +25,12 @@
                 type="text"
                 id="firstName"
                 v-model="user.firstName"
+                maxlength="50"
+                pattern="[A-Za-z][A-Za-z' \-]*"
                 autocomplete="given-name"
-                :required="!status"
+                required
                 @input="trackChanges"
-                title="Enter First Name"
+                title="Enter a valid first name using letters, spaces, apostrophes, or hyphens"
               />
             </div>
           </div>
@@ -44,10 +46,12 @@
                 type="text"
                 id="lastName"
                 v-model="user.lastName"
+                maxlength="50"
+                pattern="[A-Za-z][A-Za-z' \-]*"
                 autocomplete="family-name"
-                :required="!status"
+                required
                 @input="trackChanges"
-                title="Enter Last Name"
+                title="Enter a valid last name using letters, spaces, apostrophes, or hyphens"
               />
             </div>
           </div>
@@ -71,7 +75,7 @@
                 id="birthMonth"
                 v-model="user.birthMonth"
                 :disabled="status"
-                :required="!status"
+                required
                 title="Enter Birth Month"
               >
                 <option
@@ -104,7 +108,7 @@
                 id="birthDay"
                 v-model="user.birthDay"
                 :disabled="status"
-                :required="!status"
+                required
                 min="1"
                 max="31"
                 title="Enter Birth Day"
@@ -124,7 +128,7 @@
                 id="birthYear"
                 v-model="user.birthYear"
                 :disabled="status"
-                :required="!status"
+                required
                 min="1900"
                 :max="currentYear"
                 title="Enter Birth Year"
@@ -148,10 +152,12 @@
                 type="text"
                 id="address1"
                 v-model="user.address1"
+                minlength="3"
+                maxlength="100"
                 autocomplete="address-line1"
-                :required="!status"
+                required
                 @input="trackChanges"
-                title="Enter Street Address"
+                title="Enter a street address between 3 and 100 characters"
               />
             </div>
           </div>
@@ -167,9 +173,10 @@
                 type="text"
                 id="address2"
                 v-model="user.address2"
+                maxlength="50"
                 autocomplete="address-line2"
                 @input="trackChanges"
-                title="Enter Apartment or Unit Number (Optional)"
+                title="Address line 2 can contain up to 50 characters"
               />
             </div>
           </div>
@@ -185,11 +192,14 @@
                 type="text"
                 id="city"
                 v-model="user.city"
+                minlength="2"
+                maxlength="100"
+                pattern="[A-Za-z][A-Za-z .'\-]*"
                 placeholder="Columbus"
                 autocomplete="address-level2"
-                :required="!status"
+                required
                 @input="trackChanges"
-                title="Enter City"
+                title="Enter a valid city using letters, spaces, periods, apostrophes, or hyphens"
               />
             </div>
           </div>
@@ -201,17 +211,29 @@
             </div>
 
             <div class="col-70">
-              <input
-                type="text"
+              <select
                 id="state"
                 v-model="user.state"
-                maxlength="2"
-                placeholder="OH"
                 autocomplete="address-level1"
-                :required="!status"
-                @input="trackChanges"
-                title="Enter 2-letter state abbreviation"
-              />
+                required
+                @change="trackChanges"
+                title="Select State"
+              >
+                <option
+                  value=""
+                  disabled
+                >
+                  Select State
+                </option>
+
+                <option
+                  v-for="state in states"
+                  :key="state.abbreviation"
+                  :value="state.abbreviation"
+                >
+                  {{ state.name }}
+                </option>
+              </select>
             </div>
           </div>
 
@@ -231,9 +253,9 @@
                 inputmode="numeric"
                 placeholder="43215"
                 autocomplete="postal-code"
-                :required="!status"
+                required
                 @input="trackChanges"
-                title="Enter 5-digit ZIP code"
+                title="Enter a valid 5-digit ZIP code"
               />
             </div>
           </div>
@@ -250,7 +272,7 @@
 
           <button
             type="button"
-            @click="closeForm"
+            @click="cancelChanges"
             title="Click to Close Update Profile"
           >
             Cancel
@@ -285,6 +307,60 @@ export default {
         'October',
         'November',
         'December'
+      ],
+
+      // States used for the state dropdown
+      states: [
+        { name: 'Alabama', abbreviation: 'AL' },
+        { name: 'Alaska', abbreviation: 'AK' },
+        { name: 'Arizona', abbreviation: 'AZ' },
+        { name: 'Arkansas', abbreviation: 'AR' },
+        { name: 'California', abbreviation: 'CA' },
+        { name: 'Colorado', abbreviation: 'CO' },
+        { name: 'Connecticut', abbreviation: 'CT' },
+        { name: 'Delaware', abbreviation: 'DE' },
+        { name: 'Florida', abbreviation: 'FL' },
+        { name: 'Georgia', abbreviation: 'GA' },
+        { name: 'Hawaii', abbreviation: 'HI' },
+        { name: 'Idaho', abbreviation: 'ID' },
+        { name: 'Illinois', abbreviation: 'IL' },
+        { name: 'Indiana', abbreviation: 'IN' },
+        { name: 'Iowa', abbreviation: 'IA' },
+        { name: 'Kansas', abbreviation: 'KS' },
+        { name: 'Kentucky', abbreviation: 'KY' },
+        { name: 'Louisiana', abbreviation: 'LA' },
+        { name: 'Maine', abbreviation: 'ME' },
+        { name: 'Maryland', abbreviation: 'MD' },
+        { name: 'Massachusetts', abbreviation: 'MA' },
+        { name: 'Michigan', abbreviation: 'MI' },
+        { name: 'Minnesota', abbreviation: 'MN' },
+        { name: 'Mississippi', abbreviation: 'MS' },
+        { name: 'Missouri', abbreviation: 'MO' },
+        { name: 'Montana', abbreviation: 'MT' },
+        { name: 'Nebraska', abbreviation: 'NE' },
+        { name: 'Nevada', abbreviation: 'NV' },
+        { name: 'New Hampshire', abbreviation: 'NH' },
+        { name: 'New Jersey', abbreviation: 'NJ' },
+        { name: 'New Mexico', abbreviation: 'NM' },
+        { name: 'New York', abbreviation: 'NY' },
+        { name: 'North Carolina', abbreviation: 'NC' },
+        { name: 'North Dakota', abbreviation: 'ND' },
+        { name: 'Ohio', abbreviation: 'OH' },
+        { name: 'Oklahoma', abbreviation: 'OK' },
+        { name: 'Oregon', abbreviation: 'OR' },
+        { name: 'Pennsylvania', abbreviation: 'PA' },
+        { name: 'Rhode Island', abbreviation: 'RI' },
+        { name: 'South Carolina', abbreviation: 'SC' },
+        { name: 'South Dakota', abbreviation: 'SD' },
+        { name: 'Tennessee', abbreviation: 'TN' },
+        { name: 'Texas', abbreviation: 'TX' },
+        { name: 'Utah', abbreviation: 'UT' },
+        { name: 'Vermont', abbreviation: 'VT' },
+        { name: 'Virginia', abbreviation: 'VA' },
+        { name: 'Washington', abbreviation: 'WA' },
+        { name: 'West Virginia', abbreviation: 'WV' },
+        { name: 'Wisconsin', abbreviation: 'WI' },
+        { name: 'Wyoming', abbreviation: 'WY' }
       ],
 
       // Current year used for birth year validation
@@ -329,6 +405,16 @@ export default {
       this.$emit('form-visible', false);
     },
 
+    // Discard unsaved changes and close the profile form
+    cancelChanges() {
+      if (ProfileService.originalProfile) {
+        this.user = { ...ProfileService.originalProfile };
+      }
+
+      this.changedFields = {};
+      this.closeForm();
+    },
+
     // Check whether the user already has a profile
     async fetchStatus() {
       try {
@@ -369,6 +455,13 @@ export default {
 
           // Send the updated profile fields to the server
           const updatedProfile = { ...this.changedFields };
+
+          // Close the form when no profile fields were changed
+          if (Object.keys(updatedProfile).length === 0) {
+            this.closeForm();
+            return;
+          }
+          
           const savedProfile = await ProfileService.updateProfile(updatedProfile);
 
           // Store the profile returned by the server
@@ -394,7 +487,7 @@ export default {
         if (error.response && error.response.status === 400) {
           window.dispatchEvent(new CustomEvent('app-notification', {
             detail: {
-              message: 'Make sure to fill out all required profile fields!',
+              message: 'Please check your profile information and correct any invalid fields.',
               type: 'warning'
             }
           }));

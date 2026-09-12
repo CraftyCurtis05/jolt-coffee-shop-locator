@@ -6,9 +6,9 @@
     <!-- Locator Header -->
     <header>
       <h1>Coffee Shop Locator</h1>
-      <h2>Find Your Next Favorite Coffee Shop</h2>
+      <h2>Discover coffee shops near you</h2>
       <p class="locator-intro">
-        Search by city, ZIP code or address, or use your saved profile to find coffee shops near home.
+        Search by city or ZIP code, or use your saved profile to find coffee shops near home.
       </p>
     </header>
 
@@ -46,6 +46,15 @@ export default {
     async fetchProfile() {
       try {
 
+        // Check whether the user has created a profile
+        const hasProfile = await ProfileService.getStatus();
+
+        // The Locator can still be used without a profile
+        if (!hasProfile) {
+          this.user = null;
+          return;
+        }
+
         // Get the user's profile from the server
         const profile = await ProfileService.getProfile();
         this.user = profile;
@@ -54,7 +63,7 @@ export default {
         console.error('Error fetching user profile:', error);
         window.dispatchEvent(new CustomEvent('app-notification', {
           detail: {
-            message: 'There was an error fetching your profile!',
+            message: "We couldn't load your profile. You can still search by location.",
             type: 'error'
           }
         }));
@@ -73,7 +82,12 @@ export default {
 /* Laptop L - 1440px */
 
 header {
-  margin-top: 1.5rem;
+  max-width: 90%;
+  margin: 1rem auto 1.25rem;
+}
+
+header h1 {
+  font-size: 1.6rem;
 }
 
 .locator-intro {

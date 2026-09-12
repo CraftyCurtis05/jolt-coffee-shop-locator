@@ -98,6 +98,10 @@ header {
   margin: 1rem auto 1.25rem;
 }
 
+header h1 {
+  font-size: 1.6rem;
+}
+
 .about-intro {
   font-size: .85rem;
   margin: .25rem auto 0;

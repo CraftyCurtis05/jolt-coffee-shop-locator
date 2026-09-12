@@ -4,10 +4,7 @@
   <article class="profile-details-container">
 
     <!-- User Profile Details -->
-    <section
-      class="profile-details"
-      v-if="user"
-    >
+    <section class="profile-details">
       <p
         class="name"
         title="Your Name"
@@ -38,11 +35,6 @@
           {{ user.city }}, {{ user.state }} {{ user.zipcode }}
         </p>
       </div>
-    </section>
-
-    <!-- Loading Profile -->
-    <section v-else>
-      <p>Loading user profile...</p>
     </section>
 
   </article>

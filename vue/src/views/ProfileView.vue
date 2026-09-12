@@ -12,9 +12,12 @@
     <main>
 
       <!-- User Profile -->
-      <section class="profile-content">
+      <section
+        class="profile-content"
+        :class="{ 'profile-content-editing': isFormVisible }"
+      >
 
-        <!-- Profile Section Header -->
+        <!-- Profile Header -->
         <header class="section-header">
           <h2>Profile Information</h2>
           <p>Your personal details and profile picture.</p>
@@ -44,14 +47,14 @@
               @form-visible="toggleUpdateButton"
             />
 
-            <!-- Update Profile Button -->
+            <!-- Create / Update Profile Button -->
             <button
               v-if="showUpdateButton"
               type="button"
               @click="showForm"
-              title="Click to Create or Update Profile"
+              :title="user ? 'Click to Update Profile' : 'Click to Create Profile'"
             >
-              Update Profile
+              {{ user ? 'Update Profile' : 'Create Profile' }}
             </button>
           </article>
 
@@ -101,7 +104,10 @@ export default {
       user: null,
 
       // Control the visibility of the Update Profile button
-      showUpdateButton: true
+      showUpdateButton: true,
+
+      // Track whether the profile form is open
+      isFormVisible: false
     };
   },
 
@@ -115,6 +121,7 @@ export default {
     // Hide the Update Profile button while the form is visible
     toggleUpdateButton(isFormVisible) {
       this.showUpdateButton = !isFormVisible;
+      this.isFormVisible = isFormVisible;
     },
 
     // Update the displayed profile information
@@ -134,7 +141,7 @@ export default {
         console.error('Error fetching user profile:', error);
         window.dispatchEvent(new CustomEvent('app-notification', {
           detail: {
-            message: 'There was an error fetching your profile!',
+            message: "We couldn't load your profile. Please refresh and try again.",
             type: 'error'
           }
         }));
@@ -150,6 +157,12 @@ export default {
 </script>
 
 <style scoped>
+
+.view-container {
+  overflow: visible;
+}
+
+
 /* Laptop L - 1440px */
 
 main {
@@ -157,7 +170,16 @@ main {
   align-items: flex-start;
   width: 95%;
   max-width: 100rem;
-  margin: 1.5rem auto;
+  margin: .75rem auto 1.5rem;
+}
+
+header {
+  max-width: 90%;
+  margin: 1rem auto 1.25rem;
+}
+
+header h1 {
+  font-size: 1.6rem;
 }
 
 
@@ -166,6 +188,15 @@ main {
 .profile-content {
   width: 22rem;
   flex-shrink: 0;
+  align-self: flex-start;
+  position: sticky;
+  top: 1.6rem;
+}
+
+/* Allow the expanded profile form to scroll while staying sticky */
+.profile-content-editing {
+  max-height: calc(100vh - 3.2rem);
+  overflow-y: auto;
 }
 
 .favorites-content {
@@ -193,6 +224,21 @@ main {
   font-size: .85rem;
   color: #525459;
   margin: .2rem 0 0;
+}
+
+
+/* Profile Page Header */
+
+.profile-page-header {
+  margin: 1rem auto .75rem;
+}
+
+.profile-page-header h1 {
+  margin-bottom: .25rem;
+}
+
+.profile-page-header h2 {
+  margin-bottom: 0;
 }
 
 
@@ -281,6 +327,7 @@ main {
     width: 100%;
     max-width: 36rem;
     margin: 0 auto;
+    position: static;
   }
 
   .favorites-content {

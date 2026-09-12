@@ -96,12 +96,34 @@
             :aria-label="'Delete ' + result.businessName + ' from favorites'"
             title="Delete Favorite"
           >
-            Delete
+            <span
+              class="remove-icon"
+              aria-hidden="true"
+            >
+              🗑
+            </span>
+
+            <span>
+              Remove
+            </span>
           </button>
         </div>
 
       </div>
     </section>
+
+    <!-- Find More Coffee -->
+    <div
+      class="favorites-action-container"
+      v-if="results.length > 0"
+    >
+      <router-link
+        v-bind:to="{ name: 'locator' }"
+        class="favorites-action"
+      >
+        Find More Coffee →
+      </router-link>
+    </div>
 
     <!-- No Favorites -->
     <section
@@ -109,14 +131,13 @@
       v-if="results.length === 0"
     >
       <p>
-        You have no saved coffee shops yet.
+        Your coffee list is waiting for its first favorite.
         <router-link
           :to="{ name: 'locator' }"
           title="Find Coffee Shops"
         >
-          Visit the Locator
+          Find a Coffee Shop →
         </router-link>
-        to find one!
       </p>
     </section>
 
@@ -369,19 +390,43 @@ export default {
   width: 7rem;
   min-height: 2rem;
   font-size: .75rem;
-  color: rgb(53, 37, 19);
-  background-color: transparent;
-  border: .1rem rgb(53, 37, 19) solid;
+  color: #8b1e1e;
+  background-color: #f8eeee;
+  border: .1rem #8b1e1e solid;
   border-radius: .2rem;
   padding: .4rem .6rem;
   transition:
     background-color 0.3s ease-in-out,
-    color 0.3s ease-in-out;
+    color 0.3s ease-in-out,
+    border-color 0.3s ease-in-out,
+    box-shadow 0.2s ease-in-out,
+    transform 0.15s ease-in-out;
 }
 
 .button-container button:hover {
-  color: #e8bb64;
-  background-color: rgb(53, 37, 19);
+  color: #ffffff;
+  background-color: #8b1e1e;
+  border-color: #8b1e1e;
+  box-shadow:
+    inset 0 .15rem .3rem rgba(0, 0, 0, .25),
+    0 0 .3rem rgba(139, 30, 30, .25);
+  transform: translateY(-.05rem);
+}
+
+.button-container button:active {
+  box-shadow:
+    inset 0 .25rem .4rem rgba(0, 0, 0, .35);
+  transform: translateY(.05rem);
+}
+
+.remove-icon {
+  font-size: .9rem;
+  margin-right: .35rem;
+  transition: transform 0.3s ease-in-out;
+}
+
+.button-container button:hover .remove-icon {
+  transform: scale(1.1);
 }
 
 .name a:focus-visible,
@@ -393,15 +438,43 @@ export default {
 }
 
 
+/* Favorites Action */
+
+.favorites-action-container {
+  display: flex;
+  justify-content: center;
+  margin: 1.25rem auto .5rem;
+}
+
+.favorites-action {
+  display: inline-block;
+  font-size: .85rem;
+  font-weight: 600;
+  color: rgb(53, 37, 19);
+  text-decoration: underline;
+  text-decoration-color: #e8bb64;
+  text-underline-offset: .2rem;
+  transition: transform 0.3s ease-in-out;
+}
+
+.favorites-action:hover {
+  transform: translateX(.2rem);
+}
+
+.favorites-action:focus-visible {
+  outline: .1rem #e8bb64 solid;
+  outline-offset: .2rem;
+}
+
+
 /* No Favorite */
 
 .no-favorites {
   width: 100%;
   text-align: center;
   background-color: rgb(245, 242, 242);
-  border: .15rem #e8bb64 solid;
-  border-radius: .25rem;
-  padding: 1.5rem;
+  border-left: .2rem rgb(156, 105, 33, .8) solid;
+  padding: 1rem 1.25rem;
 }
 
 .no-favorites p {

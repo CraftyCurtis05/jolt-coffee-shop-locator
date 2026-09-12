@@ -36,6 +36,15 @@ export default {
 <style scoped>
 /* Laptop L - 1440px */
 
+header {
+  max-width: 90%;
+  margin: 1rem auto 1.25rem;
+}
+
+header h1 {
+  font-size: 1.6rem;
+}
+
 .shop-container {
   margin: 0 auto;
 }

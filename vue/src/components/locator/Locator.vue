@@ -7,9 +7,13 @@
     <section class="search-controls">
 
       <!-- Search Heading -->
-      <h3 class="search-heading">
-        Find Coffee Near You
-      </h3>
+      <div class="search-heading">
+        <span class="search-heading-accent"></span>
+
+        <h3>
+          Find Coffee Near You
+        </h3>
+      </div>
 
       <!-- Location Search -->
       <form class="search-bar" @submit.prevent="search">
@@ -63,12 +67,14 @@
           Coffee Shops Near You
         </h3>
 
-        <p class="results-count">
-          {{ results.length }} coffee shops found
-        </p>
-
         <p class="results-source">
           Results provided by Yelp
+        </p>
+
+        <!-- Search Results Count -->
+        <p class="results-count">
+          {{ results.length }}
+          {{ results.length === 1 ? 'coffee shop found' : 'coffee shops found' }}
         </p>
       </header>
 
@@ -174,8 +180,8 @@
       v-if="hasSearched && results.length === 0"
     >
       <p>
-        No coffee shops were found for that location.
-        Try another city, ZIP code or address.
+        <strong>No coffee shops found.</strong>
+        Try another city or ZIP code.
       </p>
     </section>
 
@@ -470,9 +476,23 @@ export default {
 }
 
 .search-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto .75rem;
+}
+
+.search-heading h3 {
   font-size: 1rem;
   color: rgb(53, 37, 19);
-  margin: 0 auto .75rem;
+  margin: 0;
+}
+
+.search-heading-accent {
+  width: 2.5rem;
+  height: .15rem;
+  background-color: #e8bb64;
+  margin-bottom: .5rem;
 }
 
 .search-controls form {
@@ -512,8 +532,8 @@ export default {
 /* Search Near Home */
 
 .search-home {
+  width: 12rem;
   margin: .5rem auto;
-  width: 10rem;
 }
 
 .search-home button {
@@ -534,6 +554,11 @@ export default {
 
 .search-bar button {
   width: 7rem;
+}
+
+/* Connect the Search button to the location input */
+.search-bar button {
+  border-radius: 0 .2rem .2rem 0;
 }
 
 .search-bar button,
@@ -585,11 +610,21 @@ export default {
 
 .search-home button img {
   transition:
-    filter 0.3s ease-in-out;
+    filter 0.3s ease-in-out,
+    transform 0.3s ease-in-out;
 }
 
 .search-home button:hover img {
-  filter: invert(100%);
+  transform: scale(1.08);
+  filter:
+    brightness(0)
+    saturate(100%)
+    invert(77%)
+    sepia(55%)
+    saturate(600%)
+    hue-rotate(358deg)
+    brightness(100%)
+    contrast(90%);
 }
 
 
@@ -605,22 +640,35 @@ export default {
   margin: 0 auto 1.5rem;
 }
 
+.results-header {
+  width: 100%;
+  text-align: center;
+  border-bottom: .1rem #e8bb64 solid;
+  margin-bottom: 1rem;
+}
+
 .results-header h3 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   font-size: 1.2rem;
   color: rgb(245, 242, 242);
   margin: .25rem auto;
 }
 
-.results-count {
-  font-size: .8rem;
-  color: #e8bb64;
-  margin: 0 auto .2rem;
-}
-
 .results-source {
   font-size: .75rem;
+  color: #e8bb64;
+  margin: 0 auto 1rem;
+}
+
+.results-count {
+  width: 100%;
+  text-align: right;
+  font-size: .8rem;
   color: #b4b8c2;
-  margin: 0 auto 1.5rem;
+  margin: 0 0 .75rem;
 }
 
 
@@ -633,6 +681,7 @@ export default {
   width: 100%;
   max-width: 96rem;
   margin: 0 auto;
+  padding-bottom: 1.25rem;
 }
 
 
@@ -646,17 +695,25 @@ export default {
   min-width: 0;
   min-height: 22rem;
   background-color: rgb(245, 242, 242);
-  border: .15rem #e8bb64 solid;
+  border: .15rem rgb(53, 37, 19) solid;
   border-radius: .25rem;
+  box-shadow: 0 .25rem .5rem rgba(0, 0, 0, .18);
   padding: 1rem;
   transition:
     transform 0.3s ease-in-out,
-    border-color 0.3s ease-in-out;
+    border-color 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
 }
 
 .result:hover {
-  border-color: rgb(53, 37, 19);
+  border-color: #e8bb64;
+  box-shadow: 0 .4rem .75rem rgba(0, 0, 0, .25);
   transform: translateY(-.2rem);
+}
+
+.result:focus-within {
+  border-color: #e8bb64;
+  box-shadow: 0 .4rem .75rem rgba(0, 0, 0, .25);
 }
 
 .result a {
@@ -671,6 +728,11 @@ export default {
 .search-home button:focus-visible {
   outline: .15rem #e8bb64 solid;
   outline-offset: .15rem;
+}
+
+.search-bar input:focus-visible {
+  border-color: #e8bb64;
+  box-shadow: 0 0 .35rem rgba(232, 187, 100, .35);
 }
 
 
@@ -690,6 +752,10 @@ export default {
   font-weight: bold;
   line-height: 1.25;
   color: rgb(53, 37, 19);
+  text-underline-offset: .15rem;
+  transition:
+    transform 0.3s ease-in-out,
+    color 0.3s ease-in-out;
 }
 
 .location-container {
@@ -704,11 +770,22 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-underline-offset: .15rem;
+  transition:
+    transform 0.3s ease-in-out,
+    color 0.3s ease-in-out;
 }
 
-.name:hover,
-.location-container a:hover {
+.name:hover {
+  color: #9b6a20;
   text-decoration: underline;
+  transform: scale(1.02);
+}
+
+.location-container a:hover {
+  color: #9b6a20;
+  text-decoration: underline;
+  transform: scale(1.02);
 }
 
 
@@ -734,7 +811,13 @@ export default {
   border: .1rem rgb(53, 37, 19) solid;
   border-radius: .25rem;
   margin: 0 auto .75rem;
-  transition: border-color 0.3s ease-in-out;
+  transition:
+    border-color 0.3s ease-in-out,
+    transform 0.3s ease-in-out;
+}
+
+.image a:hover img {
+  transform: scale(1.02);
 }
 
 .result:hover .image img {
@@ -767,13 +850,15 @@ export default {
 }
 
 .favorite button:hover:not(:disabled) {
-  color: #e8bb64;
+  color: #9b6a20;
+  text-decoration: underline;
   transform: scale(1.05);
 }
 
 .favorite button:disabled {
+  color: #6b6d72;
   cursor: default;
-  opacity: .65;
+  opacity: .8;
 }
 
 .favorite img {
@@ -785,6 +870,10 @@ export default {
   margin: 0;
 }
 
+.favorite button:hover:not(:disabled) img {
+  transform: scale(1.08);
+}
+
 .favorite span {
   font-size: .85rem;
 }
@@ -794,16 +883,22 @@ export default {
 
 .no-results {
   width: 90%;
-  max-width: 40rem;
+  max-width: 32rem;
+  text-align: center;
   background-color: rgb(245, 242, 242);
-  border: .15rem #e8bb64 solid;
-  border-radius: .25rem;
-  padding: 1rem;
+  border-left: .2rem rgb(156, 105, 33, .8) solid;
+  padding: 1rem 1.25rem;
   margin: 0 auto 1.5rem;
+}
+
+.no-results strong {
+  color: rgb(53, 37, 19);
+  font-weight: 600;
 }
 
 .no-results p {
   font-size: .9rem;
+  color: #525459;
   margin: 0;
 }
 
