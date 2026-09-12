@@ -13,9 +13,6 @@ export default {
 
   created() {
 
-    // *DEBUG* Log when the logout page is loaded for debugging
-    // console.log('Logging out current user.');
-
     // Remove the user's authentication information
     this.$store.commit('LOGOUT');
 

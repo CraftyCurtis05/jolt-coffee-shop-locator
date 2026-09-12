@@ -130,9 +130,6 @@ export default {
         const profile = await ProfileService.getProfile();
         this.user = profile;
 
-        // *DEBUG* Log the user's profile for debugging
-        // console.log('User profile:', profile);
-
       } catch (error) {
         console.error('Error fetching user profile:', error);
         window.dispatchEvent(new CustomEvent('app-notification', {

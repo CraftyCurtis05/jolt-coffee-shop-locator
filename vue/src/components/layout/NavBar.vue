@@ -194,16 +194,11 @@ export default {
         const imageUrl = await ProfileService.getImage();
         this.imageUrl = imageUrl;
 
-        // *DEBUG* Log the profile image for debugging
-        // console.log('Profile image:', imageUrl);
-
       } catch (error) {
 
         // Use the default profile image if the user does not have a saved image
         this.imageUrl = null;
 
-        // *DEBUG* Log the profile image error for debugging
-        // console.log('Profile image not found:', error);
       }
     },
 

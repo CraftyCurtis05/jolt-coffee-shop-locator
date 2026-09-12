@@ -322,9 +322,6 @@ export default {
         const response = await ProfileService.getStatus();
         this.status = response;
 
-        // *DEBUG* Log the profile status for debugging
-        // console.log('Profile status:', response);
-
       } catch (error) {
         console.error('Error fetching profile status:', error);
       }
@@ -347,9 +344,6 @@ export default {
           // Update the profile displayed on the page
           this.$emit('profile-updated', savedProfile);
 
-          // *DEBUG* Log the created profile for debugging
-          // console.log('Profile created:', savedProfile);
-
           window.dispatchEvent(new CustomEvent('app-notification', {
             detail: {
               message: 'Profile created successfully!',
@@ -370,9 +364,6 @@ export default {
 
           // Update the profile displayed on the page
           this.$emit('profile-updated', savedProfile);
-
-          // *DEBUG* Log the updated profile for debugging
-          // console.log('Profile updated:', savedProfile);
 
           window.dispatchEvent(new CustomEvent('app-notification', {
             detail: {
@@ -410,12 +401,9 @@ export default {
       try {
         const response = await ProfileService.getProfile();
 
-      if (response) {
-        this.user = { ...response };
-      }
-
-        // *DEBUG* Log the profile for debugging
-        // console.log('Existing profile:', response);
+        if (response) {
+          this.user = { ...response };
+        }
 
       } catch (error) {
         console.error('Error fetching profile:', error);

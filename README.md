@@ -1,64 +1,130 @@
 # Jolt Coffee Shop Locator
 
-### Full-Stack Business Discovery Application
+### Full-Stack Coffee Shop Discovery Application
 
-Jolt is a full-stack business discovery application that centralizes local coffee shop information into a unified user experience.
+Jolt is a full-stack web application that helps users discover local coffee shops, view real-time business information, save favorite locations, and manage a personalized user profile.
 
-Originally developed as a collaborative capstone project during the Tech Elevator Full-Stack Java Bootcamp, the application was later independently redesigned and expanded to improve its architecture, user experience, and overall functionality. The version contained in this repository reflects the continued development completed after the original capstone project.
+Originally developed as a collaborative capstone project during the Tech Elevator Full-Stack Java Bootcamp, Jolt was later independently redesigned and expanded. I continued working on the application after the bootcamp to improve its organization, user experience, security, testing, and overall functionality.
+
+The version in this repository reflects the continued development completed after the original capstone project.
 
 ---
 
 ## Project Evolution
 
-Jolt began as a collaborative capstone project focused on helping users discover nearby coffee shops using real-time business data from the Yelp Fusion API.
+Jolt began as a collaborative capstone project focused on helping users find nearby coffee shops using real-time business data from the Yelp Fusion API.
 
-After completing the bootcamp, I continued developing the application independently. I redesigned the user interface, reorganized the application's architecture, expanded user workflows, improved maintainability, and added additional functionality while preserving the original goal of creating a centralized coffee shop discovery experience.
+After completing the bootcamp, I continued developing the application independently. I redesigned the user interface, reorganized parts of the application, expanded user workflows, improved database and authentication security, added automated testing, and continued improving the overall user experience.
+
+This project represents one of my first full-stack applications and has also given me the opportunity to continue applying what I have learned as my development skills have grown.
 
 ---
 
 ## Project Overview
 
-Jolt helps users discover and evaluate local coffee shops by consolidating business information from external data sources into a single application.
+Jolt brings coffee shop discovery and personalized user features together in one application.
 
-The current application allows users to:
+Users can:
 
-- Search nearby coffee shops
-- View real-time business information
-- Save favorite locations
-- Manage personalized user profiles
+- Register and log in to a secure account
+- Search for nearby coffee shops
+- View real-time business information from the Yelp Fusion API
+- Save coffee shops to a personalized favorites list
+- Create and update a user profile
+- Upload and manage a profile picture
 
-All within a single, streamlined user experience.
+The application uses a Vue.js frontend, a Java and Spring Boot REST API, and a PostgreSQL database.
 
 ---
 
 ## Key Features
 
-### Business Discovery
+### Coffee Shop Discovery
 
-- Search coffee shops using Yelp Fusion API data
-- View business details and location information
-- Browse local businesses through a centralized interface
+- Search for coffee shops by location
+- Retrieve current business information through the Yelp Fusion API
+- View business names, addresses, images, and additional Yelp information
+- Browse search results through a centralized interface
 
-### Personalized User Experience
+### User Authentication
 
-- Secure user authentication
-- User profile management
-- Personalized favorites functionality
+- User registration and login
+- BCrypt password hashing
+- JWT-based authentication
+- Protected user-specific application features
+- Authenticated requests between the Vue frontend and Spring Boot backend
 
-### Independent Enhancements
+### Favorites
 
-Following the original capstone project, I independently:
+- Save coffee shops returned through Yelp searches
+- View saved locations from a personalized favorites list
+- Remove saved favorites
+- Prevent duplicate favorites for the same user
+- Restrict favorite management to the authenticated account
+
+### User Profiles
+
+- Create a personalized profile
+- Update existing profile information
+- Maintain profile information separately for each authenticated user
+- Track profile form completion
+- Protect profile data using the authenticated user's account
+
+### Profile Images
+
+- Upload a profile picture
+- Replace an existing profile picture
+- Remove a profile picture
+- Validate supported image types
+- Store profile image data in PostgreSQL
+
+---
+
+## Independent Development
+
+Following the original capstone project, I continued developing Jolt independently.
+
+Some of the changes and additions include:
 
 - Redesigned the application's user interface
-- Improved application architecture and organization
-- Expanded user workflows
-- Implemented user profile management
-- Added favorites functionality
-- Improved overall usability and maintainability
+- Reorganized the project and removed duplicate backend files
+- Expanded profile management functionality
+- Improved favorites functionality and duplicate prevention
+- Added profile image upload, replacement, and removal
+- Added application-wide user notifications
+- Improved authenticated user data protection
+- Moved sensitive application values to environment variables
+- Improved PostgreSQL database roles and application permissions
+- Hardened the local database setup process
+- Added automated DAO, controller, security, and integration testing
+- Improved CORS configuration for local and deployed environments
+- Continued improving responsive styling and usability
+
+These changes allowed me to continue working with the same application while applying concepts I learned after the original capstone was completed.
 
 ---
 
 ## System Architecture
+
+Jolt follows a traditional client-server architecture.
+
+```text
+Vue.js Frontend
+       |
+       | HTTP / REST
+       v
+Spring Boot Backend
+       |
+       | JDBC
+       v
+PostgreSQL Database
+
+Spring Boot Backend
+       |
+       | HTTPS
+       v
+Yelp Fusion API
+```
 
 ### Frontend
 
@@ -67,13 +133,19 @@ Following the original capstone project, I independently:
 - HTML5
 - CSS3
 - Axios
+- Vue Router
+- Vuex
 
 ### Backend
 
-- Java
+- Java 11
 - Spring Boot
+- Spring Security
 - RESTful API
-- JDBC
+- Spring JDBC
+- JdbcTemplate
+- JWT Authentication
+- Maven
 
 ### Database
 
@@ -87,88 +159,292 @@ Following the original capstone project, I independently:
 
 ## Technical Implementation
 
-The application follows a traditional client-server architecture with a Vue.js frontend communicating with a Spring Boot REST API backed by PostgreSQL.
+The Vue frontend communicates with the Spring Boot backend through RESTful HTTP requests.
 
-- Designed intuitive user interfaces focused on usability and efficient business discovery
-- Integrated the Yelp Fusion API to retrieve and display real-time business information
-- Implemented RESTful communication between frontend and backend systems
-- Designed PostgreSQL database structures to support authenticated user workflows
-- Expanded the application through continued development, including profile management, favorites functionality, and improved application architecture
-- Applied full-stack development practices using Java, Spring Boot, Vue.js, and PostgreSQL
+The backend handles authentication, user-specific application data, database access, profile images, and communication with the Yelp Fusion API.
+
+Some of the main technical concepts used throughout Jolt include:
+
+- RESTful frontend and backend communication
+- JWT authentication
+- BCrypt password hashing
+- Spring Security
+- PostgreSQL relational database design
+- DAO-based database access with JdbcTemplate
+- Foreign key relationships and database constraints
+- User-specific data access
+- Multipart image uploads
+- External API integration
+- Environment-based application secrets
+- Automated backend testing
+- Responsive frontend design
+
+---
+
+## Database
+
+Jolt uses PostgreSQL to store application and user-specific data.
+
+The main database tables include:
+
+```text
+users
+favorites
+profile
+image
+```
+
+User-owned records are connected to the application's users through foreign key relationships.
+
+The database also includes constraints that support application rules, including preventing the same coffee shop from being saved more than once by the same user.
+
+Jolt uses separate PostgreSQL roles for database ownership and normal application access. The Spring Boot application connects with a limited application account rather than the PostgreSQL administrator account.
+
+---
+
+## Security
+
+Jolt uses Spring Security and JWT authentication to protect user-specific application functionality.
+
+Security-related features include:
+
+- BCrypt password hashing
+- Stateless JWT authentication
+- Protected backend endpoints
+- Authenticated user lookup
+- User-specific favorites, profiles, and profile images
+- Environment variables for passwords, JWT secrets, and API keys
+- Restricted application database permissions
+- CORS configuration for approved frontend origins
+
+The backend determines the current user from the authenticated request rather than accepting a user ID from the frontend for protected data operations.
+
+---
+
+## Testing
+
+Jolt includes automated backend tests covering the application's database, controller, and security behavior.
+
+Testing includes:
+
+- User DAO integration tests
+- Favorites DAO integration tests
+- Profile DAO integration tests
+- Image DAO integration tests
+- Authentication controller tests
+- Coffee search controller tests
+- Favorites controller tests
+- Profile controller tests
+- Image controller tests
+- JWT token tests
+- JWT filter tests
+- User details service tests
+- Security utility tests
+- Authentication and access-denied handler tests
+- Web security integration tests
+
+DAO integration tests use a separate PostgreSQL test database so database behavior can be tested without modifying the normal development database.
 
 ---
 
 ## Technology Stack
 
 | Category | Technologies |
-|-----------|-------------|
+| --- | --- |
 | Frontend | Vue.js, JavaScript, HTML5, CSS3, Axios |
-| Backend | Java, Spring Boot, JDBC |
+| Backend | Java 11, Spring Boot, Spring Security, JDBC |
 | Database | PostgreSQL |
-| APIs | Yelp Fusion API |
-| Tools | Git, GitHub, IntelliJ IDEA |
+| Authentication | JWT, BCrypt |
+| API | Yelp Fusion API |
+| Testing | JUnit, Spring Boot Test, Spring Security Test |
+| Tools | Git, GitHub, Maven, IntelliJ IDEA |
+
+---
+
+## Project Structure
+
+```text
+jolt-coffee-shop-locator/
+
+├── java/
+│   ├── database/
+│   ├── src/
+│   │   ├── main/
+│   │   └── test/
+│   ├── pom.xml
+│   └── README.md
+├── vue/
+│   ├── public/
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   ├── router/
+│   │   ├── services/
+│   │   ├── store/
+│   │   └── views/
+│   ├── package.json
+│   └── README.md
+├── screenshots/
+├── .env.example
+├── load-env.sh
+└── README.md
+```
+
+The Java and Vue directories contain additional README files with more information about each side of the application.
 
 ---
 
 ## Screenshots
 
-The following screenshots demonstrate the current application after the independent redesign and continued development.
+The following screenshots demonstrate the application after the independent redesign and continued development.
 
 ### Login Page
 
-Secure user authentication for personalized features.
+Secure user authentication for personalized application features.
 
-![Login](screenshots/01-register.png)
+![Login](screenshots/01-login.png)
 
 ---
 
 ### Home Page
 
-Introduces the application and primary navigation.
+Introduces Jolt and provides access to the application's main features.
 
 ![Home Page](screenshots/02-home.png)
 
 ---
 
-### Search Results
+### Coffee Shop Search
 
-Displays nearby coffee shops retrieved from the Yelp Fusion API.
+Displays nearby coffee shops retrieved through the Yelp Fusion API.
 
-![Search Results](screenshots/03-locator-search.png)
+![Coffee Shop Search](screenshots/03-locator-search.png)
 
 ---
 
-### Shop Details
+### Coffee Shop Results
 
-Displays coffee shop information and available user actions.
+Allows users to view coffee shop information and save locations to their favorites.
 
-![Shop Details](screenshots/04-shop.png)
+![Coffee Shop Results](screenshots/04-shop.png)
 
 ---
 
 ### Profile Management
 
-Allows users to create and manage profile information.
+Allows authenticated users to create and manage their profile information.
 
-![Profile Form](screenshots/05-profile-form.png)
+![Profile Management](screenshots/05-profile-form.png)
 
 ---
 
 ### Favorites
 
-Displays saved coffee shops for authenticated users.
+Displays coffee shops saved by the authenticated user.
 
 ![Favorites](screenshots/06-profile-favs.png)
 
 ---
 
+## Running Jolt Locally
+
+Jolt requires:
+
+- Java 11
+- PostgreSQL
+- Node.js and npm
+- A Yelp Fusion API key
+
+Sensitive values are stored in a local `.env` file and are not committed to the repository.
+
+An example environment file is included:
+
+```text
+.env.example
+```
+
+Copy the example file to `.env` and provide the required local values.
+
+### Load Environment Variables
+
+From the project root:
+
+```bash
+source load-env.sh
+```
+
+### Start the Backend
+
+From the Java directory:
+
+```bash
+cd java
+./mvnw spring-boot:run
+```
+
+The backend runs locally on:
+
+```text
+http://localhost:9000
+```
+
+### Start the Frontend
+
+In a second terminal:
+
+```bash
+cd vue
+npm install
+npm run dev
+```
+
+The Vue development server runs locally on:
+
+```text
+http://localhost:5173
+```
+
+Additional setup information is available in the Java and Vue README files.
+
+---
+
+## Environment Variables
+
+The root `.env.example` file documents the private environment values required by the application.
+
+```env
+DB_PASSWORD=
+DB_ADMIN_PASSWORD=
+JWT_BASE64_SECRET=
+YELP_API_KEY=
+```
+
+The actual `.env` file should remain local and should never be committed or shared publicly.
+
+---
+
+## Live Demo
+
+A live version of Jolt will be available at:
+
+```text
+https://jolt.jennifercurtis.me
+```
+
+Deployment information and final demo access will be added as the live version is completed.
+
+---
+
 ## Future Enhancements
 
-- Responsive optimization for tablets and mobile devices
-- User reviews and ratings
-- Enhanced search filtering
+Jolt is intentionally maintained as one of my earlier full-stack projects, but there are several features that could be added in the future:
+
+- Enhanced coffee shop search filtering
 - Interactive map integration
-- Search history and personalized recommendations
+- User reviews and ratings
+- Search history
+- Personalized coffee shop recommendations
+- Additional accessibility and responsive design improvements
 
 ---
 
@@ -176,10 +452,10 @@ Displays saved coffee shops for authenticated users.
 
 **Jennifer Curtis**
 
-Business Systems Analyst | Full-Stack Developer
+Business Systems & Technology Professional | Full-Stack Developer
 
-🌐 **Portfolio:** https://jennifercurtis.me
+**Portfolio:** https://jennifercurtis.me
 
-💼 **LinkedIn:** https://linkedin.com/in/jcurtisdeveloper
+**LinkedIn:** https://linkedin.com/in/jcurtisdeveloper
 
-💻 **GitHub:** https://github.com/craftycurtis05
+**GitHub:** https://github.com/CraftyCurtis05

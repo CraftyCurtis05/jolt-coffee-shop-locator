@@ -142,9 +142,6 @@ export default {
       .login(this.user)
       .then((response) => {
 
-        // *DEBUG* Log the login response for debugging
-        // console.log('Login response:', response);
-
         // Save the authentication information after successful login
         if (response.status == 200) {
           this.$store.commit('SET_AUTH_TOKEN', response.data.token);
@@ -155,9 +152,6 @@ export default {
         }
       })
       .catch((error) => {
-
-        // *DEBUG* Log the login error for debugging
-        // console.log('Login error:', error);
 
         const response = error.response;
 

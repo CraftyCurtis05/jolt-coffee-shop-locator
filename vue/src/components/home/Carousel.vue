@@ -101,8 +101,6 @@ export default {
       // Move to the last image if the carousel is currently on the first image
       this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
 
-      // *DEBUG* Log the current carousel image for debugging
-      // console.log('Previous carousel image:', this.currentIndex);
     },
 
     // Display the next carousel image
@@ -111,8 +109,6 @@ export default {
       // Move back to the first image after reaching the last image
       this.currentIndex = (this.currentIndex + 1) % this.images.length;
 
-      // *DEBUG* Log the current carousel image for debugging
-      // console.log('Next carousel image:', this.currentIndex);
     }
   },
 

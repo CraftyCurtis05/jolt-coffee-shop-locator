@@ -45,9 +45,6 @@ export default {
     // Return the existing profile when nothing changed
     if (Object.keys(updatedProfile).length === 0) {
 
-      // *DEBUG* Confirm that no profile changes were detected
-      // console.log('No profile changes detected');
-
       return Promise.resolve(this.originalProfile);
     }
 

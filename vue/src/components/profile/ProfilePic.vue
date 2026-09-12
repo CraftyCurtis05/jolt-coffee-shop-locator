@@ -120,8 +120,6 @@ export default {
         // Preview the selected image before it is saved
         this.previewUrl = URL.createObjectURL(file);
 
-        // *DEBUG* Log the selected image for debugging
-        // console.log('Selected profile image:', file);
       }
     },
 
@@ -149,12 +147,9 @@ export default {
           }
         }));
 
-	// Clear the selected image and preview after a successful upload
+        // Clear the selected image and preview after a successful upload
         this.selectedFile = null;
         this.previewUrl = null;
-
-        // *DEBUG* Log a successful profile image upload
-        // console.log('Profile image uploaded successfully');
 
       } catch (error) {
         console.error('Error uploading image:', error);
@@ -204,9 +199,6 @@ export default {
       try {
         const imageUrl = await ProfileService.getImage();
         this.imageUrl = imageUrl;
-
-        // *DEBUG* Log the profile image URL for debugging
-        // console.log('Profile image:', imageUrl);
 
       } catch (error) {
         console.error('Error fetching image:', error);

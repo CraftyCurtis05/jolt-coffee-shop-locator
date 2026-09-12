@@ -270,8 +270,6 @@ export default {
           this.results = response.businesses || [];
           this.hasSearched = true;
 
-          // *DEBUG* Log the search results for debugging
-          // console.log('Coffee shop search results:', this.results);
         })
         .catch((error) => {
 
@@ -281,9 +279,6 @@ export default {
             error.response &&
             error.response.status === 400
           ) {
-
-            // *DEBUG* Log the ZIP code fallback for debugging
-            // console.log('Home address not found. Searching saved ZIP code:', fallbackLocation);
 
             this.getResults(fallbackLocation);
             return;
@@ -333,8 +328,6 @@ export default {
           // Add the business ID after the favorite is successfully saved
           this.userFavorites.push(result.id);
 
-          // *DEBUG* Log the added favorite for debugging
-          // console.log('Favorite added:', result.id);
         })
         .catch((error) => {
 
@@ -352,9 +345,6 @@ export default {
                 type: 'warning'
               }
             }));
-
-            // *DEBUG* Log the duplicate favorite for debugging
-            // console.log('Favorite already exists:', result.id);
 
           } else {
 
@@ -379,8 +369,6 @@ export default {
           // Store the business IDs for the user's saved favorites
           this.userFavorites = response.map((favorite) => favorite.businessId);
 
-          // *DEBUG* Log the user's favorites for debugging
-          // console.log('User favorites:', this.userFavorites);
         })
         .catch((error) => {
           console.error('Error fetching favorites:', error);

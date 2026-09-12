@@ -168,9 +168,6 @@ export default {
       FavoriteService.getFavorites()
         .then(response => {
           this.results = response || [];
-
-          // *DEBUG* Log the user's favorites for debugging
-          // console.log('Favorites:', this.results);
         })
         .catch(error => {
           console.error('Error fetching favorites:', error);
@@ -195,8 +192,6 @@ export default {
             result => result.favoriteId !== favoriteId
           );
 
-          // *DEBUG* Log the deleted favorite for debugging
-          // console.log('Favorite deleted:', favoriteId);
         })
         .catch(error => {
           console.error('Error deleting favorite:', error);

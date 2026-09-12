@@ -1,10 +1,14 @@
 # Jolt Coffee Shop Locator — Java Backend
 
+### Spring Boot REST API
+
 This directory contains the Java and Spring Boot backend for the Jolt Coffee Shop Locator.
 
-The Jolt backend provides authentication, user-specific data management, PostgreSQL persistence, profile image storage, favorites, and coffee shop search integration through the Yelp Fusion API.
+The backend handles user authentication, PostgreSQL database access, user profiles, profile images, favorites, and coffee shop searches through the Yelp Fusion API.
 
-The application uses a layered Spring Boot architecture with REST controllers, DAO-based database access, JWT authentication, and PostgreSQL.
+It uses a straightforward layered structure that keeps the different parts of the application separated while remaining easy to follow.
+
+---
 
 ## Backend Technologies
 
@@ -15,15 +19,25 @@ The application uses a layered Spring Boot architecture with REST controllers, D
 - JdbcTemplate
 - PostgreSQL
 - JWT Authentication
+- BCrypt
 - Maven
 - Yelp Fusion API
+- JUnit
+- Spring Boot Test
+- Spring Security Test
+
+---
 
 ## Project Structure
 
-The backend application is organized under:
+The main backend code is located under:
 
 ```text
 src/main/java/com/jolt/
+```
+
+```text
+com/jolt/
 
 ├── config/
 │   └── AppConfig.java
@@ -68,26 +82,26 @@ src/main/java/com/jolt/
 └── JoltApplication.java
 ```
 
-The main application layers include:
+### Main Application Layers
 
-- **Configuration** — Provides application-level Spring configuration and shared beans.
-- **Controllers** — Handle HTTP requests and responses.
-- **DAOs** — Handle PostgreSQL database access using `JdbcTemplate`.
-- **DTOs** — Represent authentication request and response data.
+- **Configuration** — Contains shared Spring configuration and application beans.
+- **Controllers** — Handle incoming HTTP requests and responses.
+- **DAOs** — Handle PostgreSQL database operations using JdbcTemplate.
+- **DTOs** — Transfer authentication and registration data between the client and server.
 - **Models** — Represent application and authentication data.
-- **Security** — Handles Spring Security configuration and authenticated-user behavior.
-- **JWT** — Creates, validates, and processes JSON Web Tokens.
-- **Exceptions** — Provides application-specific database exception handling.
+- **Security** — Handles authentication and protected application access.
+- **JWT** — Creates and validates authentication tokens.
+- **Exceptions** — Handles application-specific database errors.
+
+---
 
 ## Database
 
-Database setup scripts are located in:
+Database scripts are located in:
 
 ```text
 database/
 ```
-
-The directory contains:
 
 ```text
 database/
@@ -99,26 +113,23 @@ database/
 └── user.sql
 ```
 
-From the Java project directory, run:
+### Database Scripts
 
-```bash
-cd database
-./create.sh
-```
-
-The setup process rebuilds the local PostgreSQL database and executes the required SQL scripts in order.
-
-| File Name | Description |
+| File | Purpose |
 | --- | --- |
 | `create.sh` | Coordinates the local database setup process. |
 | `data.sql` | Adds development and demonstration data. |
-| `dropdb.sql` | Removes the existing Jolt database and associated database users. |
-| `schema.sql` | Creates the Jolt database tables, relationships, and constraints. |
-| `user.sql` | Creates the database users and grants the required privileges. |
+| `dropdb.sql` | Removes the existing Jolt database while leaving the database roles available. |
+| `schema.sql` | Creates the application tables, relationships, and constraints. |
+| `user.sql` | Creates the Jolt database roles if they do not already exist. |
 
-### Database Structure
+The setup script rebuilds the local Jolt database and loads the required schema and development data.
 
-The Jolt database contains the following primary tables:
+---
+
+## Database Structure
+
+The main Jolt database tables are:
 
 ```text
 users
@@ -127,26 +138,49 @@ profile
 image
 ```
 
-User-owned data is connected to the `users` table through foreign keys.
+User-owned data is connected to the `users` table using foreign keys.
 
-The `profile` and `image` tables allow one record per user, while `favorites` allows multiple records per user.
+The `profile` and `image` tables allow one record per user, while each user can save multiple favorites.
 
-Favorites include a database-level unique constraint preventing the same Yelp business from being saved more than once for the same account.
+The `favorites` table also contains a unique constraint that prevents the same Yelp business from being saved more than once by the same user.
 
-Dependent profile, image, and favorite records are removed automatically when their associated user is deleted.
+Dependent profile, image, and favorite records use database relationships to keep user-owned data connected to the correct account.
 
-### Database Users
+---
 
-Jolt uses separate PostgreSQL users for database ownership and application access:
+## Database Roles
+
+Jolt separates database ownership from normal application access.
 
 ```text
+postgres
+    ↓
+Database administration
+
 jolt_owner
+    ↓
+Owns Jolt database objects
+
 jolt_appuser
+    ↓
+Spring Boot application access
 ```
 
-The PostgreSQL `postgres` superuser is used for database administration and should not be used by the application.
+### `postgres`
 
-The Jolt application connects using `jolt_appuser`, which receives the database privileges required by the backend, including:
+The PostgreSQL administrator account is used for database administration and setup.
+
+The application does not connect using this account.
+
+### `jolt_owner`
+
+`jolt_owner` owns the Jolt database objects and does not allow normal application login.
+
+### `jolt_appuser`
+
+The Spring Boot application connects to PostgreSQL using `jolt_appuser`.
+
+This account receives the database permissions required by the application, including:
 
 - `SELECT`
 - `INSERT`
@@ -154,33 +188,154 @@ The Jolt application connects using `jolt_appuser`, which receives the database 
 - `DELETE`
 - Required sequence access
 
-Database passwords are supplied through local environment configuration and should not be committed to the repository.
+This keeps the application from running with PostgreSQL administrator privileges.
 
-## Spring Boot
+---
 
-The Spring Boot backend runs on port `9000` during local development.
+## Authentication
 
-The main application entry point is:
+Authentication is handled through Spring Security and JSON Web Tokens.
 
-```text
-src/main/java/com/jolt/JoltApplication.java
-```
-
-The application can be started from the Java project directory using:
-
-```bash
-./mvnw spring-boot:run
-```
-
-The local backend is available at:
+The main authentication endpoints are:
 
 ```text
-http://localhost:9000
+POST /login
+POST /register
 ```
+
+When a user registers:
+
+1. The backend validates the registration request.
+2. The password is hashed using BCrypt.
+3. The account is stored in PostgreSQL with the standard user role.
+
+When a user logs in:
+
+1. Spring Security authenticates the username and password.
+2. The backend creates a JWT.
+3. The token is returned to the Vue frontend.
+4. Future protected requests include the token in the `Authorization` header.
+
+Jolt uses stateless authentication, so the backend does not maintain a server-side login session.
+
+---
+
+## Protected User Data
+
+Favorites, profiles, and profile images belong to individual authenticated users.
+
+For protected operations, the backend gets the current username from the authenticated Spring Security principal and then determines the corresponding database user.
+
+This means the frontend does not decide which user ID should be used for protected data.
+
+This approach is used for:
+
+- Favorites
+- Profiles
+- Profile images
+
+It helps prevent one user from retrieving or changing another user's protected application data.
+
+---
+
+## Coffee Shop Search
+
+Coffee shop searches are handled through the Yelp Fusion API.
+
+The frontend sends a location to the Jolt backend.
+
+The backend then:
+
+1. Builds the Yelp business search request.
+2. Adds the private Yelp API key.
+3. Sends the request to Yelp.
+4. Returns the business results to the Vue frontend.
+
+Keeping the Yelp request on the backend prevents the private API key from being included in frontend JavaScript.
+
+---
+
+## Favorites
+
+Authenticated users can save coffee shops returned through Yelp searches.
+
+Saved favorites include information such as:
+
+- Yelp business ID
+- Business name
+- Address
+- Business image
+- Yelp URL
+
+Favorites are connected to the authenticated user's account.
+
+Before creating a favorite, the application checks whether the business has already been saved.
+
+The database also contains a unique constraint that provides an additional level of duplicate prevention.
+
+Users can only retrieve and delete favorites associated with their own account.
+
+---
+
+## User Profiles
+
+Each authenticated user can create one profile.
+
+Profile information includes:
+
+- First name
+- Last name
+- Birth date
+- Address
+- City
+- State
+- ZIP code
+- Form completion status
+
+The profile workflow tracks whether the user has already submitted their initial profile.
+
+The birth date is collected during the initial profile creation and is not changed through later profile updates.
+
+---
+
+## Profile Images
+
+Authenticated users can upload a profile picture.
+
+The application supports:
+
+- JPEG
+- PNG
+- WebP
+
+Uploaded image data is stored in PostgreSQL using the `BYTEA` data type.
+
+Each user can have one profile image.
+
+Uploading another image replaces the current image, and users can also remove their existing profile picture.
+
+The backend validates uploaded file types before saving the image.
+
+---
+
+## CORS
+
+During local development, the Vue frontend and Spring Boot backend run on different ports.
+
+The backend allows requests from the Jolt frontend origins:
+
+```text
+http://localhost:5173
+https://jolt.jennifercurtis.me
+```
+
+This allows the local Vue development server and deployed Jolt frontend to communicate with the backend while avoiding unrestricted cross-origin access.
+
+---
 
 ## Application Configuration
 
-Local Spring Boot configuration is stored in:
+Spring Boot configuration is located in:
 
 ```text
 src/main/resources/application.properties
@@ -188,14 +343,15 @@ src/main/resources/application.properties
 
 The configuration includes:
 
-- PostgreSQL datasource settings
-- JWT authentication settings
+- Backend server port
+- PostgreSQL datasource configuration
+- JWT settings
 - File upload limits
 - Yelp Fusion API configuration
 
-Sensitive values are supplied through environment variables rather than being stored directly in source code.
+Sensitive values are supplied through environment variables instead of being written directly into source code.
 
-The backend expects environment configuration for:
+The application uses:
 
 ```text
 DB_PASSWORD
@@ -203,232 +359,44 @@ JWT_BASE64_SECRET
 YELP_API_KEY
 ```
 
-The local `application.properties` file is excluded from source control because it contains environment-specific application configuration.
-
-API keys, JWT signing secrets, and database credentials should never be committed to the repository.
-
-## JdbcTemplate and DAO Layer
-
-Jolt uses Spring's `JdbcTemplate` for database access.
-
-DAO implementations receive a `JdbcTemplate` instance through constructor injection:
-
-```java
-private final JdbcTemplate jdbcTemplate;
-
-public JdbcUserDao(JdbcTemplate jdbcTemplate) {
-    this.jdbcTemplate = jdbcTemplate;
-}
-```
-
-The DAO layer is responsible for:
-
-- SQL queries
-- Inserts, updates, and deletes
-- Database result mapping
-- User-specific data access
-- Application-specific database error handling
-
-DAO interfaces define the database operations available to the application, while JDBC implementations contain the PostgreSQL-specific queries.
-
-## REST Controllers
-
-REST controllers are located in:
+Database setup and backend tests also use:
 
 ```text
-src/main/java/com/jolt/controller/
+DB_ADMIN_PASSWORD
 ```
 
-The backend contains controllers for:
+The actual values should remain in the local root `.env` file and should never be committed to GitHub.
 
-- Authentication and registration
-- Coffee shop searches
-- Favorites
-- User profiles
-- Profile images
+---
 
-The controllers connect HTTP requests to the application's database, security, and external API functionality.
+## Local Environment
 
-## Authentication
-
-Authentication and registration are handled by:
+The repository contains:
 
 ```text
-AuthenticationController.java
+.env.example
+load-env.sh
 ```
 
-The authentication controller provides:
+The example environment file documents the required private values without containing actual credentials.
+
+Before running the backend from Git Bash, load the local environment from the project root:
+
+```bash
+source load-env.sh
+```
+
+A successful load displays:
 
 ```text
-/login
-/register
+Jolt environment loaded.
 ```
 
-Registration creates standard Jolt user accounts.
+---
 
-Passwords are hashed with BCrypt before being stored in the database.
+## Creating the Local Database
 
-When a user successfully logs in, the backend creates a JSON Web Token that is returned to the frontend for later authenticated requests.
-
-## Security
-
-Security functionality is located in:
-
-```text
-src/main/java/com/jolt/security/
-```
-
-JWT-specific functionality is located in:
-
-```text
-src/main/java/com/jolt/security/jwt/
-```
-
-Jolt uses Spring Security with stateless JWT authentication.
-
-The security layer includes:
-
-- Spring Security configuration
-- JWT request filtering
-- Token creation and validation
-- Authentication entry-point handling
-- Access-denied handling
-- Authenticated-user lookup
-
-The backend does not maintain a server-side login session.
-
-Instead, authenticated requests include a JWT that is validated before the user's Spring Security authentication is established.
-
-## Protected User Data
-
-User-specific operations determine the current account from the authenticated Spring Security principal.
-
-This is used for:
-
-- Favorites
-- Profiles
-- Profile images
-
-The backend determines the authenticated user's database ID rather than trusting a user ID supplied by the frontend.
-
-This helps prevent one user from accessing or modifying another user's protected data.
-
-## Favorites
-
-Authenticated users can save coffee shops returned by Yelp.
-
-Favorite records include information such as:
-
-- Yelp business ID
-- Business name
-- Address
-- Image URL
-- Yelp URL
-
-Favorites are associated with the authenticated user's account.
-
-The application checks for existing favorites, and the database also includes a unique constraint preventing the same Yelp business from being saved more than once for the same user.
-
-## User Profiles
-
-Users can create and update profile information associated with their account.
-
-Profile data includes:
-
-- First and last name
-- Birth date
-- Address
-- City
-- State
-- ZIP code
-- Form-completion status
-
-Each user can have one profile record.
-
-## Profile Images
-
-Users can upload and manage a profile image associated with their account.
-
-Image data is stored in PostgreSQL using the `BYTEA` data type.
-
-Each user can have one stored profile image.
-
-The backend validates uploaded image data and returns stored images to the frontend as encoded image data.
-
-## Yelp Fusion API
-
-Coffee shop searches use the Yelp Fusion API.
-
-The frontend sends a search location to the Jolt backend. The backend sends the search request to Yelp and returns the business data to the Vue application.
-
-Keeping the Yelp request on the backend prevents the Yelp API key from being exposed in client-side code.
-
-## CORS
-
-The backend allows requests from the configured Jolt frontend origins.
-
-During local development, the Vue frontend and Spring Boot backend run separately, so Cross-Origin Resource Sharing (CORS) is required for communication between the two applications.
-
-The backend supports the local Vue development origin as well as the deployed Jolt frontend origin.
-
-## File Uploads
-
-Spring Boot multipart configuration controls profile image upload limits.
-
-The application currently supports a maximum file size and multipart request size of:
-
-```text
-10 MB
-```
-
-## Testing
-
-Backend integration tests are located under:
-
-```text
-src/test/
-```
-
-The current test structure includes:
-
-```text
-src/test/
-
-├── java/
-│   └── com/
-│       └── jolt/
-│           ├── config/
-│           │   └── TestingDatabaseConfig.java
-│           └── dao/
-│               ├── BaseDaoTests.java
-│               └── JdbcUserDaoTests.java
-└── resources/
-    └── test-data.sql
-```
-
-### DAO Integration Testing
-
-DAO tests run against a separate PostgreSQL test database:
-
-```text
-jolt_test
-```
-
-The testing configuration:
-
-1. Creates or connects to the Jolt test database.
-2. Runs `database/schema.sql`.
-3. Loads `src/test/resources/test-data.sql`.
-4. Provides a Spring `DataSource` to the DAO tests.
-5. Rolls back database changes after each test.
-
-This allows DAO behavior and SQL queries to be tested against PostgreSQL without modifying the development database.
-
-## Running the Backend
-
-Before starting the server, ensure PostgreSQL is running and the required environment variables are configured.
-
-### 1. Create the Database
+PostgreSQL must be running before creating the Jolt database.
 
 From the Java project directory:
 
@@ -437,13 +405,26 @@ cd database
 ./create.sh
 ```
 
-### 2. Return to the Java Project Directory
+The setup process:
+
+1. Removes the existing local `jolt` database.
+2. Creates the required Jolt database roles if needed.
+3. Creates a new `jolt` database owned by `jolt_owner`.
+4. Creates the database schema.
+5. Loads development data.
+6. Grants the required application permissions to `jolt_appuser`.
+
+After the database has been created, return to the Java directory:
 
 ```bash
 cd ..
 ```
 
-### 3. Start Jolt Server
+---
+
+## Running the Backend
+
+From the Java project directory:
 
 ```bash
 ./mvnw spring-boot:run
@@ -455,10 +436,107 @@ The backend runs locally at:
 http://localhost:9000
 ```
 
-## Jolt Backend Architecture
+---
 
-The Jolt backend intentionally retains its Java 11, Spring Boot, JdbcTemplate, PostgreSQL, and JWT-based architecture.
+## Testing
 
-The project uses a straightforward layered structure that separates HTTP handling, database access, authentication, application data, configuration, and external API integration.
+Automated backend tests are located under:
 
-This structure keeps the backend maintainable and understandable while preserving the application's development history.
+```text
+src/test/
+```
+
+The test suite covers the main database, controller, authentication, and security behavior of Jolt.
+
+### DAO Tests
+
+DAO integration tests cover:
+
+- Users
+- Favorites
+- Profiles
+- Profile images
+
+These tests run against a separate PostgreSQL test database:
+
+```text
+jolt_test
+```
+
+This allows the actual SQL and PostgreSQL behavior to be tested without modifying the normal development database.
+
+Database changes made during individual DAO tests are rolled back after each test.
+
+### Controller Tests
+
+Controller tests cover:
+
+- Authentication
+- Coffee shop searches
+- Favorites
+- Profiles
+- Profile images
+
+These tests verify request handling, response behavior, authenticated-user workflows, and application-specific errors.
+
+### Security Tests
+
+Security testing covers:
+
+- JWT token creation and validation
+- JWT request filtering
+- User details loading
+- Security utilities
+- Authentication entry-point behavior
+- Access-denied behavior
+- Protected endpoint access
+
+The security integration tests also verify that protected endpoints reject unauthenticated requests.
+
+### Running the Tests
+
+After loading the required environment variables, run:
+
+```bash
+./mvnw test
+```
+
+---
+
+## Backend Design
+
+Jolt intentionally uses a straightforward Java and Spring Boot structure.
+
+The project separates:
+
+```text
+HTTP requests
+    ↓
+Controllers
+    ↓
+DAO interfaces and JDBC implementations
+    ↓
+PostgreSQL
+```
+
+Authentication and security are handled separately through Spring Security and JWT classes.
+
+This structure keeps the backend understandable while still separating the main responsibilities of the application.
+
+Jolt is one of my earlier full-stack projects, so I have intentionally kept the backend readable rather than adding additional layers or abstractions that the application does not currently need.
+
+---
+
+## Related Documentation
+
+For the complete project overview, screenshots, and project history, see:
+
+```text
+../README.md
+```
+
+Frontend-specific information is available in:
+
+```text
+../vue/README.md
+```

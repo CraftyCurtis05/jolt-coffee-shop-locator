@@ -141,9 +141,6 @@ export default {
         .register(this.user)
         .then((response) => {
 
-          // *DEBUG* Log the registration response for debugging
-          // console.log('Registration response:', response);
-
           // Send the user to the login page after successful registration
           if (response.status == 201) {
             this.$router.push({
@@ -153,9 +150,6 @@ export default {
           }
         })
         .catch((error) => {
-
-          // *DEBUG* Log the registration error for debugging
-          // console.log('Registration error:', error);
 
           const response = error.response;
           this.registrationErrors = true;
