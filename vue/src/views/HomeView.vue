@@ -408,7 +408,7 @@ header img {
   }
 
   header {
-    margin-bottom: .5rem;
+    margin-bottom: 0rem;
     order: 1;
   }
 
@@ -440,12 +440,13 @@ header img {
   }
 
   .description-container {
+    margin: 0 auto;
     order: 5;
   }
 
   .explore-container {
     width: 90%;
-    margin: 1.75rem auto 2rem;
+    margin: 1.5rem auto 2rem;
     order: 6;
   }
 

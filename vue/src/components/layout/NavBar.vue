@@ -4,7 +4,10 @@
   <nav v-if="!$route.meta.hideNavBar">
 
     <!-- Navigation Container -->
-    <article class="nav-container">
+    <article
+      class="nav-container"
+      ref="navContainer"
+    >
 
       <!-- Jolt Logo -->
       <section class="logo-container">
@@ -205,10 +208,28 @@ export default {
     // Update the profile image after the user changes it
     handleProfileImageUpdate() {
       this.fetchImage();
+    },
+
+    // Close the mobile navigation menu when clicking outside of it
+    handleOutsideClick(event) {
+
+      if (
+        this.isNavOpen &&
+        this.$refs.navContainer &&
+        !this.$refs.navContainer.contains(event.target)
+      ) {
+        this.isNavOpen = false;
+      }
     }
   },
 
   mounted() {
+
+    // Close the mobile navigation menu when clicking outside of it
+    document.addEventListener(
+      'click',
+      this.handleOutsideClick
+    );
 
     // Update the navigation profile image when it changes
     window.addEventListener(
@@ -230,6 +251,12 @@ export default {
   },
 
   beforeUnmount() {
+
+    // Remove the outside click listener
+    document.removeEventListener(
+      'click',
+      this.handleOutsideClick
+    );
 
     // Remove the profile image update listener
     window.removeEventListener(

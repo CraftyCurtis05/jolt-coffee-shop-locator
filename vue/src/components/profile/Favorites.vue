@@ -537,11 +537,22 @@ export default {
 }
 
 
-/* Tablet - 1100px */
-@media screen and (max-width: 1100px) {
+/* Tablet - 1000px */
+@media screen and (max-width: 1000px) {
 
   .results-container {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* Tablet - 900px */
+@media screen and (max-width: 900px) {
+
+  .results-container {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .75rem;
   }
 
 }
@@ -551,6 +562,7 @@ export default {
 @media screen and (max-width: 700px) {
 
   .results-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: .75rem;
   }
 
@@ -565,9 +577,23 @@ export default {
   }
 
   .result {
-    width: 100%;
-    max-width: 22rem;
+    width: 88%;
+    max-width: 20rem;
     margin: 0 auto;
+  }
+
+  .name,
+  .name a {
+    min-height: 2.75rem;
+  }
+
+  .location-container {
+    min-height: 2.75rem;
+    margin-top: 0;
+  }
+
+  .image-container a {
+    max-width: 13rem;
   }
 
 }

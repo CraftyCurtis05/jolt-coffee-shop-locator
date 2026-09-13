@@ -455,6 +455,9 @@ export default {
         return;
       }
 
+      // Clear the manual search location when searching near home
+      this.locationId = '';
+
       // Create the full address from the user's saved profile
       const fullAddress =
         `${address1}${address2 ? ', ' + address2 : ''}, ${city}, ${state} ${zipcode}`;
@@ -1056,19 +1059,50 @@ export default {
   }
 
   .result {
+    min-height: auto;
     padding: .75rem;
   }
 
+  .result-info {
+    margin-bottom: .25rem;
+  }
+
+  .image {
+    padding-top: .4rem;
+    margin-top: .25rem;
+  }
+
+  .image img {
+    max-width: 10rem;
+    margin: 0 auto .4rem;
+  }
+
   .name {
+    min-height: 2.75rem;
     font-size: 1rem;
   }
 
   .location-container {
+    min-height: 2.75rem;
     font-size: .78rem;
+    margin-top: 0;
+  }
+
+  .location-container a {
+    min-height: 2.75rem;
+  }
+
+  .favorite {
+    padding-top: .4rem;
   }
 
   .favorite span {
     font-size: .8rem;
+  }
+
+  .favorite button {
+    min-height: 2.75rem;
+    padding: .15rem .25rem;
   }
 
 }

@@ -189,6 +189,15 @@ h3 {
 }
 
 
+@media screen and (max-width: 711px) {
+
+  .articles-content {
+    width: 100%;
+  }
+
+}
+
+
 /* Mobile L - 426px */
 @media screen and (max-width: 426px) {
 

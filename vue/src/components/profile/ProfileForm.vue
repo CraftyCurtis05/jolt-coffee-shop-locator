@@ -265,13 +265,18 @@
         <div class="button-container">
           <button
             type="submit"
-            :disabled="isSaving || Object.keys(changedFields).length === 0"
+            :disabled="
+              isSaving ||
+              (status && Object.keys(changedFields).length === 0)
+            "
             :title="
               isSaving
                 ? 'Saving Profile'
-                : Object.keys(changedFields).length === 0
+                : status && Object.keys(changedFields).length === 0
                   ? 'No Changes to Save'
-                  : 'Click to Save Changes'
+                  : status
+                    ? 'Click to Save Changes'
+                    : 'Click to Create Profile'
             "
           >
             {{ isSaving ? 'Saving...' : 'Save Profile' }}

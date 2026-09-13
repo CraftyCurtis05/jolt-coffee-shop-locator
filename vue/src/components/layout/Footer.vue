@@ -11,10 +11,14 @@
         Be Brew-tiful. Sip, Savor, Repeat.
       </p>
 
+      <p class="footer-links-heading">
+        Connect with Jennifer
+      </p>
+
       <!-- Project Links -->
       <nav
         class="footer-links"
-        aria-label="Project links"
+        aria-label="Jennifer's professional links"
       >
         <a
           href="https://github.com/CraftyCurtis05/jolt-coffee-shop-locator"
@@ -82,22 +86,26 @@ footer {
 .footer-container {
   width: 100%;
   padding: 0 1rem;
-  margin: 0 auto;
 }
 
 .slogan {
   font-size: 1rem;
   font-weight: bold;
   color: rgb(234, 189, 99);
-  margin: 0;
+  margin: .5rem auto;
+}
+
+.footer-links-heading {
+  font-size: .75rem;
+  font-weight: 600;
+  color: #525459;
+  margin: 1.25rem 0 0;
 }
 
 .footer-links {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1.25rem;
-  margin: .8rem 0;
 }
 
 .footer-links a {
@@ -112,7 +120,7 @@ footer {
   padding: 0 .25rem;
   transition:
     transform 0.3s ease-in-out,
-    border-color 0.3s ease-in-out;
+    color 0.3s ease-in-out;
 }
 
 .footer-links a:hover {
@@ -131,7 +139,7 @@ footer span {
   display: block;
   color: #333437;
   font-size: .7rem;
-  margin-top: .25rem;
+  margin-top: .75rem;
 }
 
 
@@ -148,11 +156,11 @@ footer span {
 
   .slogan {
     font-size: .9rem;
+    margin-bottom: 1rem;
   }
 
   .footer-links {
     gap: 1rem;
-    margin: .65rem 0;
   }
 
   .footer-links a {

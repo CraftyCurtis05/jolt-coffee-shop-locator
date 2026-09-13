@@ -13,6 +13,7 @@
 
       <!-- User Profile -->
       <section
+        ref="profileContent"
         class="profile-content"
         :class="{ 'profile-content-editing': isFormVisible }"
       >
@@ -146,12 +147,40 @@ export default {
           }
         }));
       }
+    },
+
+    // Close the profile form when clicking outside of the profile section
+    handleOutsideClick(event) {
+
+      if (
+        this.isFormVisible &&
+        this.$refs.profileContent &&
+        !this.$refs.profileContent.contains(event.target)
+      ) {
+        this.$refs.profileForm.cancelChanges();
+      }
     }
   },
 
   mounted() {
+
+    // Close the profile form when clicking outside of the profile section
+    document.addEventListener(
+      'pointerdown',
+      this.handleOutsideClick
+    );
+
     // Get the user's profile when the page loads
     this.fetchProfile();
+  },
+
+  beforeUnmount() {
+
+    // Remove the outside click listener
+    document.removeEventListener(
+      'pointerdown',
+      this.handleOutsideClick
+    );
   }
 };
 </script>
@@ -193,10 +222,11 @@ header h1 {
   top: 1.6rem;
 }
 
-/* Allow the expanded profile form to scroll while staying sticky */
+/* Allow the page to scroll normally while editing the profile */
 .profile-content-editing {
-  max-height: calc(100vh - 3.2rem);
-  overflow-y: auto;
+  position: static;
+  max-height: none;
+  overflow: visible;
 }
 
 .favorites-content {
@@ -326,7 +356,7 @@ header h1 {
 
   .profile-content {
     width: 100%;
-    max-width: 36rem;
+    max-width: 48rem;
     margin: 0 auto;
     position: static;
   }
@@ -338,9 +368,33 @@ header h1 {
   }
 
   .profile-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "picture details"
+      "picture form";
+    align-items: center;
+    column-gap: 1.5rem;
     width: 100%;
-    max-width: 32rem;
+    max-width: 48rem;
+    min-height: auto;
+    padding: 1.25rem;
     margin: 0 auto;
+  }
+
+  .profile-pic {
+    grid-area: picture;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .profile-details {
+    grid-area: details;
+  }
+
+  .profile-form {
+    grid-area: form;
   }
 
 }
@@ -354,11 +408,11 @@ header h1 {
   }
 
   .profile-content {
-    max-width: 30rem;
+    max-width: 100%;
   }
 
   .profile-container {
-    max-width: 28rem;
+    max-width: 100%;
   }
 
 }
@@ -367,14 +421,32 @@ header h1 {
 /* Mobile - 500px */
 @media screen and (max-width: 500px) {
 
+  main {
+    width: 95%;
+  }
+
   .profile-content {
     width: 100%;
     max-width: none;
   }
 
   .profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 94%;
-    max-width: none;
+    max-width: 26rem;
+    padding: .5rem;
+  }
+
+  .profile-pic,
+  .profile-details,
+  .profile-form {
+    width: 100%;
+  }
+
+  .profile-form button {
+    margin: .2rem;
   }
 
 }
@@ -385,6 +457,10 @@ header h1 {
 
   main {
     width: 96%;
+  }
+
+  .profile-container {
+    padding: .75rem;
   }
 
   .profile-content {

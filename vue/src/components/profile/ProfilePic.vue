@@ -346,4 +346,15 @@ form button:focus-visible {
   outline: .15rem #e8bb64 solid;
   outline-offset: .2rem;
 }
+
+
+/* Mobile - 500px */
+@media screen and (max-width: 500px) {
+
+  .image-container {
+    width: 8.5rem;
+    height: 8.5rem;
+  }
+
+}
 </style>
