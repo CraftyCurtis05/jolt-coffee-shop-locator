@@ -70,6 +70,10 @@ public class ProfileControllerTests {
         user.setUsername("testuser");
 
         Profile profile = new Profile();
+        profile.setBirthMonth("January");
+        profile.setBirthDay(15);
+        profile.setBirthYear(1990);
+        profile.setState("OH");
 
         Profile createdProfile = new Profile();
 
@@ -210,6 +214,10 @@ public class ProfileControllerTests {
         user.setUsername("testuser");
 
         Profile profile = new Profile();
+        profile.setBirthMonth("January");
+        profile.setBirthDay(15);
+        profile.setBirthYear(1990);
+        profile.setState("OH");
 
         DaoException expectedException =
                 new DaoException("Database error");

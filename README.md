@@ -2,7 +2,7 @@
 
 ### Full-Stack Coffee Shop Discovery Application
 
-Jolt is a full-stack web application that helps users discover local coffee shops, view real-time business information, save favorite locations, and manage a personalized user profile.
+Jolt is a full-stack web application that helps users discover local coffee shops, view real-time business information, save coffee shops, and manage a personalized user profile.
 
 Originally developed as a collaborative capstone project during the Tech Elevator Full-Stack Java Bootcamp, Jolt was later independently redesigned and expanded. I continued working on the application after the bootcamp to improve its organization, user experience, security, testing, and overall functionality.
 
@@ -12,11 +12,13 @@ The version in this repository reflects the continued development completed afte
 
 ## Project Evolution
 
-Jolt began as a collaborative capstone project focused on helping users find nearby coffee shops using real-time business data from the Yelp Fusion API.
+Jolt began as a collaborative four-person capstone project focused on helping users find nearby coffee shops using real-time business data from the Yelp Fusion API.
 
-After completing the bootcamp, I continued developing the application independently. I redesigned the user interface, reorganized parts of the application, expanded user workflows, improved database and authentication security, added automated testing, and continued improving the overall user experience.
+During the original development, I integrated and configured the Yelp API, contributed to application setup and functionality, and helped shape the logo, navigation, and visual design.
 
-This project represents one of my first full-stack applications and has also given me the opportunity to continue applying what I have learned as my development skills have grown.
+After completing the bootcamp, I continued developing Jolt independently. I redesigned the user interface, expanded profile and saved coffee shop functionality, improved application behavior and error handling, strengthened database and authentication security, added automated testing, and rebuilt the application for a responsive experience across devices.
+
+This project represents one of my first full-stack applications and has given me the opportunity to continue applying what I have learned as my development skills have grown.
 
 ---
 
@@ -27,9 +29,10 @@ Jolt brings coffee shop discovery and personalized user features together in one
 Users can:
 
 - Register and log in to a secure account
-- Search for nearby coffee shops
+- Search for coffee shops by city, state, or ZIP code
+- Search near a saved home location
 - View real-time business information from the Yelp Fusion API
-- Save coffee shops to a personalized favorites list
+- Save coffee shops to a personalized list
 - Create and update a user profile
 - Upload and manage a profile picture
 
@@ -41,10 +44,12 @@ The application uses a Vue.js frontend, a Java and Spring Boot REST API, and a P
 
 ### Coffee Shop Discovery
 
-- Search for coffee shops by location
+- Search for coffee shops by city, state, or ZIP code
+- Search near the home location stored in a user profile
 - Retrieve current business information through the Yelp Fusion API
 - View business names, addresses, images, and additional Yelp information
-- Browse search results through a centralized interface
+- Open directions or view additional business information through Yelp
+- Save coffee shops directly from search results
 
 ### User Authentication
 
@@ -53,19 +58,21 @@ The application uses a Vue.js frontend, a Java and Spring Boot REST API, and a P
 - JWT-based authentication
 - Protected user-specific application features
 - Authenticated requests between the Vue frontend and Spring Boot backend
+- Session-expiration handling for protected application workflows
 
-### Favorites
+### Saved Coffee Shops
 
 - Save coffee shops returned through Yelp searches
-- View saved locations from a personalized favorites list
-- Remove saved favorites
-- Prevent duplicate favorites for the same user
-- Restrict favorite management to the authenticated account
+- View saved coffee shops from a personalized list
+- Remove previously saved coffee shops
+- Prevent duplicate saved coffee shops for the same user
+- Restrict saved coffee shop management to the authenticated account
 
 ### User Profiles
 
 - Create a personalized profile
 - Update existing profile information
+- Use a saved home location for coffee shop searches
 - Maintain profile information separately for each authenticated user
 - Track profile form completion
 - Protect profile data using the authenticated user's account
@@ -78,27 +85,41 @@ The application uses a Vue.js frontend, a Java and Spring Boot REST API, and a P
 - Validate supported image types
 - Store profile image data in PostgreSQL
 
+### User Experience
+
+- Responsive layouts across desktop, tablet, and mobile screen sizes
+- Keyboard-visible focus states for interactive elements
+- Reduced-motion support
+- Mobile-friendly touch targets
+- Loading and processing states for asynchronous actions
+- Application-wide notifications and user feedback
+- Clear empty, error, and validation states
+- Custom not-found page and navigation behavior
+
 ---
 
 ## Independent Development
 
-Following the original capstone project, I continued developing Jolt independently.
+Following the original capstone project, I continued developing Jolt independently as my development skills grew.
 
 Some of the changes and additions include:
 
-- Redesigned the application's user interface
+- Redesigned the application's user interface and responsive layouts
 - Reorganized the project and removed duplicate backend files
 - Expanded profile management functionality
-- Improved favorites functionality and duplicate prevention
+- Expanded saved coffee shop functionality and duplicate prevention
 - Added profile image upload, replacement, and removal
-- Added application-wide user notifications
+- Added application-wide user notifications and loading states
+- Improved application error handling and user feedback
 - Improved authenticated user data protection
+- Added session-expiration handling
 - Moved sensitive application values to environment variables
 - Improved PostgreSQL database roles and application permissions
 - Hardened the local database setup process
 - Added automated DAO, controller, security, and integration testing
 - Improved CORS configuration for local and deployed environments
-- Continued improving responsive styling and usability
+- Improved keyboard accessibility, reduced-motion support, and mobile touch targets
+- Continued refining application copy, navigation, and overall usability
 
 These changes allowed me to continue working with the same application while applying concepts I learned after the original capstone was completed.
 
@@ -178,6 +199,7 @@ Some of the main technical concepts used throughout Jolt include:
 - Environment-based application secrets
 - Automated backend testing
 - Responsive frontend design
+- Accessibility-focused user interface behavior
 
 ---
 
@@ -212,7 +234,7 @@ Security-related features include:
 - Stateless JWT authentication
 - Protected backend endpoints
 - Authenticated user lookup
-- User-specific favorites, profiles, and profile images
+- User-specific saved coffee shops, profiles, and profile images
 - Environment variables for passwords, JWT secrets, and API keys
 - Restricted application database permissions
 - CORS configuration for approved frontend origins
@@ -223,7 +245,7 @@ The backend determines the current user from the authenticated request rather th
 
 ## Testing
 
-Jolt includes automated backend tests covering the application's database, controller, and security behavior.
+Jolt currently includes **98 passing automated backend tests** covering database, controller, authentication, security, and integration behavior.
 
 Testing includes:
 
@@ -245,6 +267,8 @@ Testing includes:
 
 DAO integration tests use a separate PostgreSQL test database so database behavior can be tested without modifying the normal development database.
 
+Before the final release, the application was also checked with frontend linting, a production frontend build, and manual testing across desktop, tablet, and mobile workflows.
+
 ---
 
 ## Technology Stack
@@ -261,11 +285,78 @@ DAO integration tests use a separate PostgreSQL test database so database behavi
 
 ---
 
+## Screenshots
+
+The following screenshots demonstrate Jolt after the independent redesign and continued development.
+
+### Home
+
+Explore Jolt's main features from a responsive landing page designed to make coffee shop discovery simple and easy to navigate.
+
+![Home Page](screenshots/01-home.webp)
+
+---
+
+### Create Account
+
+Create a secure Jolt account to access personalized features, with clear validation and feedback throughout the registration process.
+
+![Create Account](screenshots/02-create-account.webp)
+
+---
+
+### Profile Management
+
+Create and manage personal information and a profile picture used across Jolt's personalized features.
+
+![Profile Management](screenshots/03-profile.webp)
+
+---
+
+### Coffee Shop Locator
+
+Search by city, state, or ZIP code—or use a saved home location—to find nearby coffee shops with real-time business information from Yelp.
+
+![Coffee Shop Locator](screenshots/04-coffee-shop-locator.webp)
+
+---
+
+### Saved Coffee Shops
+
+Save coffee shops from search results and manage them from a personalized list tied to the authenticated user.
+
+![Saved Coffee Shops](screenshots/05-saved-coffee-shops.webp)
+
+---
+
+### Jolt Shop
+
+Browse a responsive collection of Jolt merchandise that extends the application's visual identity beyond its core coffee shop features.
+
+![Jolt Shop](screenshots/06-shop.webp)
+
+---
+
+### Coffee Articles
+
+Explore coffee-related articles through a responsive card-based layout designed for quick browsing and easy navigation.
+
+![Coffee Articles](screenshots/07-articles.webp)
+
+---
+
+### About Jolt
+
+Meet the original development team and see how Jolt evolved from a collaborative capstone into an application I continued redesigning and expanding independently.
+
+![About Jolt](screenshots/08-about-project.webp)
+
+---
+
 ## Project Structure
 
 ```text
 jolt-coffee-shop-locator/
-
 ├── java/
 │   ├── database/
 │   ├── src/
@@ -291,58 +382,6 @@ jolt-coffee-shop-locator/
 ```
 
 The Java and Vue directories contain additional README files with more information about each side of the application.
-
----
-
-## Screenshots
-
-The following screenshots demonstrate the application after the independent redesign and continued development.
-
-### Login Page
-
-Secure user authentication for personalized application features.
-
-![Login](screenshots/01-login.png)
-
----
-
-### Home Page
-
-Introduces Jolt and provides access to the application's main features.
-
-![Home Page](screenshots/02-home.png)
-
----
-
-### Coffee Shop Search
-
-Displays nearby coffee shops retrieved through the Yelp Fusion API.
-
-![Coffee Shop Search](screenshots/03-locator-search.png)
-
----
-
-### Coffee Shop Results
-
-Allows users to view coffee shop information and save locations to their favorites.
-
-![Coffee Shop Results](screenshots/04-shop.png)
-
----
-
-### Profile Management
-
-Allows authenticated users to create and manage their profile information.
-
-![Profile Management](screenshots/05-profile-form.png)
-
----
-
-### Favorites
-
-Displays coffee shops saved by the authenticated user.
-
-![Favorites](screenshots/06-profile-favs.png)
 
 ---
 
@@ -444,7 +483,6 @@ Jolt is intentionally maintained as one of my earlier full-stack projects, but t
 - User reviews and ratings
 - Search history
 - Personalized coffee shop recommendations
-- Additional accessibility and responsive design improvements
 
 ---
 
