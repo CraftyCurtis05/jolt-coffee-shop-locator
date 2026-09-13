@@ -5,8 +5,8 @@
 
     <!-- Profile Header -->
     <header>
-      <h1>Your Profile</h1>
-      <h2>Manage your personal details and profile picture</h2>
+      <h1>Profile</h1>
+      <h2>Manage your profile and saved coffee shops</h2>
     </header>
 
     <main>
@@ -21,7 +21,7 @@
         <!-- Profile Header -->
         <header class="section-header">
           <h2>Profile Information</h2>
-          <p>Your personal details and profile picture.</p>
+          <p>View and update your personal details and profile picture.</p>
         </header>
 
         <!-- Profile Card -->
@@ -53,7 +53,7 @@
               v-if="showUpdateButton"
               type="button"
               @click="showForm"
-              :title="user ? 'Click to Update Profile' : 'Click to Create Profile'"
+              :title="user ? 'Update Profile' : 'Create Profile'"
             >
               {{ user ? 'Update Profile' : 'Create Profile' }}
             </button>
@@ -69,7 +69,7 @@
         <!-- Favorites Section Header -->
         <header class="section-header">
           <h2>Saved Coffee Shops</h2>
-          <p>Your favorite places, all in one spot.</p>
+          <p>Revisit the coffee shops you've saved along the way.</p>
         </header>
 
         <Favorites />

@@ -103,7 +103,7 @@
             :to="{ name: 'login' }"
             class="register-link"
           >
-            Already have an account? Log in.
+            Already have an account? Sign in.
           </router-link>
         </div>
 
@@ -145,7 +145,7 @@ export default {
       // Check that the password and confirmation password match
       if (this.user.password != this.user.confirmPassword) {
         this.registrationErrors = true;
-        this.registrationErrorMsg = 'Password & Confirm Password do not match.';
+        this.registrationErrorMsg = 'Passwords do not match.';
 
       } else {
 

@@ -14,7 +14,7 @@
         <img
           src="@/assets/about/steven.webp"
           alt="Steven Riggle"
-          title="Click to Go to Steven's LinkedIn"
+          title="Visit Steven Riggle on LinkedIn"
         />
       </a>
     </section>
@@ -154,7 +154,7 @@ summary {
 
 summary:hover {
   font-size: 1rem;
-  font-weight: 00;
+  font-weight: 600;
   color: #e8bb64;
   text-decoration: underline;
 }

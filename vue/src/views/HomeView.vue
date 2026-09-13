@@ -24,7 +24,7 @@
       class="profile-setup"
     >
       <p>
-        Create your profile to personalize your Jolt experience.
+        Create your profile to search near home and personalize your Jolt experience.
       </p>
       <RouterLink
         to="/profile"
@@ -38,7 +38,7 @@
     <section class="invitation-container">
       <router-link
         v-bind:to="{ name: 'locator' }"
-        title="Click to Find a Coffee Shop"
+        title="Click to Find a Coffee Shops"
       >
         Start your coffee journey with us today!
       </router-link>
@@ -86,7 +86,7 @@
         <router-link
           v-bind:to="{ name: 'locator' }"
           class="explore-card"
-          title="Click to Find Coffee"
+          title="Click to Find Coffee Shops"
         >
           <span class="explore-card-accent"></span>
           <h3>
@@ -113,7 +113,7 @@
           </h3>
 
           <p>
-            Explore coffee-inspired products and Jolt favorites.
+            Explore coffee-inspired products and Jolt picks.
           </p>
           <span class="explore-action">
             Visit Shop →

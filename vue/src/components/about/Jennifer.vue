@@ -14,7 +14,7 @@
         <img
           src="@/assets/about/jennifer.webp"
           alt="Jennifer Curtis"
-          title="Click to Go to Jennifer's LinkedIn"
+          title="Visit Jennifer Curtis on LinkedIn"
         />
       </a>
     </section>
@@ -43,17 +43,15 @@
         >
           I've always been the type to ask questions, look for patterns and figure out
           how different pieces connect. That curiosity naturally led me into technology,
-          where I built a foundation across systems administration, infrastructure and
-          software development before completing Tech Elevator's Java Full-Stack
-          Bootcamp.
+          where I built a foundation in systems administration, infrastructure and 
+          software development before completing Tech Elevator's Java Full-Stack Bootcamp.
 
           <br><br>
 
-          Since then, I've continued building and refining full-stack applications with
-          Java, Spring Boot, PostgreSQL, JavaScript and Vue.js while expanding my work 
-          across APIs, responsive design, application security and systems-focused 
-          problem-solving. I enjoy understanding both how a system works technically
-          and how it can be improved for the people using it.
+          I've continued building and refining full-stack applications with Java, Spring Boot, 
+          PostgreSQL, JavaScript and Vue.js while continuing to learn more about APIs, responsive 
+          design, application security and systems-focused problem-solving. I enjoy understanding 
+          both how a system works technically and how it can be improved for the people using it.
         </p>
       </details>
 
@@ -155,7 +153,7 @@ summary {
 
 summary:hover {
   font-size: 1rem;
-  font-weight: 00;
+  font-weight: 600;
   color: #e8bb64;
   text-decoration: underline;
 }

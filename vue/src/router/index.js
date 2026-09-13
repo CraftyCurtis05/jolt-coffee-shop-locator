@@ -38,7 +38,7 @@ const routes = [
     name: 'login',
     component: LoginView,
     meta: {
-      title: 'Login | Jolt',
+      title: 'Sign In | Jolt',
       hideNavBar: true,
       requiresAuth: false
     }
@@ -57,7 +57,7 @@ const routes = [
     name: 'register',
     component: RegisterView,
     meta: {
-      title: 'Register | Jolt',
+      title: 'Create Account | Jolt',
       hideNavBar: true,
       requiresAuth: false
     }
@@ -122,7 +122,14 @@ const routes = [
 // Create the router
 const router = createRouter({
   history: createWebHistory(),
-  routes: routes
+  routes,
+
+  // Start each page at the top when navigating
+  scrollBehavior() {
+    return {
+      top: 0
+    };
+  }
 });
 
 

@@ -11,14 +11,14 @@
         <span class="search-heading-accent"></span>
 
         <h3>
-          Find Coffee Near You
+          Find Coffee Shops Near You
         </h3>
       </div>
 
       <!-- Location Search -->
       <form class="search-bar" @submit.prevent="search">
         <label for="location-search">
-          Search Location:
+          Location:
         </label>
 
         <input
@@ -32,7 +32,11 @@
         <button
           type="submit"
           :disabled="isSearching"
-          :title="isSearching ? 'Searching for Coffee Shops' : 'Click to Get Coffee Shops'"
+          :title="
+            isSearching
+              ? 'Searching for Coffee Shops'
+              : 'Click to Search for Coffee Shops'
+          "
         >
           {{ isSearching ? 'Searching...' : 'Search' }}
         </button>
@@ -45,7 +49,11 @@
           type="button"
           @click="searchHome()"
           :disabled="isSearching"
-          :title="isSearching ? 'Searching for Coffee Shops Near Home' : 'Click to Get Coffee Shops Near Home'"
+          :title="
+            isSearching
+              ? 'Searching for Coffee Shops Near Home'
+              : 'Click to Search for Coffee Shops Near Home'
+          "
         >
           <img
             :src="houseIcon"
@@ -54,6 +62,17 @@
           {{ isSearching ? 'Searching...' : 'Search Near Home' }}
         </button>
       </section>
+
+      <!-- Profile Required for Home Search -->
+      <p
+        v-else
+        class="profile-search-hint"
+      >
+        <RouterLink to="/profile">
+          Create a profile
+        </RouterLink>
+        to search for coffee shops near home.
+      </p>
 
     </section>
 
@@ -70,13 +89,13 @@
         </h3>
 
         <p class="results-source">
-          Results provided by Yelp
+          Results by Yelp
         </p>
 
         <!-- Search Results Count -->
         <p class="results-count">
           {{ results.length }}
-          {{ results.length === 1 ? 'coffee shop found' : 'coffee shops found' }}
+          {{ results.length === 1 ? 'result found' : 'results found' }}
         </p>
       </header>
 
@@ -100,7 +119,7 @@
               target="_blank"
               rel="noopener noreferrer"
               :aria-label="'View ' + result.name + ' on Yelp'"
-              title="Click for Yelp Page"
+              title="View on Yelp"
             >
               {{ result.name }}
             </a>
@@ -112,7 +131,7 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 :aria-label="'Get directions to ' + result.name"
-                title="Click for Directions"
+                title="Get Directions"
               >
                 <span>
                   {{ result.location.address1 }}
@@ -142,7 +161,7 @@
               <img
                 :src="result.image_url || defaultImage"
                 :alt="result.image_url ? result.name + ' coffee shop' : 'No photo available for ' + result.name"
-                title="Click for Yelp Page"
+                title="View on Yelp"
               />
             </a>
           </section>
@@ -158,12 +177,12 @@
               "
               :aria-label="
                 userFavorites.includes(result.id)
-                  ? result.name + ' is already in favorites'
-                  : 'Add ' + result.name + ' to favorites'
+                  ? result.name + ' is saved'
+                  : 'Save ' + result.name
               "
               :title="userFavorites.includes(result.id)
-                  ? 'Added to Favorites'
-                  : 'Click to Add to Favorites'"
+                ? 'Saved Coffee Shop'
+                : 'Click to Save Coffee Shop'"
             >
               <img
                 :src="userFavorites.includes(result.id)
@@ -178,8 +197,8 @@
                     savingFavoriteId === result.id
                       ? 'Saving...'
                       : userFavorites.includes(result.id)
-                        ? 'Added to Favorites'
-                        : 'Add to Favorites'
+                        ? 'Saved'
+                        : 'Save Coffee Shop'
                   }}
                 </span>
               </span>
@@ -198,7 +217,7 @@
     >
       <p>
         <strong>No coffee shops found.</strong>
-        Try another city or ZIP code.
+        Try another city, state or ZIP code.
       </p>
     </section>
 
@@ -340,7 +359,7 @@ export default {
 
           window.dispatchEvent(new CustomEvent('app-notification', {
             detail: {
-              message: 'There was a problem fetching coffee shops! Please try again.',
+              message: 'There was a problem finding coffee shops. Please try again.',
               type: 'error'
             }
           }));
@@ -355,7 +374,7 @@ export default {
       if (this.userFavorites.includes(result.id)) {
         window.dispatchEvent(new CustomEvent('app-notification', {
           detail: {
-            message: "You've already favorited this shop.",
+            message: "You've already saved this coffee shop.",
             type: 'warning'
           }
         }));
@@ -396,7 +415,7 @@ export default {
 
             window.dispatchEvent(new CustomEvent('app-notification', {
               detail: {
-                message: "You've already favorited this shop.",
+                message: "You've already saved this coffee shop.",
                 type: 'warning'
               }
             }));
@@ -406,11 +425,11 @@ export default {
             // Display an error if the favorite cannot be saved
             window.dispatchEvent(new CustomEvent('app-notification', {
               detail: {
-                message: 'There was a problem adding this favorite. Please try again.',
+                message: 'There was a problem saving this coffee shop. Please try again.',
                 type: 'error'
               }
             }));
-            console.error('Error adding favorite:', error);
+            console.error('Error adding coffee shop:', error);
           }
         })
         .finally(() => {
@@ -430,7 +449,7 @@ export default {
 
         })
         .catch((error) => {
-          console.error('Error fetching favorites:', error);
+          console.error('Error fetching coffee shops:', error);
         });
     },
 
@@ -448,7 +467,7 @@ export default {
       if (!address1 || !city || !state || !zipcode) {
         window.dispatchEvent(new CustomEvent('app-notification', {
           detail: {
-            message: 'User address is missing or incomplete. Please complete your profile.',
+            message: 'Your home address is missing or incomplete. Please complete your profile.',
             type: 'warning'
           }
         }));
@@ -543,7 +562,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 9rem;
+  width: 6rem;
   flex-shrink: 0;
   text-align: center;
   margin: 0;
@@ -584,6 +603,39 @@ export default {
   width: 1.75rem;
   height: 1.75rem;
   object-fit: contain;
+}
+
+
+.profile-search-hint {
+  font-size: .8rem;
+  line-height: 1.4;
+  background-color: rgba(232, 187, 100, .2);
+  border-left: .2rem rgb(156, 105, 33, .8) solid;
+  padding-left: .75rem;
+  margin: .5rem auto;
+}
+
+.profile-search-hint a {
+  display: inline-block;
+  font-weight: 600;
+  color: rgb(53, 37, 19);
+  text-decoration: underline;
+  text-decoration-color: #e8bb64;
+  text-underline-offset: .2rem;
+  transition:
+    color 0.3s ease-in-out,
+    transform 0.3s ease-in-out;
+}
+
+.profile-search-hint a:hover {
+  color: #9b6a20;
+  transform: scale(1.03);
+}
+
+.profile-search-hint a:focus-visible {
+  color: #9b6a20;
+  outline: .15rem #e8bb64 solid;
+  outline-offset: .2rem;
 }
 
 

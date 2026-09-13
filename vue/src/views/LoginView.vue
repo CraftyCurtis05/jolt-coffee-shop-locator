@@ -74,7 +74,7 @@
             v-if="this.$route.query.registration"
             id="alert1"
           >
-            Thank you for registering!<br>Please sign in.
+            Your account has been created.<br>Please sign in.
           </div>
 
           <!-- Invalid Login Message -->
@@ -101,7 +101,7 @@
             :to="{ name: 'register' }"
             class="register-link"
           >
-            Don't have an account? Register.
+            Don't have an account? Create one.
           </router-link>
         </div>
 

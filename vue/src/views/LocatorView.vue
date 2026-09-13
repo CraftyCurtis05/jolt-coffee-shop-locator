@@ -8,7 +8,7 @@
       <h1>Coffee Shop Locator</h1>
       <h2>Discover coffee shops near you</h2>
       <p class="locator-intro">
-        Search by city or ZIP code, or use your saved profile to find coffee shops near home.
+        Search by city, state or ZIP code, or use your saved profile to find coffee shops near home.
       </p>
     </header>
 

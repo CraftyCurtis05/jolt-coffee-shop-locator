@@ -94,8 +94,8 @@
             type="button"
             @click="deleteFavorite(result.favoriteId)"
             :disabled="removingFavoriteId === result.favoriteId"
-            :aria-label="'Delete ' + result.businessName + ' from favorites'"
-            title="Delete Favorite"
+            :aria-label="'Remove ' + result.businessName + ' from saved coffee shops'"
+            title="Remove Saved Coffee Shop"
           >
             <span
               class="remove-icon"
@@ -126,7 +126,7 @@
         v-bind:to="{ name: 'locator' }"
         class="favorites-action"
       >
-        Find More Coffee →
+        Find More Coffee Shops →
       </router-link>
     </div>
 
@@ -136,7 +136,7 @@
       v-if="results.length === 0"
     >
       <p>
-        Your coffee list is waiting for its first favorite.
+        No coffee shops saved yet. Find one to start your list.
         <router-link
           :to="{ name: 'locator' }"
           title="Find Coffee Shops"
@@ -199,14 +199,14 @@ export default {
           this.results = response || [];
         })
         .catch(error => {
-          console.error('Error fetching favorites:', error);
+          console.error('Error fetching coffee shops', error);
         });
     },
 
     // Delete a favorite coffee shop
     deleteFavorite(favoriteId) {
       const confirmDelete = confirm(
-        'Are you sure you want to remove this coffee shop from your favorites?'
+        'Are you sure you want to remove this coffee shop from your saved list?'
       );
 
       if (!confirmDelete) {
@@ -226,7 +226,7 @@ export default {
 
         })
         .catch(error => {
-          console.error('Error deleting favorite:', error);
+          console.error('Error deleting coffee shop:', error);
         })
         .finally(() => {
           this.removingFavoriteId = null;
@@ -504,7 +504,7 @@ export default {
 .no-favorites {
   width: 100%;
   text-align: center;
-  background-color: rgb(245, 242, 242);
+  background-color: rgba(232, 187, 100, .2);
   border-left: .2rem rgb(156, 105, 33, .8) solid;
   padding: 1rem 1.25rem;
 }

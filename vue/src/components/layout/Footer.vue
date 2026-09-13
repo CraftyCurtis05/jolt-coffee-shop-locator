@@ -24,7 +24,7 @@
           href="https://github.com/CraftyCurtis05/jolt-coffee-shop-locator"
           target="_blank"
           rel="noopener noreferrer"
-          title="Click to Go to Jennifer's Github"
+          title="Click to Go to Jennifer's GitHub"
         >
           GitHub
         </a>

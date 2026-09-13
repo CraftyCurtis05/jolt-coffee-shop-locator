@@ -14,7 +14,7 @@
         <img
           src="@/assets/about/naomi.webp"
           alt="Naomi Adams"
-          title="Click to Go to Naomi's LinkedIn"
+          title="Visit Naomi Adams on LinkedIn"
         />
       </a>
     </section>
@@ -154,7 +154,7 @@ summary {
 
 summary:hover {
   font-size: 1rem;
-  font-weight: 00;
+  font-weight: 600;
   color: #e8bb64;
   text-decoration: underline;
 }

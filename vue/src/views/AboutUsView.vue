@@ -6,8 +6,10 @@
     <!-- About Header -->
     <header>
       <h1>Who We Are</h1>
-      <h2>Meet the Original Jolt Development Team</h2>
-      <p class="about-intro">Jolt began as a four-person capstone project and continues to evolve through independent development.</p>
+      <h2>Meet the original Jolt development team</h2>
+      <p class="about-intro">
+        Meet the developers behind Jolt and learn how the project continues to evolve.
+      </p>
     </header>
 
     <!-- Developer Profiles -->
@@ -42,15 +44,15 @@
       <p>
         Jolt began as a collaborative four-person capstone project. During its
         original development, Jennifer integrated and configured the Yelp API,
-        contributed across application setup and functionality, and helped shape
-        the logo, links and visual design.
+        contributed to application setup and functionality, and helped shape
+        the logo, navigation and visual design.
       </p>
 
       <p>
         Since the capstone, Jennifer has continued developing Jolt independently,
-        expanding the profile and favorites functionality, redesigning the
+        expanding profile and saved coffee shop functionality, redesigning the
         interface and imagery, improving application behavior and error handling,
-        and rebuilding the application for responsive use across devices.
+        and rebuilding the application for a responsive experience across devices.
       </p>
     </section>
 

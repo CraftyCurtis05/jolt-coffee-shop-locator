@@ -14,7 +14,7 @@
         <img
           src="@/assets/about/david.webp"
           alt="David DeFosha"
-          title="Click to Go to David's LinkedIn"
+          title="Visit David DeFosha on LinkedIn"
         />
       </a>
     </section>
@@ -154,7 +154,7 @@ summary {
 
 summary:hover {
   font-size: 1rem;
-  font-weight: 00;
+  font-weight: 600;
   color: #e8bb64;
   text-decoration: underline;
 }
