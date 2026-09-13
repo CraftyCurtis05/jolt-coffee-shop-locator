@@ -12,6 +12,7 @@ import ArticlesView from '../views/ArticlesView.vue';
 import LocatorView from '../views/LocatorView.vue';
 import ProfileView from '../views/ProfileView.vue';
 import AboutUsView from '../views/AboutUsView.vue';
+import NotFoundView from '../views/NotFoundView.vue';
 
 
 /*
@@ -28,6 +29,7 @@ const routes = [
     name: 'home',
     component: HomeView,
     meta: {
+      title: 'Home | Jolt',
       requiresAuth: true
     }
   },
@@ -36,6 +38,7 @@ const routes = [
     name: 'login',
     component: LoginView,
     meta: {
+      title: 'Login | Jolt',
       hideNavBar: true,
       requiresAuth: false
     }
@@ -45,6 +48,7 @@ const routes = [
     name: 'logout',
     component: LogoutView,
     meta: {
+      title: 'Logout | Jolt',
       requiresAuth: true
     }
   },
@@ -53,6 +57,7 @@ const routes = [
     name: 'register',
     component: RegisterView,
     meta: {
+      title: 'Register | Jolt',
       hideNavBar: true,
       requiresAuth: false
     }
@@ -62,6 +67,7 @@ const routes = [
     name: 'shop',
     component: ShopView,
     meta: {
+      title: 'Shop | Jolt',
       requiresAuth: true
     }
   },
@@ -70,6 +76,7 @@ const routes = [
     name: 'articles',
     component: ArticlesView,
     meta: {
+      title: 'Articles | Jolt',
       requiresAuth: true
     }
   },
@@ -78,6 +85,7 @@ const routes = [
     name: 'locator',
     component: LocatorView,
     meta: {
+      title: 'Coffee Shop Locator | Jolt',
       requiresAuth: true
     }
   },
@@ -86,6 +94,7 @@ const routes = [
     name: 'profile',
     component: ProfileView,
     meta: {
+      title: 'Profile | Jolt',
       requiresAuth: true
     }
   },
@@ -94,6 +103,16 @@ const routes = [
     name: 'aboutUs',
     component: AboutUsView,
     meta: {
+      title: 'About Us | Jolt',
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'not-found',
+    component: NotFoundView,
+    meta: {
+      title: 'Page Not Found | Jolt',
       requiresAuth: true
     }
   }
@@ -109,6 +128,9 @@ const router = createRouter({
 
 // Check authentication before navigating to protected routes
 router.beforeEach((to) => {
+
+  // Update the browser tab title for the current page
+  document.title = to.meta.title || 'Jolt';
 
   // Determine if the route requires authentication
   const requiresAuth = to.matched.some(route => route.meta.requiresAuth);

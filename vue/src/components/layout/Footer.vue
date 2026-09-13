@@ -11,66 +11,35 @@
         Be Brew-tiful. Sip, Savor, Repeat.
       </p>
 
-      <!-- Social Media Links -->
-      <section class="social-links">
-
-        <!-- Facebook -->
+      <!-- Project Links -->
+      <nav
+        class="footer-links"
+        aria-label="Project links"
+      >
         <a
-          href="https://www.facebook.com/"
+          href="https://github.com/CraftyCurtis05/jolt-coffee-shop-locator"
           target="_blank"
           rel="noopener noreferrer"
-          class="social-link"
         >
-          <img
-            src="@/assets/app/social/facebook_logo.webp"
-            alt="Facebook"
-            title="Facebook"
-          >
+          GitHub
         </a>
 
-        <!-- Instagram -->
         <a
-          href="https://www.instagram.com/"
+          href="https://jennifercurtis.me/"
           target="_blank"
           rel="noopener noreferrer"
-          class="social-link"
         >
-          <img
-            src="@/assets/app/social/instagram_logo.webp"
-            alt="Instagram"
-            title="Instagram"
-          >
+          Portfolio
         </a>
 
-        <!-- LinkedIn -->
         <a
-          href="https://www.linkedin.com/"
+          href="https://www.linkedin.com/in/jcurtisdeveloper/"
           target="_blank"
           rel="noopener noreferrer"
-          class="social-link"
         >
-          <img
-            src="@/assets/app/social/linkedIn_logo.webp"
-            alt="LinkedIn"
-            title="LinkedIn"
-          >
+          LinkedIn
         </a>
-
-        <!-- Twitter -->
-        <a
-          href="https://www.twitter.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="social-link"
-        >
-          <img
-            src="@/assets/app/social/twitter_logo.webp"
-            alt="Twitter"
-            title="Twitter"
-          >
-        </a>
-
-      </section>
+      </nav>
 
       <!-- Copyright -->
       <span>
@@ -78,6 +47,7 @@
       </span>
 
     </article>
+
   </footer>
 </template>
 
@@ -119,30 +89,34 @@ footer {
   margin: 0;
 }
 
-.social-links {
+.footer-links {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
-  margin: 1rem 0;
+  gap: 1.25rem;
+  margin: .8rem 0;
 }
 
-.social-link {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.footer-links a {
+  font-size: .8rem;
+  font-weight: 600;
+  color: #333437;
+  text-decoration: none;
+  transition:
+    transform 0.3s ease-in-out,
+    border-color 0.3s ease-in-out;
 }
 
-.social-link img {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  transition: all 0.3s ease-in-out;
+.footer-links a:hover {
+  font-weight: 700;
+  color: rgb(53, 37, 19);
+  text-decoration: underline;
+  transform: scale(1.02);
 }
 
-.social-link img:hover {
-  transform: scale(1.1);
-  filter: brightness(85%);
+.footer-links a:focus-visible {
+  outline: .15rem rgb(234, 189, 99) solid;
+  outline-offset: .2rem;
 }
 
 footer span {
@@ -168,14 +142,13 @@ footer span {
     font-size: .9rem;
   }
 
-  .social-links {
-    gap: .75rem;
-    margin: .8rem 0;
+  .footer-links {
+    gap: 1rem;
+    margin: .65rem 0;
   }
 
-  .social-link img {
-    width: 1.8rem;
-    height: 1.8rem;
+  .footer-links a {
+    font-size: .75rem;
   }
 
 }

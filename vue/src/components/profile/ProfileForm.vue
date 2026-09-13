@@ -265,8 +265,14 @@
         <div class="button-container">
           <button
             type="submit"
-            :disabled="isSaving"
-            :title="isSaving ? 'Saving Profile' : 'Click to Save Updated Profile'"
+            :disabled="isSaving || Object.keys(changedFields).length === 0"
+            :title="
+              isSaving
+                ? 'Saving Profile'
+                : Object.keys(changedFields).length === 0
+                  ? 'No Changes to Save'
+                  : 'Click to Save Changes'
+            "
           >
             {{ isSaving ? 'Saving...' : 'Save Profile' }}
           </button>
@@ -527,9 +533,15 @@ export default {
       }
     },
 
-    // Store the profile information after a field is changed
+    // Track only profile fields that are different from the original profile
     trackChanges() {
-      this.changedFields = {
+      const originalProfile = ProfileService.originalProfile;
+
+      if (!originalProfile) {
+        return;
+      }
+
+      const updatedFields = {
         firstName: this.user.firstName,
         lastName: this.user.lastName,
         birthMonth: this.user.birthMonth,
@@ -541,6 +553,14 @@ export default {
         state: this.user.state,
         zipcode: this.user.zipcode
       };
+
+      this.changedFields = {};
+
+      Object.keys(updatedFields).forEach(key => {
+        if (updatedFields[key] !== originalProfile[key]) {
+          this.changedFields[key] = updatedFields[key];
+        }
+      });
     }
   },
 
@@ -700,9 +720,12 @@ legend {
 }
 
 .button-container button:disabled {
-  cursor: wait;
-  opacity: .75;
+  opacity: .6;
   transform: none;
+}
+
+.button-container button:disabled:not(.saving) {
+  cursor: not-allowed;
 }
 
 .button-container button:focus-visible {

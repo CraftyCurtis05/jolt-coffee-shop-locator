@@ -42,6 +42,15 @@ axios.interceptors.response.use(
       store.state.token
     ) {
       store.commit('LOGOUT');
+
+      // Tell the user why they were returned to the login page
+      window.dispatchEvent(new CustomEvent('app-notification', {
+        detail: {
+          message: 'Your session has expired. Please sign in again.',
+          type: 'info'
+        }
+      }));
+
       router.push('/login');
     }
 

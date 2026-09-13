@@ -5,21 +5,16 @@
 
     <!-- Background Video -->
     <video
-      class="background-video"
+      class="auth-background"
       autoplay
       muted
       loop
       playsinline
+      poster="/assets/jolt-personalized-falling-beans-fallback.jpg"
+      aria-hidden="true"
     >
-      <source
-        src="@/assets/login/beans-coffee.webm"
-        type="video/webm"
-      />
-
-      <source
-        src="@/assets/login/beans-coffee.mp4"
-        type="video/mp4"
-      />
+      <source src="../assets/login/jolt-personalized-falling-beans.webm" type="video/webm">
+      <source src="../assets/login/jolt-personalized-falling-beans.mp4" type="video/mp4">
     </video>
 
     <!-- Jolt Logo -->
@@ -205,27 +200,23 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
+  position: fixed;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
   overflow-x: hidden;
   font-family: 'Ubuntu', sans-serif;
-  color: #333437;
-  padding: 2rem 1rem;
-  z-index: 0;
-  caret-color: transparent;
+  padding: 0;
 }
 
 /* Login and registration background video */
 .background-video {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   pointer-events: none; /* Prevents the video from blocking page clicks */
-  z-index: 0;
+  z-index: -1;
 }
 
 .jolt-logo {
@@ -390,5 +381,19 @@ button:disabled {
     font-size: .9rem;
   }
 
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-background {
+    display: none;
+  }
+
+  body {
+    background:
+      #1a0e08
+      url("/assets/login/jolt-personalized-falling-beans-fallback.jpg")
+      center / cover no-repeat fixed;
+  }
 }
 </style>
