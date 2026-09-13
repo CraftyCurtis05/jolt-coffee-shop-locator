@@ -10,6 +10,8 @@
       muted
       loop
       playsinline
+      :poster="fallbackImage"
+      aria-hidden="true"
     >
       <source
         src="@/assets/login/jolt-personalized-falling-beans.webm"
@@ -113,12 +115,16 @@
 
 <script>
 import authService from '../services/AuthService.js';
+import fallbackImage from '../assets/login/jolt-personalized-falling-beans-fallback.jpg';
 
 export default {
   name: 'LoginView',
 
   data() {
     return {
+      // Background image used while the video is loading
+      fallbackImage,
+
       // Store the information entered into the login form
       user: {
         username: '',
