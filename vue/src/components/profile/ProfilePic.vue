@@ -303,7 +303,7 @@ form button {
   justify-content: center;
   align-items: center;
   width: 8rem;
-  min-height: 2.2rem;
+  min-height: 2.75rem;
   font-size: .8rem;
   color: rgb(53, 37, 19);
   background-color: #e8bb64;

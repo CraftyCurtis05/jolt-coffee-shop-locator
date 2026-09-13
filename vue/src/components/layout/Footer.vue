@@ -20,6 +20,7 @@
           href="https://github.com/CraftyCurtis05/jolt-coffee-shop-locator"
           target="_blank"
           rel="noopener noreferrer"
+          title="Click to Go to Jennifer's Github"
         >
           GitHub
         </a>
@@ -28,6 +29,7 @@
           href="https://jennifercurtis.me/"
           target="_blank"
           rel="noopener noreferrer"
+          title="Click to Go to Jennifer's Portfolio"
         >
           Portfolio
         </a>
@@ -36,6 +38,7 @@
           href="https://www.linkedin.com/in/jcurtisdeveloper/"
           target="_blank"
           rel="noopener noreferrer"
+          title="Click to Go to Jennifer's LinkedIn"
         >
           LinkedIn
         </a>
@@ -98,10 +101,15 @@ footer {
 }
 
 .footer-links a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 2.75rem;
   font-size: .8rem;
   font-weight: 600;
   color: #333437;
   text-decoration: none;
+  padding: 0 .25rem;
   transition:
     transform 0.3s ease-in-out,
     border-color 0.3s ease-in-out;

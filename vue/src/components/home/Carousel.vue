@@ -179,7 +179,9 @@ export default {
 }
 
 .prev-btn:hover,
-.next-btn:hover {
+.next-btn:hover,
+.prev-btn:active,
+.next-btn:active {
   background-color: #e8bb64;
 }
 
@@ -206,12 +208,16 @@ button img {
 
 /* Switch navigation images when the button is hovered */
 .prev-btn:hover .default,
-.next-btn:hover .default {
+.next-btn:hover .default,
+.prev-btn:active .default,
+.next-btn:active .default {
   opacity: 0;
 }
 
 .prev-btn:hover .hover,
-.next-btn:hover .hover {
+.next-btn:hover .hover,
+.prev-btn:active .hover,
+.next-btn:active .hover {
   opacity: 1;
 }
 
@@ -225,10 +231,10 @@ button img {
 
   .prev-btn,
   .next-btn {
-    width: 2.2rem;
-    min-width: 2.2rem;
-    height: 2.2rem;
-    min-height: 2.2rem;
+    width: 2.75rem;
+    min-width: 2.75rem;
+    height: 2.75rem;
+    min-height: 2.75rem;
     padding: .4rem;
   }
 
@@ -244,11 +250,11 @@ button img {
 
   .prev-btn,
   .next-btn {
-    width: 2rem;
-    min-width: 2rem;
-    height: 2rem;
-    min-height: 2rem;
-    padding: .2rem;
+    width: 2.75rem;
+    min-width: 2.75rem;
+    height: 2.75rem;
+    min-height: 2.75rem;
+    padding: .35rem;
   }
 
 }

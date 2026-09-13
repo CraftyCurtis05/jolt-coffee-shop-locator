@@ -161,11 +161,15 @@
                   ? result.name + ' is already in favorites'
                   : 'Add ' + result.name + ' to favorites'
               "
+              :title="userFavorites.includes(result.id)
+                  ? 'Added to Favorites'
+                  : 'Click to Add to Favorites'"
             >
               <img
-                :src="userFavorites.includes(result.id) ? favoriteAddedButton : favoriteButton"
+                :src="userFavorites.includes(result.id)
+                  ? favoriteAddedButton 
+                  : favoriteButton"
                 alt=""
-                :title="userFavorites.includes(result.id) ? 'Added to Favorites' : 'Click to Add to Favorites'"
               />
 
               <span>
@@ -597,7 +601,7 @@ export default {
   flex-shrink: 0;
   justify-content: center;
   align-items: center;
-  min-height: 2.2rem;
+  min-height: 2.75rem;
   font-size: .8rem;
   color: rgb(53, 37, 19);
   background-color: #e8bb64;
@@ -807,6 +811,8 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 100%;
+  min-height: 3.5rem;
   text-underline-offset: .15rem;
   transition:
     transform 0.3s ease-in-out,
@@ -993,7 +999,9 @@ export default {
 
   .search-bar input {
     width: 100%;
+    min-height: 2.75rem;
     border-radius: .2rem;
+    padding: .25rem .5rem;
   }
 
   .search-bar button {

@@ -140,3 +140,32 @@ input:disabled,
 select:disabled {
   cursor: not-allowed;
 }
+
+
+/* Keyboard Focus */
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: .15rem solid #e8bb64;
+  outline-offset: .2rem;
+}
+
+
+/* Reduced Motion */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+
+}

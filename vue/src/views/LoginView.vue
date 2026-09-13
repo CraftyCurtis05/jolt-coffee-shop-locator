@@ -12,12 +12,12 @@
       playsinline
     >
       <source
-        src="@/assets/login/beans-coffee.webm"
+        src="@/assets/login/jolt-personalized-falling-beans.webm"
         type="video/webm"
       />
 
       <source
-        src="@/assets/login/beans-coffee.mp4"
+        src="@/assets/login/jolt-personalized-falling-beans.mp4"
         type="video/mp4"
       />
     </video>
@@ -207,9 +207,10 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  background-color: #1a0e08;
   pointer-events: none; /* Prevents the video from blocking page clicks */
   z-index: 0;
 }
@@ -253,7 +254,7 @@ h1 {
 
 .form-input input {
   width: 100%;
-  min-height: 2.5rem;
+  min-height: 2.75rem;
   font-size: 1rem;
   background-color: #ffffff;
   border: .1rem rgb(53, 37, 19) solid;
@@ -290,36 +291,31 @@ h1 {
   padding-top: .5rem;
 }
 
-button,
-#register {
+button {
   display: flex;
-  flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
-  object-fit: contain;
+  min-width: 8rem;
+  min-height: 2.75rem;
   background-color: rgb(53, 37, 19);
-  width: 5rem;
-  height: 1.7rem;
   font-size: .9rem;
+  font-weight: 600;
   color: #ffffff;
   border: .1rem solid #e8bb64;
-  border-radius: .1rem;
-  transition: all 0.5s;
-  -webkit-transition: all 0.5s; /* Chrome, Safari, etc. */
-  -moz-transition: all 0.5s; /* Firefox */
-  -o-transition: all 0.5s; /* Opera */
+  border-radius: .2rem;
+  padding: .5rem 1rem;
+  transition:
+    background-color .2s ease-in-out,
+    color .2s ease-in-out,
+    border-color .2s ease-in-out,
+    transform .2s ease-in-out;
 }
 
-button:hover:not(:disabled),
-#register:hover {
+button:hover:not(:disabled) {
   background-color: #e8bb64;
   color: rgb(53, 37, 19);
-  text-decoration: underline;
-  border: .1rem solid #ffffff;
-}
-
-button:active:not(:disabled) {
-
+  border-color: rgb(53, 37, 19);
+  transform: translateY(-.1rem);
 }
 
 button:disabled {
@@ -337,15 +333,21 @@ button:disabled {
 }
 
 .register-link {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 2.75rem;
   font-size: .9rem;
   color: #333437;
   text-decoration: underline;
   text-underline-offset: .15rem;
-  margin-top: 1rem;
+  padding: .5rem .25rem;
+  margin-top: .5rem;
 }
 
 .register-link:hover {
-  color: rgb(53, 37, 19);
+  color: #e8bb64;
+  font-weight: 500;
 }
 
 .register-link:focus-visible {
@@ -361,6 +363,16 @@ button:disabled {
   text-align: center;
   color: #681c29;
   margin-top: .25rem;
+}
+
+
+/* Tablet - 900px */
+@media screen and (max-width: 500px) {
+
+  .background-video {
+    object-fit: contain;
+  }
+
 }
 
 
@@ -395,6 +407,22 @@ button:disabled {
   .form-input input {
     min-height: 2.75rem;
     font-size: 1rem;
+  }
+
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+  .background-video {
+    display: none;
+  }
+
+  .login-view {
+    background:
+      #1a0e08
+      url("@/assets/login/jolt-personalized-falling-beans-fallback.jpg")
+      center / cover no-repeat fixed;
   }
 
 }

@@ -303,10 +303,15 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 2.5rem;
+  min-height: 2.75rem;
 }
 
 .name a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 2.75rem;
   font-size: 1.05rem;
   font-weight: bold;
   line-height: 1.25;
@@ -331,6 +336,14 @@ export default {
   width: 100%;
   min-height: 3.5rem;
   margin-top: .25rem;
+  color: #525459;
+  text-align: center;
+  text-decoration: none;
+}
+
+.location-container:hover {
+  color: #9b6a20;
+  text-decoration: underline;
 }
 
 .location-container .top,
@@ -341,15 +354,11 @@ export default {
 }
 
 .location-container a {
-  font-size: .8rem;
+  font-size: .85rem;
   line-height: 1.4;
   color: #525459;
   text-align: center;
   text-decoration: none;
-}
-
-.location-container a:hover {
-  text-decoration: underline;
 }
 
 
@@ -402,7 +411,7 @@ export default {
   justify-content: center;
   align-items: center;
   width: 7rem;
-  min-height: 2rem;
+  min-height: 2.75rem;
   font-size: .75rem;
   color: #8b1e1e;
   background-color: #f8eeee;
@@ -467,7 +476,10 @@ export default {
 }
 
 .favorites-action {
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 2.75rem;
   font-size: .85rem;
   font-weight: 600;
   color: rgb(53, 37, 19);
@@ -504,6 +516,10 @@ export default {
 }
 
 .no-favorites a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 2.75rem;
   color: rgb(53, 37, 19);
   font-weight: 600;
   text-decoration-color: #e8bb64;

@@ -86,6 +86,7 @@
         <router-link
           v-bind:to="{ name: 'locator' }"
           class="explore-card"
+          title="Click to Find Coffee"
         >
           <span class="explore-card-accent"></span>
           <h3>
@@ -104,6 +105,7 @@
         <router-link
           v-bind:to="{ name: 'shop' }"
           class="explore-card"
+          title="Click to Browse the Shop"
         >
           <span class="explore-card-accent"></span>
           <h3>
@@ -122,6 +124,7 @@
         <router-link
           v-bind:to="{ name: 'articles' }"
           class="explore-card"
+          title="Click to Read Articles"
         >
           <span class="explore-card-accent"></span>
           <h3>
@@ -405,6 +408,7 @@ header img {
   }
 
   header {
+    margin-bottom: .5rem;
     order: 1;
   }
 
@@ -413,8 +417,22 @@ header img {
   }
 
   .invitation-container {
-    padding-bottom: .75rem;
     order: 3;
+  }
+
+  .invitation-container a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 2.75rem;
+  }
+
+  .profile-setup-link {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: .4rem .25rem;
   }
 
   main {

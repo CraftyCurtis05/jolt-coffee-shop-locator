@@ -5,7 +5,7 @@
 
     <!-- Background Video -->
     <video
-      class="auth-background"
+      class="background-video"
       autoplay
       muted
       loop
@@ -99,7 +99,10 @@
             {{ isRegistering ? 'Creating Account...' : 'Create Account' }}
           </button>
 
-          <router-link id="account" v-bind:to="{ name: 'login' }">
+          <router-link
+            :to="{ name: 'login' }"
+            class="register-link"
+          >
             Already have an account? Log in.
           </router-link>
         </div>
@@ -206,17 +209,20 @@ export default {
   overflow-x: hidden;
   font-family: 'Ubuntu', sans-serif;
   padding: 0;
+  z-index: 0;
 }
 
 /* Login and registration background video */
 .background-video {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  background-color: #1a0e08;
   pointer-events: none; /* Prevents the video from blocking page clicks */
-  z-index: -1;
+  z-index: 0;
 }
 
 .jolt-logo {
@@ -258,7 +264,7 @@ h1 {
 
 .form-input input {
   width: 100%;
-  min-height: 2.5rem;
+  min-height: 2.75rem;
   font-size: 1rem;
   background-color: #ffffff;
   border: .1rem rgb(53, 37, 19) solid;
@@ -302,46 +308,70 @@ h1 {
 
 button {
   display: flex;
-  flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
-  object-fit: contain;
+  min-width: 8rem;
+  min-height: 2.75rem;
   background-color: rgb(53, 37, 19);
-  width: 8rem;
-  height: 1.8rem;
   font-size: .9rem;
+  font-weight: 600;
   color: #ffffff;
   border: .1rem solid #e8bb64;
-  border-radius: .1rem;
-  transition: all 0.5s;
-  -webkit-transition: all 0.5s; /* Chrome, Safari, etc. */
-  -moz-transition: all 0.5s; /* Firefox */
-  -o-transition: all 0.5s; /* Opera */
+  border-radius: .2rem;
+  padding: .5rem 1rem;
+  transition:
+    background-color .2s ease-in-out,
+    color .2s ease-in-out,
+    border-color .2s ease-in-out,
+    transform .2s ease-in-out;
 }
 
 button:hover:not(:disabled) {
   background-color: #e8bb64;
   color: rgb(53, 37, 19);
-  text-decoration: underline;
-  border: .1vw solid #ffffff;
+  border-color: rgb(53, 37, 19);
+  transform: translateY(-.1rem);
 }
 
 button:disabled {
   cursor: wait;
   opacity: .75;
+  transform: none;
 }
 
-#account {
-  text-align: center;
+.register-link {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 2.75rem;
+  font-size: .9rem;
   color: #333437;
-  font-size: 1rem;
-  padding-top: 1rem;
+  text-decoration: underline;
+  text-underline-offset: .15rem;
+  padding: .5rem .25rem;
+  margin-top: .5rem;
 }
 
-#account:hover {
+.register-link:hover {
   color: #e8bb64;
-  font-weight: bold;
+  font-weight: 500;
 }
+
+.register-link:focus-visible {
+  outline: .15rem #e8bb64 solid;
+  outline-offset: .15rem;
+}
+
+
+/* Tablet - 900px */
+@media screen and (max-width: 500px) {
+
+  .background-video {
+    object-fit: contain;
+  }
+
+}
+
 
 
 /* Mobile - 500px */
@@ -377,23 +407,21 @@ button:disabled {
     font-size: 1rem;
   }
 
-  #account {
-    font-size: .9rem;
-  }
-
 }
 
 
 @media (prefers-reduced-motion: reduce) {
-  .auth-background {
+
+  .background-video {
     display: none;
   }
 
-  body {
+  .register-view {
     background:
       #1a0e08
-      url("/assets/login/jolt-personalized-falling-beans-fallback.jpg")
+      url("@/assets/login/jolt-personalized-falling-beans-fallback.jpg")
       center / cover no-repeat fixed;
   }
+
 }
 </style>

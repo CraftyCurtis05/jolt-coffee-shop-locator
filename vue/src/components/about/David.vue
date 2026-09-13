@@ -14,7 +14,7 @@
         <img
           src="@/assets/about/david.webp"
           alt="David DeFosha"
-          title="David DeFosha"
+          title="Click to Go to David's LinkedIn"
         />
       </a>
     </section>
@@ -89,9 +89,12 @@ export default {
 }
 
 .image-container a:focus-visible {
-  outline: .15rem #e8bb64 solid;
-  outline-offset: .2rem;
-  border-radius: 50%;
+  outline: none;
+}
+
+.image-container a:focus-visible img {
+  border-color: rgb(245, 242, 242);
+  transform: scale(1.05);
 }
 
 img {
@@ -138,13 +141,22 @@ details {
 }
 
 summary {
-  padding: 0 .75rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 2.75rem;
+  color: rgb(245, 242, 242);
+  font-size: .95rem;
+  padding: 0 .75rem;
   transition: color 0.3s ease-in-out;
   z-index: 100;
 }
 
 summary:hover {
+  font-size: 1rem;
+  font-weight: 00;
   color: #e8bb64;
+  text-decoration: underline;
 }
 
 summary:focus-visible {

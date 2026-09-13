@@ -339,6 +339,11 @@ h3:hover,
   display: none;
 }
 
+#logout {
+  min-height: 2.75rem;
+  padding: .5rem .5rem;
+}
+
 .nav-profile-container {
   display: flex;
   flex-direction: row;
@@ -388,6 +393,11 @@ h3:hover,
   filter: grayscale(70%);
 }
 
+.image-container:focus-within {
+  border: .25rem rgb(53, 37, 19) solid;
+  transform: scale(1.05);
+}
+
 .image-container.profile-active {
   border: .25rem rgb(53, 37, 19) solid;
 }
@@ -434,9 +444,14 @@ h3:hover,
   }
 
   .toggle-container button {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
     background-color: transparent;
     font-size: 2rem;
+    line-height: 1;
     color: rgb(245, 242, 242);
     border: none;
     padding: 0;
@@ -463,6 +478,12 @@ h3:hover,
     padding: 1rem;
     margin: 0;
     z-index: 3;
+  }
+
+  .link-container .link {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: .5rem .75rem;
   }
 
   .link-container.nav-open {

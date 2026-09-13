@@ -50,7 +50,10 @@
 }
 
 .home-link {
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 2.75rem;
   font-weight: 600;
   color: rgb(53, 37, 19);
   text-decoration: none;

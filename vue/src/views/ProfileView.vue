@@ -249,11 +249,12 @@ header h1 {
   flex-direction: column;
   align-items: center;
   width: 100%;
+  min-height: 32rem;
   background-color: rgb(53, 37, 19);
   border: .15rem #e8bb64 solid;
   border-radius: .25rem;
   box-shadow: 0 .35rem .75rem rgba(53, 37, 19, .15);
-  padding: 1.25rem;
+  padding: 1.7rem;
 }
 
 .profile-pic,
@@ -276,7 +277,7 @@ header h1 {
   justify-content: center;
   align-items: center;
   width: 12rem;
-  min-height: 2.2rem;
+  min-height: 2.75rem;
   font-size: .8rem;
   color: rgb(53, 37, 19);
   background-color: #e8bb64;

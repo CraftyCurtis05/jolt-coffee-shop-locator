@@ -95,7 +95,7 @@ export default {
   width: 100%;
   border-top: .1rem #e8bb64 solid;
   padding-top: .75rem;
-  margin-top: .75rem;
+  margin: .8rem auto;
 }
 
 .address1,
