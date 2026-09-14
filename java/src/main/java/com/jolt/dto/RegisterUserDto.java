@@ -2,7 +2,7 @@ package com.jolt.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-
+import javax.validation.constraints.Pattern;
 /*
  * DTO stands for "Data Transfer Object".
  * This type of class transfers data between the client and server.
@@ -13,14 +13,24 @@ import javax.validation.constraints.Size;
 
 public class RegisterUserDto {
 
-    @NotBlank
+    @NotBlank(message = "Username is required")
     @Size(
-        max = 50,
-        message = "Username cannot be longer than 50 characters"
+        min = 3,
+        max = 30,
+        message = "Username must be between 3 and 30 characters"
+    )
+    @Pattern(
+        regexp = "^[A-Za-z0-9._-]+$",
+        message = "Username can only contain letters, numbers, periods, underscores and hyphens"
     )
     private String username;
 
-    @NotBlank
+    @NotBlank(message = "Password is required")
+    @Size(
+        min = 8,
+        max = 72,
+        message = "Password must be between 8 and 72 characters"
+    )
     private String password;
 
     @NotBlank

@@ -35,20 +35,22 @@
 
           <!-- Username -->
           <div class="form-input username">
-            <label for="username">Username</label>
-              <input
-                type="text"
-                id="username"
-                v-model="user.username"
-                autocomplete="username"
-                maxlength="50"
-                required
-                autofocus
-              />
+            <input
+              type="text"
+              id="username"
+              v-model="user.username"
+              autocomplete="username"
+              minlength="3"
+              maxlength="30"
+              pattern="[A-Za-z0-9._\-]+"
+              title="Username must be 3 to 30 characters and can only contain letters, numbers, periods, underscores and hyphens"
+              required
+              autofocus
+            />
 
-              <p class="input-hint">
-                Username can be up to 50 characters.
-              </p>
+            <p class="input-hint">
+              3–30 characters using letters, numbers, periods, underscores or hyphens.
+            </p>
           </div>
 
           <!-- Password -->
@@ -59,24 +61,28 @@
               id="password"
               v-model="user.password"
               autocomplete="new-password"
+              minlength="8"
+              maxlength="72"
               required
             />
 
             <p class="input-hint">
-              Choose a password you'll remember.
+              Password must be 8–72 characters.
             </p>
           </div>
 
           <!-- Confirm Password -->
           <div class="form-input confirm">
             <label for="confirmPassword">Confirm Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              v-model="user.confirmPassword"
-              autocomplete="new-password"
-              required
-            />
+              <input
+                type="password"
+                id="confirmPassword"
+                v-model="user.confirmPassword"
+                autocomplete="new-password"
+                minlength="8"
+                maxlength="72"
+                required
+              />
           </div>
 
         </div>
@@ -146,6 +152,31 @@ export default {
     // Register a new user
     register() {
 
+      // Check that the username follows the required format
+      const usernamePattern = /^[A-Za-z0-9._-]+$/;
+
+      if (
+        this.user.username.length < 3 ||
+        this.user.username.length > 30 ||
+        !usernamePattern.test(this.user.username)
+      ) {
+        this.registrationErrors = true;
+        this.registrationErrorMsg =
+          'Username must be 3–30 characters and can only contain letters, numbers, periods, underscores and hyphens.';
+        return;
+      }
+
+      // Check that the password follows the required length
+      if (
+        this.user.password.length < 8 ||
+        this.user.password.length > 72
+      ) {
+        this.registrationErrors = true;
+        this.registrationErrorMsg =
+          'Password must be between 8 and 72 characters.';
+        return;
+      }
+
       // Check that the password and confirmation password match
       if (this.user.password != this.user.confirmPassword) {
         this.registrationErrors = true;
@@ -175,9 +206,18 @@ export default {
           this.registrationErrors = true;
 
           // Display an error message based on the server response
-          if (response && response.status === 400) {
+          if (
+            response &&
+            response.status === 400 &&
+            response.data.message === 'Username is already taken.'
+          ) {
+            this.registrationErrorMsg =
+              'Username is already taken. Please choose a different username.';
+
+          } else if (response && response.status === 400) {
             this.registrationErrorMsg =
               'Please check your account information and try again.';
+
           } else {
             this.registrationErrorMsg =
               'There was a problem creating your account. Please try again.';
@@ -194,8 +234,8 @@ export default {
     clearErrors() {
       this.registrationErrors = false;
       this.registrationErrorMsg = 'There was a problem creating your account.';
-    },
-  },
+    }
+  }
 };
 </script>
 

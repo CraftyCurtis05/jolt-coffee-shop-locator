@@ -9,6 +9,9 @@ import com.jolt.model.User;
 import com.jolt.security.jwt.JWTFilter;
 import com.jolt.security.jwt.TokenProvider;
 
+import java.util.Collections;
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @RestController
 @CrossOrigin(origins = {
@@ -132,5 +136,18 @@ public class AuthenticationController {
             );
         }
     }
+
+    // Return controller error messages to the client
+        @ExceptionHandler(ResponseStatusException.class)
+        public ResponseEntity<Map<String, String>> handleResponseStatusException(
+                ResponseStatusException e) {
+
+        return ResponseEntity
+                .status(e.getStatus())
+                .body(Collections.singletonMap(
+                        "message",
+                        e.getReason()
+                ));
+        }
 
 }

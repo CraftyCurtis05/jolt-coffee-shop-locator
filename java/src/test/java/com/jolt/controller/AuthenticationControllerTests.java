@@ -155,10 +155,15 @@ public class AuthenticationControllerTests {
             Assert.fail("Expected ResponseStatusException");
 
         } catch (ResponseStatusException e) {
-            Assert.assertEquals(
-                    400,
-                    e.getStatus().value()
-            );
+                Assert.assertEquals(
+                        400,
+                        e.getStatus().value()
+                );
+
+                Assert.assertEquals(
+                        "Username is already taken.",
+                        e.getReason()
+                );
         }
     }
 
