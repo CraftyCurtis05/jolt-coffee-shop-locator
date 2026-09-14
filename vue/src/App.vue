@@ -18,6 +18,8 @@
       <router-view />
     </div>
 
+    <BackToTop />
+
     <!-- Application Footer -->
     <Footer />
 
@@ -28,6 +30,7 @@
 import NavBar from './components/layout/NavBar.vue';
 import Footer from './components/layout/Footer.vue';
 import AppNotification from './components/layout/AppNotification.vue';
+import BackToTop from './components/layout/BackToTop.vue';
 
 export default {
   name: 'App',
@@ -36,7 +39,8 @@ export default {
   components: {
     NavBar,
     Footer,
-    AppNotification
+    AppNotification,
+    BackToTop
   }
 };
 </script>
