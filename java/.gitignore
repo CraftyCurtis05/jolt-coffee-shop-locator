@@ -30,7 +30,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-### App Properties ###
-# Contains application secrets and local configuration
-**/application.properties

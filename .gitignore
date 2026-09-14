@@ -61,7 +61,4 @@ coverage
 *.sln
 *.sw?
 
-### App Properties ###
-application.properties
-
 .env
