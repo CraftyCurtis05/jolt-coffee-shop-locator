@@ -89,6 +89,25 @@
 
         </div>
 
+        <!-- Demo Account Information -->
+        <div class="demo-account">
+          <p class="demo-title">Demo Account</p>
+
+          <p>
+            Want to explore Jolt without creating an account?
+          </p>
+
+          <div class="demo-credentials">
+            <span>
+              <strong>Username:</strong> joltdemo
+            </span>
+
+            <span>
+              <strong>Password:</strong> DemoPass123
+            </span>
+          </div>
+        </div>
+
         <!-- Login and Registration Buttons -->
         <div class="button-container">
           <button
@@ -288,6 +307,40 @@ h1 {
   color: rgb(234,189,99);
 }
 
+.demo-account {
+  width: 100%;
+  background-color: rgba(255, 255, 255, .45);
+  border: .1rem solid rgba(53, 37, 19, .55);
+  border-radius: .2rem;
+  font-size: .82rem;
+  line-height: 1.4;
+  text-align: center;
+  padding: .4rem;
+  margin-bottom: .6rem;
+}
+
+.demo-account p {
+  margin: 0;
+}
+
+.demo-title {
+  font-size: .9rem;
+  font-weight: 700;
+  color: rgb(53, 37, 19);
+  margin-bottom: .35rem !important;
+}
+
+.demo-credentials {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: .5rem;
+}
+
+.demo-credentials span {
+  white-space: nowrap;
+}
+
 .button-container {
   display: flex;
   flex-direction: column;
@@ -413,6 +466,20 @@ button:disabled {
   .form-input input {
     min-height: 2.75rem;
     font-size: 1rem;
+  }
+
+    .demo-account {
+    font-size: .78rem;
+    padding: .7rem;
+  }
+
+  .demo-credentials {
+    flex-direction: column;
+    gap: .2rem;
+  }
+
+  .demo-credentials span {
+    white-space: normal;
   }
 
 }

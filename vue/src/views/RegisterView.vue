@@ -35,6 +35,7 @@
 
           <!-- Username -->
           <div class="form-input username">
+            <label for="username">Username</label>
             <input
               type="text"
               id="username"

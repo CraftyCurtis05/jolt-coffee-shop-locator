@@ -110,15 +110,6 @@ export default {
       this.currentIndex = (this.currentIndex + 1) % this.images.length;
 
     }
-  },
-
-  mounted() {
-
-    // Preload the carousel images
-    this.images.forEach(image => {
-      const preloadImage = new Image();
-      preloadImage.src = image;
-    });
   }
 };
 </script>

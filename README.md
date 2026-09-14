@@ -464,13 +464,33 @@ The actual `.env` file should remain local and should never be committed or shar
 
 ## Live Demo
 
-A live version of Jolt will be available at:
+Jolt is deployed and available at:
+
+**Live Application:** https://jolt.jennifercurtis.me
+
+Visitors can create their own account to explore the full registration and authentication workflow or use the prepared demo account for immediate access.
+
+### Demo Account
 
 ```text
-https://jolt.jennifercurtis.me
+Username: joltdemo
+Password: DemoPass123
 ```
 
-Deployment information and final demo access will be added as the live version is completed.
+The demo account includes a completed sample profile, profile image, and saved coffee shops to demonstrate Jolt's personalized features.
+
+### Production Deployment
+
+The deployed application uses:
+
+- **Frontend:** Vue.js hosted on Namecheap
+- **Backend:** Spring Boot REST API hosted on Render
+- **Database:** PostgreSQL hosted on Neon
+- **External API:** Yelp Fusion API
+
+Production configuration and sensitive credentials are managed through environment variables and are not stored in the repository.
+
+> The backend is hosted on Render's free service tier and may require a short startup period after extended inactivity.
 
 ---
 

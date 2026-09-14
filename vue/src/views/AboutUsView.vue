@@ -20,9 +20,9 @@
         <Jennifer />
       </section>
 
-      <!-- Steven -->
-      <section class="steven">
-        <Steven />
+      <!-- David -->
+      <section class="david">
+        <David />
       </section>
 
       <!-- Naomi -->
@@ -30,10 +30,12 @@
         <Naomi />
       </section>
 
-      <!-- David -->
-      <section class="david">
-        <David />
+      <!-- Steven -->
+      <section class="steven">
+        <Steven />
       </section>
+
+
 
     </main>
 
