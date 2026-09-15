@@ -108,6 +108,15 @@
           </div>
         </div>
 
+        <!-- Demo Server Information -->
+        <div class="server-notice">
+          <p>
+            <strong>Demo Server:</strong>
+            If Jolt has been inactive, signing in may take up to a minute
+            while the server wakes up.
+          </p>
+        </div>
+
         <!-- Login and Registration Buttons -->
         <div class="button-container">
           <button
@@ -307,6 +316,9 @@ h1 {
   color: rgb(234,189,99);
 }
 
+
+
+/* Demo Account Info */
 .demo-account {
   width: 100%;
   background-color: rgba(255, 255, 255, .45);
@@ -341,6 +353,28 @@ h1 {
   white-space: nowrap;
 }
 
+
+/* Server Notice */
+.server-notice {
+  width: 100%;
+  background-color: rgba(232, 167, 36, 0.25);
+  border: .1rem solid rgba(53, 37, 19, .45);
+  border-radius: .2rem;
+  font-size: .78rem;
+  line-height: 1.35;
+  text-align: center;
+  color: rgb(57, 36, 12);
+  padding: .5rem .65rem;
+  margin-top: .6rem;
+  margin-bottom: .25rem;
+}
+
+.server-notice p {
+  margin: 0;
+}
+
+
+/* Login and Register Buttons */
 .button-container {
   display: flex;
   flex-direction: column;
@@ -440,12 +474,12 @@ button:disabled {
 
   .login-view {
     justify-content: flex-start;
-    padding: 2rem 1rem;
+    padding: .75rem 1rem 2rem;
   }
 
   .jolt-logo {
     width: 13rem;
-    margin-top: 1rem;
+    margin-top: 0;
     margin-bottom: -.5rem;
   }
 
@@ -468,7 +502,7 @@ button:disabled {
     font-size: 1rem;
   }
 
-    .demo-account {
+  .demo-account {
     font-size: .78rem;
     padding: .7rem;
   }
