@@ -158,15 +158,20 @@ export default {
 
   data() {
     return {
-      // Store the user's favorite coffee shops
-      results: [],
-
       // Store the favorite currently being removed
       removingFavoriteId: null,
 
       // Default image used when a coffee shop has no image
       defaultImage: defaultImage
     };
+  },
+
+  computed: {
+
+    // Get the user's favorite coffee shops from the store
+    results() {
+      return this.$store.state.favorites;
+    }
   },
 
   methods: {
@@ -192,17 +197,6 @@ export default {
         encodeURIComponent(address);
     },
 
-    // Get the user's saved favorites
-    getUserFavorites() {
-      FavoriteService.getFavorites()
-        .then(response => {
-          this.results = response || [];
-        })
-        .catch(error => {
-          console.error('Error fetching coffee shops', error);
-        });
-    },
-
     // Delete a favorite coffee shop
     deleteFavorite(favoriteId) {
       const confirmDelete = confirm(
@@ -219,9 +213,12 @@ export default {
       FavoriteService.deleteFavorite(favoriteId)
         .then(() => {
 
-          // Remove the deleted favorite from the page
-          this.results = this.results.filter(
-            result => result.favoriteId !== favoriteId
+          // Remove the deleted favorite from the shared favorites
+          this.$store.commit(
+            'SET_FAVORITES',
+            this.$store.state.favorites.filter(
+              favorite => favorite.favoriteId !== favoriteId
+            )
           );
 
         })
@@ -232,11 +229,6 @@ export default {
           this.removingFavoriteId = null;
         });
     }
-  },
-
-  mounted() {
-    // Get the user's favorites when the component loads
-    this.getUserFavorites();
   }
 };
 </script>

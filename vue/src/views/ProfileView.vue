@@ -44,7 +44,6 @@
           <article class="profile-form">
             <ProfileForm
               ref="profileForm"
-              @profile-updated="updateProfile"
               @form-visible="toggleUpdateButton"
             />
 
@@ -82,8 +81,6 @@
 </template>
 
 <script>
-import ProfileService from '../services/ProfileService.js';
-
 import ProfilePic from '../components/profile/ProfilePic.vue';
 import ProfileDetails from '../components/profile/ProfileDetails.vue';
 import ProfileForm from '../components/profile/ProfileForm.vue';
@@ -101,15 +98,20 @@ export default {
 
   data() {
     return {
-      // Store the user's profile information
-      user: null,
-
       // Control the visibility of the Update Profile button
       showUpdateButton: true,
 
       // Track whether the profile form is open
       isFormVisible: false
     };
+  },
+
+  computed: {
+
+    // Get the user's profile information from the store
+    user() {
+      return this.$store.state.profile;
+    }
   },
 
   methods: {
@@ -123,30 +125,6 @@ export default {
     toggleUpdateButton(isFormVisible) {
       this.showUpdateButton = !isFormVisible;
       this.isFormVisible = isFormVisible;
-    },
-
-    // Update the displayed profile information
-    updateProfile(updatedUser) {
-      this.user = updatedUser;
-    },
-
-    // Get the user's profile information
-    async fetchProfile() {
-      try {
-
-        // Get the user's profile from the server
-        const profile = await ProfileService.getProfile();
-        this.user = profile;
-
-      } catch (error) {
-        console.error('Error fetching user profile:', error);
-        window.dispatchEvent(new CustomEvent('app-notification', {
-          detail: {
-            message: "We couldn't load your profile. Please refresh and try again.",
-            type: 'error'
-          }
-        }));
-      }
     },
 
     // Close the profile form when clicking outside of the profile section
@@ -169,9 +147,6 @@ export default {
       'pointerdown',
       this.handleOutsideClick
     );
-
-    // Get the user's profile when the page loads
-    this.fetchProfile();
   },
 
   beforeUnmount() {

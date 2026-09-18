@@ -4,25 +4,28 @@
   <div class="login-view">
 
     <!-- Background Video -->
-    <video
-      class="background-video"
-      autoplay
-      muted
-      loop
-      playsinline
-      :poster="fallbackImage"
-      aria-hidden="true"
-    >
-      <source
-        src="@/assets/login/jolt-personalized-falling-beans.webm"
-        type="video/webm"
-      />
+    <div class="background-video-container">
+      <video
+        class="background-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        :poster="fallbackImage"
+        aria-hidden="true"
+      >
+        <source
+          src="@/assets/login/jolt-personalized-falling-beans.webm"
+          type="video/webm"
+        />
 
-      <source
-        src="@/assets/login/jolt-personalized-falling-beans.mp4"
-        type="video/mp4"
-      />
-    </video>
+        <source
+          src="@/assets/login/jolt-personalized-falling-beans.mp4"
+          type="video/mp4"
+        />
+
+      </video>
+    </div>
 
     <!-- Jolt Logo -->
     <img
@@ -97,34 +100,44 @@
             Want to explore Jolt without creating an account?
           </p>
 
-          <div class="demo-credentials">
-            <span>
-              <strong>Username:</strong> joltdemo
-            </span>
+          <!-- Demo Account Button -->
+          <button
+            type="button"
+            class="demo-button"
+            @click="useDemoAccount"
+            :disabled="isLoggingIn"
+          >
+            {{ isLoggingIn && loginType === 'demo'
+              ? 'Signing in...'
+              : 'Use Demo Account'
+            }}
+          </button>
 
-            <span>
-              <strong>Password:</strong> DemoPass123
-            </span>
-          </div>
-        </div>
+          <p class="demo-server-message">
+            <template v-if="isLoggingIn">
+              <strong>Thanks for your patience!</strong>
+              Jolt is signing you in. The demo server may take a moment to wake up.
+            </template>
 
-        <!-- Demo Server Information -->
-        <div class="server-notice">
-          <p>
-            <strong>Demo Server:</strong>
-            If Jolt has been inactive, signing in may take up to a minute
-            while the server wakes up.
+            <template v-else>
+              <strong>Please Note:</strong>
+              Jolt uses a free-tier demo server, so the first sign-in may take
+              1–2 minutes while the server wakes up after being inactive.
+            </template>
           </p>
         </div>
 
-        <!-- Login and Registration Buttons -->
+        <!-- Sign in and Registration Buttons -->
         <div class="button-container">
+
           <button
             type="submit"
             :disabled="isLoggingIn"
-            :title="isLoggingIn ? 'Signing In' : 'Click to Sign In'"
           >
-            {{ isLoggingIn ? 'Signing in...' : 'Sign In' }}
+            {{ isLoggingIn && loginType === 'regular'
+              ? 'Signing in...'
+              : 'Sign In'
+            }}
           </button>
 
           <router-link
@@ -143,6 +156,9 @@
 
 <script>
 import authService from '../services/AuthService.js';
+import ProfileService from '../services/ProfileService.js';
+import FavoriteService from '../services/FavoriteService.js';
+
 import fallbackImage from '../assets/login/jolt-personalized-falling-beans-fallback.jpg';
 
 export default {
@@ -162,12 +178,24 @@ export default {
       // Track whether the login request is being processed
       isLoggingIn: false,
 
+      // Track which login button started the request
+      loginType: null,
+
       // Track invalid login information
       invalidCredentials: false
     };
   },
 
   methods: {
+
+    // Fill in the login form with the demo account
+    useDemoAccount() {
+      this.user.username = 'joltdemo';
+      this.user.password = 'DemoPass123';
+      this.loginType = 'demo';
+
+      this.login();
+    },
 
     // Log in an existing user
     login() {
@@ -179,38 +207,80 @@ export default {
 
       // Send the user's login information to the server
       authService
-      .login(this.user)
-      .then((response) => {
+        .login(this.user)
+        .then((response) => {
 
-        // Save the authentication information after successful login
-        if (response.status == 200) {
-          this.$store.commit('SET_AUTH_TOKEN', response.data.token);
-          this.$store.commit('SET_USER', response.data.user);
+          // Save the authentication information after successful login
+          if (response.status == 200) {
+            this.$store.commit('SET_AUTH_TOKEN', response.data.token);
+            this.$store.commit('SET_USER', response.data.user);
 
-          // Send the user to the home page
-          this.$router.push('/');
-        }
-      })
-      .catch((error) => {
+            // Send the user to the home page
+            this.$router.push('/');
 
-        const response = error.response;
+            // Get the logged-in user's profile
+            ProfileService.getProfile()
+              .then((profile) => {
 
-        // Display a message for an incorrect username or password
-        if (response && response.status === 401) {
-          this.invalidCredentials = true;
+                // Store the profile for use throughout the application
+                this.$store.commit('SET_PROFILE_STATUS', true);
+                this.$store.commit('SET_PROFILE', profile);
+              })
+              .catch(() => {
 
-        } else {
-          window.dispatchEvent(new CustomEvent('app-notification', {
-            detail: {
-              message: 'There was a problem signing in. Please try again.',
-              type: 'error'
-            }
-          }));
-        }
-      })
+                // Store that the user does not have a profile
+                this.$store.commit('SET_PROFILE_STATUS', false);
+                this.$store.commit('SET_PROFILE', null);
+              });
+
+            // Get the logged-in user's saved profile image
+            ProfileService.getImage()
+              .then((imageUrl) => {
+
+                // Store the profile image for use throughout the application
+                this.$store.commit('SET_PROFILE_IMAGE', imageUrl);
+              })
+              .catch(() => {
+
+                // Use the default profile image if the user does not have one
+                this.$store.commit('SET_PROFILE_IMAGE', null);
+              });
+
+            // Get the logged-in user's saved favorite coffee shops
+            FavoriteService.getFavorites()
+              .then((favorites) => {
+
+                // Store the favorites for use throughout the application
+                this.$store.commit('SET_FAVORITES', favorites || []);
+              })
+              .catch(() => {
+
+                // Use an empty list if the user does not have any favorites
+                this.$store.commit('SET_FAVORITES', []);
+              });
+          }
+        })
+        .catch((error) => {
+
+          const response = error.response;
+
+          // Display a message for an incorrect username or password
+          if (response && response.status === 401) {
+            this.invalidCredentials = true;
+
+          } else {
+            window.dispatchEvent(new CustomEvent('app-notification', {
+              detail: {
+                message: 'There was a problem signing in. Please try again.',
+                type: 'error'
+              }
+            }));
+          }
+        })
       .finally(() => {
         // Allow another login attempt if needed
         this.isLoggingIn = false;
+        this.loginType = null;
       });
     }
   }
@@ -227,43 +297,61 @@ export default {
   align-items: center;
   position: relative;
   width: 100%;
-  min-height: 100vh;
-  overflow-x: hidden;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  box-sizing: border-box;
   font-family: 'Ubuntu', sans-serif;
   color: #333437;
-  padding: 2rem 1rem;
+  padding: 1rem;
   z-index: 0;
   caret-color: transparent;
 }
 
+
 /* Login and registration background video */
-.background-video {
+.background-video-container {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  inset: 0;
+  overflow: hidden; /* Clips the part of the video outside the screen */
   background-color: #1a0e08;
   pointer-events: none; /* Prevents the video from blocking page clicks */
   z-index: 0;
 }
 
+.background-video {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Fills the screen without stretching the video */
+  object-position: right center; /* Keeps the right side and crops from the left */
+}
+
+
+/* Jolt Logo */
 .jolt-logo {
-  width: clamp(12rem, 24vw, 20rem);
+  width: 24rem;
+  max-width: 70%;
   height: auto;
-  margin-bottom: -.75rem;
+  margin-bottom: -1rem;
   z-index: 100;
 }
 
+
+/* Login Form */
 .login-form {
   position: relative;
-  width: min(90%, 24rem);
+  width: 22rem;
+  max-width: 90%;
+  max-height: 75vh;
+  overflow-y: auto;
   background-color: rgba(160, 153, 145, .82);
   border: .15rem rgb(53, 37, 19) solid;
   border-radius: .25rem;
   box-shadow: 0 .4rem 1rem rgba(0, 0, 0, .3);
-  padding: 1.5rem;
+  padding: 1.25rem;
   z-index: 10;
 }
 
@@ -273,104 +361,93 @@ export default {
 
 h1 {
   text-align: center;
-  font-size: 1.4rem;
-  padding-bottom: .8rem;
+  font-size: 1.3rem;
+  padding: .5rem;
 }
 
+
+/* User Login Information */
 .form-input {
   display: flex;
   flex-direction: column;
   width: 100%;
-  font-size: 1rem;
-  margin-bottom: .9rem;
+  font-size: .95rem;
+  margin-bottom: .6rem;
   caret-color: black; /* Shows the caret inside form inputs */
 }
 
 .form-input input {
   width: 100%;
-  min-height: 2.75rem;
+  min-height: 2.5rem;
   font-size: 1rem;
   background-color: #ffffff;
   border: .1rem rgb(53, 37, 19) solid;
   border-radius: .2rem;
-  padding: .45rem .6rem;
+  padding: .4rem .55rem;
 }
 
 .form-input label {
   width: 100%;
   text-align: left;
   font-weight: 500;
-  margin-bottom: .25rem;
+  margin-bottom: .2rem;
+}
+
+
+/* Login Messages */
+#alert1 {
+  font-weight: 500;
+  color: rgb(234, 189, 99);
 }
 
 .alert-container {
+  width: 100%;
+  font-size: .8rem;
+  font-weight: 600;
+  line-height: 1.35;
   text-align: center;
-  font-size: .9rem;
-  font-weight: bold;
   color: #681c29;
-  padding-top: .5rem;
-}
-
-#alert1 {
-  font-weight: 500;
-  color: rgb(234,189,99);
+  padding-top: .4rem;
+  margin-top: .2rem;
 }
 
 
-
-/* Demo Account Info */
+/* Demo Account */
 .demo-account {
   width: 100%;
-  background-color: rgba(255, 255, 255, .45);
-  border: .1rem solid rgba(53, 37, 19, .55);
+  background-color: rgba(232, 187, 100, .25);
+  border: .1rem solid rgba(53, 37, 19, .6);
   border-radius: .2rem;
-  font-size: .82rem;
-  line-height: 1.4;
   text-align: center;
-  padding: .4rem;
-  margin-bottom: .6rem;
-}
-
-.demo-account p {
-  margin: 0;
+  color: rgb(35, 24, 13);
+  margin: auto;
+  margin-top: .5rem;
+  padding: .5rem;
 }
 
 .demo-title {
   font-size: .9rem;
-  font-weight: 700;
-  color: rgb(53, 37, 19);
-  margin-bottom: .35rem !important;
+  font-weight: 600;
+  margin: .5rem;
 }
 
-.demo-credentials {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: .5rem;
+.demo-account p {
+  margin: .5rem auto;
 }
 
-.demo-credentials span {
-  white-space: nowrap;
+.demo-button {
+  min-width: 8.5rem;
+  min-height: 2.25rem;
+  font-size: .8rem;
+  padding: .3rem .7rem;
+  margin: .5rem auto;
 }
 
-
-/* Server Notice */
-.server-notice {
-  width: 100%;
-  background-color: rgba(232, 167, 36, 0.25);
-  border: .1rem solid rgba(53, 37, 19, .45);
-  border-radius: .2rem;
-  font-size: .78rem;
+.demo-server-message {
+  font-size: .75rem;
   line-height: 1.35;
-  text-align: center;
-  color: rgb(57, 36, 12);
-  padding: .5rem .65rem;
-  margin-top: .6rem;
-  margin-bottom: .25rem;
-}
-
-.server-notice p {
-  margin: 0;
+  color: rgb(35, 24, 13);
+  padding-top: .1rem;
 }
 
 
@@ -381,22 +458,23 @@ h1 {
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding-top: .5rem;
+  margin-top: 1rem;
+  padding-top: .4rem;
 }
 
 button {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 8rem;
-  min-height: 2.75rem;
+  min-width: 7.5rem;
+  min-height: 2.5rem;
   background-color: rgb(53, 37, 19);
   font-size: .9rem;
   font-weight: 600;
   color: #ffffff;
   border: .1rem solid #e8bb64;
   border-radius: .2rem;
-  padding: .5rem 1rem;
+  padding: .4rem .9rem;
   transition:
     background-color .2s ease-in-out,
     color .2s ease-in-out,
@@ -417,25 +495,17 @@ button:disabled {
   transform: none;
 }
 
-#sign-in {
-  margin-right: 2rem;
-}
-
-#register {
-  text-decoration: none;
-}
-
 .register-link {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  min-height: 2.75rem;
+  min-height: 2.5rem;
   font-size: .9rem;
   color: #333437;
   text-decoration: underline;
   text-underline-offset: .15rem;
-  padding: .5rem .25rem;
-  margin-top: .5rem;
+  padding: .35rem .25rem;
+  margin-top: .3rem;
 }
 
 .register-link:hover {
@@ -448,22 +518,40 @@ button:disabled {
   outline-offset: .15rem;
 }
 
-.alert-container {
-  width: 100%;
-  font-size: .8rem;
-  font-weight: 600;
-  line-height: 1.35;
-  text-align: center;
-  color: #681c29;
-  margin-top: .25rem;
+
+/* Laptop - 1200px */
+@media screen and (max-width: 1200px) {
+
+  .jolt-logo {
+    width: 21rem;
+  }
+
 }
 
 
 /* Tablet - 900px */
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 900px) {
 
-  .background-video {
-    object-fit: contain;
+  .jolt-logo {
+    width: 19rem;
+  }
+
+  .login-form {
+    width: 21rem;
+  }
+
+}
+
+
+/* Small Tablet - 700px */
+@media screen and (max-width: 700px) {
+
+  .jolt-logo {
+    width: 18rem;
+  }
+
+  .login-form {
+    width: 20rem;
   }
 
 }
@@ -473,52 +561,109 @@ button:disabled {
 @media screen and (max-width: 500px) {
 
   .login-view {
-    justify-content: flex-start;
-    padding: .75rem 1rem 2rem;
+    padding: .5rem;
   }
 
   .jolt-logo {
-    width: 13rem;
-    margin-top: 0;
+    width: 17rem;
+    max-width: 80%;
     margin-bottom: -.5rem;
   }
 
   .login-form {
-    width: 100%;
-    max-width: 22rem;
-    padding: 1.25rem;
+    width: 20rem;
+    max-width: 94%;
+    padding: 1rem;
   }
 
   h1 {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
   }
 
   .form-input {
     font-size: .9rem;
   }
 
-  .form-input input {
-    min-height: 2.75rem;
-    font-size: 1rem;
+}
+
+
+/* Small Mobile - 375px */
+@media screen and (max-width: 375px) {
+
+  .jolt-logo {
+    width: 15rem;
   }
 
-  .demo-account {
-    font-size: .78rem;
-    padding: .7rem;
-  }
-
-  .demo-credentials {
-    flex-direction: column;
-    gap: .2rem;
-  }
-
-  .demo-credentials span {
-    white-space: normal;
+  .login-form {
+    max-width: 96%;
+    padding: .75rem;
   }
 
 }
 
 
+/* Short Screens */
+@media screen and (max-height: 750px) {
+
+  .login-view {
+    padding: .35rem;
+  }
+
+  .jolt-logo {
+    width: 16rem;
+    margin-bottom: -.5rem;
+  }
+
+  .login-form {
+    max-height: 80vh;
+    max-height: 80dvh;
+    padding: .75rem 1rem;
+  }
+
+  h1 {
+    padding: .35rem;
+  }
+
+  .form-input {
+    margin-bottom: .35rem;
+  }
+
+  .demo-account {
+    padding: .3rem .45rem;
+  }
+
+  .demo-button {
+    margin: .3rem auto;
+  }
+
+  .button-container {
+    margin-top: .5rem;
+    padding-top: .2rem;
+  }
+
+  .register-link {
+    margin-top: .2rem;
+  }
+
+}
+
+
+/* Very Short Screens */
+@media screen and (max-height: 600px) {
+
+  .jolt-logo {
+    width: 14rem;
+  }
+
+  .login-form {
+    max-height: 84vh;
+    max-height: 84dvh;
+  }
+
+}
+
+
+/* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
 
   .background-video {
@@ -529,7 +674,7 @@ button:disabled {
     background:
       #1a0e08
       url("@/assets/login/jolt-personalized-falling-beans-fallback.jpg")
-      center / cover no-repeat fixed;
+      center / cover no-repeat;
   }
 
 }

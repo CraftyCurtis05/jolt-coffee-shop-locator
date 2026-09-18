@@ -7,32 +7,28 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig {
 
     private final TokenProvider tokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-    private final UserModelDetailsService userModelDetailsService;
 
     public WebSecurityConfig(
             TokenProvider tokenProvider,
             JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
-            JwtAccessDeniedHandler jwtAccessDeniedHandler,
-            UserModelDetailsService userModelDetailsService) {
+            JwtAccessDeniedHandler jwtAccessDeniedHandler) {
 
         this.tokenProvider = tokenProvider;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
-        this.userModelDetailsService = userModelDetailsService;
     }
 
     @Bean
@@ -40,15 +36,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
-    public void configure(WebSecurity web) {
-        web.ignoring()
-                .antMatchers(HttpMethod.OPTIONS, "/**");
-    }
-
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                // Allows requests from the Jolt frontend
+                .cors()
+
+                .and()
                 // Jolt uses stateless JWT authentication instead of server-side sessions
                 .csrf()
                 .disable()
@@ -62,7 +56,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, "/**")
+                .permitAll()
+                .antMatchers(HttpMethod.POST, "/login", "/register")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+
+                .and()
                 .apply(securityConfigurerAdapter());
+
+        return httpSecurity.build();
     }
 
     private JWTConfigurer securityConfigurerAdapter() {

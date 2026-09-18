@@ -24,7 +24,6 @@
 
 <script>
 import Locator from '../components/locator/Locator.vue';
-import ProfileService from '../services/ProfileService.js';
 
 export default {
   name: 'LocatorView',
@@ -33,47 +32,12 @@ export default {
     Locator
   },
 
-  data() {
-    return {
-      // Store the user's profile information
-      user: null
-    };
-  },
+  computed: {
 
-  methods: {
-
-    // Get the user's profile information
-    async fetchProfile() {
-      try {
-
-        // Check whether the user has created a profile
-        const hasProfile = await ProfileService.getStatus();
-
-        // The Locator can still be used without a profile
-        if (!hasProfile) {
-          this.user = null;
-          return;
-        }
-
-        // Get the user's profile from the server
-        const profile = await ProfileService.getProfile();
-        this.user = profile;
-
-      } catch (error) {
-        console.error('Error fetching user profile:', error);
-        window.dispatchEvent(new CustomEvent('app-notification', {
-          detail: {
-            message: "We couldn't load your profile. You can still search by location.",
-            type: 'error'
-          }
-        }));
-      }
+    // Get the user's profile information from the store
+    user() {
+      return this.$store.state.profile;
     }
-  },
-
-  mounted() {
-    // Get the user's profile when the page loads
-    this.fetchProfile();
   }
 };
 </script>

@@ -20,7 +20,7 @@
 
     <!-- Verify User Has Created a Profile -->
     <section
-      v-if="!hasProfile"
+      v-if="$store.state.profileStatus === false"
       class="profile-setup"
     >
       <p>
@@ -146,38 +146,14 @@
 </template>
 
 <script>
-import ProfileService from '../services/ProfileService';
 import Carousel from '../components/home/Carousel.vue';
 
 export default {
   name: 'HomeView',
 
-  data() {
-    return {
-      hasProfile: true
-    }
-  },
-
   // Components used on the home page
   components: {
     Carousel
-  },
-
-  methods: {
-
-    // Check whether the user already has a profile
-    async fetchProfileStatus() {
-      try {
-        this.hasProfile = await ProfileService.getStatus();
-
-      } catch (error) {
-        console.error('Error fetching profile status:', error);
-      }
-    }
-  },
-
-  mounted() {
-    this.fetchProfileStatus();
   }
 };
 </script>

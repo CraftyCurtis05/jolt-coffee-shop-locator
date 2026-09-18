@@ -9,7 +9,7 @@
       <!-- Current Profile Picture -->
       <div class="image-container">
         <img
-          :src="previewUrl || imageUrl || defaultImage"
+          :src="previewUrl || $store.state.profileImage || defaultImage"
           alt="User profile picture"
           title="Profile Picture"
         />
@@ -50,7 +50,7 @@
 
         <!-- Remove Profile Picture -->
         <button
-          v-if="imageUrl"
+          v-if="$store.state.profileImage"
           type="button"
           class="remove-image-button"
           @click="deleteImage"
@@ -80,9 +80,6 @@ export default {
 
       // Store a preview of the selected image
       previewUrl: null,
-
-      // Store the user's uploaded profile image
-      imageUrl: null,
 
       // Track profile picture requests
       isUploading: false,
@@ -135,6 +132,11 @@ export default {
         // Store the selected image until it is saved
         this.selectedFile = file;
 
+        // Clear the previous image preview
+        if (this.previewUrl) {
+          URL.revokeObjectURL(this.previewUrl);
+        }
+
         // Preview the selected image before it is saved
         this.previewUrl = URL.createObjectURL(file);
 
@@ -143,6 +145,12 @@ export default {
 
     // Upload the selected profile image
     async uploadImage() {
+
+      // Make sure an image was selected
+      if (!this.selectedFile) {
+        return;
+      }
+
       // Show that the profile picture is being uploaded
       this.isUploading = true;
 
@@ -157,9 +165,6 @@ export default {
         // Get the newly saved image
         await this.fetchImage();
 
-        // Tell the navigation bar that the profile image changed
-        window.dispatchEvent(new Event('profile-image-updated'));
-
         // Confirm the profile image was updated
         window.dispatchEvent(new CustomEvent('app-notification', {
           detail: {
@@ -170,7 +175,11 @@ export default {
 
         // Clear the selected image and preview after a successful upload
         this.selectedFile = null;
-        this.previewUrl = null;
+
+        if (this.previewUrl) {
+          URL.revokeObjectURL(this.previewUrl);
+          this.previewUrl = null;
+        }
 
       } catch (error) {
         console.error('Error uploading image:', error);
@@ -196,11 +205,8 @@ export default {
         // Delete the image from the server
         await ProfileService.deleteImage();
 
-        // Clear the current image
-        this.imageUrl = null;
-
-        // Tell the navigation bar that the profile image changed
-        window.dispatchEvent(new Event('profile-image-updated'));
+        // Clear the current profile image
+        this.$store.commit('SET_PROFILE_IMAGE', null);
 
         // Confirm the profile image was removed
         window.dispatchEvent(new CustomEvent('app-notification', {
@@ -228,17 +234,26 @@ export default {
     async fetchImage() {
       try {
         const imageUrl = await ProfileService.getImage();
-        this.imageUrl = imageUrl;
+
+        // Store the updated profile image
+        this.$store.commit('SET_PROFILE_IMAGE', imageUrl);
 
       } catch (error) {
+
+        // Use the default profile image if the saved image cannot be loaded
+        this.$store.commit('SET_PROFILE_IMAGE', null);
+
         console.error('Error fetching image:', error);
+        throw error;
       }
     }
   },
 
-  created() {
-    // Get the user's profile image when the component loads
-    this.fetchImage();
+  beforeUnmount() {
+    // Clear the temporary image preview
+    if (this.previewUrl) {
+      URL.revokeObjectURL(this.previewUrl);
+    }
   }
 };
 </script>

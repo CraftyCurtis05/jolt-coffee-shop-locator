@@ -4,18 +4,28 @@
   <div class="register-view">
 
     <!-- Background Video -->
-    <video
-      class="background-video"
-      autoplay
-      muted
-      loop
-      playsinline
-      :poster="fallbackImage"
-      aria-hidden="true"
-    >
-      <source src="../assets/login/jolt-personalized-falling-beans.webm" type="video/webm">
-      <source src="../assets/login/jolt-personalized-falling-beans.mp4" type="video/mp4">
-    </video>
+    <div class="background-video-container">
+      <video
+        class="background-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        :poster="fallbackImage"
+        aria-hidden="true"
+      >
+        <source
+          src="@/assets/login/jolt-personalized-falling-beans.webm"
+          type="video/webm"
+        />
+
+        <source
+          src="@/assets/login/jolt-personalized-falling-beans.mp4"
+          type="video/mp4"
+        />
+
+      </video>
+    </div>
 
     <!-- Jolt Logo -->
     <img
@@ -248,43 +258,63 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: fixed;
+  position: relative;
   width: 100%;
-  min-height: 100%;
-  overflow-x: hidden;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  box-sizing: border-box;
   font-family: 'Ubuntu', sans-serif;
-  padding: 0;
+  color: #333437;
+  padding: 1rem;
   z-index: 0;
+  caret-color: transparent;
 }
 
+
 /* Login and registration background video */
-.background-video {
+.background-video-container {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  inset: 0;
+  overflow: hidden; /* Clips the part of the video outside the screen */
   background-color: #1a0e08;
   pointer-events: none; /* Prevents the video from blocking page clicks */
   z-index: 0;
 }
 
+.background-video {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Fills the screen without stretching the video */
+  object-position: right center; /* Keeps the right side and crops from the left */
+}
+
+
+/* Jolt Logo */
 .jolt-logo {
-  width: clamp(12rem, 24vw, 20rem);
+  width: 24rem;
+  max-width: 70%;
   height: auto;
-  margin-bottom: -.75rem;
+  margin-bottom: -1rem;
   z-index: 100;
 }
 
+
+/* Registration Form */
 .register-form {
   position: relative;
-  width: min(90%, 24rem);
+  width: 22rem;
+  max-width: 90%;
+  max-height: 75vh;
+  overflow-y: auto;
   background-color: rgba(160, 153, 145, .82);
   border: .15rem rgb(53, 37, 19) solid;
   border-radius: .25rem;
   box-shadow: 0 .4rem 1rem rgba(0, 0, 0, .3);
-  padding: 1.5rem;
+  padding: 1.25rem;
   z-index: 10;
 }
 
@@ -294,45 +324,51 @@ export default {
 
 h1 {
   text-align: center;
-  font-size: 1.4rem;
-  padding-bottom: .8rem;
+  font-size: 1.3rem;
+  padding: .5rem;
 }
 
+
+/* User Registration Information */
 .form-input {
   display: flex;
   flex-direction: column;
   width: 100%;
-  font-size: 1rem;
-  margin-bottom: .9rem;
-  caret-color: black;
+  font-size: .95rem;
+  margin-bottom: .6rem;
+  caret-color: black; /* Shows the caret inside form inputs */
 }
 
 .form-input input {
   width: 100%;
-  min-height: 2.75rem;
+  min-height: 2.5rem;
   font-size: 1rem;
   background-color: #ffffff;
   border: .1rem rgb(53, 37, 19) solid;
   border-radius: .2rem;
-  padding: .45rem .6rem;
+  padding: .4rem .55rem;
 }
 
 .form-input label {
   width: 100%;
   text-align: left;
   font-weight: 500;
-  margin-bottom: .25rem;
+  margin-bottom: .2rem;
 }
 
+
+/* Registration Input Hints */
 .input-hint {
   width: 100%;
   font-size: .7rem;
   line-height: 1.3;
   color: #3f4144;
   text-align: left;
-  margin: .25rem 0 0;
+  margin: .2rem 0 0;
 }
 
+
+/* Registration Error Message */
 .alert-container {
   width: 100%;
   font-size: .8rem;
@@ -340,30 +376,35 @@ h1 {
   line-height: 1.35;
   text-align: center;
   color: #681c29;
-  margin-top: .25rem;
+  padding-top: .4rem;
+  margin-top: .2rem;
 }
 
+
+/* Registration Button and Login Link */
 .button-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: .5rem;
+  width: 100%;
+  margin-top: 1rem;
+  padding-top: .4rem;
 }
 
 button {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 8rem;
-  min-height: 2.75rem;
+  min-width: 7.5rem;
+  min-height: 2.5rem;
   background-color: rgb(53, 37, 19);
   font-size: .9rem;
   font-weight: 600;
   color: #ffffff;
   border: .1rem solid #e8bb64;
   border-radius: .2rem;
-  padding: .5rem 1rem;
+  padding: .4rem .9rem;
   transition:
     background-color .2s ease-in-out,
     color .2s ease-in-out,
@@ -388,13 +429,13 @@ button:disabled {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  min-height: 2.75rem;
+  min-height: 2.5rem;
   font-size: .9rem;
   color: #333437;
   text-decoration: underline;
   text-underline-offset: .15rem;
-  padding: .5rem .25rem;
-  margin-top: .5rem;
+  padding: .35rem .25rem;
+  margin-top: .3rem;
 }
 
 .register-link:hover {
@@ -408,53 +449,143 @@ button:disabled {
 }
 
 
-/* Tablet - 900px */
-@media screen and (max-width: 500px) {
+/* Laptop - 1200px */
+@media screen and (max-width: 1200px) {
 
-  .background-video {
-    object-fit: contain;
+  .jolt-logo {
+    width: 21rem;
   }
 
 }
 
+
+/* Tablet - 900px */
+@media screen and (max-width: 900px) {
+
+  .jolt-logo {
+    width: 19rem;
+  }
+
+  .register-form {
+    width: 21rem;
+  }
+
+}
+
+
+/* Small Tablet - 700px */
+@media screen and (max-width: 700px) {
+
+  .jolt-logo {
+    width: 18rem;
+  }
+
+  .register-form {
+    width: 20rem;
+  }
+
+}
 
 
 /* Mobile - 500px */
 @media screen and (max-width: 500px) {
 
   .register-view {
-    justify-content: flex-start;
-    padding: 2rem 1rem;
+    padding: .5rem;
   }
 
   .jolt-logo {
-    width: 13rem;
-    margin-top: 1rem;
+    width: 17rem;
+    max-width: 80%;
     margin-bottom: -.5rem;
   }
 
   .register-form {
-    width: 100%;
-    max-width: 22rem;
-    padding: 1.25rem;
+    width: 20rem;
+    max-width: 94%;
+    padding: 1rem;
   }
 
   h1 {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
   }
 
   .form-input {
     font-size: .9rem;
   }
 
-  .form-input input {
-    min-height: 2.75rem;
-    font-size: 1rem;
+}
+
+
+/* Small Mobile - 375px */
+@media screen and (max-width: 375px) {
+
+  .jolt-logo {
+    width: 15rem;
+  }
+
+  .register-form {
+    max-width: 96%;
+    padding: .75rem;
   }
 
 }
 
 
+/* Short Screens */
+@media screen and (max-height: 750px) {
+
+  .register-view {
+    padding: .35rem;
+  }
+
+  .jolt-logo {
+    width: 16rem;
+    margin-bottom: -.5rem;
+  }
+
+  .register-form {
+    max-height: 80vh;
+    max-height: 80dvh;
+    padding: .75rem 1rem;
+  }
+
+  h1 {
+    padding: .35rem;
+  }
+
+  .form-input {
+    margin-bottom: .35rem;
+  }
+
+  .button-container {
+    margin-top: .5rem;
+    padding-top: .2rem;
+  }
+
+  .register-link {
+    margin-top: .2rem;
+  }
+
+}
+
+
+/* Very Short Screens */
+@media screen and (max-height: 600px) {
+
+  .jolt-logo {
+    width: 14rem;
+  }
+
+  .register-form {
+    max-height: 84vh;
+    max-height: 84dvh;
+  }
+
+}
+
+
+/* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
 
   .background-video {
@@ -465,7 +596,7 @@ button:disabled {
     background:
       #1a0e08
       url("@/assets/login/jolt-personalized-falling-beans-fallback.jpg")
-      center / cover no-repeat fixed;
+      center / cover no-repeat;
   }
 
 }

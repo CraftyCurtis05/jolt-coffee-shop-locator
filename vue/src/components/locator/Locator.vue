@@ -257,12 +257,19 @@ export default {
       favoriteButton: favoriteButton,
       favoriteAddedButton: favoriteAddedButton,
 
-      // Store the user's saved favorite business IDs
-      userFavorites: [],
-
       // Store the coffee shop currently being added to favorites
       savingFavoriteId: null
     };
+  },
+
+  computed: {
+
+    // Get the user's saved favorite business IDs from the store
+    userFavorites() {
+      return this.$store.state.favorites.map(
+        favorite => favorite.businessId
+      );
+    }
   },
 
   methods: {
@@ -397,21 +404,19 @@ export default {
           businessImage: result.image_url,
           businessUrl: result.url
         })
-        .then(() => {
+        .then((favorite) => {
 
-          // Add the business ID after the favorite is successfully saved
-          this.userFavorites.push(result.id);
+          // Add the saved favorite to the shared favorites
+          this.$store.commit(
+            'SET_FAVORITES',
+            [...this.$store.state.favorites, favorite]
+          );
 
         })
         .catch((error) => {
 
           // Handle a favorite that already exists in the database
           if (error.response && error.response.status === 409) {
-
-            // Update the frontend to match the database
-            if (!this.userFavorites.includes(result.id)) {
-              this.userFavorites.push(result.id);
-            }
 
             window.dispatchEvent(new CustomEvent('app-notification', {
               detail: {
@@ -435,21 +440,6 @@ export default {
         .finally(() => {
           // Allow the favorite button to be used again
           this.savingFavoriteId = null;
-        });
-    },
-
-    // Get the user's saved favorites
-    getUserFavorites() {
-      FavoriteService
-        .getFavorites()
-        .then((response) => {
-
-          // Store the business IDs for the user's saved favorites
-          this.userFavorites = response.map((favorite) => favorite.businessId);
-
-        })
-        .catch((error) => {
-          console.error('Error fetching coffee shops:', error);
         });
     },
 
@@ -485,11 +475,6 @@ export default {
       this.clearResults();
       this.getResults(fullAddress, zipcode);
     }
-  },
-
-  mounted() {
-    // Get the user's favorite shops when the component loads
-    this.getUserFavorites();
   }
 };
 </script>

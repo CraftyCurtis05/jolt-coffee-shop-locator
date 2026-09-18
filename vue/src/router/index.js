@@ -3,10 +3,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 // Import views
-import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
+import HomeView from '../views/HomeView.vue';
 import ShopView from '../views/ShopView.vue';
 import ArticlesView from '../views/ArticlesView.vue';
 import LocatorView from '../views/LocatorView.vue';
@@ -24,15 +24,6 @@ import NotFoundView from '../views/NotFoundView.vue';
  * they are redirected to the login page.
  */
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView,
-    meta: {
-      title: 'Home | Jolt',
-      requiresAuth: true
-    }
-  },
   {
     path: '/login',
     name: 'login',
@@ -60,6 +51,15 @@ const routes = [
       title: 'Create Account | Jolt',
       hideNavBar: true,
       requiresAuth: false
+    }
+  },
+    {
+    path: '/',
+    name: 'home',
+    component: HomeView,
+    meta: {
+      title: 'Home | Jolt',
+      requiresAuth: true
     }
   },
   {

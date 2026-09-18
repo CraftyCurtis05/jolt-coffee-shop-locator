@@ -9,7 +9,15 @@ export function createStore(currentToken, currentUser) {
   const store = _createStore({
     state: {
       token: currentToken,
-      user: currentUser || {}
+      user: currentUser || {},
+
+      // Store profile information used throughout the application
+      profileStatus: null,
+      profile: null,
+      profileImage: null,
+
+      // Store the user's favorite coffee shops
+      favorites: []
     },
 
     mutations: {
@@ -29,6 +37,26 @@ export function createStore(currentToken, currentUser) {
         localStorage.setItem('user', JSON.stringify(user));
       },
 
+      // Store whether the logged-in user has a profile
+      SET_PROFILE_STATUS(state, status) {
+        state.profileStatus = status;
+      },
+
+      // Store the logged-in user's profile
+      SET_PROFILE(state, profile) {
+        state.profile = profile;
+      },
+
+      // Store the logged-in user's profile image
+      SET_PROFILE_IMAGE(state, image) {
+        state.profileImage = image;
+      },
+
+      // Store the user's favorite coffee shops
+      SET_FAVORITES(state, favorites) {
+        state.favorites = favorites;
+      },
+
       // Clear the user's authentication data
       LOGOUT(state) {
         localStorage.removeItem('token');
@@ -36,6 +64,10 @@ export function createStore(currentToken, currentUser) {
 
         state.token = '';
         state.user = {};
+        state.profileStatus = null;
+        state.profile = null;
+        state.profileImage = null;
+        state.favorites = [];
 
         // Remove the authorization header from future Axios requests
         delete axios.defaults.headers.common['Authorization'];

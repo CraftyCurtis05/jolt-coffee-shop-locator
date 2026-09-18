@@ -411,6 +411,26 @@ export default {
 
     // Open the profile form
     openForm() {
+      const profile = this.$store.state.profile;
+
+      if (profile) {
+
+        // Get the current profile information from the store
+        this.user = { ...profile };
+        this.status = true;
+
+        // Store the original profile for update comparisons
+        ProfileService.originalProfile = { ...profile };
+
+      } else {
+
+        // Set the form to create mode when the user does not have a profile
+        this.status = false;
+      }
+
+      // Clear previously tracked changes
+      this.changedFields = {};
+
       this.isVisible = true;
       this.$emit('form-visible', true);
     },
@@ -431,17 +451,6 @@ export default {
       this.closeForm();
     },
 
-    // Check whether the user already has a profile
-    async fetchStatus() {
-      try {
-        const response = await ProfileService.getStatus();
-        this.status = response;
-
-      } catch (error) {
-        console.error('Error fetching profile status:', error);
-      }
-    },
-
     // Create or update the user's profile
     async saveProfile() {
       this.isSaving = true;
@@ -458,8 +467,9 @@ export default {
           // Switch the form to update mode
           this.status = true;
 
-          // Update the profile displayed on the page
-          this.$emit('profile-updated', savedProfile);
+          // Store the new profile for use throughout the application
+          this.$store.commit('SET_PROFILE_STATUS', true);
+          this.$store.commit('SET_PROFILE', savedProfile);
 
           window.dispatchEvent(new CustomEvent('app-notification', {
             detail: {
@@ -487,8 +497,8 @@ export default {
           this.user = { ...savedProfile };
           this.changedFields = {};
 
-          // Update the profile displayed on the page
-          this.$emit('profile-updated', savedProfile);
+          // Store the updated profile for use throughout the application
+          this.$store.commit('SET_PROFILE', savedProfile);
 
           window.dispatchEvent(new CustomEvent('app-notification', {
             detail: {
@@ -524,20 +534,6 @@ export default {
       }
     },
 
-    // Get the user's existing profile information
-    async fetchProfile() {
-      try {
-        const response = await ProfileService.getProfile();
-
-        if (response) {
-          this.user = { ...response };
-        }
-
-      } catch (error) {
-        console.error('Error fetching profile:', error);
-      }
-    },
-
     // Track only profile fields that are different from the original profile
     trackChanges() {
       const originalProfile = ProfileService.originalProfile;
@@ -570,11 +566,24 @@ export default {
   },
 
   mounted() {
-    // Check whether the user already has a profile
-    this.fetchStatus();
 
-    // Get the user's existing profile information
-    this.fetchProfile();
+    // Get the user's profile information from the store
+    const profile = this.$store.state.profile;
+
+    if (profile) {
+
+      // Store the profile information in the form
+      this.user = { ...profile };
+      this.status = true;
+
+      // Store the original profile for update comparisons
+      ProfileService.originalProfile = { ...profile };
+
+    } else {
+
+      // Set the form to create mode when the user does not have a profile
+      this.status = false;
+    }
   }
 };
 </script>

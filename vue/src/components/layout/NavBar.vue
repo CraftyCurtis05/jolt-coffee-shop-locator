@@ -151,7 +151,7 @@
             title="Click to Go to Profile"
           >
             <img
-              :src="imageUrl || defaultProfileImage"
+              :src="$store.state.profileImage || defaultProfileImage"
               alt=""
             />
           </router-link>
@@ -165,8 +165,6 @@
 </template>
 
 <script>
-import ProfileService from '../../services/ProfileService.js';
-
 import joltLogo from '../../assets/app/logo/jolt_logo.webp';
 import responsiveLogo from '../../assets/app/logo/logo_responsive.webp';
 import defaultProfileImage from '../../assets/profile/profile_pic.webp';
@@ -179,9 +177,6 @@ export default {
       // Track whether the mobile navigation menu is open
       isNavOpen: false,
 
-      // Store the user's profile image
-      imageUrl: null,
-
       // Navigation images
       logo: joltLogo,
       logoResponsive: responsiveLogo,
@@ -190,25 +185,6 @@ export default {
   },
 
   methods: {
-
-    // Get the user's saved profile image
-    async fetchImage() {
-      try {
-        const imageUrl = await ProfileService.getImage();
-        this.imageUrl = imageUrl;
-
-      } catch (error) {
-
-        // Use the default profile image if the user does not have a saved image
-        this.imageUrl = null;
-
-      }
-    },
-
-    // Update the profile image after the user changes it
-    handleProfileImageUpdate() {
-      this.fetchImage();
-    },
 
     // Close the mobile navigation menu when clicking outside of it
     handleOutsideClick(event) {
@@ -231,22 +207,11 @@ export default {
       this.handleOutsideClick
     );
 
-    // Update the navigation profile image when it changes
-    window.addEventListener(
-      'profile-image-updated',
-      this.handleProfileImageUpdate
-    );
-
     // Watch for route changes throughout the application
     this.$router.afterEach(() => {
 
       // Close the mobile navigation menu after changing pages
       this.isNavOpen = false;
-
-      // Get the profile image if the user is logged in
-      if (this.$store.state.token) {
-        this.fetchImage();
-      }
     });
   },
 
@@ -256,12 +221,6 @@ export default {
     document.removeEventListener(
       'click',
       this.handleOutsideClick
-    );
-
-    // Remove the profile image update listener
-    window.removeEventListener(
-      'profile-image-updated',
-      this.handleProfileImageUpdate
     );
   }
 };
