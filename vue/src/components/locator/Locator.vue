@@ -333,7 +333,7 @@ export default {
     },
 
     // Get coffee shops for a searched location
-    getResults(locationId, fallbackLocation = null) {
+    getResults(locationId) {
       // Show that a coffee shop search is in progress
       this.isSearching = true;
 
@@ -349,17 +349,6 @@ export default {
         })
         .catch((error) => {
 
-          // If the full home address cannot be found, try the saved ZIP code
-          if (
-            fallbackLocation &&
-            error.response &&
-            error.response.status === 400
-          ) {
-
-            this.getResults(fallbackLocation);
-            return;
-          }
-
           // Display an error if the search fails
           this.hasSearched = false;
           this.isSearching = false;
@@ -370,6 +359,7 @@ export default {
               type: 'error'
             }
           }));
+
           console.error('Error fetching Yelp results:', error);
         });
     },
@@ -443,21 +433,17 @@ export default {
         });
     },
 
-    // Search for coffee shops near the user's home address
+    // Search for coffee shops near the user's home location
     searchHome() {
       const {
-        address1,
-        address2,
-        city,
-        state,
         zipcode
       } = this.user;
 
-      // Make sure the user's address is complete
-      if (!address1 || !city || !state || !zipcode) {
+      // Make sure the user's ZIP code is available
+      if (!zipcode) {
         window.dispatchEvent(new CustomEvent('app-notification', {
           detail: {
-            message: 'Your home address is missing or incomplete. Please complete your profile.',
+            message: 'Your home location is missing. Please complete your profile.',
             type: 'warning'
           }
         }));
@@ -467,13 +453,9 @@ export default {
       // Clear the manual search location when searching near home
       this.locationId = '';
 
-      // Create the full address from the user's saved profile
-      const fullAddress =
-        `${address1}${address2 ? ', ' + address2 : ''}, ${city}, ${state} ${zipcode}`;
-
-      // Clear previous results and search using the user's saved address
+      // Clear previous results and search using the user's saved ZIP code
       this.clearResults();
-      this.getResults(fullAddress, zipcode);
+      this.getResults(zipcode);
     }
   }
 };
