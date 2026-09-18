@@ -106,8 +106,76 @@ export default {
       document.getElementById('fileInput').click();
     },
 
-    // Validate and store the selected image
-    handleFileUpload(event) {
+    // Clear the selected image and temporary preview
+    clearSelectedImage() {
+      this.selectedFile = null;
+
+      if (this.previewUrl) {
+        URL.revokeObjectURL(this.previewUrl);
+        this.previewUrl = null;
+      }
+    },
+
+    // Resize the selected profile image
+    resizeImage(file) {
+      return new Promise((resolve, reject) => {
+        const image = new Image();
+        const imageUrl = URL.createObjectURL(file);
+
+        image.onload = () => {
+          const maxSize = 500;
+
+          let width = image.width;
+          let height = image.height;
+
+          // Resize the image while keeping its original proportions
+          if (width > height && width > maxSize) {
+            height = Math.round(height * (maxSize / width));
+            width = maxSize;
+
+          } else if (height > maxSize) {
+            width = Math.round(width * (maxSize / height));
+            height = maxSize;
+          }
+
+          const canvas = document.createElement('canvas');
+
+          canvas.width = width;
+          canvas.height = height;
+
+          const context = canvas.getContext('2d');
+
+          // Draw the resized image onto the canvas
+          context.drawImage(image, 0, 0, width, height);
+
+          // Convert the resized image back into a file
+          canvas.toBlob(
+            (blob) => {
+              URL.revokeObjectURL(imageUrl);
+
+              if (!blob) {
+                reject(new Error('Unable to resize image.'));
+                return;
+              }
+
+              resolve(blob);
+            },
+            'image/webp',
+            0.85
+          );
+        };
+
+        image.onerror = () => {
+          URL.revokeObjectURL(imageUrl);
+          reject(new Error('Unable to load image.'));
+        };
+
+        image.src = imageUrl;
+      });
+    },
+
+    // Validate, resize and store the selected image
+    async handleFileUpload(event) {
       const file = event.target.files[0];
 
       if (file) {
@@ -125,21 +193,52 @@ export default {
               type: 'warning'
             }
           }));
-          this.selectedFile = null;
+          this.clearSelectedImage();
           return;
         }
 
-        // Store the selected image until it is saved
-        this.selectedFile = file;
+        try {
 
-        // Clear the previous image preview
-        if (this.previewUrl) {
-          URL.revokeObjectURL(this.previewUrl);
+          // Resize the selected image before it is uploaded
+          const resizedImage = await this.resizeImage(file);
+
+          // Create a WebP filename for the resized image
+          const imageName = file.name.replace(
+            /\.[^/.]+$/,
+            ''
+          ) + '.webp';
+
+          const resizedFile = new File(
+            [resizedImage],
+            imageName,
+            {
+              type: 'image/webp'
+            }
+          );
+
+          // Store the resized image until it is saved
+          this.selectedFile = resizedFile;
+
+          // Clear the previous image preview
+          if (this.previewUrl) {
+            URL.revokeObjectURL(this.previewUrl);
+          }
+
+          // Preview the resized image before it is saved
+          this.previewUrl = URL.createObjectURL(resizedFile);
+
+        } catch (error) {
+          console.error('Error resizing image:', error);
+
+          window.dispatchEvent(new CustomEvent('app-notification', {
+            detail: {
+              message: 'Error preparing profile picture!',
+              type: 'error'
+            }
+          }));
+
+          this.clearSelectedImage();
         }
-
-        // Preview the selected image before it is saved
-        this.previewUrl = URL.createObjectURL(file);
-
       }
     },
 
@@ -174,12 +273,7 @@ export default {
         }));
 
         // Clear the selected image and preview after a successful upload
-        this.selectedFile = null;
-
-        if (this.previewUrl) {
-          URL.revokeObjectURL(this.previewUrl);
-          this.previewUrl = null;
-        }
+        this.clearSelectedImage();
 
       } catch (error) {
         console.error('Error uploading image:', error);
