@@ -12,13 +12,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class JdbcImageDaoTests extends BaseDaoTests {
 
     private JdbcImageDao sut;
-    private JdbcUserDao userDao;
 
     @Before
     public void setup() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        userDao = new JdbcUserDao(jdbcTemplate);
-        sut = new JdbcImageDao(jdbcTemplate, userDao);
+        sut = new JdbcImageDao(jdbcTemplate);
     }
 
     @Test
@@ -43,7 +41,6 @@ public class JdbcImageDaoTests extends BaseDaoTests {
         Assert.assertTrue(savedImage.getImageId() > 0);
         Assert.assertEquals("test-image.png", savedImage.getImageName());
         Assert.assertArrayEquals(imageData, savedImage.getImage());
-        Assert.assertEquals(1, savedImage.getUser().getId());
     }
 
     @Test
@@ -79,10 +76,6 @@ public class JdbcImageDaoTests extends BaseDaoTests {
                 secondImageData,
                 savedSecondImage.getImage()
         );
-        Assert.assertEquals(
-                1,
-                savedSecondImage.getUser().getId()
-        );
     }
 
     @Test
@@ -110,10 +103,6 @@ public class JdbcImageDaoTests extends BaseDaoTests {
         Assert.assertArrayEquals(
                 imageData,
                 retrievedImage.getImage()
-        );
-        Assert.assertEquals(
-                1,
-                retrievedImage.getUser().getId()
         );
     }
 

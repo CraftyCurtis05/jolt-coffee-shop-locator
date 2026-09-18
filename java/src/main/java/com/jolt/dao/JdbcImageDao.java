@@ -2,7 +2,6 @@ package com.jolt.dao;
 
 import com.jolt.exception.DaoException;
 import com.jolt.model.Image;
-import com.jolt.model.User;
 
 import java.sql.PreparedStatement;
 
@@ -15,18 +14,17 @@ import org.springframework.stereotype.Component;
 public class JdbcImageDao implements ImageDao {
 
     private final JdbcTemplate jdbcTemplate;
-    private final UserDao userDao;
 
-    public JdbcImageDao(JdbcTemplate jdbcTemplate, UserDao userDao) {
+    public JdbcImageDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.userDao = userDao;
     }
 
     @Override
     public Image getImageByUserId(int userId) {
         Image image = null;
 
-        String sql = "SELECT * FROM image WHERE user_id = ?";
+        String sql =
+                "SELECT image_id, image_name, image FROM image WHERE user_id = ?";
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
@@ -119,9 +117,6 @@ public class JdbcImageDao implements ImageDao {
             byte[] imageBytes = (byte[]) imageObject;
             image.setImage(imageBytes);
         }
-
-        User user = userDao.getUserById(results.getInt("user_id"));
-        image.setUser(user);
 
         return image;
     }
