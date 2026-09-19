@@ -77,7 +77,7 @@ export default {
 
 .back-to-top:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0.45rem 1rem rgba(0, 0, 0, 0.25);
+  box-shadow: 0 .45rem 1rem rgba(0, 0, 0, .25);
 }
 
 .back-to-top:focus-visible {
@@ -117,13 +117,6 @@ export default {
     bottom: 1.25rem;
     width: 2.75rem;
     height: 2.75rem;
-  }
-}
-
-
-@media (prefers-reduced-motion: reduce) {
-  .back-to-top {
-    transition: none;
   }
 }
 </style>

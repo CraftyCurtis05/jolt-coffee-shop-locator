@@ -26,17 +26,14 @@
           type="text"
           v-model="locationId"
           placeholder="City, state or ZIP code"
-          title="Enter a city, state or ZIP code"
+          autocomplete="off"
+          autocapitalize="words"
         />
 
         <button
           type="submit"
           :disabled="isSearching"
-          :title="
-            isSearching
-              ? 'Searching for Coffee Shops'
-              : 'Click to Search for Coffee Shops'
-          "
+          aria-live="polite"
         >
           {{ isSearching ? 'Searching...' : 'Search' }}
         </button>
@@ -49,11 +46,7 @@
           type="button"
           @click="searchHome()"
           :disabled="isSearching"
-          :title="
-            isSearching
-              ? 'Searching for Coffee Shops Near Home'
-              : 'Click to Search for Coffee Shops Near Home'
-          "
+          aria-live="polite"
         >
           <img
             :src="houseIcon"
@@ -93,7 +86,10 @@
         </p>
 
         <!-- Search Results Count -->
-        <p class="results-count">
+        <p
+          class="results-count"
+          role="status"
+        >
           {{ results.length }}
           {{ results.length === 1 ? 'result found' : 'results found' }}
         </p>
@@ -119,7 +115,6 @@
               target="_blank"
               rel="noopener noreferrer"
               :aria-label="'View ' + result.name + ' on Yelp'"
-              title="View on Yelp"
             >
               {{ result.name }}
             </a>
@@ -131,7 +126,6 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 :aria-label="'Get directions to ' + result.name"
-                title="Get Directions"
               >
                 <span>
                   {{ result.location.address1 }}
@@ -160,8 +154,8 @@
             >
               <img
                 :src="result.image_url || defaultImage"
-                :alt="result.image_url ? result.name + ' coffee shop' : 'No photo available for ' + result.name"
-                title="View on Yelp"
+                alt=""
+                loading="lazy"
               />
             </a>
           </section>
@@ -176,13 +170,13 @@
                 savingFavoriteId === result.id
               "
               :aria-label="
-                userFavorites.includes(result.id)
-                  ? result.name + ' is saved'
-                  : 'Save ' + result.name
+                savingFavoriteId === result.id
+                  ? 'Saving ' + result.name
+                  : userFavorites.includes(result.id)
+                    ? result.name + ' is saved'
+                    : 'Save ' + result.name
               "
-              :title="userFavorites.includes(result.id)
-                ? 'Saved Coffee Shop'
-                : 'Click to Save Coffee Shop'"
+              aria-live="polite"
             >
               <img
                 :src="userFavorites.includes(result.id)
@@ -192,15 +186,13 @@
               />
 
               <span>
-                <span>
-                  {{
-                    savingFavoriteId === result.id
-                      ? 'Saving...'
-                      : userFavorites.includes(result.id)
-                        ? 'Saved'
-                        : 'Save Coffee Shop'
-                  }}
-                </span>
+                {{
+                  savingFavoriteId === result.id
+                    ? 'Saving...'
+                    : userFavorites.includes(result.id)
+                      ? 'Saved'
+                      : 'Save Coffee Shop'
+                }}
               </span>
             </button>
           </section>
@@ -214,6 +206,7 @@
     <section
       class="no-results"
       v-if="hasSearched && results.length === 0"
+      role="status"
     >
       <p>
         <strong>No coffee shops found.</strong>
@@ -289,6 +282,11 @@ export default {
 
     // Search for coffee shops using the entered location
     search() {
+      // Prevent another search while one is already in progress
+      if (this.isSearching) {
+        return;
+      }
+
       const location = this.locationId.trim();
 
       // Make sure a location was entered
@@ -302,8 +300,8 @@ export default {
         return;
       }
 
+      const isCityOrState = /^[A-Za-z][A-Za-z\s.,'-]*$/.test(location);
       const isZipCode = /^\d{5}$/.test(location);
-      const isCityOrState = /^[A-Za-z][A-Za-z\s.'-]*$/.test(location);
 
       // Only allow a city, state or 5-digit ZIP code
       if (!isZipCode && !isCityOrState) {
@@ -316,14 +314,12 @@ export default {
         return;
       }
 
-      // Format multi-word locations for the Yelp search
-      const searchLocation = isZipCode
-        ? location
-        : location.replace(/\s+/g, '_');
+      // Remove extra spaces from the displayed search location
+      this.locationId = location;
 
       // Clear the previous search and get new results
       this.clearResults();
-      this.getResults(searchLocation);
+      this.getResults(location);
     },
 
     // Clear previous search results
@@ -344,14 +340,13 @@ export default {
           // Store the coffee shops returned by Yelp
           this.results = response.businesses || [];
           this.hasSearched = true;
-          this.isSearching = false;
 
         })
         .catch((error) => {
 
-          // Display an error if the search fails
+          // Clear any previous results if the search fails
+          this.results = [];
           this.hasSearched = false;
-          this.isSearching = false;
 
           window.dispatchEvent(new CustomEvent('app-notification', {
             detail: {
@@ -361,14 +356,21 @@ export default {
           }));
 
           console.error('Error fetching Yelp results:', error);
+        })
+        .finally(() => {
+          // Allow another coffee shop search
+          this.isSearching = false;
         });
     },
 
     // Add a coffee shop to the user's favorites
     setFavorite(result) {
 
-      // Check if the shop is already favorited by the user
-      if (this.userFavorites.includes(result.id)) {
+      // Check if the shop is already saved or currently being saved
+      if (
+        this.userFavorites.includes(result.id) ||
+        this.savingFavoriteId === result.id
+      ) {
         window.dispatchEvent(new CustomEvent('app-notification', {
           detail: {
             message: "You've already saved this coffee shop.",
@@ -435,9 +437,13 @@ export default {
 
     // Search for coffee shops near the user's home location
     searchHome() {
-      const {
-        zipcode
-      } = this.user;
+      // Prevent another search while one is already in progress
+      if (this.isSearching) {
+        return;
+      }
+
+      // Get the user's saved ZIP code
+      const zipcode = this.user?.zipcode;
 
       // Make sure the user's ZIP code is available
       if (!zipcode) {
@@ -516,10 +522,6 @@ export default {
   height: .15rem;
   background-color: #e8bb64;
   margin-bottom: .5rem;
-}
-
-.search-controls form {
-  max-width: 90%;
 }
 
 
@@ -606,14 +608,9 @@ export default {
 }
 
 
-/* Search Buttons */
-
-.search-bar button {
-  width: 7rem;
-}
-
 /* Connect the Search button to the location input */
 .search-bar button {
+  width: 7rem;
   border-radius: 0 .2rem .2rem 0;
 }
 

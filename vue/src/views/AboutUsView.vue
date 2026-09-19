@@ -16,26 +16,24 @@
     <main>
 
       <!-- Jennifer -->
-      <section class="jennifer">
+      <section>
         <Jennifer />
       </section>
 
       <!-- David -->
-      <section class="david">
+      <section>
         <David />
       </section>
 
       <!-- Naomi -->
-      <section class="naomi">
+      <section>
         <Naomi />
       </section>
 
       <!-- Steven -->
-      <section class="steven">
+      <section>
         <Steven />
       </section>
-
-
 
     </main>
 
@@ -70,6 +68,7 @@ import David from '../components/about/David.vue';
 export default {
   name: 'AboutUsView',
 
+  // Components used on the about us page
   components: {
     Jennifer,
     Steven,
@@ -177,14 +176,7 @@ header h1 {
   }
 
   main {
-    grid-template-columns: 1fr;
-    width: 100%;
-    max-width: 24rem;
     margin-bottom: 1rem;
-  }
-
-  main > section {
-    width: 100%;
   }
 
   .project-evolution {

@@ -76,7 +76,7 @@
           <!-- Successful Registration Message -->
           <div
             role="alert"
-            v-if="this.$route.query.registration"
+            v-if="$route.query.registration"
             id="alert1"
           >
             Your account has been created.<br>Please sign in.
@@ -85,7 +85,7 @@
           <!-- Invalid Login Message -->
           <p
             v-if="invalidCredentials"
-            class="alert-container"
+            role="alert"
           >
             Invalid username or password.
           </p>
@@ -140,12 +140,12 @@
             }}
           </button>
 
-          <router-link
+          <RouterLink
             :to="{ name: 'register' }"
             class="register-link"
           >
             Don't have an account? Create one.
-          </router-link>
+          </RouterLink>
         </div>
 
       </form>
@@ -199,6 +199,12 @@ export default {
 
     // Log in an existing user
     login() {
+
+      // Track a regular login unless the demo account started the request
+      if (this.loginType !== 'demo') {
+        this.loginType = 'regular';
+      }
+
       // Show that the login request is being processed
       this.isLoggingIn = true;
 
@@ -211,7 +217,7 @@ export default {
         .then((response) => {
 
           // Save the authentication information after successful login
-          if (response.status == 200) {
+          if (response.status === 200) {
             this.$store.commit('SET_AUTH_TOKEN', response.data.token);
             this.$store.commit('SET_USER', response.data.user);
 
@@ -277,11 +283,11 @@ export default {
             }));
           }
         })
-      .finally(() => {
-        // Allow another login attempt if needed
-        this.isLoggingIn = false;
-        this.loginType = null;
-      });
+        .finally(() => {
+          // Allow another login attempt if needed
+          this.isLoggingIn = false;
+          this.loginType = null;
+        });
     }
   }
 };
@@ -409,6 +415,10 @@ h1 {
   color: #681c29;
   padding-top: .4rem;
   margin-top: .2rem;
+}
+
+.alert-container p {
+  margin: 0;
 }
 
 

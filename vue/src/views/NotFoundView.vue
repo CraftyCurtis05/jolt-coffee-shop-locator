@@ -1,3 +1,5 @@
+<!-- NotFoundView.vue -->
+
 <template>
   <main class="not-found-view">
     <section class="not-found-content">
@@ -7,12 +9,12 @@
         Looks like this page needs another shot of espresso.
       </p>
 
-      <router-link
+      <RouterLink
         :to="{ name: 'home' }"
         class="home-link"
       >
         Return Home →
-      </router-link>
+      </RouterLink>
     </section>
   </main>
 </template>
@@ -57,9 +59,11 @@
   font-weight: 600;
   color: rgb(53, 37, 19);
   text-decoration: none;
+  transition: color .3s ease-in-out;
 }
 
-.home-link:hover {
+.home-link:hover,
+.home-link:focus-visible {
   color: rgb(156, 105, 33);
 }
 

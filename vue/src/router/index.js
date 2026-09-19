@@ -53,7 +53,7 @@ const routes = [
       requiresAuth: false
     }
   },
-    {
+  {
     path: '/',
     name: 'home',
     component: HomeView,

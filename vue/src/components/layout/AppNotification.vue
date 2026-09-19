@@ -19,7 +19,6 @@
           type="button"
           @click="hideNotification"
           aria-label="Close notification"
-          title="Close Notification"
         >
           &times;
         </button>

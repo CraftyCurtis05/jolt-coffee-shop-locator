@@ -5,25 +5,16 @@
 
     <!-- User Profile Details -->
     <section class="profile-details">
-      <p
-        class="name"
-        title="Your Name"
-      >
+      <p class="name">
         {{ user.firstName }} {{ user.lastName }}
       </p>
 
-      <p
-        class="birthday"
-        title="Your Birthday"
-      >
+      <p class="birthday">
         {{ user.birthMonth }} {{ user.birthDay }}, {{ user.birthYear }}
       </p>
 
       <!-- User Address -->
-      <div
-        class="location-container"
-        title="Your Address"
-      >
+      <div class="location-container">
         <p class="address1">
           {{ user.address1 }}
           <template v-if="user.address2">

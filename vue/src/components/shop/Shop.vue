@@ -15,6 +15,7 @@
           src="@/assets/shop/shop_01.webp"
           alt="Coffee available for purchase"
           title="Shop for Coffee"
+          loading="lazy"
         />
       </a>
 
@@ -44,6 +45,7 @@
           src="@/assets/shop/shop_02.webp"
           alt="Coffee brewing equipment available for purchase"
           title="Shop for Coffee Equipment"
+          loading="lazy"
         />
       </a>
 
@@ -73,6 +75,7 @@
           src="@/assets/shop/shop_03.webp"
           alt="Coffee merchandise available for purchase"
           title="Shop for Coffee Merchandise"
+          loading="lazy"
         />
       </a>
 
@@ -102,6 +105,7 @@
           src="@/assets/shop/shop_04.webp"
           alt="Snacks available for purchase"
           title="Shop for Snacks"
+          loading="lazy"
         />
       </a>
 
@@ -150,7 +154,9 @@ export default {
   border-radius: .1rem;
   padding-bottom: .5rem;
   margin: 1rem;
-  transition: all 0.5s ease-in-out;
+  transition:
+    transform .5s ease-in-out,
+    filter .5s ease-in-out;
 }
 
 .shop-content:hover {
@@ -197,6 +203,7 @@ h3 {
 }
 
 
+/* Shop Cards - 711px */
 @media screen and (max-width: 711px) {
 
   .shop-content {

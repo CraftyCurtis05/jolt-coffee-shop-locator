@@ -3,24 +3,20 @@
 <template>
 
   <!-- Image Carousel -->
-  <article class="carousel-container">
+  <div class="carousel-container">
 
     <!-- Current Carousel Image -->
-    <section class="carousel">
+    <div class="carousel">
 
-      <div
-        class="carousel-item"
-        :key="currentIndex"
-      >
+      <div class="carousel-item">
         <img
           :src="images[currentIndex]"
-          :alt="'Coffee shop carousel image ' + (currentIndex + 1)"
-          title="Carousel Image Slide"
+          alt=""
           fetchpriority="high"
         />
       </div>
 
-    </section>
+    </div>
 
     <!-- Previous Image Button -->
     <button
@@ -64,7 +60,7 @@
       />
     </button>
 
-  </article>
+  </div>
 </template>
 
 <script>
@@ -89,7 +85,7 @@ export default {
       ],
 
       // Track the image currently displayed
-      currentIndex: 0,
+      currentIndex: 0
     };
   },
 
@@ -122,7 +118,6 @@ export default {
   width: 70vw;
   max-width: 70rem;
   background-color: rgb(53, 37, 19);
-  box-sizing: border-box;
   padding: 2%;
 }
 
@@ -149,16 +144,17 @@ export default {
   position: absolute;
   top: 50%;
   width: 4vw;
-  min-width: 3vw;
+  min-width: 2.75rem;
   height: 4vw;
-  min-height: 3vw;
-  background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent buttons */
+  min-height: 2.75rem;
+  background-color: rgba(0, 0, 0, .2);
   border: none;
   border-radius: 50%;
   transform: translateY(-50%);
-  padding: 10px;
+  padding: .625rem;
+  cursor: pointer;
   z-index: 10;
-  transition: all 0.5s ease-in-out;
+  transition: background-color .5s ease-in-out;
 }
 
 .prev-btn {
@@ -172,7 +168,9 @@ export default {
 .prev-btn:hover,
 .next-btn:hover,
 .prev-btn:active,
-.next-btn:active {
+.next-btn:active,
+.prev-btn:focus-visible,
+.next-btn:focus-visible {
   background-color: #e8bb64;
 }
 
@@ -190,25 +188,31 @@ button img {
 }
 
 .default {
-  opacity: 1; /* Show the default button image */
+  opacity: 1;
+  transition: opacity .3s ease-in-out;
 }
 
 .hover {
-  opacity: 0; /* Hide the hover button image */
+  opacity: 0;
+  transition: opacity .3s ease-in-out;
 }
 
-/* Switch navigation images when the button is hovered */
+/* Switch navigation images during interaction */
 .prev-btn:hover .default,
 .next-btn:hover .default,
 .prev-btn:active .default,
-.next-btn:active .default {
+.next-btn:active .default,
+.prev-btn:focus-visible .default,
+.next-btn:focus-visible .default {
   opacity: 0;
 }
 
 .prev-btn:hover .hover,
 .next-btn:hover .hover,
 .prev-btn:active .hover,
-.next-btn:active .hover {
+.next-btn:active .hover,
+.prev-btn:focus-visible .hover,
+.next-btn:focus-visible .hover {
   opacity: 1;
 }
 
@@ -222,18 +226,48 @@ button img {
 
   .prev-btn,
   .next-btn {
-    width: 2.75rem;
-    min-width: 2.75rem;
-    height: 2.75rem;
-    min-height: 2.75rem;
+    width: 3rem;
+    min-width: 3rem;
+    height: 3rem;
+    min-height: 3rem;
     padding: .4rem;
   }
 
 }
 
 
-/* Mobile L - 426px */
-@media screen and (max-width: 426px) {
+/* Mobile - 650px */
+@media screen and (max-width: 650px) {
+
+  .prev-btn,
+  .next-btn {
+    width: 2.5rem;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    min-height: 2.5rem;
+    padding: .3rem;
+  }
+
+}
+
+
+/* Mobile - 500px */
+@media screen and (max-width: 500px) {
+
+  .prev-btn,
+  .next-btn {
+    width: 2.25rem;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    min-height: 2.25rem;
+    padding: .25rem;
+  }
+
+}
+
+
+/* Mobile L - 470px */
+@media screen and (max-width: 470px) {
 
   .carousel-container {
     width: 90vw;
@@ -241,11 +275,11 @@ button img {
 
   .prev-btn,
   .next-btn {
-    width: 2.75rem;
-    min-width: 2.75rem;
-    height: 2.75rem;
-    min-height: 2.75rem;
-    padding: .35rem;
+    width: 1.75rem;
+    min-width: 1.75rem;
+    height: 1.75rem;
+    min-height: 1.75rem;
+    padding: .1rem;
   }
 
 }

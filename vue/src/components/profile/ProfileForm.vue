@@ -30,7 +30,6 @@
                 autocomplete="given-name"
                 required
                 @input="trackChanges"
-                title="Enter a valid first name using letters, spaces, apostrophes, or hyphens"
               />
             </div>
           </div>
@@ -51,7 +50,6 @@
                 autocomplete="family-name"
                 required
                 @input="trackChanges"
-                title="Enter a valid last name using letters, spaces, apostrophes, or hyphens"
               />
             </div>
           </div>
@@ -74,9 +72,7 @@
               <select
                 id="birthMonth"
                 v-model="user.birthMonth"
-                :disabled="status"
                 required
-                title="Enter Birth Month"
               >
                 <option
                   value=""
@@ -107,11 +103,9 @@
                 type="number"
                 id="birthDay"
                 v-model="user.birthDay"
-                :disabled="status"
                 required
                 min="1"
                 max="31"
-                title="Enter Birth Day"
               />
             </div>
           </div>
@@ -127,11 +121,9 @@
                 type="number"
                 id="birthYear"
                 v-model="user.birthYear"
-                :disabled="status"
                 required
                 min="1900"
                 :max="currentYear"
-                title="Enter Birth Year"
               />
             </div>
           </div>
@@ -157,7 +149,6 @@
                 autocomplete="address-line1"
                 required
                 @input="trackChanges"
-                title="Enter a street address between 3 and 100 characters"
               />
             </div>
           </div>
@@ -176,7 +167,6 @@
                 maxlength="50"
                 autocomplete="address-line2"
                 @input="trackChanges"
-                title="Address line 2 can contain up to 50 characters"
               />
             </div>
           </div>
@@ -197,10 +187,17 @@
                 pattern="[A-Za-z][A-Za-z .'\-]*"
                 placeholder="Columbus"
                 autocomplete="address-level2"
+                aria-describedby="city-hint"
                 required
                 @input="trackChanges"
-                title="Enter a valid city using letters, spaces, periods, apostrophes, or hyphens"
               />
+
+              <p
+                id="city-hint"
+                class="input-hint"
+              >
+                Use letters, spaces, periods, apostrophes, or hyphens.
+              </p>
             </div>
           </div>
 
@@ -217,7 +214,6 @@
                 autocomplete="address-level1"
                 required
                 @change="trackChanges"
-                title="Select State"
               >
                 <option
                   value=""
@@ -253,10 +249,16 @@
                 inputmode="numeric"
                 placeholder="43215"
                 autocomplete="postal-code"
+                aria-describedby="zipcode-hint"
                 required
                 @input="trackChanges"
-                title="Enter a valid 5-digit ZIP code"
               />
+              <p
+                id="zipcode-hint"
+                class="input-hint"
+              >
+                Enter a 5-digit ZIP code.
+              </p>
             </div>
           </div>
         </fieldset>
@@ -269,15 +271,7 @@
               isSaving ||
               (status && Object.keys(changedFields).length === 0)
             "
-            :title="
-              isSaving
-                ? 'Saving Profile'
-                : status && Object.keys(changedFields).length === 0
-                  ? 'No Changes to Save'
-                  : status
-                    ? 'Click to Save Changes'
-                    : 'Click to Create Profile'
-            "
+            aria-live="polite"
           >
             {{ isSaving ? 'Saving...' : 'Save Profile' }}
           </button>
@@ -286,7 +280,6 @@
             type="button"
             @click="cancelChanges"
             :disabled="isSaving"
-            title="Click to Close Update Profile"
           >
             Cancel
           </button>
@@ -403,7 +396,7 @@ export default {
         city: '',
         state: '',
         zipcode: ''
-      },
+      }
     };
   },
 
@@ -445,6 +438,19 @@ export default {
     cancelChanges() {
       if (ProfileService.originalProfile) {
         this.user = { ...ProfileService.originalProfile };
+      } else {
+        this.user = {
+          firstName: '',
+          lastName: '',
+          birthMonth: '',
+          birthDay: '',
+          birthYear: '',
+          address1: '',
+          address2: '',
+          city: '',
+          state: '',
+          zipcode: ''
+        };
       }
 
       this.changedFields = {};
@@ -484,13 +490,6 @@ export default {
           // Send the updated profile fields to the server
           const updatedProfile = { ...this.changedFields };
 
-          // Close the form when no profile fields were changed
-          if (Object.keys(updatedProfile).length === 0) {
-            this.isSaving = false;
-            this.closeForm();
-            return;
-          }
-          
           const savedProfile = await ProfileService.updateProfile(updatedProfile);
 
           // Store the profile returned by the server
@@ -672,6 +671,13 @@ legend {
   outline-offset: .1rem;
 }
 
+.input-hint {
+  font-size: .7rem;
+  line-height: 1.3;
+  color: rgb(53, 37, 19);
+  margin: .25rem 0 0;
+}
+
 
 /* Profile Form Columns */
 
@@ -735,11 +741,8 @@ legend {
 
 .button-container button:disabled {
   opacity: .6;
-  transform: none;
-}
-
-.button-container button:disabled:not(.saving) {
   cursor: not-allowed;
+  transform: none;
 }
 
 .button-container button:focus-visible {

@@ -15,6 +15,7 @@
           src="@/assets/articles/articles_01.webp"
           alt="Coffee representing the health benefits of coffee"
           title="Read Health Benefits of Coffee"
+          loading="lazy"
         />
       </a>
 
@@ -42,6 +43,7 @@
           src="@/assets/articles/articles_02.webp"
           alt="Coffee representing the brain boosting effects of coffee"
           title="Read Brain Boosting Effects of Coffee"
+          loading="lazy"
         />
       </a>
 
@@ -69,6 +71,7 @@
           src="@/assets/articles/articles_03.webp"
           alt="Coffee representing the best time to drink coffee"
           title="Read Best Time to Drink Coffee"
+          loading="lazy"
         />
       </a>
 
@@ -96,6 +99,7 @@
           src="@/assets/articles/articles_04.webp"
           alt="Coffee representing how much coffee is too much"
           title="Read How Much Coffee is Too Much"
+          loading="lazy"
         />
       </a>
 
@@ -142,7 +146,9 @@ export default {
   border-radius: .1rem;
   padding-bottom: .5rem;
   margin: 1rem;
-  transition: all 0.5s ease-in-out;
+  transition:
+    transform .5s ease-in-out,
+    filter .5s ease-in-out;
 }
 
 .articles-content:hover {
@@ -189,6 +195,7 @@ h3 {
 }
 
 
+/* Article Cards - 711px */
 @media screen and (max-width: 711px) {
 
   .articles-content {

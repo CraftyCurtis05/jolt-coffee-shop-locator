@@ -11,7 +11,6 @@
         <img
           :src="previewUrl || $store.state.profileImage || defaultImage"
           alt="User profile picture"
-          title="Profile Picture"
         />
       </div>
 
@@ -22,6 +21,7 @@
         <input
           type="file"
           id="fileInput"
+          ref="fileInput"
           @change="handleFileUpload"
           accept="image/jpeg, image/png, image/webp"
         />
@@ -31,13 +31,7 @@
           type="button"
           @click="handleButtonClick"
           :disabled="isUploading || isRemoving"
-          :title="
-            isUploading
-              ? 'Uploading Profile Picture'
-              : selectedFile
-                ? 'Click to Save Profile Picture'
-                : 'Click to Change Profile Picture'
-          "
+          aria-live="polite"
         >
           {{
             isUploading
@@ -55,7 +49,7 @@
           class="remove-image-button"
           @click="deleteImage"
           :disabled="isUploading || isRemoving"
-          :title="isRemoving ? 'Removing Profile Picture' : 'Click to Remove Profile Picture'"
+          aria-live="polite"
         >
           {{ isRemoving ? 'Removing...' : 'Remove Picture' }}
         </button>
@@ -103,7 +97,7 @@ export default {
 
     // Open the hidden file input
     triggerFileInput() {
-      document.getElementById('fileInput').click();
+      this.$refs.fileInput.click();
     },
 
     // Clear the selected image and temporary preview
@@ -113,6 +107,11 @@ export default {
       if (this.previewUrl) {
         URL.revokeObjectURL(this.previewUrl);
         this.previewUrl = null;
+      }
+
+      // Clear the selected file from the file input
+      if (this.$refs.fileInput) {
+        this.$refs.fileInput.value = '';
       }
     },
 
@@ -193,6 +192,21 @@ export default {
               type: 'warning'
             }
           }));
+          this.clearSelectedImage();
+          return;
+        }
+
+        // Make sure the selected image is not too large
+        const maxFileSize = 10 * 1024 * 1024;
+
+        if (file.size > maxFileSize) {
+          window.dispatchEvent(new CustomEvent('app-notification', {
+            detail: {
+              message: 'Image is too large. Please select an image smaller than 10 MB.',
+              type: 'warning'
+            }
+          }));
+
           this.clearSelectedImage();
           return;
         }
@@ -301,6 +315,9 @@ export default {
 
         // Clear the current profile image
         this.$store.commit('SET_PROFILE_IMAGE', null);
+
+        // Clear any selected image and temporary preview
+        this.clearSelectedImage();
 
         // Confirm the profile image was removed
         window.dispatchEvent(new CustomEvent('app-notification', {
@@ -446,7 +463,7 @@ form button:active:not(:disabled) {
 }
 
 form button:disabled {
-  cursor: wait;
+  cursor: not-allowed;
   opacity: .75;
   transform: none;
 }

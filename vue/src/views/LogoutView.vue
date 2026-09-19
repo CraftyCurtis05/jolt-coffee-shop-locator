@@ -17,7 +17,7 @@ export default {
     this.$store.commit('LOGOUT');
 
     // Send the user back to the login page
-    this.$router.push('/login');
+    this.$router.replace('/login');
   }
 };
 </script>

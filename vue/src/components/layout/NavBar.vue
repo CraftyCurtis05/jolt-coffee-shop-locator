@@ -11,23 +11,24 @@
 
       <!-- Jolt Logo -->
       <section class="logo-container">
-        <router-link
-          v-bind:to="{ name: 'home' }"
-          v-if="$store.state.token != ''"
+        <RouterLink
+          :to="{ name: 'home' }"
+          v-if="$store.state.token !== ''"
+          aria-label="Go to Home"
           title="Click to Go to Home"
         >
           <img
             :src="logo"
             class="logo"
-            alt="Jolt logo"
+            alt=""
           />
 
           <img
             :src="logoResponsive"
             class="logo-responsive"
-            alt="Jolt logo"
+            alt=""
           />
-        </router-link>
+        </RouterLink>
       </section>
 
       <!-- Mobile Navigation Toggle -->
@@ -35,10 +36,14 @@
         <button
           type="button"
           @click="isNavOpen = !isNavOpen"
-          v-if="$store.state.token != ''"
+          v-if="$store.state.token !== ''"
           :aria-expanded="isNavOpen"
-          aria-label="Toggle navigation menu"
-          title="Open Navigation Menu"
+          :aria-label="isNavOpen
+            ? 'Close navigation menu'
+            : 'Open navigation menu'"
+          :title="isNavOpen
+            ? 'Close Navigation Menu'
+            : 'Open Navigation Menu'"
         >
           ☰
         </button>
@@ -51,72 +56,72 @@
       >
 
         <!-- Home -->
-        <router-link
+        <RouterLink
           class="link"
-          v-bind:to="{ name: 'home' }"
-          v-if="$store.state.token != ''"
+          :to="{ name: 'home' }"
+          v-if="$store.state.token !== ''"
           title="Click to Go to Home"
         >
           <h3 class="open">HOME</h3>
-        </router-link>
+        </RouterLink>
 
         <div class="separator">|</div>
 
         <!-- Locator -->
-        <router-link
+        <RouterLink
           class="link"
-          v-bind:to="{ name: 'locator' }"
-          v-if="$store.state.token != ''"
+          :to="{ name: 'locator' }"
+          v-if="$store.state.token !== ''"
           title="Click to Go to Locator"
         >
           <h3 class="open">LOCATOR</h3>
-        </router-link>
+        </RouterLink>
 
         <div class="separator">|</div>
 
         <!-- Shop -->
-        <router-link
+        <RouterLink
           class="link"
-          v-bind:to="{ name: 'shop' }"
-          v-if="$store.state.token != ''"
+          :to="{ name: 'shop' }"
+          v-if="$store.state.token !== ''"
           title="Click to Go to Shop"
         >
           <h3 class="open">SHOP</h3>
-        </router-link>
+        </RouterLink>
 
         <div class="separator">|</div>
 
         <!-- Articles -->
-        <router-link
+        <RouterLink
           class="link"
-          v-bind:to="{ name: 'articles' }"
-          v-if="$store.state.token != ''"
+          :to="{ name: 'articles' }"
+          v-if="$store.state.token !== ''"
           title="Click to Go to Articles"
         >
           <h3 class="open">ARTICLES</h3>
-        </router-link>
+        </RouterLink>
 
         <div class="separator">|</div>
 
         <!-- About Us -->
-        <router-link
+        <RouterLink
           class="link"
-          v-bind:to="{ name: 'aboutUs' }"
-          v-if="$store.state.token != ''"
+          :to="{ name: 'aboutUs' }"
+          v-if="$store.state.token !== ''"
           title="Click to Go to About Us"
         >
           <h3 class="open">ABOUT US</h3>
-        </router-link>
+        </RouterLink>
 
         <!-- Mobile Logout -->
-        <router-link
+        <RouterLink
           class="link mobile-logout"
-          v-bind:to="{ name: 'logout' }"
-          v-if="$store.state.token != ''"
+          :to="{ name: 'logout' }"
+          v-if="$store.state.token !== ''"
           title="Click to Logout"
         >
           <h3 class="open">LOGOUT</h3>
-        </router-link>
+        </RouterLink>
       </section>
 
       <!-- User Profile -->
@@ -126,15 +131,15 @@
       >
 
         <!-- Logout -->
-        <router-link
+        <RouterLink
           class="link"
           id="logout"
-          v-bind:to="{ name: 'logout' }"
-          v-if="$store.state.token != ''"
+          :to="{ name: 'logout' }"
+          v-if="$store.state.token !== ''"
           title="Click to Logout"
         >
           <h3>LOGOUT</h3>
-        </router-link>
+        </RouterLink>
 
         <!-- Profile Picture -->
         <div
@@ -144,9 +149,9 @@
             'profile-active': $route.name === 'profile'
           }"
         >
-          <router-link
-            v-bind:to="{ name: 'profile' }"
-            v-if="$store.state.token != ''"
+          <RouterLink
+            :to="{ name: 'profile' }"
+            v-if="$store.state.token !== ''"
             aria-label="Go to your profile"
             title="Click to Go to Profile"
           >
@@ -154,7 +159,7 @@
               :src="$store.state.profileImage || defaultProfileImage"
               alt=""
             />
-          </router-link>
+          </RouterLink>
         </div>
 
       </section>
@@ -176,6 +181,7 @@ export default {
     return {
       // Track whether the mobile navigation menu is open
       isNavOpen: false,
+      removeAfterEach: null,
 
       // Navigation images
       logo: joltLogo,
@@ -207,10 +213,8 @@ export default {
       this.handleOutsideClick
     );
 
-    // Watch for route changes throughout the application
-    this.$router.afterEach(() => {
-
-      // Close the mobile navigation menu after changing pages
+    // Close the mobile navigation after changing pages
+    this.removeAfterEach = this.$router.afterEach(() => {
       this.isNavOpen = false;
     });
   },
@@ -222,6 +226,11 @@ export default {
       'click',
       this.handleOutsideClick
     );
+
+    // Remove the router navigation hook
+    if (this.removeAfterEach) {
+      this.removeAfterEach();
+    }
   }
 };
 </script>
@@ -278,7 +287,7 @@ nav {
 }
 
 .toggle-container button {
-  display: none; /* Initially hidden for larger screens */
+  display: none;
 }
 
 .link-container {
@@ -303,7 +312,9 @@ h3,
   color: rgb(245, 242, 242);
   text-decoration: none;
   white-space: nowrap;
-  transition: all 0.3s ease-in-out;
+  transition:
+    color .3s ease-in-out,
+    transform .3s ease-in-out;
 }
 
 h3:hover,
@@ -312,7 +323,7 @@ h3:hover,
   transform: scale(1.03);
 }
 
-.link.router-link-active h3 {
+.link.RouterLink-active h3 {
   color: #525459;
   border-bottom: .15rem #e8bb64 solid;
 }
@@ -327,7 +338,7 @@ h3:hover,
 
 #logout {
   min-height: 2.75rem;
-  padding: .5rem .5rem;
+  padding: .5rem;
 }
 
 .nav-profile-container {
@@ -351,7 +362,10 @@ h3:hover,
   overflow: hidden;
   border-radius: 50%;
   border: .25rem #e8bb64 solid;
-  transition: all 0.3s ease-in-out;
+  transition:
+    border .3s ease-in-out,
+    transform .3s ease-in-out,
+    filter .3s ease-in-out;
 }
 
 .image-container a {
@@ -442,7 +456,10 @@ h3:hover,
     border: none;
     padding: 0;
     margin: 0;
-    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    transition:
+      color .3s ease-in-out,
+      transform .3s ease-in-out;
   }
 
   .toggle-container button:hover {

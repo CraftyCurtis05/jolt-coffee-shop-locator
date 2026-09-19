@@ -4,20 +4,21 @@
   <article class="developer">
 
     <!-- Naomi Image -->
-    <section class="image-container">
+    <div class="image-container">
       <a
         href="https://www.linkedin.com/in/naomi-adams-0804a4106/"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Visit Naomi Adams on LinkedIn"
+        aria-label="Visit Naomi Adams on LinkedIn - opens in a new tab"
       >
         <img
           src="@/assets/about/naomi.webp"
           alt="Naomi Adams"
           title="Visit Naomi Adams on LinkedIn"
+          loading="lazy"
         />
       </a>
-    </section>
+    </div>
 
     <!-- About Section -->
     <section class="about-container">
@@ -81,10 +82,11 @@ export default {
   border-radius: .25rem;
   padding: 1rem;
   margin: .75rem;
-  transition: transform 0.3s ease-in-out;
+  transition: transform .3s ease-in-out;
 }
 
-.developer:hover {
+.developer:hover,
+.developer:focus-within {
   transform: translateY(-.2rem);
 }
 
@@ -94,7 +96,7 @@ export default {
 
 .image-container a:focus-visible img {
   border-color: rgb(245, 242, 242);
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 img {
@@ -104,11 +106,14 @@ img {
   object-fit: cover;
   border: .5rem #e8bb64 solid;
   border-radius: 50%;
-  transition: transform 0.3s ease-in-out;
+  transition:
+    transform .3s ease-in-out,
+    border-color .3s ease-in-out;
 }
 
 img:hover {
-  transform: scale(1.05);
+  border-color: rgb(245, 242, 242);
+  transform: scale(1.02);
 }
 
 .about-container {
@@ -116,10 +121,11 @@ img:hover {
   color: rgb(245, 242, 242);
   border: .15rem #e8bb64 solid;
   margin-top: 1rem;
-  transition: border-color 0.3s ease-in-out;
+  transition: border-color .3s ease-in-out;
 }
 
-.about-container:hover {
+.about-container:hover,
+.about-container:focus-within {
   border-color: rgb(245, 242, 242);
 }
 
@@ -137,7 +143,6 @@ h3 {
 
 details {
   width: 100%;
-  font-size: .9rem;
 }
 
 summary {
@@ -148,12 +153,11 @@ summary {
   color: rgb(245, 242, 242);
   font-size: .95rem;
   padding: 0 .75rem;
-  transition: color 0.3s ease-in-out;
-  z-index: 100;
+  cursor: pointer;
+  transition: color .3s ease-in-out;
 }
 
 summary:hover {
-  font-size: 1rem;
   font-weight: 600;
   color: #e8bb64;
   text-decoration: underline;
@@ -171,7 +175,7 @@ summary:focus-visible {
   line-height: 1.5;
   padding: .75rem;
   margin: 0;
-  overflow-y: auto; /* Adds vertical scroll when content exceeds max height */
+  overflow-y: auto;
 }
 
 .bio-content:focus-visible {

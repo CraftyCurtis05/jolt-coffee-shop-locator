@@ -7,6 +7,7 @@
     <p
       class="favorites-count"
       v-if="results.length > 0"
+      role="status"
     >
       {{ results.length }}
       {{ results.length === 1 ? 'saved coffee shop' : 'saved coffee shops' }}
@@ -26,22 +27,20 @@
             :href="result.businessUrl"
             target="_blank"
             rel="noopener noreferrer"
-            title="Click for Yelp Page"
+            :aria-label="'View ' + result.businessName + ' on Yelp'"
           >
             {{ result.businessName }}
           </a>
         </div>
 
         <!-- Coffee Shop Location -->
-        <div
-          class="location-container"
-          title="Click for Directions"
-        >
+        <div class="location-container">
           <div class="top">
             <a
               :href="getDirectionsUrl(result)"
               target="_blank"
               rel="noopener noreferrer"
+              :aria-label="'Get directions to ' + result.businessName"
             >
               {{ result.businessAddress1 }}
             </a>
@@ -51,6 +50,7 @@
               :href="getDirectionsUrl(result)"
               target="_blank"
               rel="noopener noreferrer"
+              :aria-label="'Get directions to ' + result.businessName"
             >
               {{ result.businessAddress2 }}
             </a>
@@ -61,6 +61,7 @@
               :href="getDirectionsUrl(result)"
               target="_blank"
               rel="noopener noreferrer"
+              :aria-label="'Get directions to ' + result.businessName"
             >
               {{ result.businessCity }},
               {{ result.businessState }}
@@ -75,15 +76,12 @@
             :href="result.businessUrl"
             target="_blank"
             rel="noopener noreferrer"
+            :aria-label="'View ' + result.businessName + ' on Yelp'"
           >
             <img
               :src="result.businessImage || defaultImage"
-              :alt="
-                result.businessImage
-                  ? result.businessName + ' coffee shop'
-                  : 'No photo available for ' + result.businessName
-              "
-              title="Click for Yelp Page"
+              alt=""
+              loading="lazy"
             />
           </a>
         </div>
@@ -93,9 +91,9 @@
           <button
             type="button"
             @click="deleteFavorite(result.favoriteId)"
-            :disabled="removingFavoriteId === result.favoriteId"
+            :disabled="removingFavoriteId !== null"
             :aria-label="'Remove ' + result.businessName + ' from saved coffee shops'"
-            title="Remove Saved Coffee Shop"
+            aria-live="polite"
           >
             <span
               class="remove-icon"
@@ -122,27 +120,27 @@
       class="favorites-action-container"
       v-if="results.length > 0"
     >
-      <router-link
-        v-bind:to="{ name: 'locator' }"
+      <RouterLink
+        :to="{ name: 'locator' }"
         class="favorites-action"
       >
         Find More Coffee Shops →
-      </router-link>
+      </RouterLink>
     </div>
 
     <!-- No Favorites -->
     <section
       class="no-favorites"
       v-if="results.length === 0"
+      role="status"
     >
       <p>
         No coffee shops saved yet. Find one to start your list.
-        <router-link
+        <RouterLink
           :to="{ name: 'locator' }"
-          title="Find Coffee Shops"
         >
           Find a Coffee Shop →
-        </router-link>
+        </RouterLink>
       </p>
     </section>
 
@@ -199,6 +197,12 @@ export default {
 
     // Delete a favorite coffee shop
     deleteFavorite(favoriteId) {
+
+      // Prevent multiple delete requests at the same time
+      if (this.removingFavoriteId !== null) {
+        return;
+      }
+
       const confirmDelete = confirm(
         'Are you sure you want to remove this coffee shop from your saved list?'
       );
@@ -223,6 +227,13 @@ export default {
 
         })
         .catch(error => {
+          window.dispatchEvent(new CustomEvent('app-notification', {
+            detail: {
+              message: 'There was a problem removing this coffee shop. Please try again.',
+              type: 'error'
+            }
+          }));
+
           console.error('Error deleting coffee shop:', error);
         })
         .finally(() => {
@@ -281,7 +292,8 @@ export default {
     box-shadow 0.3s ease-in-out;
 }
 
-.result:hover {
+.result:hover,
+.result:focus-within {
   border-color: rgb(53, 37, 19);
   box-shadow: 0 .4rem .75rem rgba(53, 37, 19, .16);
   transform: translateY(-.2rem);
@@ -333,7 +345,7 @@ export default {
   text-decoration: none;
 }
 
-.location-container:hover {
+.location-container a:hover {
   color: #9b6a20;
   text-decoration: underline;
 }
@@ -434,7 +446,7 @@ export default {
   transform: none;
 }
 
-.button-container button:active {
+.button-container button:active:not(:disabled) {
   box-shadow:
     inset 0 .25rem .4rem rgba(0, 0, 0, .35);
   transform: translateY(.05rem);
@@ -446,7 +458,7 @@ export default {
   transition: transform 0.3s ease-in-out;
 }
 
-.button-container button:hover .remove-icon {
+.button-container button:hover:not(:disabled) .remove-icon {
   transform: scale(1.1);
 }
 

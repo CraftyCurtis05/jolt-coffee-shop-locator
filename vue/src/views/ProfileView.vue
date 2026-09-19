@@ -44,15 +44,14 @@
           <article class="profile-form">
             <ProfileForm
               ref="profileForm"
-              @form-visible="toggleUpdateButton"
+              @form-visible="updateFormVisibility"
             />
 
             <!-- Create / Update Profile Button -->
             <button
-              v-if="showUpdateButton"
+              v-if="!isFormVisible"
               type="button"
               @click="showForm"
-              :title="user ? 'Update Profile' : 'Create Profile'"
             >
               {{ user ? 'Update Profile' : 'Create Profile' }}
             </button>
@@ -98,9 +97,6 @@ export default {
 
   data() {
     return {
-      // Control the visibility of the Update Profile button
-      showUpdateButton: true,
-
       // Track whether the profile form is open
       isFormVisible: false
     };
@@ -121,9 +117,8 @@ export default {
       this.$refs.profileForm.openForm();
     },
 
-    // Hide the Update Profile button while the form is visible
-    toggleUpdateButton(isFormVisible) {
-      this.showUpdateButton = !isFormVisible;
+    // Track whether the profile form is visible
+    updateFormVisibility(isFormVisible) {
       this.isFormVisible = isFormVisible;
     },
 
@@ -232,21 +227,6 @@ header h1 {
 }
 
 
-/* Profile Page Header */
-
-.profile-page-header {
-  margin: 1rem auto .75rem;
-}
-
-.profile-page-header h1 {
-  margin-bottom: .25rem;
-}
-
-.profile-page-header h2 {
-  margin-bottom: 0;
-}
-
-
 /* User Profile */
 
 .profile-container {
@@ -291,11 +271,11 @@ header h1 {
   padding: .4rem .6rem;
   margin: 1rem;
   transition:
-    background-color 0.3s ease-in-out,
-    color 0.3s ease-in-out,
-    border-color 0.3s ease-in-out,
-    box-shadow 0.2s ease-in-out,
-    transform 0.15s ease-in-out;
+    background-color .3s ease-in-out,
+    color .3s ease-in-out,
+    border-color .3s ease-in-out,
+    box-shadow .2s ease-in-out,
+    transform .15s ease-in-out;
 }
 
 .profile-form button:hover {

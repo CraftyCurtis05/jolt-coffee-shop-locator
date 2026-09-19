@@ -54,12 +54,15 @@
               minlength="3"
               maxlength="30"
               pattern="[A-Za-z0-9._\-]+"
-              title="Username must be 3 to 30 characters and can only contain letters, numbers, periods, underscores and hyphens"
+              aria-describedby="username-hint"
               required
               autofocus
             />
 
-            <p class="input-hint">
+            <p
+              id="username-hint"
+              class="input-hint"
+            >
               3–30 characters using letters, numbers, periods, underscores or hyphens.
             </p>
           </div>
@@ -74,10 +77,14 @@
               autocomplete="new-password"
               minlength="8"
               maxlength="72"
+              aria-describedby="password-hint"
               required
             />
 
-            <p class="input-hint">
+            <p
+              id="password-hint"
+              class="input-hint"
+            >
               Password must be 8–72 characters.
             </p>
           </div>
@@ -85,43 +92,44 @@
           <!-- Confirm Password -->
           <div class="form-input confirm">
             <label for="confirmPassword">Confirm Password</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                v-model="user.confirmPassword"
-                autocomplete="new-password"
-                minlength="8"
-                maxlength="72"
-                required
-              />
+            <input
+              type="password"
+              id="confirmPassword"
+              v-model="user.confirmPassword"
+              autocomplete="new-password"
+              minlength="8"
+              maxlength="72"
+              required
+            />
           </div>
 
         </div>
 
         <!-- Registration Error Message -->
-        <div class="alert-container">
-          <div role="alert" v-if="registrationErrors">
-            {{ registrationErrorMsg }}
-          </div>
+        <div
+          v-if="registrationErrors"
+          class="alert-container"
+          role="alert"
+        >
+          {{ registrationErrorMsg }}
         </div>
 
         <!-- Registration Button and Login Link -->
         <div class="button-container">
           <button
-            id="create"
             type="submit"
             :disabled="isRegistering"
-            :title="isRegistering ? 'Creating Account' : 'Click to Create Account'"
+            aria-live="polite"
           >
             {{ isRegistering ? 'Creating Account...' : 'Create Account' }}
           </button>
 
-          <router-link
+          <RouterLink
             :to="{ name: 'login' }"
             class="register-link"
           >
             Already have an account? Sign in.
-          </router-link>
+          </RouterLink>
         </div>
 
       </form>
@@ -154,7 +162,7 @@ export default {
       registrationErrorMsg: 'There was a problem creating your account.',
 
       // Track whether the registration request is being processed
-      isRegistering: false,
+      isRegistering: false
     };
   },
 
@@ -188,26 +196,28 @@ export default {
         return;
       }
 
-      // Check that the password and confirmation password match
-      if (this.user.password != this.user.confirmPassword) {
+      // Check that the passwords match
+      if (this.user.password !== this.user.confirmPassword) {
         this.registrationErrors = true;
         this.registrationErrorMsg = 'Passwords do not match.';
+        return;
+      }
 
-      } else {
+      // Clear previous registration errors before trying again
+      this.clearErrors();
 
-        // Show that the registration request is being processed
-        this.isRegistering = true;
+      // Show that the registration request is being processed
+      this.isRegistering = true;
 
-        // Send the new user information to the server
-        authService
+      authService
         .register(this.user)
         .then((response) => {
 
           // Send the user to the login page after successful registration
-          if (response.status == 201) {
+          if (response.status === 201) {
             this.$router.push({
               path: '/login',
-              query: { registration: 'success' },
+              query: { registration: 'success' }
             });
           }
         })
@@ -238,7 +248,6 @@ export default {
           // Allow another registration attempt if needed
           this.isRegistering = false;
         });
-      }
     },
 
     // Clear registration errors

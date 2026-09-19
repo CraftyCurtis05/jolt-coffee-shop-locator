@@ -1,7 +1,3 @@
-<!-- npm install -->
-<!-- npm install axios -->
-<!-- npm run dev -->
-
 <!-- App.vue -->
 
 <template>
