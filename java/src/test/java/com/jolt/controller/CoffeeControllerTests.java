@@ -121,7 +121,7 @@ public class CoffeeControllerTests {
         );
 
         Assert.assertTrue(
-                requestUrl.contains("radius=20000")
+                requestUrl.contains("radius=15000")
         );
 
         Assert.assertTrue(

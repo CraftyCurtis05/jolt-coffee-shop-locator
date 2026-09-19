@@ -41,7 +41,7 @@ public class CoffeeController {
                 .fromHttpUrl("https://api.yelp.com/v3/businesses/search")
                 .queryParam("location", locationId)
                 .queryParam("term", "coffee")
-                .queryParam("radius", 40000)
+                .queryParam("radius", 15000)
                 .queryParam("sort_by", "distance")
                 .queryParam("limit", 12)
                 .build()
