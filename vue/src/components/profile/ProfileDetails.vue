@@ -52,7 +52,7 @@ export default {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  color: rgb(245, 242, 242);
+  color: var(--color-surface);
   padding: .75rem 0 0;
   margin-top: .75rem;
 }
@@ -75,7 +75,7 @@ export default {
 
 .birthday {
   font-size: .8rem;
-  color: #e8bb64;
+  color: var(--color-accent);
   margin: 0 auto;
 }
 
@@ -84,7 +84,7 @@ export default {
 
 .location-container {
   width: 100%;
-  border-top: .1rem #e8bb64 solid;
+  border-top: .1rem var(--color-accent) solid;
   padding-top: .75rem;
   margin: .8rem auto;
 }

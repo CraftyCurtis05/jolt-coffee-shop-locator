@@ -377,7 +377,7 @@ export default {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  color: rgb(245, 242, 242);
+  color: var(--color-surface);
 }
 
 
@@ -397,7 +397,7 @@ export default {
   width: 11rem;
   height: 11rem;
   overflow: hidden;
-  border: .45rem #e8bb64 solid;
+  border: .45rem var(--color-accent) solid;
   border-radius: 50%;
   margin: 0 auto;
 }
@@ -431,24 +431,24 @@ form button {
   width: 8rem;
   min-height: 2.75rem;
   font-size: .8rem;
-  color: rgb(53, 37, 19);
-  background-color: #e8bb64;
-  border: .1rem rgb(53, 37, 19) solid;
+  color: var(--color-coffee);
+  background-color: var(--color-accent);
+  border: .1rem var(--color-coffee) solid;
   border-radius: .2rem;
   padding: .4rem .6rem;
   margin: 0;
   transition:
-    background-color 0.3s ease-in-out,
-    color 0.3s ease-in-out,
-    border-color 0.3s ease-in-out,
+    background-color var(--transition-speed) ease-in-out,
+    color var(--transition-speed) ease-in-out,
+    border-color var(--transition-speed) ease-in-out,
     box-shadow 0.2s ease-in-out,
     transform 0.15s ease-in-out;
 }
 
 form button:hover:not(:disabled) {
-  color: #e8bb64;
-  background-color: rgb(53, 37, 19);
-  border-color: #e8bb64;
+  color: var(--color-accent);
+  background-color: var(--color-coffee);
+  border-color: var(--color-accent);
   box-shadow:
     inset 0 .15rem .3rem rgba(0, 0, 0, .35),
     0 0 .35rem rgba(232, 187, 100, .35);
@@ -469,8 +469,8 @@ form button:disabled {
 }
 
 form button:focus-visible {
-  outline: .15rem #e8bb64 solid;
-  outline-offset: .2rem;
+  outline: var(--focus-outline-width) var(--color-accent) solid;
+  outline-offset:var(--focus-outline-offset);
 }
 
 

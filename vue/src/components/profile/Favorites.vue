@@ -120,12 +120,12 @@
       class="favorites-action-container"
       v-if="results.length > 0"
     >
-      <RouterLink
+      <router-link
         :to="{ name: 'locator' }"
         class="favorites-action"
       >
         Find More Coffee Shops →
-      </RouterLink>
+      </router-link>
     </div>
 
     <!-- No Favorites -->
@@ -136,11 +136,11 @@
     >
       <p>
         No coffee shops saved yet. Find one to start your list.
-        <RouterLink
+        <router-link
           :to="{ name: 'locator' }"
         >
           Find a Coffee Shop →
-        </RouterLink>
+        </router-link>
       </p>
     </section>
 
@@ -258,7 +258,7 @@ export default {
   width: 100%;
   text-align: right;
   font-size: .8rem;
-  color: #525459;
+  color: var(--color-text-muted);
   margin: 0 0 .75rem;
 }
 
@@ -281,20 +281,20 @@ export default {
   align-items: center;
   width: 100%;
   min-width: 0;
-  background-color: rgb(245, 242, 242);
-  border: .15rem #e8bb64 solid;
-  border-radius: .25rem;
+  background-color: var(--color-surface);
+  border: .15rem var(--color-accent) solid;
+  border-radius: var(--border-radius);
   box-shadow: 0 .25rem .5rem rgba(53, 37, 19, .1);
   padding: 1rem;
   transition:
-    transform 0.3s ease-in-out,
-    border-color 0.3s ease-in-out,
-    box-shadow 0.3s ease-in-out;
+    transform var(--transition-speed) ease-in-out,
+    border-color var(--transition-speed) ease-in-out,
+    box-shadow var(--transition-speed) ease-in-out;
 }
 
 .result:hover,
 .result:focus-within {
-  border-color: rgb(53, 37, 19);
+  border-color: var(--color-coffee);
   box-shadow: 0 .4rem .75rem rgba(53, 37, 19, .16);
   transform: translateY(-.2rem);
 }
@@ -319,14 +319,14 @@ export default {
   font-size: 1.05rem;
   font-weight: bold;
   line-height: 1.25;
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
   text-align: center;
   text-decoration: none;
-  transition: color 0.3s ease-in-out;
+  transition: color var(--transition-speed) ease-in-out;
 }
 
 .name a:hover {
-  color: #9b6a20;
+  color: var(--color-accent-dark);
   text-decoration: underline;
 }
 
@@ -340,13 +340,13 @@ export default {
   width: 100%;
   min-height: 3.5rem;
   margin-top: .25rem;
-  color: #525459;
+  color: var(--color-text-muted);
   text-align: center;
   text-decoration: none;
 }
 
 .location-container a:hover {
-  color: #9b6a20;
+  color: var(--color-accent-dark);
   text-decoration: underline;
 }
 
@@ -360,7 +360,7 @@ export default {
 .location-container a {
   font-size: .85rem;
   line-height: 1.4;
-  color: #525459;
+  color: var(--color-text-muted);
   text-align: center;
   text-decoration: none;
 }
@@ -373,7 +373,7 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
-  border-top: .1rem #e8bb64 solid;
+  border-top: .1rem var(--color-accent) solid;
   padding-top: .75rem;
   margin-top: .5rem;
   overflow: hidden;
@@ -389,9 +389,9 @@ export default {
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  border: .1rem rgb(53, 37, 19) solid;
+  border: .1rem var(--color-coffee) solid;
   border-radius: .2rem;
-  transition: transform 0.3s ease-in-out;
+  transition: transform var(--transition-speed) ease-in-out;
 }
 
 .image-container a:hover img {
@@ -405,7 +405,7 @@ export default {
   display: flex;
   justify-content: center;
   width: 100%;
-  border-top: .1rem #e8bb64 solid;
+  border-top: .1rem var(--color-accent) solid;
   padding-top: .75rem;
   margin-top: .75rem;
 }
@@ -423,15 +423,15 @@ export default {
   border-radius: .2rem;
   padding: .4rem .6rem;
   transition:
-    background-color 0.3s ease-in-out,
-    color 0.3s ease-in-out,
-    border-color 0.3s ease-in-out,
+    background-color var(--transition-speed) ease-in-out,
+    color var(--transition-speed) ease-in-out,
+    border-color var(--transition-speed) ease-in-out,
     box-shadow 0.2s ease-in-out,
     transform 0.15s ease-in-out;
 }
 
 .button-container button:hover:not(:disabled) {
-  color: #ffffff;
+  color: var(--color-white);
   background-color: #8b1e1e;
   border-color: #8b1e1e;
   box-shadow:
@@ -455,7 +455,7 @@ export default {
 .remove-icon {
   font-size: .9rem;
   margin-right: .35rem;
-  transition: transform 0.3s ease-in-out;
+  transition: transform var(--transition-speed) ease-in-out;
 }
 
 .button-container button:hover:not(:disabled) .remove-icon {
@@ -466,7 +466,7 @@ export default {
 .location-container a:focus-visible,
 .image-container a:focus-visible,
 .button-container button:focus-visible {
-  outline: .15rem #e8bb64 solid;
+  outline: var(--focus-outline-width) var(--color-accent) solid;
   outline-offset: .15rem;
 }
 
@@ -486,11 +486,11 @@ export default {
   min-height: 2.75rem;
   font-size: .85rem;
   font-weight: 600;
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
   text-decoration: underline;
-  text-decoration-color: #e8bb64;
+  text-decoration-color: var(--color-accent);
   text-underline-offset: .2rem;
-  transition: transform 0.3s ease-in-out;
+  transition: transform var(--transition-speed) ease-in-out;
 }
 
 .favorites-action:hover {
@@ -498,8 +498,8 @@ export default {
 }
 
 .favorites-action:focus-visible {
-  outline: .1rem #e8bb64 solid;
-  outline-offset: .2rem;
+  outline: .1rem var(--color-accent) solid;
+  outline-offset:var(--focus-outline-offset);
 }
 
 
@@ -515,7 +515,7 @@ export default {
 
 .no-favorites p {
   font-size: .9rem;
-  color: #525459;
+  color: var(--color-text-muted);
   margin: 0;
 }
 
@@ -524,19 +524,19 @@ export default {
   justify-content: center;
   align-items: center;
   min-height: 2.75rem;
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
   font-weight: 600;
-  text-decoration-color: #e8bb64;
+  text-decoration-color: var(--color-accent);
   text-underline-offset: .15rem;
-  transition: color 0.3s ease-in-out;
+  transition: color var(--transition-speed) ease-in-out;
 }
 
 .no-favorites a:hover {
-  color: #9b6a20;
+  color: var(--color-accent-dark);
 }
 
 .no-favorites a:focus-visible {
-  outline: .15rem #e8bb64 solid;
+  outline: var(--focus-outline-width) var(--color-accent) solid;
   outline-offset: .15rem;
 }
 

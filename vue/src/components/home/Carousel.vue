@@ -117,7 +117,7 @@ export default {
   position: relative;
   width: 70vw;
   max-width: 70rem;
-  background-color: rgb(53, 37, 19);
+  background-color: var(--color-coffee);
   padding: 2%;
 }
 
@@ -133,7 +133,7 @@ export default {
   width: 85%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  border: .2rem #e8bb64 solid;
+  border: .2rem var(--color-accent) solid;
 }
 
 .prev-btn,
@@ -171,12 +171,12 @@ export default {
 .next-btn:active,
 .prev-btn:focus-visible,
 .next-btn:focus-visible {
-  background-color: #e8bb64;
+  background-color: var(--color-accent);
 }
 
 .prev-btn:focus-visible,
 .next-btn:focus-visible {
-  outline: .15rem #e8bb64 solid;
+  outline: var(--focus-outline-width) var(--color-accent) solid;
   outline-offset: .15rem;
 }
 
@@ -189,12 +189,12 @@ button img {
 
 .default {
   opacity: 1;
-  transition: opacity .3s ease-in-out;
+  transition: opacity var(--transition-speed) ease-in-out;
 }
 
 .hover {
   opacity: 0;
-  transition: opacity .3s ease-in-out;
+  transition: opacity var(--transition-speed) ease-in-out;
 }
 
 /* Switch navigation images during interaction */

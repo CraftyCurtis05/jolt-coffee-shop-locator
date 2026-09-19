@@ -85,7 +85,7 @@ main {
   display: grid;
   grid-template-columns: repeat(4, auto);
   justify-content: center;
-  align-items: stretch;
+  align-items: start;
   width: 95%;
   max-width: 90rem;
   margin: 0 auto 2rem;
@@ -113,15 +113,15 @@ header h1 {
 .project-evolution {
   width: 90%;
   max-width: 60rem;
-  background-color: rgb(245, 242, 242);
-  border: .15rem #e8bb64 solid;
-  border-radius: .25rem;
+  background-color: var(--color-surface);
+  border: .15rem var(--color-accent) solid;
+  border-radius: var(--border-radius);
   padding: 1rem 1.5rem;
   margin: 0 auto 2rem;
 }
 
 .project-evolution h2 {
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
   margin-top: 0;
 }
 

@@ -109,9 +109,9 @@ export default {
   right: 1.5rem;
   z-index: 9999;
   width: min(24rem, calc(100% - 3rem));
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
   background-color: #f8f3e8;
-  border: .15rem #e8bb64 solid;
+  border: .15rem var(--color-accent) solid;
   border-radius: .4rem;
   box-shadow: 0 .35rem 1rem rgba(53, 37, 19, .25);
 }
@@ -132,7 +132,7 @@ export default {
 
 .notification-content button {
   flex-shrink: 0;
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
   background: transparent;
   border: none;
   font-size: 1.5rem;
@@ -146,8 +146,8 @@ export default {
 }
 
 .notification-content button:focus-visible {
-  outline: .15rem #e8bb64 solid;
-  outline-offset: .2rem;
+  outline: var(--focus-outline-width) var(--color-accent) solid;
+  outline-offset:var(--focus-outline-offset);
 }
 
 

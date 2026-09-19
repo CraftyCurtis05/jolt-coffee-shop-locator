@@ -59,7 +59,7 @@ export default {
   height: 3rem;
 
   background-color: rgba(245, 242, 242, .15);
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
 
   border: none;
   border-radius: 50%;
@@ -81,8 +81,8 @@ export default {
 }
 
 .back-to-top:focus-visible {
-  outline: 3px solid #ffc107;
-  outline-offset: 3px;
+  outline: var(--focus-outline-width) solid var(--color-accent);
+  outline-offset:var(--focus-outline-offset);
 }
 
 

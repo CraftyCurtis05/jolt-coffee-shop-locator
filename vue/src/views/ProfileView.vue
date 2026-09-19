@@ -208,7 +208,7 @@ header h1 {
 .section-header {
   width: 100%;
   text-align: left;
-  border-bottom: .1rem #e8bb64 solid;
+  border-bottom: .1rem var(--color-accent) solid;
   padding-bottom: .75rem;
   margin-bottom: 1rem;
 }
@@ -216,13 +216,13 @@ header h1 {
 .section-header h2 {
   font-size: 1.3rem;
   font-weight: 600;
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
   margin: 0;
 }
 
 .section-header p {
   font-size: .85rem;
-  color: #525459;
+  color: var(--color-text-muted);
   margin: .2rem 0 0;
 }
 
@@ -235,9 +235,9 @@ header h1 {
   align-items: center;
   width: 100%;
   min-height: 32rem;
-  background-color: rgb(53, 37, 19);
-  border: .15rem #e8bb64 solid;
-  border-radius: .25rem;
+  background-color: var(--color-coffee);
+  border: .15rem var(--color-accent) solid;
+  border-radius: var(--border-radius);
   box-shadow: 0 .35rem .75rem rgba(53, 37, 19, .15);
   padding: 1.7rem;
 }
@@ -264,24 +264,24 @@ header h1 {
   width: 12rem;
   min-height: 2.75rem;
   font-size: .8rem;
-  color: rgb(53, 37, 19);
-  background-color: #e8bb64;
-  border: .1rem rgb(53, 37, 19) solid;
+  color: var(--color-coffee);
+  background-color: var(--color-accent);
+  border: .1rem var(--color-coffee) solid;
   border-radius: .2rem;
   padding: .4rem .6rem;
   margin: 1rem;
   transition:
-    background-color .3s ease-in-out,
-    color .3s ease-in-out,
-    border-color .3s ease-in-out,
+    background-color var(--transition-speed) ease-in-out,
+    color var(--transition-speed) ease-in-out,
+    border-color var(--transition-speed) ease-in-out,
     box-shadow .2s ease-in-out,
     transform .15s ease-in-out;
 }
 
 .profile-form button:hover {
-  color: #e8bb64;
-  background-color: rgb(53, 37, 19);
-  border-color: #e8bb64;
+  color: var(--color-accent);
+  background-color: var(--color-coffee);
+  border-color: var(--color-accent);
   box-shadow:
     inset 0 .15rem .3rem rgba(0, 0, 0, .35),
     0 0 .35rem rgba(232, 187, 100, .35);
@@ -296,8 +296,8 @@ header h1 {
 }
 
 .profile-form button:focus-visible {
-  outline: .15rem #e8bb64 solid;
-  outline-offset: .2rem;
+  outline: var(--focus-outline-width) var(--color-accent) solid;
+  outline-offset:var(--focus-outline-offset);
 }
 
 

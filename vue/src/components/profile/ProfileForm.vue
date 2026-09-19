@@ -597,10 +597,10 @@ export default {
 
 .profile-form {
   width: 100%;
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
   background-color: rgb(160, 153, 145);
-  border: .15rem #e8bb64 solid;
-  border-radius: .25rem;
+  border: .15rem var(--color-accent) solid;
+  border-radius: var(--border-radius);
   padding: 1rem;
 }
 
@@ -617,7 +617,7 @@ export default {
   display: flex;
   flex-direction: column;
   width: 100%;
-  border: .1rem rgb(245, 242, 242) solid;
+  border: .1rem var(--color-surface) solid;
   padding: .75rem;
   margin: 0 auto .75rem;
 }
@@ -658,8 +658,8 @@ legend {
   min-width: 0;
   min-height: 2.75rem;
   font-size: .8rem;
-  color: rgb(53, 37, 19);
-  background-color: rgb(245, 242, 242);
+  color: var(--color-coffee);
+  background-color: var(--color-surface);
   border: .1rem #ccc solid;
   border-radius: .2rem;
   padding: .5rem;
@@ -667,14 +667,14 @@ legend {
 
 .form input:focus-visible,
 .form select:focus-visible {
-  outline: .15rem #e8bb64 solid;
+  outline: var(--focus-outline-width) var(--color-accent) solid;
   outline-offset: .1rem;
 }
 
 .input-hint {
   font-size: .7rem;
   line-height: 1.3;
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
   margin: .25rem 0 0;
 }
 
@@ -708,24 +708,24 @@ legend {
   width: 10rem;
   min-height: 2.75rem;
   font-size: .8rem;
-  color: rgb(53, 37, 19);
-  background-color: #e8bb64;
-  border: .1rem rgb(53, 37, 19) solid;
+  color: var(--color-coffee);
+  background-color: var(--color-accent);
+  border: .1rem var(--color-coffee) solid;
   border-radius: .2rem;
   padding: .4rem .6rem;
   margin: 0;
   transition:
-    background-color 0.3s ease-in-out,
-    color 0.3s ease-in-out,
-    border-color 0.3s ease-in-out,
+    background-color var(--transition-speed) ease-in-out,
+    color var(--transition-speed) ease-in-out,
+    border-color var(--transition-speed) ease-in-out,
     box-shadow 0.2s ease-in-out,
     transform 0.15s ease-in-out;
 }
 
 .button-container button:hover:not(:disabled) {
-  color: #e8bb64;
-  background-color: rgb(53, 37, 19);
-  border-color: #e8bb64;
+  color: var(--color-accent);
+  background-color: var(--color-coffee);
+  border-color: var(--color-accent);
   box-shadow:
     inset 0 .15rem .3rem rgba(0, 0, 0, .35),
     0 0 .35rem rgba(232, 187, 100, .35);
@@ -746,7 +746,7 @@ legend {
 }
 
 .button-container button:focus-visible {
-  outline: .15rem #e8bb64 solid;
-  outline-offset: .2rem;
+  outline: var(--focus-outline-width) var(--color-accent) solid;
+  outline-offset:var(--focus-outline-offset);
 }
 </style>

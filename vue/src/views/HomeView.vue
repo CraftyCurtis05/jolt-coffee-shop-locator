@@ -27,22 +27,22 @@
         Create your profile to search near home and personalize your Jolt experience.
       </p>
 
-      <RouterLink
+      <router-link
         :to="{ name: 'profile' }"
         class="profile-setup-link"
       >
         Create Profile
-      </RouterLink>
+      </router-link>
     </div>
 
     <!-- Jolt Invitation -->
     <div class="invitation-container">
-      <RouterLink
+      <router-link
         :to="{ name: 'locator' }"
         title="Click to Find Coffee Shops"
       >
         Start your coffee journey with us today!
-      </RouterLink>
+      </router-link>
     </div>
 
     <!-- Home Page Content -->
@@ -89,7 +89,7 @@
         <div class="explore-links">
 
           <!-- Find Coffee -->
-          <RouterLink
+          <router-link
             :to="{ name: 'locator' }"
             class="explore-card"
             title="Click to Find Coffee Shops"
@@ -110,10 +110,10 @@
             <span class="explore-action">
               Explore Locator →
             </span>
-          </RouterLink>
+          </router-link>
 
           <!-- Browse the Shop -->
-          <RouterLink
+          <router-link
             :to="{ name: 'shop' }"
             class="explore-card"
             title="Click to Browse the Shop"
@@ -134,10 +134,10 @@
             <span class="explore-action">
               Visit Shop →
             </span>
-          </RouterLink>
+          </router-link>
 
           <!-- Read Articles -->
-          <RouterLink
+          <router-link
             :to="{ name: 'articles' }"
             class="explore-card"
             title="Click to Read Articles"
@@ -158,7 +158,7 @@
             <span class="explore-action">
               Browse Articles →
             </span>
-          </RouterLink>
+          </router-link>
 
         </div>
       </section>
@@ -218,11 +218,11 @@ header img {
   display: inline-block;
   font-size: .9rem;
   font-weight: 400;
-  color: #333437;
+  color: var(--color-text);
   text-decoration: underline;
-  text-decoration-color: #e8bb64;
+  text-decoration-color: var(--color-accent);
   text-underline-offset: .25rem;
-  transition: transform .3s ease-in-out;
+  transition: transform var(--transition-speed) ease-in-out;
 }
 
 .invitation-container a:hover,
@@ -232,9 +232,9 @@ header img {
 }
 
 .invitation-container a:focus-visible {
-  color: #e8bb64;
-  outline: .1rem #e8bb64 solid;
-  outline-offset: .2rem;
+  color: var(--color-accent);
+  outline: .1rem var(--color-accent) solid;
+  outline-offset:var(--focus-outline-offset);
 }
 
 .description-container {
@@ -260,7 +260,7 @@ header img {
   max-width: 40rem;
   background-color: rgba(232, 187, 100, .2);
   border-left: .2rem rgb(156, 105, 33, .8) solid;
-  border-radius: .25rem;
+  border-radius: var(--border-radius);
   padding: .6rem 1rem;
   margin: .75rem auto 1rem;
 }
@@ -275,12 +275,12 @@ header img {
   display: inline-block;
   font-size: .9rem;
   font-weight: 600;
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
   text-decoration: underline;
-  text-decoration-color: #e8bb64;
+  text-decoration-color: var(--color-accent);
   text-underline-offset: .2rem;
   margin-left: .5rem;
-  transition: transform .3s ease-in-out;
+  transition: transform var(--transition-speed) ease-in-out;
 }
 
 .profile-setup-link:hover,
@@ -289,9 +289,9 @@ header img {
 }
 
 .profile-setup-link:focus-visible {
-  color: #e8bb64;
-  outline: .1rem #e8bb64 solid;
-  outline-offset: .2rem;
+  color: var(--color-accent);
+  outline: .1rem var(--color-accent) solid;
+  outline-offset:var(--focus-outline-offset);
 }
 
 
@@ -323,7 +323,7 @@ header img {
 .explore-accent {
   width: 4rem;
   height: .1rem;
-  background-color: #e8bb64;
+  background-color: var(--color-accent);
 }
 
 .explore-links {
@@ -337,9 +337,9 @@ header img {
   display: block;
   width: 2.5rem;
   height: .15rem;
-  background-color: #e8bb64;
+  background-color: var(--color-accent);
   margin: 0 auto .75rem;
-  transition: width .3s ease-in-out;
+  transition: width var(--transition-speed) ease-in-out;
 }
 
 .explore-card:hover .explore-card-accent,
@@ -352,32 +352,32 @@ header img {
   flex-direction: column;
   justify-content: center;
   min-height: 7rem;
-  color: #333437;
+  color: var(--color-text);
   text-decoration: none;
-  background-color: rgb(245, 242, 242);
-  border: .1rem solid rgb(53, 37, 19);
-  border-radius: .25rem;
+  background-color: var(--color-surface);
+  border: .1rem solid var(--color-coffee);
+  border-radius: var(--border-radius);
   padding: 1rem;
   transition:
-    transform .3s ease-in-out,
-    border-color .3s ease-in-out;
+    transform var(--transition-speed) ease-in-out,
+    border-color var(--transition-speed) ease-in-out;
 }
 
 .explore-card:hover,
 .explore-card:focus-visible {
-  border-color: #e8bb64;
+  border-color: var(--color-accent);
   transform: translateY(-.2rem);
 }
 
 .explore-card:focus-visible {
-  outline: .15rem solid #e8bb64;
-  outline-offset: .2rem;
+  outline: var(--focus-outline-width) solid var(--color-accent);
+  outline-offset:var(--focus-outline-offset);
 }
 
 .explore-card h3 {
   font-size: 1rem;
   font-weight: 600;
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
   margin: 0 0 .5rem;
 }
 
@@ -391,14 +391,14 @@ header img {
   display: inline-block;
   font-size: .8rem;
   font-weight: 600;
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
   margin-top: .75rem;
-  transition: transform .3s ease-in-out;
+  transition: transform var(--transition-speed) ease-in-out;
 }
 
 .explore-card:hover .explore-action,
 .explore-card:focus-visible .explore-action {
-  color: #9b6a20;
+  color: var(--color-accent-dark);
   transform: translateX(.25rem);
 }
 

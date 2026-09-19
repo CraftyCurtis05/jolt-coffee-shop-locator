@@ -140,12 +140,12 @@
             }}
           </button>
 
-          <RouterLink
+          <router-link
             :to="{ name: 'register' }"
             class="register-link"
           >
             Don't have an account? Create one.
-          </RouterLink>
+          </router-link>
         </div>
 
       </form>
@@ -308,7 +308,7 @@ export default {
   overflow: hidden;
   box-sizing: border-box;
   font-family: 'Ubuntu', sans-serif;
-  color: #333437;
+  color: var(--color-text);
   padding: 1rem;
   z-index: 0;
   caret-color: transparent;
@@ -354,8 +354,8 @@ export default {
   max-height: 75vh;
   overflow-y: auto;
   background-color: rgba(160, 153, 145, .82);
-  border: .15rem rgb(53, 37, 19) solid;
-  border-radius: .25rem;
+  border: .15rem var(--color-coffee) solid;
+  border-radius: var(--border-radius);
   box-shadow: 0 .4rem 1rem rgba(0, 0, 0, .3);
   padding: 1.25rem;
   z-index: 10;
@@ -369,6 +369,7 @@ h1 {
   text-align: center;
   font-size: 1.3rem;
   padding: .5rem;
+  margin-bottom: .5rem;
 }
 
 
@@ -386,8 +387,8 @@ h1 {
   width: 100%;
   min-height: 2.5rem;
   font-size: 1rem;
-  background-color: #ffffff;
-  border: .1rem rgb(53, 37, 19) solid;
+  background-color: var(--color-white);
+  border: .1rem var(--color-coffee) solid;
   border-radius: .2rem;
   padding: .4rem .55rem;
 }
@@ -403,7 +404,7 @@ h1 {
 /* Login Messages */
 #alert1 {
   font-weight: 500;
-  color: rgb(234, 189, 99);
+  color: var(--color-accent);
 }
 
 .alert-container {
@@ -431,7 +432,7 @@ h1 {
   text-align: center;
   color: rgb(35, 24, 13);
   margin: auto;
-  margin-top: .5rem;
+  margin-top: .1rem;
   padding: .5rem;
 }
 
@@ -478,11 +479,11 @@ button {
   align-items: center;
   min-width: 7.5rem;
   min-height: 2.5rem;
-  background-color: rgb(53, 37, 19);
+  background-color: var(--color-coffee);
   font-size: .9rem;
   font-weight: 600;
-  color: #ffffff;
-  border: .1rem solid #e8bb64;
+  color: var(--color-white);
+  border: .1rem solid var(--color-accent);
   border-radius: .2rem;
   padding: .4rem .9rem;
   transition:
@@ -493,9 +494,9 @@ button {
 }
 
 button:hover:not(:disabled) {
-  background-color: #e8bb64;
-  color: rgb(53, 37, 19);
-  border-color: rgb(53, 37, 19);
+  background-color: var(--color-accent);
+  color: var(--color-coffee);
+  border-color: var(--color-coffee);
   transform: translateY(-.1rem);
 }
 
@@ -511,7 +512,7 @@ button:disabled {
   align-items: center;
   min-height: 2.5rem;
   font-size: .9rem;
-  color: #333437;
+  color: var(--color-text);
   text-decoration: underline;
   text-underline-offset: .15rem;
   padding: .35rem .25rem;
@@ -519,12 +520,12 @@ button:disabled {
 }
 
 .register-link:hover {
-  color: #e8bb64;
+  color: var(--color-accent);
   font-weight: 500;
 }
 
 .register-link:focus-visible {
-  outline: .15rem #e8bb64 solid;
+  outline: var(--focus-outline-width) var(--color-accent) solid;
   outline-offset: .15rem;
 }
 

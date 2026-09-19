@@ -79,7 +79,7 @@ footer {
   width: 100%;
   text-align: center;
   background-color: rgb(160, 153, 145);
-  border-top: .1rem #333437 solid;
+  border-top: .1rem var(--color-text) solid;
   padding: 1rem 0;
 }
 
@@ -91,14 +91,14 @@ footer {
 .slogan {
   font-size: 1rem;
   font-weight: bold;
-  color: rgb(234, 189, 99);
+  color: var(--color-accent);
   margin: .5rem auto;
 }
 
 .footer-links-heading {
   font-size: .75rem;
   font-weight: 600;
-  color: #525459;
+  color: var(--color-text-muted);
   margin: 1.25rem 0 0;
 }
 
@@ -115,29 +115,29 @@ footer {
   min-height: 2.75rem;
   font-size: .8rem;
   font-weight: 600;
-  color: #333437;
+  color: var(--color-text);
   text-decoration: none;
   padding: 0 .25rem;
   transition:
-    transform 0.3s ease-in-out,
-    color 0.3s ease-in-out;
+    transform var(--transition-speed) ease-in-out,
+    color var(--transition-speed) ease-in-out;
 }
 
 .footer-links a:hover {
   font-weight: 700;
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
   text-decoration: underline;
   transform: scale(1.02);
 }
 
 .footer-links a:focus-visible {
-  outline: .15rem rgb(234, 189, 99) solid;
-  outline-offset: .2rem;
+  outline: var(--focus-outline-width) var(--color-accent) solid;
+  outline-offset:var(--focus-outline-offset);
 }
 
 footer span {
   display: block;
-  color: #333437;
+  color: var(--color-text);
   font-size: .7rem;
   margin-top: .75rem;
 }

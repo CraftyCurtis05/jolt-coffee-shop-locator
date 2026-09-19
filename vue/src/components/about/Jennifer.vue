@@ -76,12 +76,12 @@ export default {
   align-items: center;
   width: 20rem;
   max-width: 100%;
-  background-color: rgb(53, 37, 19);
-  border: .15rem #e8bb64 solid;
-  border-radius: .25rem;
+  background-color: var(--color-coffee);
+  border: .15rem var(--color-accent) solid;
+  border-radius: var(--border-radius);
   padding: 1rem;
   margin: .75rem;
-  transition: transform .3s ease-in-out;
+  transition: transform var(--transition-speed) ease-in-out;
 }
 
 .developer:hover,
@@ -94,7 +94,7 @@ export default {
 }
 
 .image-container a:focus-visible img {
-  border-color: rgb(245, 242, 242);
+  border-color: var(--color-surface);
   transform: scale(1.02);
 }
 
@@ -103,29 +103,29 @@ img {
   width: 11rem;
   height: 11rem;
   object-fit: cover;
-  border: .5rem #e8bb64 solid;
+  border: .5rem var(--color-accent) solid;
   border-radius: 50%;
   transition:
-    transform .3s ease-in-out,
-    border-color .3s ease-in-out;
+    transform var(--transition-speed) ease-in-out,
+    border-color var(--transition-speed) ease-in-out;
 }
 
 img:hover {
-  border-color: rgb(245, 242, 242);
+  border-color: var(--color-surface);
   transform: scale(1.02);
 }
 
 .about-container {
   width: 100%;
-  color: rgb(245, 242, 242);
-  border: .15rem #e8bb64 solid;
+  color: var(--color-surface);
+  border: .15rem var(--color-accent) solid;
   margin-top: 1rem;
-  transition: border-color .3s ease-in-out;
+  transition: border-color var(--transition-speed) ease-in-out;
 }
 
 .about-container:hover,
 .about-container:focus-within {
-  border-color: rgb(245, 242, 242);
+  border-color: var(--color-surface);
 }
 
 h3 {
@@ -149,22 +149,22 @@ summary {
   justify-content: center;
   align-items: center;
   min-height: 2.75rem;
-  color: rgb(245, 242, 242);
+  color: var(--color-surface);
   font-size: .95rem;
   padding: 0 .75rem;
   cursor: pointer;
-  transition: color .3s ease-in-out;
+  transition: color var(--transition-speed) ease-in-out;
 }
 
 summary:hover {
   font-weight: 600;
-  color: #e8bb64;
+  color: var(--color-accent);
   text-decoration: underline;
 }
 
 summary:focus-visible {
-  outline: .15rem #e8bb64 solid;
-  outline-offset: .2rem;
+  outline: var(--focus-outline-width) var(--color-accent) solid;
+  outline-offset:var(--focus-outline-offset);
 }
 
 .bio-content {
@@ -178,7 +178,7 @@ summary:focus-visible {
 }
 
 .bio-content:focus-visible {
-  outline: .15rem #e8bb64 solid;
+  outline: var(--focus-outline-width) var(--color-accent) solid;
   outline-offset: -.15rem;
 }
 

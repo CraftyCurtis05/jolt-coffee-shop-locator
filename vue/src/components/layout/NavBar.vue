@@ -11,7 +11,7 @@
 
       <!-- Jolt Logo -->
       <section class="logo-container">
-        <RouterLink
+        <router-link
           :to="{ name: 'home' }"
           v-if="$store.state.token !== ''"
           aria-label="Go to Home"
@@ -28,7 +28,7 @@
             class="logo-responsive"
             alt=""
           />
-        </RouterLink>
+        </router-link>
       </section>
 
       <!-- Mobile Navigation Toggle -->
@@ -56,72 +56,72 @@
       >
 
         <!-- Home -->
-        <RouterLink
+        <router-link
           class="link"
           :to="{ name: 'home' }"
           v-if="$store.state.token !== ''"
           title="Click to Go to Home"
         >
           <h3 class="open">HOME</h3>
-        </RouterLink>
+        </router-link>
 
         <div class="separator">|</div>
 
         <!-- Locator -->
-        <RouterLink
+        <router-link
           class="link"
           :to="{ name: 'locator' }"
           v-if="$store.state.token !== ''"
           title="Click to Go to Locator"
         >
           <h3 class="open">LOCATOR</h3>
-        </RouterLink>
+        </router-link>
 
         <div class="separator">|</div>
 
         <!-- Shop -->
-        <RouterLink
+        <router-link
           class="link"
           :to="{ name: 'shop' }"
           v-if="$store.state.token !== ''"
           title="Click to Go to Shop"
         >
           <h3 class="open">SHOP</h3>
-        </RouterLink>
+        </router-link>
 
         <div class="separator">|</div>
 
         <!-- Articles -->
-        <RouterLink
+        <router-link
           class="link"
           :to="{ name: 'articles' }"
           v-if="$store.state.token !== ''"
           title="Click to Go to Articles"
         >
           <h3 class="open">ARTICLES</h3>
-        </RouterLink>
+        </router-link>
 
         <div class="separator">|</div>
 
         <!-- About Us -->
-        <RouterLink
+        <router-link
           class="link"
           :to="{ name: 'aboutUs' }"
           v-if="$store.state.token !== ''"
           title="Click to Go to About Us"
         >
           <h3 class="open">ABOUT US</h3>
-        </RouterLink>
+        </router-link>
 
         <!-- Mobile Logout -->
-        <RouterLink
+        <router-link
           class="link mobile-logout"
           :to="{ name: 'logout' }"
           v-if="$store.state.token !== ''"
           title="Click to Logout"
         >
           <h3 class="open">LOGOUT</h3>
-        </RouterLink>
+        </router-link>
       </section>
 
       <!-- User Profile -->
@@ -131,7 +131,7 @@
       >
 
         <!-- Logout -->
-        <RouterLink
+        <router-link
           class="link"
           id="logout"
           :to="{ name: 'logout' }"
@@ -139,7 +139,7 @@
           title="Click to Logout"
         >
           <h3>LOGOUT</h3>
-        </RouterLink>
+        </router-link>
 
         <!-- Profile Picture -->
         <div
@@ -149,7 +149,7 @@
             'profile-active': $route.name === 'profile'
           }"
         >
-          <RouterLink
+          <router-link
             :to="{ name: 'profile' }"
             v-if="$store.state.token !== ''"
             aria-label="Go to your profile"
@@ -159,7 +159,7 @@
               :src="$store.state.profileImage || defaultProfileImage"
               alt=""
             />
-          </RouterLink>
+          </router-link>
         </div>
 
       </section>
@@ -309,27 +309,27 @@ h3,
   font-family: 'Vonique 43', sans-serif;
   font-weight: bolder;
   font-size: 1rem;
-  color: rgb(245, 242, 242);
+  color: var(--color-surface);
   text-decoration: none;
   white-space: nowrap;
   transition:
-    color .3s ease-in-out,
-    transform .3s ease-in-out;
+    color var(--transition-speed) ease-in-out,
+    transform var(--transition-speed) ease-in-out;
 }
 
 h3:hover,
 .link:hover {
-  color: #525459;
+  color: var(--color-text-muted);
   transform: scale(1.03);
 }
 
-.link.RouterLink-active h3 {
-  color: #525459;
-  border-bottom: .15rem #e8bb64 solid;
+.link.router-link-active h3 {
+  color: var(--color-text-muted);
+  border-bottom: .15rem var(--color-accent) solid;
 }
 
 .separator {
-  color: #333437;
+  color: var(--color-text);
 }
 
 .mobile-logout {
@@ -361,11 +361,11 @@ h3:hover,
   height: 3.1rem;
   overflow: hidden;
   border-radius: 50%;
-  border: .25rem #e8bb64 solid;
+  border: .25rem var(--color-accent) solid;
   transition:
-    border .3s ease-in-out,
-    transform .3s ease-in-out,
-    filter .3s ease-in-out;
+    border var(--transition-speed) ease-in-out,
+    transform var(--transition-speed) ease-in-out,
+    filter var(--transition-speed) ease-in-out;
 }
 
 .image-container a {
@@ -375,8 +375,8 @@ h3:hover,
 }
 
 .image-container a:focus-visible {
-  outline: .15rem #e8bb64 solid;
-  outline-offset: .2rem;
+  outline: var(--focus-outline-width) var(--color-accent) solid;
+  outline-offset:var(--focus-outline-offset);
   border-radius: 50%;
 }
 
@@ -388,18 +388,18 @@ h3:hover,
 }
 
 .image-container:hover {
-  border: .25rem rgb(53, 37, 19) solid;
+  border: .25rem var(--color-coffee) solid;
   transform: scale(1.05);
   filter: grayscale(70%);
 }
 
 .image-container:focus-within {
-  border: .25rem rgb(53, 37, 19) solid;
+  border: .25rem var(--color-coffee) solid;
   transform: scale(1.05);
 }
 
 .image-container.profile-active {
-  border: .25rem rgb(53, 37, 19) solid;
+  border: .25rem var(--color-coffee) solid;
 }
 
 /* Laptop - 900px */
@@ -452,18 +452,18 @@ h3:hover,
     background-color: transparent;
     font-size: 2rem;
     line-height: 1;
-    color: rgb(245, 242, 242);
+    color: var(--color-surface);
     border: none;
     padding: 0;
     margin: 0;
     cursor: pointer;
     transition:
-      color .3s ease-in-out,
-      transform .3s ease-in-out;
+      color var(--transition-speed) ease-in-out,
+      transform var(--transition-speed) ease-in-out;
   }
 
   .toggle-container button:hover {
-    color: #525459;
+    color: var(--color-text-muted);
     transform: scale(1.05);
   }
 

@@ -150,7 +150,7 @@ export default {
   flex-direction: column;
   width: 45%;
   max-width: 32rem;
-  background-color: #e8bb64;
+  background-color: var(--color-accent);
   border-radius: .1rem;
   padding-bottom: .5rem;
   margin: 1rem;
@@ -169,16 +169,16 @@ export default {
   width: 100%;
   height: 16rem;
   object-fit: cover;
-  border: .5rem #e8bb64 solid;
+  border: .5rem var(--color-accent) solid;
 }
 
 a {
-  color: #333437;
+  color: var(--color-text);
   text-decoration: none;
 }
 
 a:focus-visible {
-  outline: .15rem rgb(53, 37, 19) solid;
+  outline: var(--focus-outline-width) var(--color-coffee) solid;
   outline-offset: .15rem;
   z-index: 2;
 }
@@ -191,14 +191,14 @@ h3 {
   font-size: 1.2rem;
   font-weight: 500;
   line-height: 1.2;
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
   padding: 0 .5rem;
   margin: .5rem auto;
 }
 
 .shop-source {
   font-size: .75rem;
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
   margin: -.25rem auto .25rem;
 }
 

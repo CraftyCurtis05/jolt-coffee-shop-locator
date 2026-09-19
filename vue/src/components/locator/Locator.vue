@@ -61,9 +61,9 @@
         v-else
         class="profile-search-hint"
       >
-        <RouterLink to="/profile">
+        <router-link to="/profile">
           Create a profile
-        </RouterLink>
+        </router-link>
         to search for coffee shops near home.
       </p>
 
@@ -497,9 +497,9 @@ export default {
   width: 76rem;
   max-width: 92%;
   min-height: 10rem;
-  background-color: rgb(245, 242, 242);
-  border: .15rem #e8bb64 solid;
-  border-radius: .25rem;
+  background-color: var(--color-surface);
+  border: .15rem var(--color-accent) solid;
+  border-radius: var(--border-radius);
   padding: 1rem 1.25rem;
   margin: 0 auto 1.25rem;
 }
@@ -513,14 +513,14 @@ export default {
 
 .search-heading h3 {
   font-size: 1rem;
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
   margin: 0;
 }
 
 .search-heading-accent {
   width: 2.5rem;
   height: .15rem;
-  background-color: #e8bb64;
+  background-color: var(--color-accent);
   margin-bottom: .5rem;
 }
 
@@ -549,7 +549,7 @@ export default {
   min-width: 0;
   font-size: 1rem;
   padding: .5rem .75rem;
-  border: .1rem rgb(53, 37, 19) solid;
+  border: .1rem var(--color-coffee) solid;
   border-radius: .2rem 0 0 .2rem;
 }
 
@@ -587,24 +587,24 @@ export default {
 .profile-search-hint a {
   display: inline-block;
   font-weight: 600;
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
   text-decoration: underline;
-  text-decoration-color: #e8bb64;
+  text-decoration-color: var(--color-accent);
   text-underline-offset: .2rem;
   transition:
-    color 0.3s ease-in-out,
-    transform 0.3s ease-in-out;
+    color var(--transition-speed) ease-in-out,
+    transform var(--transition-speed) ease-in-out;
 }
 
 .profile-search-hint a:hover {
-  color: #9b6a20;
+  color: var(--color-accent-dark);
   transform: scale(1.03);
 }
 
 .profile-search-hint a:focus-visible {
-  color: #9b6a20;
-  outline: .15rem #e8bb64 solid;
-  outline-offset: .2rem;
+  color: var(--color-accent-dark);
+  outline: var(--focus-outline-width) var(--color-accent) solid;
+  outline-offset:var(--focus-outline-offset);
 }
 
 
@@ -622,25 +622,25 @@ export default {
   align-items: center;
   min-height: 2.75rem;
   font-size: .8rem;
-  color: rgb(53, 37, 19);
-  background-color: #e8bb64;
-  border: .1rem rgb(53, 37, 19) solid;
+  color: var(--color-coffee);
+  background-color: var(--color-accent);
+  border: .1rem var(--color-coffee) solid;
   border-radius: .2rem;
   padding: .4rem .75rem;
   margin: 0;
   transition:
-    background-color 0.3s ease-in-out,
-    color 0.3s ease-in-out,
-    border-color 0.3s ease-in-out,
+    background-color var(--transition-speed) ease-in-out,
+    color var(--transition-speed) ease-in-out,
+    border-color var(--transition-speed) ease-in-out,
     box-shadow 0.2s ease-in-out,
     transform 0.15s ease-in-out;
 }
 
 .search-bar button:hover:not(:disabled),
 .search-home button:hover:not(:disabled) {
-  color: #e8bb64;
-  background-color: rgb(53, 37, 19);
-  border-color: #e8bb64;
+  color: var(--color-accent);
+  background-color: var(--color-coffee);
+  border-color: var(--color-accent);
   box-shadow:
     inset 0 .15rem .3rem rgba(0, 0, 0, .35),
     0 0 .35rem rgba(232, 187, 100, .35);
@@ -664,14 +664,14 @@ export default {
 
 .search-bar button:focus-visible,
 .search-home button:focus-visible {
-  outline: .15rem #e8bb64 solid;
-  outline-offset: .2rem;
+  outline: var(--focus-outline-width) var(--color-accent) solid;
+  outline-offset:var(--focus-outline-offset);
 }
 
 .search-home button img {
   transition:
-    filter 0.3s ease-in-out,
-    transform 0.3s ease-in-out;
+    filter var(--transition-speed) ease-in-out,
+    transform var(--transition-speed) ease-in-out;
 }
 
 .search-home button:hover:not(:disabled) img {
@@ -693,9 +693,9 @@ export default {
 .results-section {
   width: 94%;
   max-width: 100rem;
-  background-color: rgb(53, 37, 19);
-  border: .15rem #e8bb64 solid;
-  border-radius: .25rem;
+  background-color: var(--color-coffee);
+  border: .15rem var(--color-accent) solid;
+  border-radius: var(--border-radius);
   padding: 0 1.25rem;
   margin: 0 auto 1.5rem;
 }
@@ -703,7 +703,7 @@ export default {
 .results-header {
   width: 100%;
   text-align: center;
-  border-bottom: .1rem #e8bb64 solid;
+  border-bottom: .1rem var(--color-accent) solid;
   margin-bottom: 1rem;
 }
 
@@ -713,13 +713,13 @@ export default {
   justify-content: center;
   align-items: center;
   font-size: 1.2rem;
-  color: rgb(245, 242, 242);
+  color: var(--color-surface);
   margin: .25rem auto;
 }
 
 .results-source {
   font-size: .75rem;
-  color: #e8bb64;
+  color: var(--color-accent);
   margin: 0 auto 1rem;
 }
 
@@ -754,30 +754,30 @@ export default {
   width: 100%;
   min-width: 0;
   min-height: 22rem;
-  background-color: rgb(245, 242, 242);
-  border: .15rem rgb(53, 37, 19) solid;
-  border-radius: .25rem;
+  background-color: var(--color-surface);
+  border: .15rem var(--color-coffee) solid;
+  border-radius: var(--border-radius);
   box-shadow: 0 .25rem .5rem rgba(0, 0, 0, .18);
   padding: 1rem;
   transition:
-    transform 0.3s ease-in-out,
-    border-color 0.3s ease-in-out,
-    box-shadow 0.3s ease-in-out;
+    transform var(--transition-speed) ease-in-out,
+    border-color var(--transition-speed) ease-in-out,
+    box-shadow var(--transition-speed) ease-in-out;
 }
 
 .result:hover {
-  border-color: #e8bb64;
+  border-color: var(--color-accent);
   box-shadow: 0 .4rem .75rem rgba(0, 0, 0, .25);
   transform: translateY(-.2rem);
 }
 
 .result:focus-within {
-  border-color: #e8bb64;
+  border-color: var(--color-accent);
   box-shadow: 0 .4rem .75rem rgba(0, 0, 0, .25);
 }
 
 .result a {
-  color: #525459;
+  color: var(--color-text-muted);
   text-decoration: none;
 }
 
@@ -786,12 +786,12 @@ export default {
 .search-bar input:focus-visible,
 .search-bar button:focus-visible,
 .search-home button:focus-visible {
-  outline: .15rem #e8bb64 solid;
+  outline: var(--focus-outline-width) var(--color-accent) solid;
   outline-offset: .15rem;
 }
 
 .search-bar input:focus-visible {
-  border-color: #e8bb64;
+  border-color: var(--color-accent);
   box-shadow: 0 0 .35rem rgba(232, 187, 100, .35);
 }
 
@@ -811,11 +811,11 @@ export default {
   font-size: 1.05rem;
   font-weight: bold;
   line-height: 1.25;
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
   text-underline-offset: .15rem;
   transition:
-    transform 0.3s ease-in-out,
-    color 0.3s ease-in-out;
+    transform var(--transition-speed) ease-in-out,
+    color var(--transition-speed) ease-in-out;
 }
 
 .location-container {
@@ -834,18 +834,18 @@ export default {
   min-height: 3.5rem;
   text-underline-offset: .15rem;
   transition:
-    transform 0.3s ease-in-out,
-    color 0.3s ease-in-out;
+    transform var(--transition-speed) ease-in-out,
+    color var(--transition-speed) ease-in-out;
 }
 
 .name:hover {
-  color: #9b6a20;
+  color: var(--color-accent-dark);
   text-decoration: underline;
   transform: scale(1.02);
 }
 
 .location-container a:hover {
-  color: #9b6a20;
+  color: var(--color-accent-dark);
   text-decoration: underline;
   transform: scale(1.02);
 }
@@ -855,7 +855,7 @@ export default {
 
 .image {
   width: 100%;
-  border-top: .1rem #e8bb64 solid;
+  border-top: .1rem var(--color-accent) solid;
   padding-top: .75rem;
   margin-top: .5rem;
 }
@@ -870,12 +870,12 @@ export default {
   max-width: 14rem;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  border: .1rem rgb(53, 37, 19) solid;
-  border-radius: .25rem;
+  border: .1rem var(--color-coffee) solid;
+  border-radius: var(--border-radius);
   margin: 0 auto .75rem;
   transition:
-    border-color 0.3s ease-in-out,
-    transform 0.3s ease-in-out;
+    border-color var(--transition-speed) ease-in-out,
+    transform var(--transition-speed) ease-in-out;
 }
 
 .image a:hover img {
@@ -883,7 +883,7 @@ export default {
 }
 
 .result:hover .image img {
-  border-color: #e8bb64;
+  border-color: var(--color-accent);
 }
 
 
@@ -891,7 +891,7 @@ export default {
 
 .favorite {
   width: 100%;
-  border-top: .1rem #e8bb64 solid;
+  border-top: .1rem var(--color-accent) solid;
   margin-top: auto;
   padding-top: .75rem;
 }
@@ -902,17 +902,17 @@ export default {
   align-items: center;
   gap: .4rem;
   width: 100%;
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
   background-color: transparent;
   border: none;
   padding: .25rem .5rem;
   transition:
-    transform 0.3s ease-in-out,
-    color 0.3s ease-in-out;
+    transform var(--transition-speed) ease-in-out,
+    color var(--transition-speed) ease-in-out;
 }
 
 .favorite button:hover:not(:disabled) {
-  color: #9b6a20;
+  color: var(--color-accent-dark);
   text-decoration: underline;
   transform: scale(1.05);
 }
@@ -947,20 +947,20 @@ export default {
   width: 90%;
   max-width: 32rem;
   text-align: center;
-  background-color: rgb(245, 242, 242);
+  background-color: var(--color-surface);
   border-left: .2rem rgb(156, 105, 33, .8) solid;
   padding: 1rem 1.25rem;
   margin: 0 auto 1.5rem;
 }
 
 .no-results strong {
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
   font-weight: 600;
 }
 
 .no-results p {
   font-size: .9rem;
-  color: #525459;
+  color: var(--color-text-muted);
   margin: 0;
 }
 

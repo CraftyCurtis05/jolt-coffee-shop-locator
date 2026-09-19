@@ -9,12 +9,12 @@
         Looks like this page needs another shot of espresso.
       </p>
 
-      <RouterLink
+      <router-link
         :to="{ name: 'home' }"
         class="home-link"
       >
         Return Home →
-      </RouterLink>
+      </router-link>
     </section>
   </main>
 </template>
@@ -32,16 +32,16 @@
 .not-found-content {
   width: 90%;
   max-width: 34rem;
-  background-color: rgb(245, 242, 242);
+  background-color: var(--color-surface);
   border-left: .25rem rgb(156, 105, 33, .8) solid;
-  border-radius: .25rem;
+  border-radius: var(--border-radius);
   text-align: left;
   padding: 2rem;
 }
 
 .not-found-content h1 {
   font-family: 'Ubuntu', sans-serif;
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
   margin-bottom: .75rem;
 }
 
@@ -57,9 +57,9 @@
   align-items: center;
   min-height: 2.75rem;
   font-weight: 600;
-  color: rgb(53, 37, 19);
+  color: var(--color-coffee);
   text-decoration: none;
-  transition: color .3s ease-in-out;
+  transition: color var(--transition-speed) ease-in-out;
 }
 
 .home-link:hover,
@@ -68,7 +68,7 @@
 }
 
 .home-link:focus-visible {
-  outline: .15rem rgb(156, 105, 33) solid;
-  outline-offset: .2rem;
+  outline: var(--focus-outline-width) rgb(156, 105, 33) solid;
+  outline-offset:var(--focus-outline-offset);
 }
 </style>
